@@ -5,7 +5,7 @@ using Zenject;
 
 namespace UI
 {
-    public class UIRoot : MonoBehaviour
+    public class UIRoot : MonoBehaviour, IUIRoot
     {
         [SerializeField] private Transform _menuRoot;
         

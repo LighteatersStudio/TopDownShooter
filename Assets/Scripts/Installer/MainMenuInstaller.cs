@@ -11,12 +11,18 @@ namespace Installer
 
         public override void InstallBindings()
         {
+            BindUI();
+        }
+        
+        private void BindUI()
+        {
+            Debug.Log("Main menu installer: Bind UI");
             Container.Bind<UIBuilder>()
                 .FromInstance(_builder)
                 .AsSingle()
                 .NonLazy();
             
-            Container.Bind<UIRoot>()
+            Container.Bind<IUIRoot>()
                 .FromInstance(_menuRoot)
                 .AsSingle()
                 .NonLazy();
