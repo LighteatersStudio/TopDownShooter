@@ -4,15 +4,16 @@ using Zenject;
 
 namespace Scenarios
 {
-    public class ApplicationLaunchScenario : MonoBehaviour
+    public class LaunchMainMenuScenario : MonoBehaviour
     {
-        private UIRoot _uiRoot;
+        private IUIRoot _uiRoot;
         
         [Inject]
-        public void Construct(UIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot)
         {
             _uiRoot = uiRoot;
         }
+        
         
         protected void Start()
         {
@@ -24,6 +25,8 @@ namespace Scenarios
         {
             view.Closed -= OnSplashScreenClosed;
             // _uiRoot.Open<MainMenu>();
+            
+            Destroy(gameObject);
         }
     }
 }

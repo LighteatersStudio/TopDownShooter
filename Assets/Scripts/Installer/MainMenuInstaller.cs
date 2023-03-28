@@ -6,8 +6,8 @@ namespace Installer
 {
     public class MainMenuInstaller : MonoInstaller
     {
-        [SerializeField] private UIRoot _menuRoot;
         [SerializeField] private UIBuilder _builder;
+        [SerializeField] private UIRoot _menuRoot;
 
         public override void InstallBindings()
         {
@@ -23,7 +23,7 @@ namespace Installer
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
-                .FromInstance(_menuRoot)
+                .FromComponentInNewPrefab(_menuRoot)
                 .AsSingle()
                 .NonLazy();
         }
