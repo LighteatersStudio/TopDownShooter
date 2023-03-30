@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1742492003223578169}
   - component: {fileID: 1742492003223578173}
   m_Layer: 5
-  m_Name: UIRoot
+  m_Name: GlobalUIRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &1742492003223578174
 MonoBehaviour:

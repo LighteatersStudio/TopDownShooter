@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiRoot: {fileID: 1742492003223578173, guid: 1fdb5733452c4c04a96cb53f63f83b3f, type: 3}
   _builder: {fileID: 8895478004471453305, guid: 14f177d253889c44c8acd828317e8eb6, type: 3}
-  _launchScenario: {fileID: 7437664190733159054, guid: b9b15cda2a0244e408d1b713c300b2e2, type: 3}
+  sessionStartScenario: {fileID: 7437664190733159054, guid: b9b15cda2a0244e408d1b713c300b2e2, type: 3}

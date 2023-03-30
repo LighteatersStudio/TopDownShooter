@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Scenarios
 {
-    public class GameLaunchScenario : MonoBehaviour
+    public class GameSessionStartScenario : MonoBehaviour
     {
         private IUIRoot _uiRoot;
         
