@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Loading;
 using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Loader
@@ -22,10 +21,14 @@ namespace Loader
             LoadGame();
         }
 
-        private void LoadGame()
+        private async void LoadGame()
         {
             var loadingScreen = _uiRoot.Open<LoadingScreen>();
-            loadingScreen.Load(new MainMenuLoading());
+
+            var loadingQueue = new Queue<ILoadingOperation>();
+            loadingQueue.Enqueue(new MainMenuLoadingOperation());
+            
+            await loadingScreen.Load(loadingQueue);
         }
     }
 }
