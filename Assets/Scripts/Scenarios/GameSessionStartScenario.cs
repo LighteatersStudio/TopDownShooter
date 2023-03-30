@@ -4,12 +4,12 @@ using Zenject;
 
 namespace Scenarios
 {
-    public class GameLaunchScenario : MonoBehaviour
+    public class GameSessionStartScenario : MonoBehaviour
     {
         private IUIRoot _uiRoot;
         
         [Inject]
-        public void Construct(UIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot)
         {
             _uiRoot = uiRoot;
         }

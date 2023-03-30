@@ -9,7 +9,7 @@ namespace Installer
     {
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
-        [SerializeField] private GameLaunchScenario _launchScenario;
+        [SerializeField] private GameSessionStartScenario sessionStartScenario;
         public override void InstallBindings()
         {
             BindUI();
@@ -33,8 +33,8 @@ namespace Installer
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
-            Container.Bind<GameLaunchScenario>()
-                .FromComponentInNewPrefab(_launchScenario)
+            Container.Bind<GameSessionStartScenario>()
+                .FromComponentInNewPrefab(sessionStartScenario)
                 .AsSingle()
                 .NonLazy();
         }
