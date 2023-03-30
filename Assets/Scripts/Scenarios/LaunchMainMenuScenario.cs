@@ -28,7 +28,8 @@ namespace Scenarios
             //var view = _uiRoot.Open<StartSplashScreen>();
             //_uiRoot.Open<MainMenu>();
             //view.Closed += OnViewClosed;
-            WaitAndLoadLevel();
+            var view = _uiRoot.Open<StartSplashScreen>();
+            view.Closed += OnSplashScreenClosed;
         }
 
         // Debug code
@@ -39,12 +40,12 @@ namespace Scenarios
             await _loadingService.Load(_levelLoadingOperation);
         }
 
-        /*private void OnSplashScreenClosed(IView view)
+        private void OnSplashScreenClosed(IView view)
         {
             view.Closed -= OnSplashScreenClosed;
-            _uiRoot.Open<MainMenu>();
-            
+            //_uiRoot.Open<MainMenu>();
+            WaitAndLoadLevel();
             Destroy(gameObject);
-        }*/
+        }
     }
 }
