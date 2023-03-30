@@ -9,8 +9,10 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class LoadingScreen : MonoBehaviour, IView
+    public class LoadingScreen : View
     {
+        private const float FillDelay = 0.15f;
+        
         [SerializeField]
         private Slider _progressFill;
         [SerializeField]
@@ -20,20 +22,6 @@ namespace UI
         
         private float _targetProgress;
         private bool _isProgress;
-        
-        public event Action<IView> Closed;
-        
-        
-        public void Open()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Close() 
-        {
-            gameObject.SetActive(false);
-            Closed?.Invoke(this);
-        }
         
         public async UniTask Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
         {
@@ -76,7 +64,7 @@ namespace UI
                 await UniTask.Delay(1);
             }
             
-            await UniTask.Delay(TimeSpan.FromSeconds(0.15f));
+            await UniTask.Delay(TimeSpan.FromSeconds(FillDelay));
         }
 
         private IEnumerator UpdateProgressBar()
