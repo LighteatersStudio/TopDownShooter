@@ -96,3 +96,6 @@ Assets/FrameworkSamples.meta
 Assets/Doxygen
 Assets/Doxygen.meta
 .jira-project
+
+# Zenject files
+Assets/Plugins/Zenject/OptionalExtras/IntegrationTests/Installers/Editor/Resources/TestCompositeScriptableObjectInstallers/CircularReferenceCompositeInstaller
