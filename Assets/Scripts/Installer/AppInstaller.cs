@@ -16,7 +16,7 @@ namespace Installer
         public override void InstallBindings()
         {
             BindUI();
-            BindLoadingOperation();
+            BindLoadingService();
             BindScenes();
         }
         
@@ -41,12 +41,21 @@ namespace Installer
                 .NonLazy();
         }
 
-        private void BindLoadingOperation()
+        private void BindLoadingService()
         {
             Debug.Log("Global installer: Bind loading operation");
+
+            Container.Bind<LoadingService>()
+                .AsSingle()
+                .NonLazy();
             
             Container.Bind<MainMenuLoadingOperation>()
-                .To<MainMenuLoadingOperation>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<LevelLoadingOperation>()
+                .FromNew()
                 .AsSingle()
                 .Lazy();
         }

@@ -20,7 +20,7 @@ namespace Installer
         {
             Debug.Log("Game installer: Bind UI");
             Container.Bind<UIBuilder>()
-                .FromInstance(_builder)
+                .FromComponentInNewPrefab(_builder)
                 .AsSingle()
                 .NonLazy();
             

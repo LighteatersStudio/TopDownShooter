@@ -18,7 +18,7 @@ namespace Installer
         {
             Debug.Log("Main menu installer: Bind UI");
             Container.Bind<UIBuilder>()
-                .FromInstance(_builder)
+                .FromComponentInNewPrefab(_builder)
                 .AsSingle()
                 .NonLazy();
             

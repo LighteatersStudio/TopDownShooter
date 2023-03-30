@@ -9,7 +9,7 @@ namespace Scenarios
         private IUIRoot _uiRoot;
         
         [Inject]
-        public void Construct(UIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot)
         {
             _uiRoot = uiRoot;
         }
