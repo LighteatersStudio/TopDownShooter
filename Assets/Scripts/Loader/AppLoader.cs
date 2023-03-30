@@ -9,11 +9,13 @@ namespace Loader
     public class AppLoader : MonoBehaviour
     {
         private IUIRoot _uiRoot;
+        private MainMenuLoadingOperation _menuLoadingOperation;
 
         [Inject]
-        public void Construct(IUIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot, MainMenuLoadingOperation menuLoadingOperation)
         {
             _uiRoot = uiRoot;
+            _menuLoadingOperation = menuLoadingOperation;
         }
 
         protected void Start()
@@ -26,7 +28,7 @@ namespace Loader
             var loadingScreen = _uiRoot.Open<LoadingScreen>();
 
             var loadingQueue = new Queue<ILoadingOperation>();
-            loadingQueue.Enqueue(new MainMenuLoadingOperation());
+            loadingQueue.Enqueue(_menuLoadingOperation);
             
             await loadingScreen.Load(loadingQueue);
         }
