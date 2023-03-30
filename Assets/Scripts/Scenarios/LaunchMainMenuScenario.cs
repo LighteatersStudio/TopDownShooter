@@ -17,14 +17,14 @@ namespace Scenarios
         
         protected void Start()
         {
-            //var view = _uiRoot.Open<StartSplashScreen>();
-            // view.Closed += OnViewClosed;
+            var view = _uiRoot.Open<StartSplashScreen>();
+            view.Closed += OnSplashScreenClosed;
         }
         
         private void OnSplashScreenClosed(IView view)
         {
             view.Closed -= OnSplashScreenClosed;
-            // _uiRoot.Open<MainMenu>();
+            //_uiRoot.Open<MainMenu>();
             
             Destroy(gameObject);
         }
