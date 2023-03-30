@@ -1,4 +1,6 @@
-﻿using UI;
+﻿using Loader;
+using Loading;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -14,11 +16,14 @@ namespace Installer
         public override void InstallBindings()
         {
             BindUI();
+            BindLoadingService();
+            BindScenes();
         }
         
         private void BindUI()
         {
             Debug.Log("Global installer: Bind UI");
+            
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_globalUIBuilder)
                 .AsSingle()
@@ -34,6 +39,35 @@ namespace Installer
                 .FromComponentInNewPrefab(_eventSystem)
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private void BindLoadingService()
+        {
+            Debug.Log("Global installer: Bind loading operation");
+
+            Container.Bind<LoadingService>()
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<MainMenuLoadingOperation>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<LevelLoadingOperation>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+
+        private void BindScenes()
+        {
+            Debug.Log("Global installer: Bind scenes");
+            
+            Container.Bind<SceneNames>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
     }
 }

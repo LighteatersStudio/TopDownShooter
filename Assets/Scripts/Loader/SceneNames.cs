@@ -1,8 +1,9 @@
 namespace Loader
 {
-    public static class SceneNames
+    public class SceneNames
     {
-        public const string MainMenu = "MainMenu";
-        public const string Gameplay = "Gameplay";
+        public readonly string MainMenu = "MainMenu";
+        public readonly string Gameplay = "Gameplay";
+        public readonly string Level1 = "Level1";
     }
 }

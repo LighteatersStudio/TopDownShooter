@@ -8,14 +8,14 @@ using Zenject;
 
 namespace Loading
 {
-    public class MainMenuLoadingOperation : ILoadingOperation
+    public class LevelLoadingOperation : ILoadingOperation
     {
-        public string Description => "Loading Main Menu...";
+        public string Description => "Loading Level...";
 
         private readonly SceneNames _sceneNames;
         
         [Inject]
-        public MainMenuLoadingOperation(SceneNames sceneNames)
+        public LevelLoadingOperation(SceneNames sceneNames)
         {
             _sceneNames = sceneNames;
         }
@@ -24,7 +24,7 @@ namespace Loading
         {
             progressHandler?.Invoke(0.5f);
 
-            var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.MainMenu);
+            var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.Level1);
             
             var taskResult = new TaskCompletionSource<bool>();
             loadingOperation.completed += OnLoaded;

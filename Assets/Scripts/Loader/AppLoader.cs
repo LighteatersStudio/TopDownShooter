@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Loading;
-using UI;
+﻿using Loading;
 using UnityEngine;
 using Zenject;
 
@@ -8,12 +6,14 @@ namespace Loader
 {
     public class AppLoader : MonoBehaviour
     {
-        private IUIRoot _uiRoot;
+        private LoadingService _loadingService;
+        private MainMenuLoadingOperation _menuLoadingOperation;
 
         [Inject]
-        public void Construct(IUIRoot uiRoot)
+        public void Construct(LoadingService loadingService, MainMenuLoadingOperation menuLoadingOperation)
         {
-            _uiRoot = uiRoot;
+            _loadingService = loadingService;
+            _menuLoadingOperation = menuLoadingOperation;
         }
 
         protected void Start()
@@ -23,12 +23,7 @@ namespace Loader
 
         private async void LoadGame()
         {
-            var loadingScreen = _uiRoot.Open<LoadingScreen>();
-
-            var loadingQueue = new Queue<ILoadingOperation>();
-            loadingQueue.Enqueue(new MainMenuLoadingOperation());
-            
-            await loadingScreen.Load(loadingQueue);
+            await _loadingService.Load(_menuLoadingOperation);
         }
     }
 }
