@@ -33,12 +33,7 @@ namespace UI
         private void LoadLevel()
         {
             _loadingService.Load(_levelLoadingOperation);
-        }
-
-        private void OnMainMenuClosed(IView view)
-        {
-            view.Closed -= OnMainMenuClosed;
-            Destroy(gameObject);
+            Close();
         }
     }
 }

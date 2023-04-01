@@ -28,7 +28,7 @@ namespace UI
                 return default;
             }
             
-            if (_viewStack.Any())
+            if(_viewStack.Any())
             {
                 var current = _viewStack.Peek();
                 
