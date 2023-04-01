@@ -18,7 +18,7 @@ namespace Scenarios
         protected void Start()
         {
             _uiRoot.Open<Hud>();
-            //var view = _uiRoot.Open<HighStoneChooseMenu>();
+            var view = _uiRoot.Open<HighStoneChooseMenu>();
             
             Destroy(gameObject);
         }
