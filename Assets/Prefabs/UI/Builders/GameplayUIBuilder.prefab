@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewsPrefab:
   - {fileID: 971908246518506673, guid: 19ce58750d3423044b58df42fb5b2f43, type: 3}
+  - {fileID: 2034671531895404175, guid: 5dcfe5038e4bf394db11456b3f4978fa, type: 3}
