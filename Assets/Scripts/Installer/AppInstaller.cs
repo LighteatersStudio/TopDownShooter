@@ -1,4 +1,5 @@
-﻿using Loader;
+﻿using Level;
+using Loader;
 using Loading;
 using UI;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Installer
             BindUI();
             BindLoadingService();
             BindScenes();
+            BindGameRuntime();
         }
         
         private void BindUI()
@@ -65,6 +67,16 @@ namespace Installer
             Debug.Log("Global installer: Bind scenes");
             
             Container.Bind<SceneNames>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+        
+        private void BindGameRuntime()
+        {
+            Debug.Log("Global installer: Bind game runtime");
+            
+            Container.Bind<GameRunProvider>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();
