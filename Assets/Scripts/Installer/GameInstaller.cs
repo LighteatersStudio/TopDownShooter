@@ -1,4 +1,5 @@
-﻿using Scenarios;
+﻿using Gameplay;
+using Scenarios;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -7,9 +8,16 @@ namespace Installer
 {
     public class GameInstaller : MonoInstaller
     {
+        [Header("UI")]
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
+        [Header("Scenarios")]
         [SerializeField] private GameSessionStartScenario sessionStartScenario;
+        [Header("Gameplay Entities")]
+        [SerializeField] private Player _playerPrefab;
+        
+        
+        
         public override void InstallBindings()
         {
             BindUI();
@@ -37,6 +45,16 @@ namespace Installer
                 .FromComponentInNewPrefab(sessionStartScenario)
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private void BindPlayer()
+        {
+            Debug.Log("Game installer: Bind player");
+            
+            Container.Bind<IPlayer>()
+                .FromComponentInNewPrefab(_playerPrefab)
+                .AsSingle()
+                .Lazy();
         }
     }
 }
