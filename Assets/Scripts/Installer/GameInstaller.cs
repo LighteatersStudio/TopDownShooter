@@ -22,6 +22,7 @@ namespace Installer
         {
             BindUI();
             BindScenarios();
+            BindPlayer();
         }
         
         private void BindUI()
