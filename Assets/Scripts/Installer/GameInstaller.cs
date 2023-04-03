@@ -1,4 +1,5 @@
 ﻿using Gameplay;
+using Level;
 using Scenarios;
 using UI;
 using UnityEngine;
@@ -12,17 +13,16 @@ namespace Installer
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
         [Header("Scenarios")]
-        [SerializeField] private GameSessionStartScenario sessionStartScenario;
+        [SerializeField] private GameSessionStartScenario _sessionStartScenario;
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
-        
-        
         
         public override void InstallBindings()
         {
             BindUI();
             BindScenarios();
             BindPlayer();
+            BindGameRun();
         }
         
         private void BindUI()
@@ -43,7 +43,7 @@ namespace Installer
         {
             Debug.Log("Game installer: Bind scenarios");
             Container.Bind<GameSessionStartScenario>()
-                .FromComponentInNewPrefab(sessionStartScenario)
+                .FromComponentInNewPrefab(_sessionStartScenario)
                 .AsSingle()
                 .NonLazy();
         }
@@ -56,6 +56,31 @@ namespace Installer
                 .FromComponentInNewPrefab(_playerPrefab)
                 .AsSingle()
                 .Lazy();
+        }
+
+        private void BindGameRun()
+        {
+            Debug.Log("Game installer: Bind game runtime");
+
+            Container.Bind<IGameRun>()
+                .FromMethod(GetGameRun)
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private IGameRun GetGameRun()
+        {
+            foreach (var container in Container.ParentContainers)
+            {
+                var gameRunProvide = container.TryResolve<GameRunProvider>();
+                if (gameRunProvide != null)
+                {
+                    return gameRunProvide.GameRun;
+                }
+            }
+
+            Debug.LogError("Cannot resolve GameRunProvider");
+            return null;
         }
     }
 }

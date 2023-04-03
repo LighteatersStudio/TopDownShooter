@@ -1,4 +1,5 @@
-﻿using Loading;
+﻿using Level;
+using Loading;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -10,14 +11,12 @@ namespace UI
         [SerializeField] private Button _playButton;
         
         private IUIRoot _uiRoot;
-        private LoadingService _loadingService;
-        private LevelLoadingOperation _levelLoadingOperation;
+        private GameRunProvider _gameRun;
 
         [Inject]
-        public void Construct(LoadingService loadingService, LevelLoadingOperation levelLoadingOperation)
+        public void Construct(GameRunProvider gameRun)
         {
-            _loadingService = loadingService;
-            _levelLoadingOperation = levelLoadingOperation;
+            _gameRun = gameRun;
         }
 
         private void OnEnable()
@@ -32,7 +31,7 @@ namespace UI
 
         private void LoadLevel()
         {
-            _loadingService.Load(_levelLoadingOperation);
+            _gameRun.Run(GameRunType.High);
             Close();
         }
     }
