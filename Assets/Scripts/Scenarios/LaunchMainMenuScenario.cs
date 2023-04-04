@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using Audio;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -8,14 +9,21 @@ namespace Scenarios
     {
         private IUIRoot _uiRoot;
 
+        private IMusicPlayer _musicPlayer;
+        private IMusicList _musicList;
+        
         [Inject]
-        public void Construct(IUIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot, IMusicPlayer musicPlayer, IMusicList musicList)
         {
             _uiRoot = uiRoot;
+            _musicPlayer = musicPlayer;
+            _musicList = musicList;
         }
 
         protected void Start()
         {
+            _musicPlayer.PlayMusic(_musicList.GetRandomTrack());
+            
             var startSplashScreenView = _uiRoot.Open<StartSplashScreen>();
             startSplashScreenView.Closed += OnSplashScreenClosed;
         }

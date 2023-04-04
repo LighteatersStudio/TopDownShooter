@@ -1,4 +1,5 @@
-﻿using Level;
+﻿using Audio;
+using Level;
 using Loader;
 using Loading;
 using UI;
@@ -10,13 +11,21 @@ namespace Installer
 {
     public class AppInstaller : MonoInstaller
     {
+        [Header("UI")]
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _globalUIBuilder;
         [SerializeField] private GameObject _eventSystem;
         
+        [Header("Audio")]
+        [SerializeField] private SoundSource _soundSource;
+        [SerializeField] private UISoundSettings _uiSoundSettings;
+        [SerializeField] private MusicList _musicList;
+
+        
         public override void InstallBindings()
         {
             BindUI();
+            BindAudio();
             BindLoadingService();
             BindScenes();
             BindGameRuntime();
@@ -41,8 +50,52 @@ namespace Installer
                 .FromComponentInNewPrefab(_eventSystem)
                 .AsSingle()
                 .NonLazy();
+            
+            Container.Bind<UIAudioBuilder>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
         }
 
+        private void BindAudio()
+        {
+            Debug.Log("Global installer: Bind audio");
+            
+            Container.Bind<SoundSource>()
+                .FromComponentInNewPrefab(_soundSource)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<IAudioService>()
+                .To<AudioService>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<IAudioPlayer>()
+                .To<AudioPlayer>()
+                .FromNew()
+                .AsCached()
+                .Lazy();
+            
+            Container.Bind<IMusicPlayer>()
+                .To<AudioPlayer>()
+                .FromNew()
+                .AsCached()
+                .Lazy();
+            
+            Container.Bind<IUISounds>()
+                .To<UISoundSettings>()
+                .FromInstance(_uiSoundSettings)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<IMusicList>()
+                .FromInstance(_musicList)
+                .AsSingle()
+                .Lazy();
+        }
+        
         private void BindLoadingService()
         {
             Debug.Log("Global installer: Bind loading operation");
@@ -81,5 +134,7 @@ namespace Installer
                 .AsSingle()
                 .Lazy();
         }
+        
+
     }
 }

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956d65f4bee742598a39fc732a5e93ca, type: 3}
+  m_Name: UISoundSettings
+  m_EditorClassIdentifier: 
+  _buttonClick: {fileID: 11400000, guid: 942df0dfadeea9b49a6fe141f594d4ad, type: 2}
+  _toggleClick: {fileID: 11400000, guid: 0050eaba087b82f49be65c300ec79493, type: 2}
+  _openMenu: {fileID: 11400000, guid: e6ff3ff414eb497459e0caf953b276c3, type: 2}
+  _closeMenu: {fileID: 11400000, guid: 8ce2e90120ca6824fb3049065d737d36, type: 2}
+  _showMessage: {fileID: 11400000, guid: c0368d2f88b506e42b4b7bff35b74419, type: 2}

@@ -11,17 +11,22 @@ namespace UI
         
         private readonly Stack<IView> _viewStack = new();
         private UIBuilder _builder;
+        private UIAudioBuilder _audioBuilder;
         
         
         [Inject]
-        public void Construct(UIBuilder uiBuilder)
+        public void Construct(UIBuilder uiBuilder, UIAudioBuilder audioBuilder)
         {
             _builder = uiBuilder;
+            _audioBuilder = audioBuilder;
         }
+        
         public TView Open<TView>() where TView : IView
         {
             var newView = _builder.Build<TView>(_menuRoot);
 
+            TryFillSounds(newView);
+            
             if (newView == null)
             {
                 Debug.LogError("View not opened!");
@@ -39,6 +44,15 @@ namespace UI
             _viewStack.Push(newView);
             return newView;
         }
+
+        private void TryFillSounds<TView>(TView newView) where TView : IView
+        {
+            if (newView is View view)
+            {
+                _audioBuilder.FillSounds(view);
+            }
+        }
+        
 
         private void OnViewClosed(IView view)
         {

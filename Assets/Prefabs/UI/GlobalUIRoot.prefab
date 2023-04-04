@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1742492003223578174}
   - component: {fileID: 1742492003223578169}
   - component: {fileID: 1742492003223578173}
+  - component: {fileID: 2136604027901504810}
   m_Layer: 5
   m_Name: GlobalUIRoot
   m_TagString: Untagged
@@ -114,3 +115,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuRoot: {fileID: 1742492003223578172}
+--- !u!81 &2136604027901504810
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742492003223578168}
+  m_Enabled: 1
