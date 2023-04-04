@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Audio;
+using Cysharp.Threading.Tasks;
 using Level;
 using UI;
 using UnityEngine;
@@ -11,17 +12,21 @@ namespace Scenarios
         private IUIRoot _uiRoot;
         private IGameRun _gameRun;
         
+        private IMusicPlayer _musicPlayer;
+        
         [Inject]
-        public void Construct(IUIRoot uiRoot, IGameRun gameRun)
+        public void Construct(IUIRoot uiRoot, IGameRun gameRun, IMusicPlayer musicPlayer)
         {
             _uiRoot = uiRoot;
             _gameRun = gameRun;
-            Debug.Log($"GameSessionStartScenario: gameRun = {_gameRun}");
+            _musicPlayer = musicPlayer;
         }
         
         
         protected void Start()
         {
+            _musicPlayer.StopMusic();
+            
             _uiRoot.Open<Hud>();
             var view = _uiRoot.Open<HighStoneChooseMenu>();
             view.Closed += OnHighStoneChooseMenuClosed;
