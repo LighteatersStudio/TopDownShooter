@@ -99,3 +99,10 @@ Assets/Doxygen.meta
 
 # Zenject files
 Assets/Plugins/Zenject/OptionalExtras/IntegrationTests/Installers/Editor/Resources/TestCompositeScriptableObjectInstallers/CircularReferenceCompositeInstaller
+
+# Mac OS meta files
+.DS_Store
+.AppleDB
+.Spotlight-V100
+.AppleDouble
+.LSOverride
