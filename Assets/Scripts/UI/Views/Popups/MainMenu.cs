@@ -1,5 +1,4 @@
-﻿using Level;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -8,14 +7,13 @@ namespace UI
     public class MainMenu : PopupBase
     {
         [SerializeField] private Button _playButton;
-        
+
         private IUIRoot _uiRoot;
-        private GameRunProvider _gameRun;
 
         [Inject]
-        public void Construct(GameRunProvider gameRun)
+        public void Construct(IUIRoot uiRoot)
         {
-            _gameRun = gameRun;
+            _uiRoot = uiRoot;
         }
 
         private void OnEnable()
@@ -30,8 +28,15 @@ namespace UI
 
         private void LoadLevel()
         {
-            _gameRun.Run(GameRunType.High);
+            var view = _uiRoot.Open<HighStoneChooseMenu>();
+            view.Closed += OnHighStoneChooseMenuClosed;
+        }
+
+        private void OnHighStoneChooseMenuClosed(IView view)
+        {
+            view.Closed -= OnHighStoneChooseMenuClosed;
             Close();
         }
     }
+
 }
