@@ -28,15 +28,8 @@ namespace UI
 
         private void LoadLevel()
         {
-            var view = _uiRoot.Open<HighStoneChooseMenu>();
-            view.Closed += OnHighStoneChooseMenuClosed;
-        }
-
-        private void OnHighStoneChooseMenuClosed(IView view)
-        {
-            view.Closed -= OnHighStoneChooseMenuClosed;
+            _uiRoot.Open<HighStoneChooseMenu>();
             Close();
         }
     }
-
 }
