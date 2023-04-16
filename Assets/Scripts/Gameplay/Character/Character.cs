@@ -1,60 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour
+    public class Character : MonoBehaviour, IDamageable
     {
-        private static int HashSpeed = Animator.StringToHash("Speed");
+        [SerializeField] private Transform _viewRoot; 
         
+        private CharacterAnimator _animator;
         private CharacterStats _stats;
-        public ICharacterStats Stats => _stats;
 
-
-        [SerializeField] private Animator _animator; 
+        public float HealthRelative => _stats.HealthRelative;
         
-        private void Init()
+        
+        public void Load(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod)
         {
-            _stats = new CharacterStats();       
+            _stats = new CharacterStats(statsInfo);
+            _animator = viewFactoryMethod(_viewRoot).GetComponent<CharacterAnimator>();
         }
-        
+
         public void TakeDamage(float damage)
         {
             _stats.ApplyDamage(damage);
-        }
-            
-        protected void Update()
-        {
-            
-            _animator.SetFloat("Health", _stats.Health);
-        }
-    }
-    
-    public interface ICharacterMovement
-    {
-        public float Speed { get; }
-    }
-
-
-    public interface ICharacterStats
-    {
-        public float MaxHealth { get; }
-        public float Health { get; }
-    }
-    
-    public class CharacterStats : ICharacterStats
-    {
-        public float MaxHealth { get; private set; }
-        public float Health { get; private set; }
-        
-        public CharacterStats()
-        {
-            MaxHealth = 100f;
-            Health = MaxHealth;
-        }
-        
-        public void ApplyDamage(float damage)
-        {
-            Health -= damage;
+            _animator.PlayHitAnimation();
         }
     }
 }
