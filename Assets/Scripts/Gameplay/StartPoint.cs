@@ -15,12 +15,7 @@ namespace Gameplay
 
         private void Start()
         {
-            SetPosition();
-        }
-
-        private void SetPosition()
-        {
-            
+            _player.SetPosition(transform.position); 
         }
     }
 }
