@@ -16,13 +16,15 @@ namespace Installer
         [SerializeField] private GameSessionStartScenario _sessionStartScenario;
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
-        
+
+        [SerializeField] private PauseMenuObserver _pauseMenuObserverPrefab;
         public override void InstallBindings()
         {
             BindUI();
             BindScenarios();
             BindPlayer();
             BindGameRun();
+            BindPauseManager();
         }
         
         private void BindUI()
@@ -81,6 +83,19 @@ namespace Installer
 
             Debug.LogError("Cannot resolve GameRunProvider");
             return null;
+        }
+
+        private void BindPauseManager()
+        {
+            Container.Bind<IPause>()
+                .To<PauseManager>()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<PauseMenuObserver>()
+                .FromComponentInNewPrefab(_pauseMenuObserverPrefab)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
