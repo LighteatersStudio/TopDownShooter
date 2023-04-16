@@ -7,7 +7,6 @@ namespace UI
     {
         private IUIRoot _uiRoot;
         private PauseMenu _pauseMenu;
-        private PauseManager _pauseManager;
     
         [Inject]
         public void Construct(IUIRoot uiRoot)
@@ -20,16 +19,21 @@ namespace UI
             {
                 if (_pauseMenu)
                 {
-                    Debug.Log("Pause menu observer: Pause menu closed");
                     _pauseMenu.Close();
                     _pauseMenu = null;
                 }
                 else
                 {
                     _pauseMenu = _uiRoot.Open<PauseMenu>();
-                    Debug.Log("Pause menu observer: Pause menu opened");
+                    _pauseMenu.Closed += OnPauseMenuClosed;
                 }
             }
+        }
+
+        private void OnPauseMenuClosed(IView view)
+        {
+            _pauseMenu.Closed -= OnPauseMenuClosed;
+            _pauseMenu = null;
         }
     }
 }

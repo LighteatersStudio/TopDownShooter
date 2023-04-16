@@ -1,16 +1,7 @@
-using System;
-
 namespace UI
 {
     public interface IPause
     {
-        public bool Paused
-        {
-            get;
-            set;
-        }
-        
-        event Action<IPause> PauseChanged;
-
+        bool Paused { get; set; }
     }
 }

@@ -24,7 +24,6 @@ namespace Installer
             BindScenarios();
             BindPlayer();
             BindGameRun();
-            BindPauseMenuObserver();
             BindPauseManager();
         }
         
@@ -86,21 +85,17 @@ namespace Installer
             return null;
         }
 
-        private void BindPauseMenuObserver()
+        private void BindPauseManager()
         {
-            Debug.Log("Game installer: Bind pause menu observer");
-
+            Container.Bind<IPause>()
+                .To<PauseManager>()
+                .AsSingle()
+                .Lazy();
+            
             Container.Bind<PauseMenuObserver>()
                 .FromComponentInNewPrefab(_pauseMenuObserverPrefab)
                 .AsSingle()
                 .NonLazy();
-        }
-
-        private void BindPauseManager()
-        {
-            Debug.Log("Game installer: Bind pause manager");
-
-            Container.Bind<IPause>().To<PauseManager>().AsSingle();
         }
     }
 }

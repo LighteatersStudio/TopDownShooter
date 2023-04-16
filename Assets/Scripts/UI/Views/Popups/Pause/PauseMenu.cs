@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI
 {
@@ -7,22 +8,27 @@ namespace UI
     {
         [SerializeField] private Button _closeButton;
         
-        private IUIRoot _uiRoot;
-        private PauseManager _pauseManager;
-        
+        private IPause _pauseManager;
+
+        [Inject]
+        public void Construct(IPause pause)
+        {
+            _pauseManager = pause;
+        }
         private void OnEnable()
         {
-            _closeButton.onClick.AddListener(Pause);
+            _closeButton.onClick.AddListener(OnCloseButtonClicked);
         }
 
         private void OnDisable()
         {
-            _closeButton.onClick.RemoveListener(Pause);
+            _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         }
 
-        private void Pause()
+        private void OnCloseButtonClicked()
         {
-            _pauseManager.Paused = !_pauseManager.Paused;
+            _pauseManager.Paused = false;
+            Close();
         }
     }
 }
