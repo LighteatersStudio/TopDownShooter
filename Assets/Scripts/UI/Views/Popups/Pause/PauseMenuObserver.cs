@@ -17,16 +17,21 @@ namespace UI
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (_pauseMenu)
-                {
-                    _pauseMenu.Close();
-                    _pauseMenu = null;
-                }
-                else
-                {
-                    _pauseMenu = _uiRoot.Open<PauseMenu>();
-                    _pauseMenu.Closed += OnPauseMenuClosed;
-                }
+                TogglePauseMenu();
+            }
+        }
+
+        private void TogglePauseMenu()
+        {
+            if (_pauseMenu)
+            {
+                _pauseMenu.Close();
+                _pauseMenu = null;
+            }
+            else
+            {
+                _pauseMenu = _uiRoot.Open<PauseMenu>();
+                _pauseMenu.Closed += OnPauseMenuClosed;
             }
         }
 

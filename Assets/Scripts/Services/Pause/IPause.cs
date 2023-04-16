@@ -6,6 +6,6 @@ namespace UI
     {
         bool Paused { get; set; }
         
-        public event Action<IPause> PauseChanged;
+        event Action<IPause> PauseChanged;
     }
 }
