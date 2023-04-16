@@ -1,3 +1,4 @@
+using Services.Pause;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;

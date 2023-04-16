@@ -1,6 +1,8 @@
 ﻿using Gameplay;
 using Level;
 using Scenarios;
+using Services.GameTime;
+using Services.Pause;
 using UI;
 using UnityEngine;
 using Zenject;
@@ -12,12 +14,11 @@ namespace Installer
         [Header("UI")]
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
-        [Header("Scenarios")]
-        [SerializeField] private GameSessionStartScenario _sessionStartScenario;
+        
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
-
-        [SerializeField] private PauseMenuObserver _pauseMenuObserverPrefab;
+        
+        
         public override void InstallBindings()
         {
             BindUI();
@@ -25,6 +26,7 @@ namespace Installer
             BindPlayer();
             BindGameRun();
             BindPauseManager();
+            BindTime();
         }
         
         private void BindUI()
@@ -44,8 +46,10 @@ namespace Installer
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
+            
             Container.Bind<GameSessionStartScenario>()
-                .FromComponentInNewPrefab(_sessionStartScenario)
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(GameSessionStartScenario))
                 .AsSingle()
                 .NonLazy();
         }
@@ -93,7 +97,20 @@ namespace Installer
                 .Lazy();
             
             Container.Bind<PauseMenuObserver>()
-                .FromComponentInNewPrefab(_pauseMenuObserverPrefab)
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(PauseMenuObserver))
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void BindTime()
+        {
+            Debug.Log("Game installer: Bind time");
+            
+            Container.Bind<IGameTime>()
+                .To<GameTimer>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(GameTimer))
                 .AsSingle()
                 .NonLazy();
         }

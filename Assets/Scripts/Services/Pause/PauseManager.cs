@@ -1,21 +1,23 @@
 using System;
-using UI;
 
-public class PauseManager : IPause
+namespace Services.Pause
 {
-    private bool _paused;
-    public bool Paused
+    public class PauseManager : IPause
     {
-        get => _paused;
-        set
+        private bool _paused;
+        public bool Paused
         {
-            if (_paused != value)
+            get => _paused;
+            set
             {
-                _paused = value;
-                PauseChanged?.Invoke(this);
+                if (_paused != value)
+                {
+                    _paused = value;
+                    PauseChanged?.Invoke(this);
+                }
             }
         }
-    }
         
-    public event Action<IPause> PauseChanged;
+        public event Action<IPause> PauseChanged;
+    }
 }
