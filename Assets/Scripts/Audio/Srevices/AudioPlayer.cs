@@ -16,6 +16,12 @@ namespace Audio
 
         public void PlayOneShoot(IAudioClip audioClip)
         {
+            if (audioClip == null || audioClip.Clip == null)
+            {
+                Debug.LogWarning("PlayOneShoot: audioClip is null");
+                return;
+            }
+            
             _soundSource.Source.PlayOneShot(audioClip.Clip, audioClip.Volume);
         }
 
