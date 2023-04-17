@@ -36,7 +36,7 @@ Commit comments:
 
 Jira implementation:
 * If PR finished task, use pattern for PR name: <i>"Task completed:[task number]. [semantic name]"</i>
-* If PR finished task, add to comments link to jira ticket(or few link to closed tickets)
+* If PR finished task, add to description link to jira ticket(or few link to closed tickets)
 
 PR example:https://github.com/LighteatersStudio/TopDownShooter/pull/19
 
