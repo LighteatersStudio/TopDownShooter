@@ -19,6 +19,8 @@ Branch naming:
 * <i>"feature/[feature name]"</i> - for feature development
 * <i>"fix/[fix name]"</i> - for bug fixing
 * <i>"plugin/[plugin name]"</i> - for plugin installation
+* <i>"content/[content name]"</i> - for content: like a music tracks, video clips etc
+
 
 Jira implementation:
 * Use pattern for <i>[feature name]</i>: <i>"[Jira task number]_[semantic name]"</i>. Example: <i>"feature/GP-149_LevelTimer"</i>
