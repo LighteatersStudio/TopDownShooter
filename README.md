@@ -25,6 +25,7 @@ Branch naming:
 Jira implementation:
 * Use pattern for <i>[feature name]</i>: <i>"[Jira task number]_[semantic name]"</i>. Example: <i>"feature/GP-149_LevelTimer"</i>
 * If jira ticket not exist for your branch use: <i>[semantic name]</i>. Example: <i>"feature/LevelTimer"</i>
+* The same rules apply to bug fixing branches.
 
 
 Commit comments:
