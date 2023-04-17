@@ -18,8 +18,21 @@ Git strategy
 Branch naming:
 * <i>"feature/[feature name]"</i> - for feature development
 * <i>"fix/[fix name]"</i> - for bug fixing
-* <i>"plugin/[plugin name]"</i> - for plugin installation.
+* <i>"plugin/[plugin name]"</i> - for plugin installation
+
+Use pattern for [feature name]: "[Jira task number]_[semantic name]". Example: "feature/GP-149_LevelTimer"
+If jira ticket not exist for your branch use: [semantic name]. Example: "feature/LevelTimer"
+
 
 Commit comments:
 * For each commit, a conscious comment
 * When installing a plugin in a project, write the name of the plugin version in the comments
+
+
+<b>Code Review</b>
+
+Pull request:
+* If PR finished task, use pattern for Pull Request name: "Task completed:[task number]. [semantic name]"
+* If PR finished task, add to comments link to jira ticket(or few link to closed tickets)
+
+PR example:https://github.com/LighteatersStudio/TopDownShooter/pull/19
