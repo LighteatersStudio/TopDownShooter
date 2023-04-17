@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
@@ -13,16 +14,24 @@ namespace Gameplay
         public float HealthRelative => _stats.HealthRelative;
         
         
-        public void Load(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod)
-        {
+        [Inject]
+        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod)
+        {   
             _stats = new CharacterStats(statsInfo);
+            
             _animator = viewFactoryMethod(_viewRoot).GetComponent<CharacterAnimator>();
+            _animator.transform.SetZeroPositionAndRotation();
         }
 
         public void TakeDamage(float damage)
         {
             _stats.ApplyDamage(damage);
             _animator.PlayHitAnimation();
+        }
+
+        
+        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
+        {
         }
     }
 }

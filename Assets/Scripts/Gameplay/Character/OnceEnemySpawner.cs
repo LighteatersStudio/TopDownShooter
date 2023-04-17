@@ -5,20 +5,21 @@ namespace Gameplay
 {
     public class OnceEnemySpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject _modelPrefab;
         [SerializeField] private StatsInfo _statsInfo;
-        
-        
-        private CharacterFactory _characterFactory;
+        [SerializeField] private GameObject _modelPrefab;
 
+        private Character.Factory _characterFactory;
+
+        
         [Inject]
-        protected void Construct(CharacterFactory characterFactory)
+        protected void Construct(Character.Factory characterFactory)
         {
             _characterFactory = characterFactory;
         }
         protected void Start()
         {
-            _characterFactory.Create(_statsInfo, modelRoot => Instantiate(_modelPrefab, modelRoot));
+            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent));
+            enemy.transform.position = transform.position;
             
             Destroy(gameObject);
         }

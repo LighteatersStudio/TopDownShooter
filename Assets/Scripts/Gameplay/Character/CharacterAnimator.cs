@@ -8,7 +8,7 @@ namespace Gameplay
         private static readonly int SpeedName = Animator.StringToHash("Speed");
         private static readonly int HitName = Animator.StringToHash("Hit");
         
-        [SerializeField] private Animator _animator;
+        private Animator _animator;
 
         protected void Awake()
         {
