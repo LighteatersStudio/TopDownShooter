@@ -32,8 +32,17 @@ Commit comments:
 
 <b>Code Review</b>
 
+<i>Pull request = PR</i>
+
 Jira implementation:
-* If PR finished task, use pattern for Pull Request name: <i>"Task completed:[task number]. [semantic name]"</i>
+* If PR finished task, use pattern for PR name: <i>"Task completed:[task number]. [semantic name]"</i>
 * If PR finished task, add to comments link to jira ticket(or few link to closed tickets)
 
 PR example:https://github.com/LighteatersStudio/TopDownShooter/pull/19
+
+WIP Pull Request:
+* For not finished work use prefix <i>"[WIP]"</i> for PR name
+* This type of PR is used to share current work, to get comments from colleagues or to show the progress of your decision
+* This type of PR cannot be approved. But it can be used to discuss the solution in the comments
+* After completing work on the task, you need to remove the [WIP] prefix from the name. After that, the PR can be approved and merged
+* You do not need to add the [WIP] prefix to the name of the working branch.
