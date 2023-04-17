@@ -47,4 +47,4 @@ MonoBehaviour:
   _statsInfo:
     MaxHealth: 0
     Health: 0
-  _modelPrefab: {fileID: 2201577821008666808, guid: cb83f1fa82695404ebec3c1bb7bb7b64, type: 3}
+  _modelPrefab: {fileID: 7673487251499248760, guid: 1e461d2f90f7fb345bb9173731202a03, type: 3}

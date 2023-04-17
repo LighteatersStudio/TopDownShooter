@@ -125,7 +125,6 @@ namespace Installer
             
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)
-                .AsSingle()
                 .Lazy();
         }
     }
