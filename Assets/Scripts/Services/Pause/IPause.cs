@@ -1,6 +1,6 @@
 using System;
 
-namespace UI
+namespace Services.Pause
 {
     public interface IPause
     {

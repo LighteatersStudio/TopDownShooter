@@ -6,6 +6,7 @@ namespace Installer
 {
     public class MainMenuInstaller : MonoInstaller
     {
+        [Header("UI")]
         [SerializeField] private UIBuilder _builder;
         [SerializeField] private UIRoot _menuRoot;
 
