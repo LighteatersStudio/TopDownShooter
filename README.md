@@ -20,8 +20,9 @@ Branch naming:
 * <i>"fix/[fix name]"</i> - for bug fixing
 * <i>"plugin/[plugin name]"</i> - for plugin installation
 
-Use pattern for [feature name]: "[Jira task number]_[semantic name]". Example: "feature/GP-149_LevelTimer"
-If jira ticket not exist for your branch use: [semantic name]. Example: "feature/LevelTimer"
+Jira implementation:
+* Use pattern for <i>[feature name]</i>: <i>"[Jira task number]_[semantic name]"</i>. Example: <i>"feature/GP-149_LevelTimer"</i>
+* If jira ticket not exist for your branch use: <i>[semantic name]</i>. Example: <i>"feature/LevelTimer"</i>
 
 
 Commit comments:
@@ -31,8 +32,8 @@ Commit comments:
 
 <b>Code Review</b>
 
-Pull request:
-* If PR finished task, use pattern for Pull Request name: "Task completed:[task number]. [semantic name]"
+Jira implementation:
+* If PR finished task, use pattern for Pull Request name: <i>"Task completed:[task number]. [semantic name]"</i>
 * If PR finished task, add to comments link to jira ticket(or few link to closed tickets)
 
 PR example:https://github.com/LighteatersStudio/TopDownShooter/pull/19
