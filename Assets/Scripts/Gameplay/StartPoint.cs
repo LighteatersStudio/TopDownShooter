@@ -5,6 +5,8 @@ namespace Gameplay
 {
     public class StartPoint : MonoBehaviour
     {
+        private const float OffsetY = 0.9070761f;
+
         private IPlayer _player;
         
         [Inject]
@@ -15,7 +17,7 @@ namespace Gameplay
 
         private void Start()
         {
-            _player.SetPosition(transform.position); 
+            _player.SetPosition(new Vector3(transform.position.x, transform.position.y + OffsetY, transform.position.z)); 
         }
     }
 }
