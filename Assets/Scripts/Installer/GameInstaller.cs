@@ -1,4 +1,5 @@
-﻿using Gameplay;
+﻿using System;
+using Gameplay;
 using Level;
 using Scenarios;
 using Services.GameTime;
@@ -17,6 +18,7 @@ namespace Installer
         
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
+        [SerializeField] private Character _characterPrefab;
         
         
         public override void InstallBindings()
@@ -27,6 +29,8 @@ namespace Installer
             BindGameRun();
             BindPauseManager();
             BindTime();
+
+            BindCharacter();
         }
         
         private void BindUI()
@@ -113,6 +117,15 @@ namespace Installer
                 .WithGameObjectName(nameof(GameTimer))
                 .AsSingle()
                 .NonLazy();
+        }
+        
+        private void BindCharacter()
+        {
+            Debug.Log("Game installer: Bind character");
+            
+            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
+                .FromComponentInNewPrefab(_characterPrefab)
+                .Lazy();
         }
     }
 }
