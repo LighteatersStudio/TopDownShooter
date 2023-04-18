@@ -1,18 +1,25 @@
-﻿using System;
+﻿using Level;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
     public class EndPoint : MonoBehaviour
     {
-        public event Action LevelPassed;
+        private IGameRun _gameRun;
+        
+        [Inject]
+        public void Construct(IGameRun gameRun)
+        {
+            _gameRun = gameRun;
+        }
         
         
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Player>())
             {
-                LevelPassed?.Invoke();
+                _gameRun.Finish();
             }
         }
     }
