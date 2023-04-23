@@ -1,4 +1,4 @@
-﻿using Level;
+﻿using UI;
 using UnityEngine;
 using Zenject;
 
@@ -6,12 +6,12 @@ namespace Gameplay
 {
     public class EndPoint : MonoBehaviour
     {
-        private IGameRun _gameRun;
+        private IUIRoot _uiRoot;
         
         [Inject]
-        public void Construct(IGameRun gameRun)
+        public void Construct(IUIRoot uiRoot)
         {
-            _gameRun = gameRun;
+            _uiRoot = uiRoot;
         }
         
         
@@ -19,7 +19,7 @@ namespace Gameplay
         {
             if (other.GetComponent<Player>())
             {
-                _gameRun.Finish();
+                _uiRoot.Open<WinLevelMenu>();
             }
         }
     }

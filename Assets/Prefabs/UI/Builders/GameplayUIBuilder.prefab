@@ -47,3 +47,4 @@ MonoBehaviour:
   _viewsPrefab:
   - {fileID: 971908246518506673, guid: 19ce58750d3423044b58df42fb5b2f43, type: 3}
   - {fileID: 7208786591299265359, guid: 2b70ff7d37f884f0c86ed10e5a2ecb72, type: 3}
+  - {fileID: 3140025432175381861, guid: d07ba98e698517143a57a14b92dd62f6, type: 3}
