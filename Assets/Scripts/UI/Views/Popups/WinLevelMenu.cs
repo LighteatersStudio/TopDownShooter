@@ -37,8 +37,15 @@ namespace UI
             var hours = timeSpan.Hours;
             var minutes = timeSpan.Minutes;
             var seconds = timeSpan.Seconds;
-            
-            text.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+
+            if (hours != 0)
+            {
+                text.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+            }
+            else
+            {
+                text.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+            }
         }
         
         public void ClickDoneLevelButton()
