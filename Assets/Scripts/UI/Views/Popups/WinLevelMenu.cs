@@ -38,13 +38,11 @@ namespace UI
             var minutes = timeSpan.Minutes;
             var seconds = timeSpan.Seconds;
 
-            if (hours != 0)
+            text.text = string.Format("{0:D2}:{1:D2}:{2:D2}", hours, minutes, seconds);
+            
+            if (hours == 0)
             {
-                text.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
-            }
-            else
-            {
-                text.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+                text.text = string.Format("{0:D2}:{1:D2}", minutes, seconds);
             }
         }
         
