@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.View;
 using Level;
 using Scenarios;
 using Services.GameTime;
@@ -19,6 +20,7 @@ namespace Installer
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Character _characterPrefab;
+        [SerializeField] private HealthBar _healthBarPrefab;
         
         
         public override void InstallBindings()
@@ -30,6 +32,7 @@ namespace Installer
             BindPauseManager();
             BindTime();
 
+            BindCamera();
             BindCharacter();
         }
         
@@ -119,9 +122,24 @@ namespace Installer
                 .NonLazy();
         }
         
+        private void BindCamera()
+        {
+            Debug.Log("Game installer: Bind camera");
+            
+            Container.Bind<ICameraProvider>()
+                .To<CameraProvider>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+        
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
+
+            Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
+                .FromComponentInNewPrefab(_healthBarPrefab)
+                .Lazy();
             
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)
