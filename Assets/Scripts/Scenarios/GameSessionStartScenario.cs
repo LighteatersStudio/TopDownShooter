@@ -21,8 +21,10 @@ namespace Scenarios
         protected void Start()
         {
             _musicPlayer.StopMusic();
-            
+
             _uiRoot.Open<Hud>();
+            _uiRoot.Open<StartLevelMenu>();
+
             Destroy(gameObject);
         }
     }
