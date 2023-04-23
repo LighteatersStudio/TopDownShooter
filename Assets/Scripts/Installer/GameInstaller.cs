@@ -17,6 +17,9 @@ namespace Installer
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
         
+        [Header("Level Entities")]
+        [SerializeField]private Camera _playerCamera;
+        
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Character _characterPrefab;
@@ -125,6 +128,16 @@ namespace Installer
         private void BindCamera()
         {
             Debug.Log("Game installer: Bind camera");
+
+            Container.Bind<Camera>()
+                .FromComponentInNewPrefab(_playerCamera)
+                .AsCached()
+                .NonLazy();
+            
+            Container.Bind<CameraTrackingTarget>()
+                .FromComponentInNewPrefab(_playerCamera)
+                .AsCached()
+                .Lazy();
             
             Container.Bind<ICameraProvider>()
                 .To<CameraProvider>()

@@ -62,7 +62,7 @@ namespace Gameplay
             _stats.ApplyDamage(damage);
             _animator.PlayHitAnimation();
 
-            if (_stats.Health <= 0)
+            if (IsDead)
             {
                 Death();
             }

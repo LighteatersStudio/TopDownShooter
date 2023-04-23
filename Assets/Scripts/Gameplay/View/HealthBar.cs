@@ -8,12 +8,14 @@ namespace Gameplay.View
     public class HealthBar: MonoBehaviour
     {
         [Header("UI Elements")]
-        [SerializeField] private Slider _slider;
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private Slider _slider;
+        [SerializeField] private Image _sliderFiller;
+        
         
         [Header("Settings")]
-        [SerializeField] private Color _maxhealthColor = Color.green;
-        [SerializeField] private Color _minhealthColor = Color.red;
+        [SerializeField] private Color _maxHealthColor = Color.green;
+        [SerializeField] private Color _minHealthColor = Color.red;
         [SerializeField] private bool _hideOnFullHealth = true;
         
         private DynamicMonoInitializer<ICameraProvider, Transform> _initializer;
@@ -40,8 +42,8 @@ namespace Gameplay.View
             
             _canvas.worldCamera = cameraProvider.MainCamera;
             _slider.maxValue = 1;
-            _slider.value = _healthOwner.HealthRelative;
-            RefreshView();
+            
+            OnHealthChanged();
         }
 
         private void OnHealthChanged()
@@ -62,22 +64,15 @@ namespace Gameplay.View
             if (!_hideOnFullHealth)
             {
                 _slider.gameObject.SetActive(true);
+                return;
             }
             
-            _slider.gameObject.SetActive(Mathf.Abs(_slider.value - 1) < 0.001f);
+            _slider.gameObject.SetActive(Mathf.Abs(_slider.value - 1) > 0.001f);
         }
 
         private void ChangeColor()
         {
-            _slider.colors = new ColorBlock()
-            {
-                normalColor = Color.Lerp(_minhealthColor, _maxhealthColor, _slider.value),
-                colorMultiplier = _slider.colors.colorMultiplier,
-                disabledColor = _slider.colors.disabledColor,
-                fadeDuration = _slider.colors.fadeDuration,
-                highlightedColor = _slider.colors.highlightedColor,
-                pressedColor = _slider.colors.pressedColor
-            };
+            _sliderFiller.color = Color.Lerp(_minHealthColor, _maxHealthColor, _slider.value);
         }
 
         public class Factory : PlaceholderFactory<IHaveHealth, Transform, HealthBar>

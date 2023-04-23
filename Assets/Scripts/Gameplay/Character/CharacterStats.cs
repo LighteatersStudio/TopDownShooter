@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -11,6 +12,7 @@ namespace Gameplay
         
         public event Action HealthChanged;
         
+        
         public CharacterStats(StatsInfo info)
         {
             MaxHealth = info.MaxHealth;
@@ -19,7 +21,7 @@ namespace Gameplay
         
         public void ApplyDamage(float damage)
         {
-            Health -= damage;
+            Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
             
             HealthChanged?.Invoke();
         }

@@ -16,7 +16,7 @@ namespace Gameplay.View
 
         protected void LateUpdate()
         {
-            if(_mainCameraTransform == null)
+            if(!_mainCameraTransform)
             {
                 _mainCameraTransform = _cameraProvider.MainCamera.transform;
             }
