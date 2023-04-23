@@ -16,8 +16,11 @@ namespace UI
         {
             _pauseManager = pause;
         }
+
+      
         private void OnEnable()
         {
+            _pauseManager.Paused = true;
             _closeButton.onClick.AddListener(OnCloseButtonClicked);
         }
 
