@@ -44,11 +44,13 @@ namespace Installer
             Debug.Log("Game installer: Bind UI");
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_builder)
+                .WithGameObjectName("UIBuilder[Gameplay]")
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_uiRoot)
+                .WithGameObjectName($"UIRoot[Gameplay]")
                 .AsSingle()
                 .NonLazy();
         }
@@ -70,6 +72,7 @@ namespace Installer
             
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
+                .WithGameObjectName("Player")
                 .AsSingle()
                 .Lazy();
         }
@@ -131,12 +134,13 @@ namespace Installer
 
             Container.Bind<Camera>()
                 .FromComponentInNewPrefab(_playerCamera)
-                .AsCached()
+                .WithGameObjectName("MainCamera")
+                .AsSingle()
                 .NonLazy();
             
             Container.Bind<CameraTrackingTarget>()
-                .FromComponentInNewPrefab(_playerCamera)
-                .AsCached()
+                .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
+                .AsSingle()
                 .Lazy();
             
             Container.Bind<ICameraProvider>()

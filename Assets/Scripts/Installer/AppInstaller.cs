@@ -37,12 +37,13 @@ namespace Installer
             
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_globalUIBuilder)
+                .WithGameObjectName("UIBuilder[Global]")
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_uiRoot)
-                .WithGameObjectName("GlobalUIRoot")
+                .WithGameObjectName("UIRoot[Global]")
                 .AsSingle()
                 .NonLazy();
             
