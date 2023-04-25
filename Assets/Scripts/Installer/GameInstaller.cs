@@ -28,6 +28,7 @@ namespace Installer
             BindPlayer();
             BindGameRun();
             BindPauseManager();
+            BindDeathMenuObserver();
             BindTime();
 
             BindCharacter();
@@ -103,6 +104,15 @@ namespace Installer
             Container.Bind<PauseMenuObserver>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName(nameof(PauseMenuObserver))
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindDeathMenuObserver()
+        {
+            Container.Bind<DeathMenuObserver>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(DeathMenuObserver))
                 .AsSingle()
                 .NonLazy();
         }
