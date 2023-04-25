@@ -1,4 +1,7 @@
-﻿namespace Gameplay
+﻿using System;
+using UnityEngine;
+
+namespace Gameplay
 {
     public class CharacterStats
     {
@@ -6,6 +9,9 @@
         public float Health { get; private set; }
         
         public float HealthRelative => Health / MaxHealth;
+        
+        public event Action HealthChanged;
+        
         
         public CharacterStats(StatsInfo info)
         {
@@ -15,7 +21,9 @@
         
         public void ApplyDamage(float damage)
         {
-            Health -= damage;
+            Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
+            
+            HealthChanged?.Invoke();
         }
     }
 }

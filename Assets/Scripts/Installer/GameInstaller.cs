@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.View;
 using Level;
 using Scenarios;
 using Services.GameTime;
@@ -16,9 +17,13 @@ namespace Installer
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
         
+        [Header("Level Entities")]
+        [SerializeField]private Camera _playerCamera;
+        
         [Header("Gameplay Entities")]
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Character _characterPrefab;
+        [SerializeField] private HealthBar _healthBarPrefab;
         
         
         public override void InstallBindings()
@@ -30,6 +35,7 @@ namespace Installer
             BindPauseManager();
             BindTime();
 
+            BindCamera();
             BindCharacter();
         }
         
@@ -38,11 +44,13 @@ namespace Installer
             Debug.Log("Game installer: Bind UI");
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_builder)
+                .WithGameObjectName("UIBuilder[Gameplay]")
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_uiRoot)
+                .WithGameObjectName($"UIRoot[Gameplay]")
                 .AsSingle()
                 .NonLazy();
         }
@@ -64,6 +72,7 @@ namespace Installer
             
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
+                .WithGameObjectName("Player")
                 .AsSingle()
                 .Lazy();
         }
@@ -119,9 +128,35 @@ namespace Installer
                 .NonLazy();
         }
         
+        private void BindCamera()
+        {
+            Debug.Log("Game installer: Bind camera");
+
+            Container.Bind<Camera>()
+                .FromComponentInNewPrefab(_playerCamera)
+                .WithGameObjectName("MainCamera")
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<CameraTrackingTarget>()
+                .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<ICameraProvider>()
+                .To<CameraProvider>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+        
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
+
+            Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
+                .FromComponentInNewPrefab(_healthBarPrefab)
+                .Lazy();
             
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)

@@ -22,11 +22,13 @@ namespace Installer
             Debug.Log("Main menu installer: Bind UI");
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_builder)
+                .WithGameObjectName("UIBuilder[MainMenu]")
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_menuRoot)
+                .WithGameObjectName($"UIRoot[MainMenu]")
                 .AsSingle()
                 .NonLazy();
         }
