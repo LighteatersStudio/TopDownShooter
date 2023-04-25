@@ -49,3 +49,6 @@ WIP Pull Request:
 * This type of PR cannot be approved. But it can be used to discuss the solution in the comments
 * After completing work on the task, you need to remove the [WIP] prefix from the name. After that, the PR can be approved and merged
 * You do not need to add the [WIP] prefix to the name of the working branch.
+
+Sprite format:
+* Only PNG or JPG sprite formats are allowed in the project. Uncompressed textures are not subject to this rule, but for sprites, this rule applies.
