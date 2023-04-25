@@ -5,7 +5,7 @@ namespace Gameplay
 {
     public class OnceEnemySpawner : MonoBehaviour
     {
-        [SerializeField] private StatsInfo _statsInfo;
+        [SerializeField] private StatsInfo _statsInfo = new() {MaxHealth = 100, Health = 100};
         [SerializeField] private GameObject _modelPrefab;
 
         private Character.Factory _characterFactory;

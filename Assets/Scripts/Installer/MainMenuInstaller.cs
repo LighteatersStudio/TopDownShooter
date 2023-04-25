@@ -1,4 +1,5 @@
-﻿using UI;
+﻿using Scenarios;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +14,7 @@ namespace Installer
         public override void InstallBindings()
         {
             BindUI();
+            BindScenario();
         }
         
         private void BindUI()
@@ -25,6 +27,17 @@ namespace Installer
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_menuRoot)
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void BindScenario()
+        {
+            Debug.Log("Main menu installer: Bind scenario");
+            
+            Container.Bind<LaunchMainMenuScenario>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(LaunchMainMenuScenario))
                 .AsSingle()
                 .NonLazy();
         }
