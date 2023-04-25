@@ -79,7 +79,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
-  _healthBarRoot: {fileID: 7070710791399760810}
   _deathWaitTime: 10
 --- !u!114 &-2167993171551993075
 MonoBehaviour:
@@ -88,7 +87,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7564954714399395942}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67802915381c419e80750d1dd7ab046d, type: 3}
   m_Name: 
