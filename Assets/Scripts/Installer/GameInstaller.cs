@@ -5,6 +5,7 @@ using Level;
 using Scenarios;
 using Services.GameTime;
 using Services.Pause;
+using Services.Controls;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
