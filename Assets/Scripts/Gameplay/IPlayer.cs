@@ -4,7 +4,7 @@ namespace Gameplay
 {
     public interface IPlayer
     {
-        public event Action Dead; 
+        event Action Dead; 
 
         void SetPosition(Vector3 position);
     }
