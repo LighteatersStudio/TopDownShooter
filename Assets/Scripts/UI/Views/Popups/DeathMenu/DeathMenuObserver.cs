@@ -24,7 +24,7 @@ namespace UI
         
         private void OnDisable()
         {
-            _player.Dead += ToggleDeathMenu;
+            _player.Dead -= ToggleDeathMenu;
         }
 
         private void ToggleDeathMenu()

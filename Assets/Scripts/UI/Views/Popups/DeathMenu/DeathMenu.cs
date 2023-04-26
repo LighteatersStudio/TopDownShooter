@@ -48,6 +48,8 @@ namespace UI
 
         public void PressDoneButton()
         {
+            _pauseManager.Paused = false;
+            Close();
             _gameRun.Finish();
         }
     }
