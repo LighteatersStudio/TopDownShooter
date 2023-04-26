@@ -7,6 +7,7 @@ using Services.GameTime;
 using Services.Pause;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Installer
@@ -24,6 +25,12 @@ namespace Installer
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private HealthBar _healthBarPrefab;
+
+        [Header("Controls")]
+        [SerializeField] private InputActionAsset _playerInputActionsMap;
+        [SerializeField] private ControlsManager _playerControls;
+
+        private ControlsManager _controlsManager;
         
         
         public override void InstallBindings()
@@ -37,6 +44,7 @@ namespace Installer
 
             BindCamera();
             BindCharacter();
+            BindControls();
         }
         
         private void BindUI()
@@ -161,6 +169,17 @@ namespace Installer
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)
                 .Lazy();
+        }
+
+        private void BindControls()
+        {
+            Debug.Log("Game installer: Bind controls manager");
+
+            Container.BindInstance(_playerInputActionsMap)
+                .AsSingle()
+                .Lazy();
+
+            Container.InstantiatePrefabForComponent<ControlsManager>(_playerControls);
         }
     }
 }
