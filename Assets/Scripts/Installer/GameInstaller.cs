@@ -1,4 +1,5 @@
 ﻿using System;
+using FX;
 using Gameplay;
 using Gameplay.View;
 using Level;
@@ -20,10 +21,13 @@ namespace Installer
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
         
-        [Header("Gameplay Entities")]
+        [Header("Gameplay Entities: common")]
         [SerializeField] private Player _playerPrefab;
+        
+        [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private HealthBar _healthBarPrefab;
+        [SerializeField] private ScriptableObject _characterFXList;
         
         
         public override void InstallBindings()
@@ -37,6 +41,7 @@ namespace Installer
 
             BindCamera();
             BindCharacter();
+            BindFX();
         }
         
         private void BindUI()
@@ -150,12 +155,33 @@ namespace Installer
                 .Lazy();
         }
         
+        private void BindFX()
+        {
+            Debug.Log("Game installer: Bind FX");
+            Container.BindFactory<ParticleSystem, Vector3, PlayingFX, PlayingFX.Factory>()
+                .FromNewComponentOnNewGameObject()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<ICharacterFXList>()
+                .To<CharacterFXList>()
+                .FromScriptableObject(_characterFXList)
+                .AsSingle()
+                .Lazy();
+            
+        }
+        
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
 
+
             Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
                 .FromComponentInNewPrefab(_healthBarPrefab)
+                .Lazy();
+            
+            Container.BindFactory<ICharacter, Transform, CharacterFX, CharacterFX.Factory>()
+                .FromNew()
                 .Lazy();
             
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()

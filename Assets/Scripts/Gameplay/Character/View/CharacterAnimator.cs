@@ -13,17 +13,43 @@ namespace Gameplay
         private Animator _animator;
 
         private Vector3 _lastPosition;
+
+        private ICharacter _character;
         
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
         }
 
+        public void Construct(ICharacter character)
+        {
+            _character = character;
+        }
+        
         protected void Start()
         {
+            transform.SetZeroPositionAndRotation();
+            
             _lastPosition = transform.position;
+            Subscribe();
         }
 
+        protected void OnDestroy()
+        {
+            Unsubscribe();
+        }
+
+        private void Subscribe()
+        {
+            _character.Damaged += OnDamaged;
+            _character.Dead += OnDead;
+        }
+        private void Unsubscribe()
+        {
+            _character.Damaged -= OnDamaged;
+            _character.Dead -= OnDead;
+        }
+        
         protected void Update()
         {
             var position = transform.position;
@@ -31,19 +57,14 @@ namespace Gameplay
             _lastPosition = position;
         }
 
-        public void PlayHitAnimation()
-        {
-            _animator.SetTrigger(HitName);
-        }
-
-        public void PlayAttackAnimation()
-        {
-            _animator.SetTrigger(AttackName);
-        }
-        
-        public void PlayDeadAnimation()
+        private void OnDead()
         {
             _animator.SetTrigger(DeadName);
+        }
+
+        private void OnDamaged()
+        {
+            _animator.SetTrigger(HitName);
         }
     }
 }
