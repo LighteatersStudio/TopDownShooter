@@ -5,7 +5,7 @@ using Level;
 using Scenarios;
 using Services.GameTime;
 using Services.Pause;
-using Services.Controls;
+using Services.Input;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,13 +27,10 @@ namespace Installer
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private HealthBar _healthBarPrefab;
 
-        [Header("Controls")]
+        [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
-        [SerializeField] private ControlsManager _playerControls;
+        private InputController _playerInputController;
 
-        private ControlsManager _controlsManager;
-        
-        
         public override void InstallBindings()
         {
             BindUI();
@@ -45,7 +42,7 @@ namespace Installer
 
             BindCamera();
             BindCharacter();
-            BindControls();
+            BindInputController();
         }
         
         private void BindUI()
@@ -172,15 +169,20 @@ namespace Installer
                 .Lazy();
         }
 
-        private void BindControls()
+        private void BindInputController()
         {
-            Debug.Log("Game installer: Bind controls manager");
+            Debug.Log("Game installer: Bind input controller");
 
-            Container.BindInstance(_playerInputActionsMap)
+            Container.Bind<InputActionAsset>()
+                .FromScriptableObject(_playerInputActionsMap)
                 .AsSingle()
                 .Lazy();
 
-            Container.InstantiatePrefabForComponent<ControlsManager>(_playerControls);
+            Container.Bind<IInputController>()
+                .To<InputController>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
