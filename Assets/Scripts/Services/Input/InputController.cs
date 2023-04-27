@@ -7,6 +7,13 @@ namespace Services.Input
 {
     public class InputController : IInputController
     {
+        public const string Move = "Move";
+        public const string Fire = "Fire";
+        public const string Special = "Special";
+        public const string Melee = "Melee";
+        public const string Use = "Use";
+        public const string Reload = "Reload";
+
         private readonly InputActionAsset _inputActionAsset;
         
         public event Action<Vector2> MoveChanged;
@@ -23,44 +30,44 @@ namespace Services.Input
             OnEnable();
         }
 
-        private void Move(InputAction.CallbackContext ctx)
+        private void OnMove(InputAction.CallbackContext context)
         {
-            MoveChanged?.Invoke(Vector2.zero);
+            MoveChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
-        private void Fire(InputAction.CallbackContext ctx)
+        private void OnFire(InputAction.CallbackContext context)
         {
-            FireChanged?.Invoke(Vector2.zero);
+            FireChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
-        private void Special(InputAction.CallbackContext ctx)
+        private void OnSpecial(InputAction.CallbackContext context)
         {
-            SpecialChanged?.Invoke(Vector2.zero);
+            SpecialChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
-        private void Melee(InputAction.CallbackContext ctx)
+        private void OnMelee(InputAction.CallbackContext context)
         {
             MeleeChanged?.Invoke();
         }
 
-        private void Use(InputAction.CallbackContext ctx)
+        private void OnUse(InputAction.CallbackContext context)
         {
             UseChanged?.Invoke();
         }
 
-        private void Reload(InputAction.CallbackContext ctx)
+        private void OnReload(InputAction.CallbackContext context)
         {
             ReloadChanged?.Invoke();
         }
 
         private void OnEnable()
         {
-            _inputActionAsset.FindAction("Move").performed += Move;
-            _inputActionAsset.FindAction("Fire").performed += Fire;
-            _inputActionAsset.FindAction("Special").performed += Special;
-            _inputActionAsset.FindAction("Use").performed += Use;
-            _inputActionAsset.FindAction("Reload").performed += Reload;
-            _inputActionAsset.FindAction("Melee").performed += Melee;
+            _inputActionAsset.FindAction(Move).performed += OnMove;
+            _inputActionAsset.FindAction(Fire).performed += OnFire;
+            _inputActionAsset.FindAction(Special).performed += OnSpecial;
+            _inputActionAsset.FindAction(Use).performed += OnUse;
+            _inputActionAsset.FindAction(Reload).performed += OnReload;
+            _inputActionAsset.FindAction(Melee).performed += OnMelee;
         }
     }
 }
