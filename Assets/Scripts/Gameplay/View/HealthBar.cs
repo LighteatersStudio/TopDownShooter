@@ -16,7 +16,9 @@ namespace Gameplay.View
         [Header("Settings")]
         [SerializeField] private Color _maxHealthColor = Color.green;
         [SerializeField] private Color _minHealthColor = Color.red;
+        [SerializeField] private Vector3 _rootOffest = new(0, 1.5f, 0);
         [SerializeField] private bool _hideOnFullHealth = true;
+        [SerializeField] private bool _hideOnEmptyHealth = true;
         
         private DynamicMonoInitializer<ICameraProvider, Transform> _initializer;
         private IHaveHealth _healthOwner;
@@ -37,6 +39,7 @@ namespace Gameplay.View
         private void Initialize(ICameraProvider cameraProvider, Transform parent)
         {
             transform.SetParent(parent, false);
+            transform.localPosition = _rootOffest;
             
             _healthOwner.HealthChanged += OnHealthChanged;
             
@@ -61,15 +64,22 @@ namespace Gameplay.View
         
         private void RefreshVisibility()
         {
-            if (!_hideOnFullHealth)
+            if (Mathf.Abs(_slider.value - 1) < 1e-5 && _hideOnFullHealth)
             {
-                _slider.gameObject.SetActive(true);
+                _slider.gameObject.SetActive(false);
                 return;
             }
-            
-            _slider.gameObject.SetActive(Mathf.Abs(_slider.value - 1) > 0.001f);
+
+            if (Mathf.Abs(_slider.value - 1) > 1 - 1e-5 && _hideOnEmptyHealth)
+            {
+                _slider.gameObject.SetActive(false);
+                return;
+            }
+
+            _slider.gameObject.SetActive(true);
         }
 
+        
         private void ChangeColor()
         {
             _sliderFiller.color = Color.Lerp(_minHealthColor, _maxHealthColor, _slider.value);

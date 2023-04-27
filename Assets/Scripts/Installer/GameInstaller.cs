@@ -1,4 +1,5 @@
 ﻿using System;
+using FX;
 using Gameplay;
 using Gameplay.View;
 using Level;
@@ -22,11 +23,14 @@ namespace Installer
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
         
-        [Header("Gameplay Entities")]
+        [Header("Gameplay Entities: common")]
         [SerializeField] private Player _playerPrefab;
+        
+        [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private HealthBar _healthBarPrefab;
-
+        [SerializeField] private ScriptableObject _characterFXList;
+        
         [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
 
@@ -37,10 +41,12 @@ namespace Installer
             BindPlayer();
             BindGameRun();
             BindPauseManager();
+            BindDeathMenuObserver();
             BindTime();
 
             BindCamera();
             BindCharacter();
+            BindFX();
             BindInputController();
         }
         
@@ -120,6 +126,15 @@ namespace Installer
                 .AsSingle()
                 .NonLazy();
         }
+
+        private void BindDeathMenuObserver()
+        {
+            Container.Bind<DeathMenuObserver>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(DeathMenuObserver))
+                .AsSingle()
+                .NonLazy();
+        }
         
         private void BindTime()
         {
@@ -155,19 +170,40 @@ namespace Installer
                 .Lazy();
         }
         
+        private void BindFX()
+        {
+            Debug.Log("Game installer: Bind FX");
+            Container.BindFactory<ParticleSystem, Vector3, PlayingFX, PlayingFX.Factory>()
+                .FromNewComponentOnNewGameObject()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<ICharacterFXList>()
+                .To<CharacterFXList>()
+                .FromScriptableObject(_characterFXList)
+                .AsSingle()
+                .Lazy();
+            
+        }
+        
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
 
+
             Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
                 .FromComponentInNewPrefab(_healthBarPrefab)
+                .Lazy();
+            
+            Container.BindFactory<ICharacter, Transform, CharacterFX, CharacterFX.Factory>()
+                .FromNew()
                 .Lazy();
             
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)
                 .Lazy();
         }
-
+        
         private void BindInputController()
         {
             Debug.Log("Game installer: Bind input controller");

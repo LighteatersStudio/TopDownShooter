@@ -6,6 +6,7 @@ namespace Gameplay
     public class CharacterStats
     {
         public float MaxHealth { get; }
+        
         public float Health { get; private set; }
         
         public float HealthRelative => Health / MaxHealth;
@@ -19,11 +20,13 @@ namespace Gameplay
             Health = info.Health;
         }
         
-        public void ApplyDamage(float damage)
+        public float ApplyDamage(float damage)
         {
             Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
             
             HealthChanged?.Invoke();
+
+            return damage;
         }
     }
 }
