@@ -29,7 +29,6 @@ namespace Installer
 
         [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
-        private InputController _playerInputController;
 
         public override void InstallBindings()
         {
