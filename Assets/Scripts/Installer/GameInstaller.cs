@@ -6,8 +6,10 @@ using Level;
 using Scenarios;
 using Services.GameTime;
 using Services.Pause;
+using Services.Input;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Installer
@@ -29,7 +31,9 @@ namespace Installer
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private ScriptableObject _characterFXList;
         
-        
+        [Header("Input")]
+        [SerializeField] private InputActionAsset _playerInputActionsMap;
+
         public override void InstallBindings()
         {
             BindUI();
@@ -43,6 +47,7 @@ namespace Installer
             BindCamera();
             BindCharacter();
             BindFX();
+            BindInputController();
         }
         
         private void BindUI()
@@ -197,6 +202,22 @@ namespace Installer
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
                 .FromComponentInNewPrefab(_characterPrefab)
                 .Lazy();
+        }
+        
+        private void BindInputController()
+        {
+            Debug.Log("Game installer: Bind input controller");
+
+            Container.Bind<InputActionAsset>()
+                .FromScriptableObject(_playerInputActionsMap)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind<IInputController>()
+                .To<InputController>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }
