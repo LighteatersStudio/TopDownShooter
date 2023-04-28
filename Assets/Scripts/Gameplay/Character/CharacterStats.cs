@@ -9,6 +9,8 @@ namespace Gameplay
         
         public float Health { get; private set; }
         
+        public float MoveSpeed { get; private set; }
+        
         public float HealthRelative => Health / MaxHealth;
         
         public event Action HealthChanged;
@@ -18,6 +20,7 @@ namespace Gameplay
         {
             MaxHealth = info.MaxHealth;
             Health = info.Health;
+            MoveSpeed = info.MoveSpeed;
         }
         
         public float ApplyDamage(float damage)

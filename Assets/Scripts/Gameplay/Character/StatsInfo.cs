@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Gameplay
 {
     [Serializable]
@@ -7,5 +6,6 @@ namespace Gameplay
     {
         public float MaxHealth;
         public float Health;
+        public float MoveSpeed;
     }
 }
