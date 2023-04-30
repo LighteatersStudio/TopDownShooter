@@ -71,7 +71,7 @@ namespace Gameplay
 
             if (_stats.ApplyDamage(damage) > 1e-5)
             {
-                Damaged?.Invoke();    
+                Damaged?.Invoke();
             }
 
             if (IsDead)
