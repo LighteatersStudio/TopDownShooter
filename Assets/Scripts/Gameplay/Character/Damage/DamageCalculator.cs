@@ -1,12 +1,14 @@
-﻿namespace Gameplay
-{
-    public class DamageCalculator 
-    {
-        public float CalculateDamage(float damage, float health, TypeDamage typeDamage)
-        {
-            health -= damage;
+﻿using a;
 
-            return health;
+namespace Gameplay
+{
+    public class DamageCalculator
+    {
+        private float _damage;
+        
+        public float Calculate(IAttackInfo attackInfo, IStats stats)
+        {
+            return _damage;
         }
     }
 }

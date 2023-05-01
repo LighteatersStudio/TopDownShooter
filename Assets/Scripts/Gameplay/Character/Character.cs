@@ -1,4 +1,5 @@
 ﻿using System;
+using a;
 using Gameplay.View;
 using UnityEngine;
 using Utility;
@@ -6,19 +7,16 @@ using Zenject;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, IAttackInfo, IStats
     {
         [SerializeField] private Transform _viewRoot;
-        
         [SerializeField] private float _deathWaitTime = 10f; 
         
         private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory> _initializer;
-            
+        private DamageCalculator _damageCalculator;
         private CharacterStats _stats;
-
-        public float HealthRelative => _stats.HealthRelative;
         private bool IsDead => _stats.Health <= 0;
-
+        public float HealthRelative => _stats.HealthRelative;
 
         public event Action HealthChanged
         {
@@ -48,6 +46,7 @@ namespace Gameplay
         private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod, HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory)
         {
             _stats = new CharacterStats(info);
+            _damageCalculator = new DamageCalculator();
 
             var modelRoot = LoadViewAndGetRoots(viewFactoryMethod);
             
@@ -69,9 +68,12 @@ namespace Gameplay
                 return;
             }
 
-            if (_stats.ApplyDamage(damage) > 1e-5)
+            damage = _damageCalculator.Calculate(null, null);
+
+            if (damage > 1e-5)
             {
                 Damaged?.Invoke();
+                _stats.ApplyDamage(damage);
             }
 
             if (IsDead)
