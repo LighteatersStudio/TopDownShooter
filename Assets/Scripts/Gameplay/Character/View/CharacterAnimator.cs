@@ -50,6 +50,7 @@ namespace Gameplay
             _character.Dead -= OnDead;
         }
         
+        
         protected void Update()
         {
             var position = transform.position;
