@@ -6,15 +6,14 @@ namespace Gameplay
     public class CharacterStats
     {
         public float MaxHealth { get; }
-        
         public float Health { get; private set; }
-        
         public float MoveSpeed { get; private set; }
-        
         public float HealthRelative => Health / MaxHealth;
         
         public event Action HealthChanged;
         
+        public IStats Stats { get; private set; }
+
         
         public CharacterStats(StatsInfo info)
         {
@@ -29,5 +28,6 @@ namespace Gameplay
             
             HealthChanged?.Invoke();
         }
+
     }
 }

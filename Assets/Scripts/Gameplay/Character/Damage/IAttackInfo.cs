@@ -2,7 +2,7 @@
 {
     public interface IAttackInfo
     {
-       // float Damage { get; }
-       // TypeDamage TypeDamage { get; }
+       float Damage { get; }
+       TypeDamage TypeDamage { get; }
     }
 }

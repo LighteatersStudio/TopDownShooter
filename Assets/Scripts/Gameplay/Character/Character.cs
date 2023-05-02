@@ -1,5 +1,4 @@
 ﻿using System;
-using a;
 using Gameplay.View;
 using UnityEngine;
 using Utility;
@@ -7,7 +6,7 @@ using Zenject;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, IAttackInfo, IStats
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth
     {
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private float _deathWaitTime = 10f; 
@@ -61,19 +60,19 @@ namespace Gameplay
             return model.GetComponent<CharacterModelRoots>();
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(IAttackInfo attackInfo)
         {
             if (IsDead)
             {
                 return;
             }
 
-            damage = _damageCalculator.Calculate(null, null);
+            var damage = _damageCalculator.Calculate(attackInfo, _stats.Stats);
 
             if (damage > 1e-5)
             {
-                Damaged?.Invoke();
                 _stats.ApplyDamage(damage);
+                Damaged?.Invoke();
             }
 
             if (IsDead)
