@@ -1,8 +1,15 @@
-﻿using Gameplay;
+﻿using System;
+using FX;
+using Gameplay;
+using Gameplay.View;
 using Level;
 using Scenarios;
+using Services.GameTime;
+using Services.Pause;
+using Services.Input;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Installer
@@ -12,17 +19,35 @@ namespace Installer
         [Header("UI")]
         [SerializeField] private UIRoot _uiRoot;
         [SerializeField] private UIBuilder _builder;
-        [Header("Scenarios")]
-        [SerializeField] private GameSessionStartScenario _sessionStartScenario;
-        [Header("Gameplay Entities")]
+        
+        [Header("Level Entities")]
+        [SerializeField]private Camera _playerCamera;
+        
+        [Header("Gameplay Entities: common")]
         [SerializeField] private Player _playerPrefab;
         
+        [Header("Gameplay Entities: character")]
+        [SerializeField] private Character _characterPrefab;
+        [SerializeField] private HealthBar _healthBarPrefab;
+        [SerializeField] private ScriptableObject _characterFXList;
+        
+        [Header("Input")]
+        [SerializeField] private InputActionAsset _playerInputActionsMap;
+
         public override void InstallBindings()
         {
             BindUI();
             BindScenarios();
             BindPlayer();
             BindGameRun();
+            BindPauseManager();
+            BindDeathMenuObserver();
+            BindTime();
+
+            BindCamera();
+            BindCharacter();
+            BindFX();
+            BindInputController();
         }
         
         private void BindUI()
@@ -30,11 +55,13 @@ namespace Installer
             Debug.Log("Game installer: Bind UI");
             Container.Bind<UIBuilder>()
                 .FromComponentInNewPrefab(_builder)
+                .WithGameObjectName("UIBuilder[Gameplay]")
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<IUIRoot>()
                 .FromComponentInNewPrefab(_uiRoot)
+                .WithGameObjectName($"UIRoot[Gameplay]")
                 .AsSingle()
                 .NonLazy();
         }
@@ -42,8 +69,10 @@ namespace Installer
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
+            
             Container.Bind<GameSessionStartScenario>()
-                .FromComponentInNewPrefab(_sessionStartScenario)
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(GameSessionStartScenario))
                 .AsSingle()
                 .NonLazy();
         }
@@ -54,6 +83,7 @@ namespace Installer
             
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
+                .WithGameObjectName("Player")
                 .AsSingle()
                 .Lazy();
         }
@@ -81,6 +111,113 @@ namespace Installer
 
             Debug.LogError("Cannot resolve GameRunProvider");
             return null;
+        }
+
+        private void BindPauseManager()
+        {
+            Container.Bind<IPause>()
+                .To<PauseManager>()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<PauseMenuObserver>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(PauseMenuObserver))
+                .AsSingle()
+                .NonLazy();
+        }
+
+        private void BindDeathMenuObserver()
+        {
+            Container.Bind<DeathMenuObserver>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(DeathMenuObserver))
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void BindTime()
+        {
+            Debug.Log("Game installer: Bind time");
+            
+            Container.Bind<IGameTime>()
+                .To<GameTimer>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(GameTimer))
+                .AsSingle()
+                .NonLazy();
+        }
+        
+        private void BindCamera()
+        {
+            Debug.Log("Game installer: Bind camera");
+
+            Container.Bind<Camera>()
+                .FromComponentInNewPrefab(_playerCamera)
+                .WithGameObjectName("MainCamera")
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<CameraTrackingTarget>()
+                .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<ICameraProvider>()
+                .To<CameraProvider>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+        
+        private void BindFX()
+        {
+            Debug.Log("Game installer: Bind FX");
+            Container.BindFactory<ParticleSystem, Vector3, PlayingFX, PlayingFX.Factory>()
+                .FromNewComponentOnNewGameObject()
+                .AsSingle()
+                .Lazy();
+            
+            Container.Bind<ICharacterFXList>()
+                .To<CharacterFXList>()
+                .FromScriptableObject(_characterFXList)
+                .AsSingle()
+                .Lazy();
+            
+        }
+        
+        private void BindCharacter()
+        {
+            Debug.Log("Game installer: Bind character");
+
+
+            Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
+                .FromComponentInNewPrefab(_healthBarPrefab)
+                .Lazy();
+            
+            Container.BindFactory<ICharacter, Transform, CharacterFX, CharacterFX.Factory>()
+                .FromNew()
+                .Lazy();
+            
+            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
+                .FromComponentInNewPrefab(_characterPrefab)
+                .Lazy();
+        }
+        
+        private void BindInputController()
+        {
+            Debug.Log("Game installer: Bind input controller");
+
+            Container.Bind<InputActionAsset>()
+                .FromScriptableObject(_playerInputActionsMap)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind<IInputController>()
+                .To<InputController>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

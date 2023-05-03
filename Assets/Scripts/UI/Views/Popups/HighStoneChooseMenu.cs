@@ -1,18 +1,27 @@
-﻿using UnityEngine;
+﻿using Level;
+using Zenject;
 
 namespace UI
 {
     public class HighStoneChooseMenu : PopupBase
     {
+        private GameRunProvider _gameRun;
+        
+        [Inject]
+        public void Construct(GameRunProvider gameRun)
+        {
+            _gameRun = gameRun;
+        }
+        
         public void ActivateHighMode()
         {
-            Debug.Log("High");
+            _gameRun.Run(GameRunType.High);
             Close();
         }
 
         public void ActivateStoneMode()
         {
-            Debug.Log("Stone");
+            _gameRun.Run(GameRunType.Stone);
             Close();
         }
     }
