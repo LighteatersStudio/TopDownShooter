@@ -11,8 +11,8 @@ namespace Gameplay
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private float _deathWaitTime = 10f; 
         
-        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory> _initializer;
-        private DamageCalculator _damageCalculator;
+        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer;
+        private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private bool IsDead => _stats.Health <= 0;
         public float HealthRelative => _stats.HealthRelative;
@@ -28,13 +28,14 @@ namespace Gameplay
 
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory)
+            HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory, IDamageCalculator damageCalculator)
         {
             _initializer = new(
                 statsInfo,
                 viewFactoryMethod,
                 healthBarFactory,
-                fxFactory);
+                fxFactory,
+                damageCalculator);
         }
 
         protected void Start()
@@ -42,10 +43,10 @@ namespace Gameplay
             _initializer.Initialize(Load);
         }
 
-        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod, HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory)
+        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod, HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory, IDamageCalculator damageCalculator)
         {
             _stats = new CharacterStats(info);
-            _damageCalculator = new DamageCalculator();
+            _damageCalculator = damageCalculator;
 
             var modelRoot = LoadViewAndGetRoots(viewFactoryMethod);
             
@@ -67,7 +68,7 @@ namespace Gameplay
                 return;
             }
 
-            var damage = _damageCalculator.Calculate(attackInfo, _stats.Stats);
+            var damage = _damageCalculator.Calculate(attackInfo, _stats);
 
             if (damage > 1e-5)
             {
