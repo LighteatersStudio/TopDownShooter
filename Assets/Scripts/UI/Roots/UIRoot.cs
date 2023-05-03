@@ -66,11 +66,11 @@ namespace UI
 
         private void OpenCurrent()
         {
-            if(! _viewStack.Any())
+            if (!_viewStack.Any())
             {
                 return;
             }
-            
+
             var current = _viewStack.Peek();
             current.Closed += OnViewClosed;
             current.Open();
