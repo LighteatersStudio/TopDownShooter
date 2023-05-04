@@ -6,8 +6,6 @@ namespace UI
 {
     public class UIBuilder : MonoBehaviour
     {
-                   
-    
         [SerializeField] private List<GameObject> _viewsPrefab;
         
         private DiContainer _container;
@@ -41,6 +39,7 @@ namespace UI
         private bool FromPool<TView>(out TView view) where TView : IView
         {
             const int unfundedInPoolIndex = -1;
+            
             var index = _pool.FindIndex(x => x is TView);
             
             if(index != unfundedInPoolIndex)
