@@ -2,39 +2,36 @@
 {
     public class DamageCalculator : IDamageCalculator
     {
-        /// <summary>
-        /// Temporary solution
-        /// </summary>
         public float Calculate(IAttackInfo attackInfo, IStats stats)
         {
-            if (!stats.Imunne)
+            if (stats.Imunne)
             {
                 GetDamage(attackInfo);
             }
 
-            return GetDamage(attackInfo);
+            return 0;
         }
 
         private float GetDamage(IAttackInfo attackInfo)
         {
-            float damage = 0;
+            float damageMultiplicator = 0;
 
             switch (attackInfo.TypeDamage)
             {
                 case TypeDamage.Fire:
-                    damage = attackInfo.Damage * 1.1f;
+                    damageMultiplicator = 1.1f;
                     break;
 
                 case TypeDamage.Ice:
-                    damage = attackInfo.Damage * 1.2f;
+                    damageMultiplicator = 1.2f;
                     break;
 
                 case TypeDamage.Poison:
-                    damage = attackInfo.Damage * 1.5f;
+                    damageMultiplicator = 1.5f;
                     break;
             }
 
-            return damage;
+            return damageMultiplicator * attackInfo.Damage;
         }
     }
 }

@@ -6,10 +6,10 @@
         public TypeDamage TypeDamage { get; }
 
         
-        public AttackInfo(float damage, TypeDamage fire)
+        public AttackInfo(float damage, TypeDamage typeDamage)
         {
             Damage = damage;
-            TypeDamage = fire;
+            TypeDamage = typeDamage;
         }
     }
 }
