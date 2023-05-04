@@ -23,8 +23,9 @@ namespace Installer
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
         
-        [Header("Gameplay Entities: common")]
+        [Header("Gameplay Entities: player")]
         [SerializeField] private Player _playerPrefab;
+        [SerializeField] private PlayerSettings _playerSettings;
         
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
@@ -80,6 +81,16 @@ namespace Installer
         private void BindPlayer()
         {
             Debug.Log("Game installer: Bind player");
+
+            Container.Bind<IPlayerSettings>()
+                .To<PlayerSettings>()
+                .FromScriptableObject(_playerSettings)
+                .AsSingle()
+                .Lazy();
+            
+            Container.BindFactory<IMovable, PlayerInputAdapter, PlayerInputAdapter.Factory>()
+                .AsSingle()
+                .Lazy();
             
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)

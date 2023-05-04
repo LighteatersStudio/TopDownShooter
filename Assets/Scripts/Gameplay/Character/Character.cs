@@ -17,6 +17,7 @@ namespace Gameplay
         private CharacterStats _stats;
 
         public float HealthRelative => _stats.HealthRelative;
+        
         private bool IsDead => _stats.Health <= 0;
 
 
@@ -85,6 +86,11 @@ namespace Gameplay
             Dead?.Invoke();
             
             Destroy(gameObject, _deathWaitTime);
+        }
+
+        public void SetParent(Transform parent)
+        {
+            transform.SetParent(parent);
         }
         
         
