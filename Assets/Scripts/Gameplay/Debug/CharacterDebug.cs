@@ -8,12 +8,12 @@ namespace Gameplay
         [SerializeField] private Character _character;
         [SerializeField] private float _damage = 10f;
         [SerializeField] bool _takeDamage;
-        
+
+
         private void Awake()
         {
             _character = GetComponent<Character>();
         }
-
 
         private void Update()
         {
@@ -24,9 +24,9 @@ namespace Gameplay
             }
         }
 
-        public void TakeDamage()
+        private void TakeDamage()
         {
-            _character.TakeDamage(_damage);
+            _character.TakeDamage(new AttackInfo(_damage, TypeDamage.Fire));
         }
     }
 }

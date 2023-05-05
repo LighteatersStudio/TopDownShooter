@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,7 @@ namespace UI
         [SerializeField] private List<GameObject> _viewsPrefab;
         
         private DiContainer _container;
-        private readonly Dictionary<Type, List<IView>> _pool = new();
+        private readonly List<IView> _pool = new();
         
         
         [Inject]
@@ -21,6 +20,11 @@ namespace UI
         
         public TView Build<TView>(Transform parent) where TView : IView
         {
+            if (FromPool(out TView view))
+            {   
+                return view;
+            }
+
             var viewPrefab = _viewsPrefab.Find(x => x.GetComponent<TView>() != null);
 
             if (viewPrefab == null)
@@ -32,15 +36,26 @@ namespace UI
             return _container.InstantiatePrefab(viewPrefab, parent).GetComponent<TView>();   
         }
 
+        private bool FromPool<TView>(out TView view) where TView : IView
+        {
+            const int unfundedInPoolIndex = -1;
+            
+            var index = _pool.FindIndex(x => x is TView);
+            
+            if(index != unfundedInPoolIndex)
+            {
+                view = (TView) _pool[index];
+                _pool.RemoveAt(index);
+                return true;
+            }
+            
+            view = default;
+            return false;
+        }   
+
         public void ToPool<TView>(TView view) where TView : IView
         {
-            if(_pool.TryGetValue(typeof(TView), out var list))
-            {
-                list.Add(view);
-                return; 
-            }
-
-            _pool.Add(typeof(TView), new List<IView> {view});
+            _pool.Add(view);
         }
     }
 }
