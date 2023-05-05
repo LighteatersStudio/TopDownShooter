@@ -13,7 +13,7 @@ namespace Gameplay
         
         private Func<float> _getSpeedHandler;
 
-        public float Speed => _getSpeedHandler?.Invoke() ?? 1;
+        private float Speed => _getSpeedHandler?.Invoke() ?? 1;
         
         private void Start()
         {

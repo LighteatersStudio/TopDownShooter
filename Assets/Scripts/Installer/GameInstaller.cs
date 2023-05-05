@@ -34,6 +34,7 @@ namespace Installer
         
         [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
+        [SerializeField] private PlayerInput _playerInputPrefab;
 
         public override void InstallBindings()
         {
@@ -229,6 +230,11 @@ namespace Installer
                 .AsSingle()
                 .Lazy();
 
+            Container.Bind<PlayerInput>()
+                .FromComponentInNewPrefab(_playerInputPrefab)
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<IInputController>()
                 .To<InputController>()
                 .FromNew()
