@@ -6,10 +6,10 @@
         {
             if (stats.Imunne)
             {
-                GetDamage(attackInfo);
+                return 0;
             }
 
-            return 0;
+            return GetDamage(attackInfo);
         }
 
         private float GetDamage(IAttackInfo attackInfo)

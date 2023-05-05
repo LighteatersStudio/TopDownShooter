@@ -24,7 +24,7 @@ namespace Gameplay
             }
         }
 
-        public void TakeDamage()
+        private void TakeDamage()
         {
             _character.TakeDamage(new AttackInfo(_damage, TypeDamage.Fire));
         }
