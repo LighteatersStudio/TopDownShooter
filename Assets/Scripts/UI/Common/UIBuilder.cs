@@ -38,9 +38,11 @@ namespace UI
 
         private bool FromPool<TView>(out TView view) where TView : IView
         {
+            const int unfundedInPoolIndex = -1;
+            
             var index = _pool.FindIndex(x => x is TView);
             
-            if(index != -1)
+            if(index != unfundedInPoolIndex)
             {
                 view = (TView) _pool[index];
                 _pool.RemoveAt(index);
