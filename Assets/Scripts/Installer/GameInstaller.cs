@@ -189,7 +189,12 @@ namespace Installer
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
-
+            
+            Container.Bind<IDamageCalculator>()
+                .To<DamageCalculator>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
 
             Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
                 .FromComponentInNewPrefab(_healthBarPrefab)
