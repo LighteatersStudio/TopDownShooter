@@ -16,6 +16,8 @@ namespace Gameplay
         private bool IsDead => _stats.Health <= 0;
         public float HealthRelative => _stats.HealthRelative;
 
+        public float MoveSpeed => _stats.MoveSpeed;
+        
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;

@@ -12,6 +12,7 @@ namespace Gameplay
         
         private Animator _animator;
 
+        private float _currentSpeed;
         private Vector3 _lastPosition;
 
         private ICharacter _character;
@@ -53,11 +54,24 @@ namespace Gameplay
         
         protected void Update()
         {
-            var position = transform.position;
-            _animator.SetFloat(SpeedName, (position - _lastPosition).magnitude / Time.deltaTime);
-            _lastPosition = position;
+            _animator.SetFloat(SpeedName, CalculateSpeed());
         }
 
+        private float CalculateSpeed()
+        {
+            const float maxSpeed = 10f; 
+            const float decelerationInS = 0.1f;
+
+            var position = transform.position;
+
+            _currentSpeed += (position - _lastPosition).magnitude / Time.deltaTime - decelerationInS * Time.deltaTime;
+            _currentSpeed = Mathf.Clamp(_currentSpeed, 0, maxSpeed);
+            
+            _lastPosition = position;
+            
+            return _currentSpeed;
+        }
+        
         private void OnDead()
         {
             _animator.SetTrigger(DeadName);

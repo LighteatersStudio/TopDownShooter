@@ -1,11 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
     public sealed class MoveBehaviour : MonoBehaviour, IMovable
     {
+        private const float ColliderHeight = 1.8f;
+        private const float ColliderRadius = 0.5f;
+        
+        
         private Rigidbody _rigidbody;
-        private readonly float _speed = 10;
+        
+        private Func<float> _getSpeedHandler;
+
+        public float Speed => _getSpeedHandler?.Invoke() ?? 1;
         
         private void Start()
         {
@@ -30,13 +38,18 @@ namespace Gameplay
         private void AddCollider()
         {
             var capsuleCollider = gameObject.AddComponent<CapsuleCollider>();
-            capsuleCollider.height = 1.8f;
-            capsuleCollider.radius = 0.5f;   
+            capsuleCollider.height = ColliderHeight;
+            capsuleCollider.radius = ColliderRadius;
         }
 
+        public void SetSpeedHandler(Func<float> getSpeedHandler)
+        {
+            _getSpeedHandler = getSpeedHandler;
+        }
+        
         public void SetMoveForce(Vector3 direction, float force = 1)
         {
-            _rigidbody.velocity = direction.normalized * _speed * force;
+            _rigidbody.velocity = direction.normalized * Speed * force;
         }
     }
 }

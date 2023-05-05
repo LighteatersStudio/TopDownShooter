@@ -40,6 +40,8 @@ namespace Gameplay
             _character.SetParent(transform);
 
             var moveBehaviour = gameObject.AddComponent<MoveBehaviour>();
+            moveBehaviour.SetSpeedHandler(() => _character.MoveSpeed);
+            
             _inputAdapter = playerInputFactory.Create(moveBehaviour);
         }
 

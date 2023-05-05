@@ -10,6 +10,7 @@ namespace Gameplay
         [SerializeField] private bool _moveRight;
         [SerializeField] private bool _moveLeft;
         [SerializeField] private bool _moveBackward;
+        [SerializeField] private bool _stop;
         private void Start()
         {
             _movable = GetComponent<IMovable>();
@@ -27,6 +28,7 @@ namespace Gameplay
             TryMove(Vector3.left, ref _moveLeft);
             TryMove(Vector3.right, ref _moveRight);
             TryMove(Vector3.back, ref _moveBackward);
+            TryMove(Vector3.zero, ref _stop);
         }
 
         private void TryMove(Vector3 direction, ref bool boolValue)
