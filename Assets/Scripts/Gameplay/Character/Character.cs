@@ -11,12 +11,13 @@ namespace Gameplay
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private float _deathWaitTime = 10f; 
         
-        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer;
-        private IDamageCalculator _damageCalculator;
+        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer; private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private bool IsDead => _stats.Health <= 0;
         public float HealthRelative => _stats.HealthRelative;
 
+        public float MoveSpeed => _stats.MoveSpeed;
+        
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;
@@ -87,6 +88,11 @@ namespace Gameplay
             Dead?.Invoke();
             
             Destroy(gameObject, _deathWaitTime);
+        }
+
+        public void SetParent(Transform parent)
+        {
+            transform.SetParent(parent);
         }
         
         

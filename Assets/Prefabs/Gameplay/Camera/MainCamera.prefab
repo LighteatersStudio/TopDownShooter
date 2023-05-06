@@ -89,4 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _smoothSpeed: 0.125
-  _offset: {x: 4, y: 6, z: 0}
+  _offset: {x: 4, y: 10, z: 0}

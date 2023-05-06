@@ -47,4 +47,5 @@ MonoBehaviour:
   _statsInfo:
     MaxHealth: 100
     Health: 100
+    MoveSpeed: 5
   _modelPrefab: {fileID: 7673487251499248760, guid: 1e461d2f90f7fb345bb9173731202a03, type: 3}

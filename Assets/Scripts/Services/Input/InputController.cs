@@ -7,12 +7,12 @@ namespace Services.Input
 {
     public class InputController : IInputController
     {
-        public const string Move = "Move";
-        public const string Fire = "Fire";
-        public const string Special = "Special";
-        public const string Melee = "Melee";
-        public const string Use = "Use";
-        public const string Reload = "Reload";
+        private const string Move = "Move";
+        private const string Fire = "Fire";
+        private const string Special = "Special";
+        private const string Melee = "Melee";
+        private const string Use = "Use";
+        private const string Reload = "Reload";
 
         private readonly InputActionAsset _inputActionAsset;
         

@@ -23,8 +23,9 @@ namespace Installer
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
         
-        [Header("Gameplay Entities: common")]
+        [Header("Gameplay Entities: player")]
         [SerializeField] private Player _playerPrefab;
+        [SerializeField] private PlayerSettings _playerSettings;
         
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
@@ -33,6 +34,7 @@ namespace Installer
         
         [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
+        [SerializeField] private PlayerInput _playerInputPrefab;
 
         public override void InstallBindings()
         {
@@ -80,6 +82,16 @@ namespace Installer
         private void BindPlayer()
         {
             Debug.Log("Game installer: Bind player");
+
+            Container.Bind<IPlayerSettings>()
+                .To<PlayerSettings>()
+                .FromScriptableObject(_playerSettings)
+                .AsSingle()
+                .Lazy();
+            
+            Container.BindFactory<IMovable, PlayerInputAdapter, PlayerInputAdapter.Factory>()
+                .AsSingle()
+                .Lazy();
             
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
@@ -218,6 +230,11 @@ namespace Installer
                 .AsSingle()
                 .Lazy();
 
+            Container.Bind<PlayerInput>()
+                .FromComponentInNewPrefab(_playerInputPrefab)
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<IInputController>()
                 .To<InputController>()
                 .FromNew()
