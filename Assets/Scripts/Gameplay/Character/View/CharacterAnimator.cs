@@ -59,8 +59,8 @@ namespace Gameplay
 
         private float CalculateSpeed()
         {
-            const float maxSpeed = 10f; 
-            const float decelerationInS = 0.1f;
+            const float maxSpeed = 10f;
+            const float decelerationInS = maxSpeed * 6;
 
             var position = transform.position;
 

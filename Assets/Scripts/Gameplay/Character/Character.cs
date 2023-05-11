@@ -6,18 +6,31 @@ using Zenject;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire
     {
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private float _deathWaitTime = 10f; 
         
-        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer; private IDamageCalculator _damageCalculator;
+        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer; 
+        private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private bool IsDead => _stats.Health <= 0;
         public float HealthRelative => _stats.HealthRelative;
 
         public float MoveSpeed => _stats.MoveSpeed;
         
+        private Vector3 _fireDirection;
+
+        public Vector3 LookDirection
+        {
+            get => _fireDirection;
+            set
+            {
+                _fireDirection = value; 
+                ChangeLookDirection(value);
+            }
+        }
+
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;
@@ -44,13 +57,14 @@ namespace Gameplay
             _initializer.Initialize(Load);
         }
 
-        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod, HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory, IDamageCalculator damageCalculator)
+        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod,
+            HealthBar.Factory healthBarFactory, CharacterFX.Factory fxFactory, IDamageCalculator damageCalculator)
         {
             _stats = new CharacterStats(info);
             _damageCalculator = damageCalculator;
 
             var modelRoot = LoadViewAndGetRoots(viewFactoryMethod);
-            
+
             healthBarFactory.Create(this, modelRoot.Head);
             fxFactory.Create(this, modelRoot.Head);
         }
@@ -93,6 +107,11 @@ namespace Gameplay
         public void SetParent(Transform parent)
         {
             transform.SetParent(parent);
+        }
+        
+        private void ChangeLookDirection(Vector3 direction)
+        {
+            transform.forward = direction;
         }
         
         

@@ -7,17 +7,19 @@ namespace Services.Input
 {
     public class InputController : IInputController
     {
-        private const string Move = "Move";
-        private const string Fire = "Fire";
-        private const string Special = "Special";
-        private const string Melee = "Melee";
-        private const string Use = "Use";
-        private const string Reload = "Reload";
+        private const string MoveActionName = "Move";
+        private const string LookActionName = "Look";
+        private const string FireActionName = "Fire";
+        private const string SpecialActionName = "Special";
+        private const string MeleeActionName = "Melee";
+        private const string UseActionName = "Use";
+        private const string ReloadActionName = "Reload";
 
         private readonly InputActionAsset _inputActionAsset;
         
         public event Action<Vector2> MoveChanged;
-        public event Action<Vector2> FireChanged;
+        public event Action<Vector2> LookChanged;
+        public event Action FireChanged;
         public event Action<Vector2> SpecialChanged;
         public event Action MeleeChanged;
         public event Action UseChanged;
@@ -35,11 +37,16 @@ namespace Services.Input
             MoveChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
-        private void OnFire(InputAction.CallbackContext context)
+        private void OnLook(InputAction.CallbackContext context)
         {
-            FireChanged?.Invoke(context.ReadValue<Vector2>());
+            LookChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
+        private void OnFire(InputAction.CallbackContext context)
+        {
+            FireChanged?.Invoke();
+        }
+        
         private void OnSpecial(InputAction.CallbackContext context)
         {
             SpecialChanged?.Invoke(context.ReadValue<Vector2>());
@@ -62,12 +69,13 @@ namespace Services.Input
 
         private void OnEnable()
         {
-            _inputActionAsset.FindAction(Move).performed += OnMove;
-            _inputActionAsset.FindAction(Fire).performed += OnFire;
-            _inputActionAsset.FindAction(Special).performed += OnSpecial;
-            _inputActionAsset.FindAction(Use).performed += OnUse;
-            _inputActionAsset.FindAction(Reload).performed += OnReload;
-            _inputActionAsset.FindAction(Melee).performed += OnMelee;
+            _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
+            _inputActionAsset.FindAction(LookActionName).performed += OnLook;
+            _inputActionAsset.FindAction(FireActionName).performed += OnFire;
+            _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
+            _inputActionAsset.FindAction(UseActionName).performed += OnUse;
+            _inputActionAsset.FindAction(ReloadActionName).performed += OnReload;
+            _inputActionAsset.FindAction(MeleeActionName).performed += OnMelee;
         }
     }
 }
