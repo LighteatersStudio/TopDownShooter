@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7607369641740417602}
   - component: {fileID: 6514539853883555828}
   - component: {fileID: 2362927362282252975}
-  - component: {fileID: 2277560833894425239}
+  - component: {fileID: 1075517233289976276}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -111,8 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb38f1fdf3341be900b71eac0124001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 2277560833894425239}
---- !u!54 &2277560833894425239
+--- !u!54 &1075517233289976276
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
