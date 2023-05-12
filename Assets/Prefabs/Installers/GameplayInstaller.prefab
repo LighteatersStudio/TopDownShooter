@@ -50,7 +50,5 @@ MonoBehaviour:
   _playerPrefab: {fileID: 4252321798439718732, guid: 6583108963dd87749b66c28b3ee27550, type: 3}
   _playerSettings: {fileID: 11400000, guid: 80452d2ea04c9bc499e5804b9cf14162, type: 2}
   _characterPrefab: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
-  _healthBarPrefab: {fileID: 6605134139281467808, guid: 936803711da28d046a7e40b3f2079834, type: 3}
-  _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}
   _playerInputActionsMap: {fileID: -944628639613478452, guid: 7204243c7727540028fb2dd08ab8b392, type: 3}
   _playerInputPrefab: {fileID: 5776387706417208865, guid: 65f7b11787bb0e04798952537ae807d8, type: 3}

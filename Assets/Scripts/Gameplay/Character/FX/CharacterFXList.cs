@@ -2,7 +2,7 @@
 
 namespace Gameplay
 {
-    [CreateAssetMenu(menuName = "LightEaters/Create CharacterFXList", fileName = "CharacterFXList", order = 0)]
+    [CreateAssetMenu(menuName = "LightEaters/Character/Create CharacterFXList", fileName = "CharacterFXList", order = 0)]
     public class CharacterFXList : ScriptableObject, ICharacterFXList
     {
         [SerializeField] private ParticleSystem _hitFx;
