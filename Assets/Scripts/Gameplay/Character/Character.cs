@@ -9,6 +9,7 @@ namespace Gameplay
     public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire
     {
         [SerializeField] private Transform _viewRoot;
+        [SerializeField] private Transform _lookDirectionRoot;
         [SerializeField] private float _deathWaitTime = 10f; 
         
         private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, HealthBar.Factory, CharacterFX.Factory, IDamageCalculator> _initializer; 
@@ -65,6 +66,7 @@ namespace Gameplay
 
             var modelRoot = LoadViewAndGetRoots(viewFactoryMethod);
 
+            healthBarFactory.Create(this, modelRoot.Head);
             healthBarFactory.Create(this, modelRoot.Head);
             fxFactory.Create(this, modelRoot.Head);
         }
