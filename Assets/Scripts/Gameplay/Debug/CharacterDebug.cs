@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
-    [RequireComponent(typeof(Character))]
     public sealed class CharacterDebug : MonoBehaviour
     {
-        [SerializeField] private Character _character;
         [SerializeField] private float _damage = 10f;
         [SerializeField] bool _takeDamage;
+        
+        private Character _character;
 
-
-        private void Awake()
+        
+        [Inject]
+        public void Construct(Character character)
         {
-            _character = GetComponent<Character>();
+            _character = character;
         }
 
         private void Update()

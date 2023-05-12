@@ -84,7 +84,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6605134139281467808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,9 +100,11 @@ MonoBehaviour:
   _canvas: {fileID: 6605134139281467814}
   _slider: {fileID: 6605134140160897088}
   _sliderFiller: {fileID: 6605134139677054742}
-  _maxhealthColor: {r: 0, g: 1, b: 0, a: 1}
-  _minhealthColor: {r: 0, g: 1, b: 0, a: 1}
+  _maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
+  _minHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  _rootOffest: {x: 0, y: 1.5, z: 0}
   _hideOnFullHealth: 1
+  _hideOnEmptyHealth: 1
 --- !u!114 &6605134139281467809
 MonoBehaviour:
   m_ObjectHideFlags: 0

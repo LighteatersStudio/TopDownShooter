@@ -6,5 +6,7 @@ namespace Gameplay
     {
         event Action Damaged;
         event Action Dead;
+        
+        CharacterModelRoots ModelRoots { get; }
     }
 }

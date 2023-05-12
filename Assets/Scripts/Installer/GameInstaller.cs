@@ -29,8 +29,6 @@ namespace Installer
         
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
-        [SerializeField] private HealthBar _healthBarPrefab;
-        [SerializeField] private ScriptableObject _characterFXList;
         
         [Header("Input")]
         [SerializeField] private InputActionAsset _playerInputActionsMap;
@@ -189,36 +187,15 @@ namespace Installer
                 .FromNewComponentOnNewGameObject()
                 .AsSingle()
                 .Lazy();
-            
-            Container.Bind<ICharacterFXList>()
-                .To<CharacterFXList>()
-                .FromScriptableObject(_characterFXList)
-                .AsSingle()
-                .Lazy();
-            
         }
         
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");
-            
-            Container.Bind<IDamageCalculator>()
-                .To<DamageCalculator>()
-                .FromNew()
-                .AsSingle()
-                .NonLazy();
 
-            Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
-                .FromComponentInNewPrefab(_healthBarPrefab)
-                .Lazy();
-            
-            Container.BindFactory<ICharacter, Transform, CharacterFX, CharacterFX.Factory>()
-                .FromNew()
-                .Lazy();
-            
-            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character,  Character.Factory>()
-                .FromComponentInNewPrefab(_characterPrefab)
-                .Lazy();
+            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character, Character.Factory>()
+                .FromSubContainerResolve()
+                .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
         }
         
         private void BindInputController()

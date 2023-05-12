@@ -9,15 +9,13 @@ namespace Gameplay
         private PlayingFX.Factory _fxFactory;
         private ICharacterFXList _fxList;
         private ICharacter _character;
-        private Transform _root;
         
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, ICharacterFXList fxList, ICharacter character, Transform root)
+        public void Construct(PlayingFX.Factory fxFactory, ICharacterFXList fxList, ICharacter character)
         {
             _fxFactory = fxFactory;
             _fxList = fxList;
             _character = character;
-            _root = root;
             
             Subscribe();
         }
@@ -37,17 +35,12 @@ namespace Gameplay
         private void OnDead()
         {
             Unsubscribe();
-            _fxFactory.Create(_fxList.DeadFx, _root.position);
+            _fxFactory.Create(_fxList.DeadFx, _character.ModelRoots.Head.position);
         }
 
         private void OnDamaged()
         {
-            _fxFactory.Create(_fxList.HitFx, _root.position);
-        }
-        
-        
-        public class Factory : PlaceholderFactory<ICharacter,Transform, CharacterFX>
-        {
+            _fxFactory.Create(_fxList.HitFx, _character.ModelRoots.Head.position);
         }
     }
 }
