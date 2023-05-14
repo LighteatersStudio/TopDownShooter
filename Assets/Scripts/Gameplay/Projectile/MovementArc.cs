@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay.Projectile
 {
-    public class MovementArc : MovementBase, IProjectileMovement
+    public class MovementArc : MonoBehaviour
     {
         private const float FlightTime = 10f;
         private const float TimeStep = 0.1f;
         private const float Gravity = 9.81f;
 
+        [SerializeField] private int _range;
+        [SerializeField] private float _speed;
+        
         private Rigidbody _rigidbody;
 
         private float _tanTheta;
@@ -23,9 +27,9 @@ namespace Gameplay.Projectile
         private bool _drawTrajectory;
 
 
-        public void Move(int range, float speed)
+        private void Start()
         {
-            TrajectoryCalculation(range, speed);
+            TrajectoryCalculation(_range, _speed);
             
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.velocity = _velocity;

@@ -2,20 +2,19 @@
 
 namespace Gameplay.Projectile
 {
-    public class MovementStraight : MovementBase, IProjectileMovement
+    public class MovementStraight : MonoBehaviour
     {
-        private float _speed;
+        [SerializeField] private float _speed;
         private Rigidbody _rigidbody;
 
-        
-        public void Move(int range, float speed)
+
+        private void Start()
         {
-            _speed = speed;
-            
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.useGravity = false;
         }
 
+       
         private void Update()
         {
             transform.position += transform.forward * Time.deltaTime * _speed;
