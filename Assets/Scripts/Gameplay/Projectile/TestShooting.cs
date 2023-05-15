@@ -12,8 +12,8 @@ namespace Gameplay.Projectile
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var projectile = Instantiate(_projectilePrefab);
-               
-                projectile.Launch(Vector3.up,50, TypeDamage.Fire);
+
+                projectile.Launch(transform.position, transform.forward, 50, TypeDamage.Fire);
             }
         }
     }

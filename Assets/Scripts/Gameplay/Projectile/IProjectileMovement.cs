@@ -1,7 +1,9 @@
-﻿namespace Gameplay.Projectile
+﻿using UnityEngine;
+
+namespace Gameplay.Projectile
 {
     public interface IProjectileMovement
     {
-        public void Move();
+        public void Move(Vector3 position, Vector3 direction);
     }
 }

@@ -8,8 +8,11 @@ namespace Gameplay.Projectile
         private Rigidbody _rigidbody;
 
 
-        public void Move()
+        public void Move(Vector3 position, Vector3 direction)
         {
+            transform.position = position;
+            transform.forward = direction;
+            
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.useGravity = false;
         }

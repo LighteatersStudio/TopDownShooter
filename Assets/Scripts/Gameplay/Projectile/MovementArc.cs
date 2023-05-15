@@ -26,8 +26,11 @@ namespace Gameplay.Projectile
         private bool _drawTrajectory;
 
 
-        public void Move()
+        public void Move(Vector3 position, Vector3 direction)
         {
+            transform.position = position;
+            transform.forward = direction;
+            
             TrajectoryCalculation(_range, _speed);
             
             _rigidbody = GetComponent<Rigidbody>();

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gameplay.Projectile
 {
@@ -18,10 +17,9 @@ namespace Gameplay.Projectile
             _projectileMovement = GetComponent<IProjectileMovement>();
         }
 
-        public void Launch(Vector3 direction, float damage, TypeDamage typeDamage)
+        public void Launch(Vector3 position, Vector3 direction, float damage, TypeDamage typeDamage)
         {
-            transform.position = direction;
-            _projectileMovement.Move();
+            _projectileMovement.Move(position, direction);
             _damage = damage;
             _typeDamage = typeDamage;
         }
@@ -35,8 +33,8 @@ namespace Gameplay.Projectile
                     other.GetComponent<IDamageable>().TakeDamage(new AttackInfo(_damage, _typeDamage));
                 }
                 
-                Destroy(gameObject);
                 SpawnSparksEffect();
+                Destroy(gameObject);
             }
         }
         
