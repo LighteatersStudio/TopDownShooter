@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay.Projectile
 {
@@ -9,9 +10,18 @@ namespace Gameplay.Projectile
         private float _damage;
         private TypeDamage _typeDamage;
 
+        private IProjectileMovement _projectileMovement;
+
         
-        public void Launch(float damage, TypeDamage typeDamage)
+        private void Awake()
         {
+            _projectileMovement = GetComponent<IProjectileMovement>();
+        }
+
+        public void Launch(Vector3 direction, float damage, TypeDamage typeDamage)
+        {
+            transform.position = direction;
+            _projectileMovement.Move();
             _damage = damage;
             _typeDamage = typeDamage;
         }

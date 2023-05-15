@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gameplay.Projectile
 {
@@ -12,9 +11,9 @@ namespace Gameplay.Projectile
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                var projectile = Instantiate(_projectilePrefab, transform.position, transform.rotation);
-
-               projectile.Launch(50, TypeDamage.Fire);
+                var projectile = Instantiate(_projectilePrefab);
+               
+                projectile.Launch(Vector3.up,50, TypeDamage.Fire);
             }
         }
     }

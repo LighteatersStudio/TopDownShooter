@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gameplay.Projectile
 {
-    public class MovementArc : MonoBehaviour
+    public class MovementArc : MonoBehaviour, IProjectileMovement
     {
         private const float FlightTime = 10f;
         private const float TimeStep = 0.1f;
@@ -27,7 +26,7 @@ namespace Gameplay.Projectile
         private bool _drawTrajectory;
 
 
-        private void Start()
+        public void Move()
         {
             TrajectoryCalculation(_range, _speed);
             
@@ -36,7 +35,7 @@ namespace Gameplay.Projectile
         }
 
         /// <summary>
-        /// The calculation formula for two trajectories is used
+        /// The calculation formula for two trajectories is used : Link https://habr.com/ru/articles/538952/
         /// </summary>
         /// <param name="range"></param>
         /// <param name="speed"></param>
