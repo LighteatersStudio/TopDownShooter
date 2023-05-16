@@ -4,12 +4,11 @@ namespace Gameplay.Projectile
 {
     public class Projectile : MonoBehaviour
     {
-        private const float TimeForDestroyShot = 5;
-        
+        [SerializeField] private  float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
         
         private float _damage;
-        private float _lifeTimer = TimeForDestroyShot;
+        private float _lifeTimer;
         private TypeDamage _typeDamage;
 
         private IProjectileMovement _projectileMovement;
@@ -25,6 +24,7 @@ namespace Gameplay.Projectile
             _projectileMovement.Move(position, direction);
             _damage = damage;
             _typeDamage = typeDamage;
+            _lifeTimer = _timeForDestroyShot;
         }
 
         private void OnTriggerEnter(Collider other)

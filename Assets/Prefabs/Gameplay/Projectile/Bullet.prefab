@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb38f1fdf3341be900b71eac0124001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeForDestroyShot: 10
   _sparksEffect: {fileID: 2949610213108543572, guid: 89b971b8838becd4f967c03d8ef6f846, type: 3}
 --- !u!114 &6850963848816796804
 MonoBehaviour:
