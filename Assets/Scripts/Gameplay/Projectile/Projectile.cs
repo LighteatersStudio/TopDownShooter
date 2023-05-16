@@ -4,9 +4,12 @@ namespace Gameplay.Projectile
 {
     public class Projectile : MonoBehaviour
     {
+        private const float TimeForDestroyShot = 5;
+        
         [SerializeField] private ParticleSystem _sparksEffect;
         
         private float _damage;
+        private float _lifeTimer = TimeForDestroyShot;
         private TypeDamage _typeDamage;
 
         private IProjectileMovement _projectileMovement;
@@ -26,11 +29,13 @@ namespace Gameplay.Projectile
 
         private void OnTriggerEnter(Collider other)
         {
+            var damageable = other.GetComponent<IDamageable>();
+            
             if (!other.GetComponent<Player>())
             {
-                if (other.GetComponent<IDamageable>() != null)
+                if (damageable != null)
                 {
-                    other.GetComponent<IDamageable>().TakeDamage(new AttackInfo(_damage, _typeDamage));
+                    damageable.TakeDamage(new AttackInfo(_damage, _typeDamage));
                 }
                 
                 SpawnSparksEffect();
@@ -43,6 +48,16 @@ namespace Gameplay.Projectile
             var effect = Instantiate(_sparksEffect.gameObject, transform.position, Quaternion.identity);
             Destroy(effect, _sparksEffect.main.startLifetime.constant);
         }
+        
+        private void Update()
+        {
+            _lifeTimer -= Time.deltaTime;
+
+            if (_lifeTimer <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }  
     }
 }
 
