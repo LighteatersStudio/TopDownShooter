@@ -14,10 +14,9 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private bool IsDead => _stats.Health <= 0;
+        
         public float HealthRelative => _stats.HealthRelative;
-
         public float MoveSpeed => _stats.MoveSpeed;
-
         public CharacterModelRoots ModelRoots { get; private set; }
         
         private Vector3 _fireDirection;
@@ -50,7 +49,6 @@ namespace Gameplay
                 damageCalculator);
         }
         
-
         protected void Start()
         {
             _initializer.Initialize(Load);
