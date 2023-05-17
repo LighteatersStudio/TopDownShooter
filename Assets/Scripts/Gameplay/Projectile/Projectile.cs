@@ -29,10 +29,10 @@ namespace Gameplay.Projectile
 
         private void OnTriggerEnter(Collider other)
         {
-            var damageable = other.GetComponent<IDamageable>();
-            
             if (!other.GetComponent<Player>())
             {
+                var damageable = other.GetComponent<IDamageable>();
+
                 if (damageable != null)
                 {
                     damageable.TakeDamage(new AttackInfo(_damage, _typeDamage));
