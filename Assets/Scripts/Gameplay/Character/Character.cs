@@ -37,6 +37,7 @@ namespace Gameplay
             remove => _stats.HealthChanged -= value;
         }
         public event Action Damaged;
+        public event Action Attacked;
         public event Action Dead;
         
         
@@ -110,6 +111,7 @@ namespace Gameplay
         public void Fire()
         {
             Debug.Log("Fire");
+            Attacked?.Invoke();
         }
         
 

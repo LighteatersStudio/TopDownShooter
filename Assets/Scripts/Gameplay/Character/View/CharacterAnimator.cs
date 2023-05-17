@@ -42,11 +42,16 @@ namespace Gameplay
 
         private void Subscribe()
         {
+            _character.Attacked += OnAttacked;
             _character.Damaged += OnDamaged;
             _character.Dead += OnDead;
         }
+
+        
+
         private void Unsubscribe()
         {
+            _character.Attacked -= OnAttacked;
             _character.Damaged -= OnDamaged;
             _character.Dead -= OnDead;
         }
@@ -80,6 +85,11 @@ namespace Gameplay
         private void OnDamaged()
         {
             _animator.SetTrigger(HitName);
+        }
+        
+        private void OnAttacked()
+        {
+            _animator.SetTrigger(AttackName);
         }
     }
 }
