@@ -1,21 +1,47 @@
 ﻿using UnityEngine;
-using Zenject;
 
 namespace Gameplay.Projectile
 {
     public class Projectile : MonoBehaviour
     {
+        [SerializeField] private ParticleSystem _sparksEffect;
+        
+        private float _damage;
+        private TypeDamage _typeDamage;
+
         private IProjectileMovement _projectileMovement;
 
-        [Inject]
-        public void Construct(IProjectileMovement projectileMovement)
+        
+        private void Awake()
         {
-            _projectileMovement = projectileMovement;
+            _projectileMovement = GetComponent<IProjectileMovement>();
         }
 
-        public void Launch(int range, float speed)
+        public void Launch(Vector3 position, Vector3 direction, float damage, TypeDamage typeDamage)
         {
-            _projectileMovement.Move(range, speed);
+            _projectileMovement.Move(position, direction);
+            _damage = damage;
+            _typeDamage = typeDamage;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.GetComponent<Player>())
+            {
+                if (other.GetComponent<IDamageable>() != null)
+                {
+                    other.GetComponent<IDamageable>().TakeDamage(new AttackInfo(_damage, _typeDamage));
+                }
+                
+                SpawnSparksEffect();
+                Destroy(gameObject);
+            }
+        }
+        
+        private void SpawnSparksEffect()
+        {
+            var effect = Instantiate(_sparksEffect.gameObject, transform.position, Quaternion.identity);
+            Destroy(effect, _sparksEffect.main.startLifetime.constant);
         }
     }
 }

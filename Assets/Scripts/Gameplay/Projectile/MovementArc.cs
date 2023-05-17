@@ -2,12 +2,15 @@
 
 namespace Gameplay.Projectile
 {
-    public class MovementArc : MovementBase, IProjectileMovement
+    public class MovementArc : MonoBehaviour, IProjectileMovement
     {
         private const float FlightTime = 10f;
         private const float TimeStep = 0.1f;
         private const float Gravity = 9.81f;
 
+        [SerializeField] private int _range;
+        [SerializeField] private float _speed;
+        
         private Rigidbody _rigidbody;
 
         private float _tanTheta;
@@ -23,16 +26,19 @@ namespace Gameplay.Projectile
         private bool _drawTrajectory;
 
 
-        public void Move(int range, float speed)
+        public void Move(Vector3 position, Vector3 direction)
         {
-            TrajectoryCalculation(range, speed);
+            transform.position = position;
+            transform.forward = direction;
+            
+            TrajectoryCalculation(_range, _speed);
             
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.velocity = _velocity;
         }
 
         /// <summary>
-        /// The calculation formula for two trajectories is used
+        /// The calculation formula for two trajectories is used : Link https://habr.com/ru/articles/538952/
         /// </summary>
         /// <param name="range"></param>
         /// <param name="speed"></param>
