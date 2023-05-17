@@ -32,7 +32,6 @@ namespace Gameplay
             }
         }
         
-        
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;
@@ -108,6 +107,11 @@ namespace Gameplay
         private void ChangeLookDirection(Vector3 direction)
         {
             transform.forward = direction;
+        }
+        
+        public void Fire()
+        {
+            Debug.Log("Fire");
         }
         
 

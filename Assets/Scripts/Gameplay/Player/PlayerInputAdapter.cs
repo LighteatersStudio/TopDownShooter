@@ -24,7 +24,13 @@ namespace Gameplay
             _inputController.MoveChanged += OnMoveChanged;
             _inputController.LookChanged += OnLookChanged;
             _inputController.MeleeChanged+= OnMeleeChanged;
+            _inputController.FireChanged += OnFireChanged;
             
+        }
+
+        private void OnFireChanged()
+        {            
+            _fireActor.Fire();
         }
 
         private void OnMeleeChanged()
@@ -34,7 +40,7 @@ namespace Gameplay
 
         private void OnLookChanged(Vector2 direction)
         {
-            Debug.LogError($"OnFireChanged{direction}");
+      //      Debug.LogError($"OnLookChanged{direction}");
             
             _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y);
         }
