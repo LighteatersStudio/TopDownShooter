@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 using Zenject;
@@ -79,12 +80,12 @@ namespace Gameplay.View
             _slider.gameObject.SetActive(true);
         }
 
-        
         private void ChangeColor()
         {
             _sliderFiller.color = Color.Lerp(_minHealthColor, _maxHealthColor, _slider.value);
         }
 
+        
         public class Factory : PlaceholderFactory<IHaveHealth, Transform, HealthBar>
         {
         }

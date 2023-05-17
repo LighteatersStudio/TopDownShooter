@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7070710791399760810}
+  - component: {fileID: 5721185334030971740}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -62,6 +63,18 @@ Transform:
   m_Father: {fileID: 7564954714399395941}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5721185334030971740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3005667997710167655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 016f53de03014e918b98c7dc55081b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7564954714399395942
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +85,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7564954714399395941}
   - component: {fileID: 7564954714399395940}
-  - component: {fileID: -2167993171551993075}
+  - component: {fileID: 1287744693554637472}
+  - component: {fileID: 1262148185}
+  - component: {fileID: 948706742088386816}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -112,21 +127,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
   _deathWaitTime: 10
---- !u!114 &-2167993171551993075
+--- !u!114 &1287744693554637472
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7564954714399395942}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67802915381c419e80750d1dd7ab046d, type: 3}
+  m_Script: {fileID: 11500000, guid: c0ae0b658826464b94e6597e8c2193fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _character: {fileID: 0}
-  _damage: 10
-  _takeDamage: 0
+  _healthBarPrefab: {fileID: 6605134139281467808, guid: 936803711da28d046a7e40b3f2079834, type: 3}
+  _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}
+--- !u!114 &1262148185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7564954714399395942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 1287744693554637472}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &948706742088386816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7564954714399395942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 7564954714399395940}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 2
 --- !u!1 &7564954714408511391
 GameObject:
   m_ObjectHideFlags: 0
