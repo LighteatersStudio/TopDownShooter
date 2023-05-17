@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire
     {
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private float _deathWaitTime = 10f;
@@ -19,6 +19,19 @@ namespace Gameplay
         public float MoveSpeed => _stats.MoveSpeed;
 
         public CharacterModelRoots ModelRoots { get; private set; }
+        
+        private Vector3 _fireDirection;
+
+        public Vector3 LookDirection
+        {
+            get => _fireDirection;
+            set
+            {
+                _fireDirection = value; 
+                ChangeLookDirection(value);
+            }
+        }
+        
         
         public event Action HealthChanged
         {
@@ -92,6 +105,11 @@ namespace Gameplay
             transform.SetParent(parent);
         }
 
+        private void ChangeLookDirection(Vector3 direction)
+        {
+            transform.forward = direction;
+        }
+        
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {
