@@ -1,7 +1,12 @@
-﻿namespace Gameplay.View
+﻿using UnityEngine;
+using Zenject;
+
+namespace Gameplay.View
 {
-    public class LookDirectionDisplay
+    public class LookDirectionDisplay : MonoBehaviour
     {
-        
+        public class Factory : PlaceholderFactory<LookDirectionDisplay>
+        {
+        }
     }
 }

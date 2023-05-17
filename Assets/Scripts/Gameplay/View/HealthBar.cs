@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Utility;
 using Zenject;
@@ -17,30 +16,34 @@ namespace Gameplay.View
         [Header("Settings")]
         [SerializeField] private Color _maxHealthColor = Color.green;
         [SerializeField] private Color _minHealthColor = Color.red;
-        [SerializeField] private Vector3 _rootOffest = new(0, 1.5f, 0);
+        [SerializeField] private Vector3 _rootOffset;
         [SerializeField] private bool _hideOnFullHealth = true;
         [SerializeField] private bool _hideOnEmptyHealth = true;
         
-        private DynamicMonoInitializer<ICameraProvider, Transform> _initializer;
+        private DynamicMonoInitializer<ICameraProvider> _initializer;
         private IHaveHealth _healthOwner;
         
         
         [Inject]
-        public void Construct(ICameraProvider cameraProvider, IHaveHealth healthOwner, Transform parent)
+        public void Construct(ICameraProvider cameraProvider, IHaveHealth healthOwner)
         {
             _healthOwner = healthOwner;
-            _initializer = new DynamicMonoInitializer<ICameraProvider, Transform>(cameraProvider, parent);
+            _initializer = new DynamicMonoInitializer<ICameraProvider>(cameraProvider);
         }
         
         protected void Start()
         {
             _initializer.Initialize(Initialize);
         }
-        
-        private void Initialize(ICameraProvider cameraProvider, Transform parent)
+
+        protected void OnDestroy()
         {
-            transform.SetParent(parent, false);
-            transform.localPosition = _rootOffest;
+            _healthOwner.HealthChanged -= OnHealthChanged;
+        }
+
+        private void Initialize(ICameraProvider cameraProvider)
+        {
+            transform.localPosition = _rootOffset;
             
             _healthOwner.HealthChanged += OnHealthChanged;
             
@@ -62,7 +65,10 @@ namespace Gameplay.View
             ChangeColor();
             RefreshVisibility();
         }
-        
+        private void ChangeColor()
+        {
+            _sliderFiller.color = Color.Lerp(_minHealthColor, _maxHealthColor, _slider.value);
+        }
         private void RefreshVisibility()
         {
             if (Mathf.Abs(_slider.value - 1) < 1e-5 && _hideOnFullHealth)
@@ -80,13 +86,8 @@ namespace Gameplay.View
             _slider.gameObject.SetActive(true);
         }
 
-        private void ChangeColor()
-        {
-            _sliderFiller.color = Color.Lerp(_minHealthColor, _maxHealthColor, _slider.value);
-        }
 
-        
-        public class Factory : PlaceholderFactory<IHaveHealth, Transform, HealthBar>
+        public class Factory : PlaceholderFactory<IHaveHealth, HealthBar>
         {
         }
     }

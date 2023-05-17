@@ -8,6 +8,7 @@ namespace Gameplay
     public class CharacterInstaller : MonoInstaller
     {
         [SerializeField] private HealthBar _healthBarPrefab;
+        [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
         [SerializeField] private ScriptableObject _characterFXList;
         
         [Inject] private StatsInfo _statsInfo;
@@ -49,10 +50,14 @@ namespace Gameplay
         
         private void BindView()
         {
-            Container.BindFactory<IHaveHealth, Transform, HealthBar, HealthBar.Factory>()
+            Container.BindFactory<IHaveHealth, HealthBar, HealthBar.Factory>()
                 .FromComponentInNewPrefab(_healthBarPrefab)
                 .Lazy();
          
+            Container.BindFactory<LookDirectionDisplay, LookDirectionDisplay.Factory>()
+                .FromComponentInNewPrefab(_lookDirectionDisplayPrefab)
+                .Lazy();
+            
             Container.Bind<ICharacterFXList>()
                 .To<CharacterFXList>()
                 .FromScriptableObject(_characterFXList)

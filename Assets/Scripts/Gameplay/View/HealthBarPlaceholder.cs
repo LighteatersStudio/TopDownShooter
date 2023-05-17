@@ -1,24 +1,22 @@
 ﻿using UnityEngine;
+using Utility;
 using Zenject;
 
 namespace Gameplay.View
 {
-    public sealed class HealthBarPlaceholder : MonoBehaviour
+    public sealed class HealthBarPlaceholder : Placeholder<HealthBar.Factory>
     {
-        private HealthBar.Factory _factory;
         private IHaveHealth _healthOwner;
-        
+
         [Inject]
-        public void Construct(HealthBar.Factory factory, IHaveHealth healthOwner)
+        public void Construct(IHaveHealth healthOwner)
         {
-            _factory = factory;
             _healthOwner = healthOwner;
         }
 
-        private void Start()
+        protected override GameObject Create(HealthBar.Factory factory)
         {
-            _factory.Create(_healthOwner, transform);
-            Destroy(this);
+            return factory.Create(_healthOwner).gameObject;
         }
     }
 }
