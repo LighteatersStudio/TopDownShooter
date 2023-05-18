@@ -102,7 +102,7 @@ MonoBehaviour:
   _sliderFiller: {fileID: 6605134139677054742}
   _maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
   _minHealthColor: {r: 1, g: 0, b: 0, a: 1}
-  _rootOffest: {x: 0, y: 1.5, z: 0}
+  _rootOffset: {x: 0, y: 1.5, z: 0}
   _hideOnFullHealth: 1
   _hideOnEmptyHealth: 1
 --- !u!114 &6605134139281467809

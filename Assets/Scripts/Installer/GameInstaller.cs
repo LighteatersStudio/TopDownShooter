@@ -87,7 +87,7 @@ namespace Installer
                 .AsSingle()
                 .Lazy();
             
-            Container.BindFactory<IMovable, PlayerInputAdapter, PlayerInputAdapter.Factory>()
+            Container.BindFactory<IMovable, ICanFire, PlayerInputAdapter, PlayerInputAdapter.Factory>()
                 .AsSingle()
                 .Lazy();
             
