@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.View;
+using Gameplay.Weapon;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +11,8 @@ namespace Gameplay
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
         [SerializeField] private ScriptableObject _characterFXList;
-        
+        [SerializeField] private Weapon.Weapon _weaponPrefab;
+
         [Inject] private StatsInfo _statsInfo;
         [Inject] private Func<Transform, GameObject> _modelFactoryMethod;
         
@@ -56,6 +58,11 @@ namespace Gameplay
          
             Container.BindFactory<LookDirectionDisplay, LookDirectionDisplay.Factory>()
                 .FromComponentInNewPrefab(_lookDirectionDisplayPrefab)
+                .Lazy();
+            
+            Container.Bind<Weapon.Weapon>()
+                .FromComponentInNewPrefab(_weaponPrefab)
+                .AsSingle()
                 .Lazy();
             
             Container.Bind<ICharacterFXList>()

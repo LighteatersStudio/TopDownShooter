@@ -13,6 +13,7 @@ namespace Gameplay
         private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, IDamageCalculator> _initializer;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
+        private Weapon.Weapon _weapon;
         private bool IsDead => _stats.Health <= 0;
         
         public float HealthRelative => _stats.HealthRelative;
@@ -42,16 +43,18 @@ namespace Gameplay
         
         
         [Inject]
-        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator)
+        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator, Weapon.Weapon weapon)
         {
             _initializer = new(
                 statsInfo,
                 viewFactoryMethod,
                 damageCalculator);
+            _weapon = weapon;
         }
         
         protected void Start()
         {
+            _weapon.transform.position = new Vector3(0, 1, 0);
             _initializer.Initialize(Load);
         }
 
@@ -111,6 +114,7 @@ namespace Gameplay
         public void Fire()
         {
             Debug.Log("Fire");
+            _weapon.Shot();
             Attacked?.Invoke();
         }
         
