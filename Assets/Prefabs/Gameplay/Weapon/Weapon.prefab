@@ -41,8 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8962779276344501880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18bf6eee05d45459e98067fd2c9188cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a8735c5ab6e4458dbf71a8054a65d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectilePrefab: {fileID: 2362927362282252975, guid: 2af3c92a9e433ce4b9a830e4ea80334f, type: 3}
-  _shootingSpeed: 120
+  _shotsPerSecond: 2
+  _bulletAmount: 50
+  _shotEffect: {fileID: 0}
