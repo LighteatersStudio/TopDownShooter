@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 18bf6eee05d45459e98067fd2c9188cc
+guid: 4a8735c5ab6e4458dbf71a8054a65d86
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _projectilePrefab: {fileID: 2362927362282252975, guid: 2af3c92a9e433ce4b9a830e4ea80334f, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

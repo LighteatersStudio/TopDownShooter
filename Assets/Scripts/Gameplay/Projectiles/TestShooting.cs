@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Gameplay.Projectile
+namespace Gameplay.Projectiles
 {
     public class TestShooting : MonoBehaviour
     {
@@ -12,8 +12,6 @@ namespace Gameplay.Projectile
             if (Input.GetKeyDown(KeyCode.E))
             {
                 var projectile = Instantiate(_projectilePrefab);
-
-                projectile.Launch(transform.position, transform.forward, 50, TypeDamage.Fire);
             }
         }
     }

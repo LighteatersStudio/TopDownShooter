@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Zenject;
 
-namespace Gameplay.Projectile
+namespace Gameplay.Projectiles
 {
     public class Projectile : MonoBehaviour
     {
@@ -13,18 +14,27 @@ namespace Gameplay.Projectile
 
         private IProjectileMovement _projectileMovement;
 
+        private Vector3 _position;
+        private Vector3 _direction;
         
         private void Awake()
         {
             _projectileMovement = GetComponent<IProjectileMovement>();
         }
 
-        public void Launch(Vector3 position, Vector3 direction, float damage, TypeDamage typeDamage)
+        [Inject]
+        public void Construct(Vector3 position, Vector3 direction, float damage, TypeDamage typeDamage)
         {
-            _projectileMovement.Move(position, direction);
+            _position = position;
+            _direction = direction;
             _damage = damage;
             _typeDamage = typeDamage;
             _lifeTimer = _timeForDestroyShot;
+        }
+
+        public void Launch()
+        {
+            _projectileMovement.Move(_position, _direction);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -57,7 +67,11 @@ namespace Gameplay.Projectile
             {
                 Destroy(gameObject);
             }
-        }  
+        }
+        
+        public class Factory : PlaceholderFactory<Vector3, Vector3, float, TypeDamage, Projectile>
+        {
+        }
     }
 }
 

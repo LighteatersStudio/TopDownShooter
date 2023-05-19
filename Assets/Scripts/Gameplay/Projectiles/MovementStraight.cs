@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Gameplay.Projectile
+namespace Gameplay.Projectiles
 {
     public class MovementStraight : MonoBehaviour, IProjectileMovement
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using Gameplay.View;
-using Gameplay.Weapon;
+using Gameplay.Projectiles;
+using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +12,8 @@ namespace Gameplay
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
         [SerializeField] private ScriptableObject _characterFXList;
-        [SerializeField] private Weapon.Weapon _weaponPrefab;
+        [SerializeField] private Weapon _weaponPrefab;
+        [SerializeField] private Projectile _projectilePrefab;
 
         [Inject] private StatsInfo _statsInfo;
         [Inject] private Func<Transform, GameObject> _modelFactoryMethod;
@@ -20,6 +22,7 @@ namespace Gameplay
         {
             BindInjectedParameters();
             BindGameRules();
+            BindWeapon();
             BindView();
 
             if (Application.isEditor)
@@ -49,6 +52,20 @@ namespace Gameplay
                 .AsSingle()
                 .NonLazy();
         }
+
+        private void BindWeapon()
+        {
+            Container.Bind<IWeapon>()
+                .To<Weapon>()
+                .FromComponentInNewPrefab(_weaponPrefab)
+                .AsSingle()
+                .Lazy();
+
+            Container.BindFactory<Vector3, Vector3, float, TypeDamage, Projectile, Projectile.Factory>()
+                .FromComponentInNewPrefab(_projectilePrefab)
+                .AsSingle()
+                .Lazy();
+        }
         
         private void BindView()
         {
@@ -58,11 +75,6 @@ namespace Gameplay
          
             Container.BindFactory<LookDirectionDisplay, LookDirectionDisplay.Factory>()
                 .FromComponentInNewPrefab(_lookDirectionDisplayPrefab)
-                .Lazy();
-            
-            Container.Bind<Weapon.Weapon>()
-                .FromComponentInNewPrefab(_weaponPrefab)
-                .AsSingle()
                 .Lazy();
             
             Container.Bind<ICharacterFXList>()

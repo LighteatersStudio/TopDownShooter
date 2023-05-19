@@ -1,4 +1,4 @@
-namespace Gameplay.Weapon
+namespace Gameplay.Weapons
 {
     public interface IWeapon
     {
