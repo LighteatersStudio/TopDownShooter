@@ -9,6 +9,7 @@ namespace Gameplay
     public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire
     {
         [SerializeField] private Transform _viewRoot;
+        [SerializeField] private Transform _weaponFiringPoint;
         [SerializeField] private float _deathWaitTime = 10f;
 
         private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, IDamageCalculator> _initializer;
@@ -55,7 +56,7 @@ namespace Gameplay
         
         protected void Start()
         {
-            //_weapon.transform.position = new Vector3(0, 1, 0);
+            _weapon.SetParent(_weaponFiringPoint);
             _initializer.Initialize(Load);
         }
 

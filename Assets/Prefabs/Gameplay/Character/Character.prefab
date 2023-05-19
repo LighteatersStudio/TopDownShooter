@@ -44,6 +44,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea4df72222c40849f2282e09cfaf375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2323227509379616764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7804321971561553831}
+  m_Layer: 0
+  m_Name: WeaponFiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7804321971561553831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2323227509379616764}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.9, z: 1.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7564954714399395941}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3005667997710167655
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,6 +154,7 @@ Transform:
   - {fileID: 7564954714408511390}
   - {fileID: 7070710791399760810}
   - {fileID: 1715054113}
+  - {fileID: 7804321971561553831}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
+  _weaponFiringPoint: {fileID: 7804321971561553831}
   _deathWaitTime: 10
 --- !u!114 &1287744693554637472
 MonoBehaviour:
