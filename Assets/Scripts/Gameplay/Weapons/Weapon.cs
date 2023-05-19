@@ -41,7 +41,6 @@ namespace Gameplay.Weapons
         {
             if (_shotCooldownTimer > 0 || _bulletAmount == 0)
             {
-                Debug.Log("False");
                 return false;
             }
             
@@ -51,7 +50,6 @@ namespace Gameplay.Weapons
 
             var projectile = _projectileFactory.Create(_firingPoint.position, _firingPoint.forward, _weaponDamage, _typeDamage);
             projectile.Launch();
-            Debug.Log("Shot");
 
             var shotFX = Instantiate(_shotEffectPrefab, _firingPoint);
             shotFX.Play();
