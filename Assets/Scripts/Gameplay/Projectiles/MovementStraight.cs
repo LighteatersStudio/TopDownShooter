@@ -5,13 +5,19 @@ namespace Gameplay.Projectiles
     public class MovementStraight : MonoBehaviour, IProjectileMovement
     {
         [SerializeField] private float _speed;
+        
         private Rigidbody _rigidbody;
+        private Transform _cachedTransform;
 
-
-        public void Move(Vector3 position, Vector3 direction)
+        private void Awake()
         {
-            transform.position = position;
-            transform.forward = direction;
+            _cachedTransform = transform;
+        }
+
+        public void Move(FlyInfo flyInfo)
+        {
+            _cachedTransform.position = flyInfo.Position;
+            _cachedTransform.forward = flyInfo.Direction;
             
             _rigidbody = GetComponent<Rigidbody>();
             _rigidbody.useGravity = false;
@@ -19,7 +25,7 @@ namespace Gameplay.Projectiles
 
         private void Update()
         {
-            transform.position += transform.forward * Time.deltaTime * _speed;
+            _cachedTransform.position += transform.forward * Time.deltaTime * _speed;
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-
-namespace Gameplay.Projectiles
+﻿namespace Gameplay.Projectiles
 {
     public interface IProjectileMovement
     {
-        public void Move(Vector3 position, Vector3 direction);
+        public void Move(FlyInfo flyInfo);
     }
 }

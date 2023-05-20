@@ -15,7 +15,7 @@ namespace Gameplay
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
 
-        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>> _initializer;
+        private DynamicMonoInitializer<Func<Transform, GameObject>> _initializer;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
@@ -57,8 +57,9 @@ namespace Gameplay
         {
             _damageCalculator = damageCalculator;
             _weapon = weapon;
+            _stats = new CharacterStats(statsInfo);
             
-            _initializer = new(statsInfo, viewFactoryMethod);
+            _initializer = new(viewFactoryMethod);
         }
         
         protected void Start()
@@ -66,9 +67,8 @@ namespace Gameplay
             _initializer.Initialize(Load);
         }
 
-        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod)
+        private void Load(Func<Transform, GameObject> viewFactoryMethod)
         {
-            _stats = new CharacterStats(info);
             ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
         }
 
@@ -129,7 +129,5 @@ namespace Gameplay
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {
         }
-
-
     }
 }
