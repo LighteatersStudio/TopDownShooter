@@ -70,6 +70,8 @@ namespace Services.Input
         private void OnEnable()
         {
             _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
+            _inputActionAsset.FindAction(MoveActionName).canceled += OnMove;
+            
             _inputActionAsset.FindAction(LookActionName).performed += OnLook;
             _inputActionAsset.FindAction(FireActionName).performed += OnFire;
             _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
