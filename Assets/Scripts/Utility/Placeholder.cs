@@ -10,7 +10,7 @@ namespace Utility
             var transformInstance = Create().transform;
             
             transformInstance.SetParent(transform);
-            transformInstance.SetZeroPositionAndRotation();
+            transformInstance.SetZeroPositionRotation();
             
             Destroy(this);
         }

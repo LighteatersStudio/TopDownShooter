@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2370865988010644905
+--- !u!1 &8962779276344501880
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2370865988010644911}
-  - component: {fileID: 2370865988010644910}
+  - component: {fileID: 4971804570338522012}
+  - component: {fileID: 6250218386788076744}
   m_Layer: 0
-  m_Name: OnceEnemySpawner
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2370865988010644911
+--- !u!4 &4971804570338522012
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370865988010644905}
+  m_GameObject: {fileID: 8962779276344501880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,21 +32,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2370865988010644910
+--- !u!114 &6250218386788076744
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2370865988010644905}
+  m_GameObject: {fileID: 8962779276344501880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 120fbe64f9bd47b68441ae831d766c5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a8735c5ab6e4458dbf71a8054a65d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statsInfo:
-    MaxHealth: 100
-    Health: 100
-    MoveSpeed: 5
-    AttackSpeed: 1
-  _modelPrefab: {fileID: 7673487251499248760, guid: 1e461d2f90f7fb345bb9173731202a03, type: 3}
+  _shotsPerSecond: 2
+  _bulletAmount: 50
+  _weaponDamage: 1
+  _typeDamage: 0
+  _shotFX: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}

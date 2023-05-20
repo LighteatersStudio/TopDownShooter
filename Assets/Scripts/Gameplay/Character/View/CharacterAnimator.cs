@@ -29,7 +29,7 @@ namespace Gameplay
         
         protected void Start()
         {
-            transform.SetZeroPositionAndRotation();
+            transform.SetZeroPositionRotation();
             
             _lastPosition = transform.position;
             Subscribe();

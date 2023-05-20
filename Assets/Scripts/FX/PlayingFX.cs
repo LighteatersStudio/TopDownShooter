@@ -25,6 +25,11 @@ namespace FX
             Destroy(gameObject, particle.main.duration);
         }
         
+        public void SetParent(Transform parent)
+        {
+            transform.SetParent(parent);
+        }
+        
         public class Factory : PlaceholderFactory<ParticleSystem, Vector3, PlayingFX>
         {
         }
