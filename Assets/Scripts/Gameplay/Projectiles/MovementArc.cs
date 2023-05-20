@@ -24,12 +24,12 @@ namespace Gameplay.Projectiles
 
         private bool _lowTrajectorySelected;
         private bool _drawTrajectory;
-
-
-        public void Move(Vector3 position, Vector3 direction)
+        
+        
+        public void Move(FlyInfo flyInfo)
         {
-            transform.position = position;
-            transform.forward = direction;
+            transform.position = flyInfo.Position;
+            transform.forward = flyInfo.Direction;
             
             TrajectoryCalculation(_range, _speed);
             

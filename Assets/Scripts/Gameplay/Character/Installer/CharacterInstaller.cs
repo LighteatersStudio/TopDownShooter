@@ -7,8 +7,12 @@ using Zenject;
 
 namespace Gameplay
 {
+    [RequireComponent(typeof(Character))]
     public class CharacterInstaller : MonoInstaller
     {
+        [Header("Character self")]
+        [SerializeField] private Character _character;
+        
         [Header("View components")]
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
@@ -27,6 +31,9 @@ namespace Gameplay
         public override void InstallBindings()
         {
             BindInjectedParameters();
+            
+            BindCharacterSelf();
+            
             BindGameRules();
             BindWeapon();
             BindView();
@@ -49,7 +56,35 @@ namespace Gameplay
                 .AsSingle()
                 .NonLazy();
         }
-        
+
+        private void BindCharacterSelf()
+        {
+            Container.Bind<Character>()
+                .FromInstance(_character)
+                .AsCached()
+                .NonLazy();
+            
+            Container.Bind<ICharacter>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+            
+            Container.Bind<IHaveHealth>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+            
+            Container.Bind<ICanFire>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+            
+            Container.Bind<IWeaponUser>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+        }
+
         private void BindGameRules()
         {
             Container.Bind<IDamageCalculator>()

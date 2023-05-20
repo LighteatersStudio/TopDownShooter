@@ -38,7 +38,7 @@ namespace Gameplay.Projectiles
             transform.parent = null;
             _lifeTimer = _timeForDestroyShot;
             
-            _projectileMovement.Move(_flyInfo.Position, _flyInfo.Direction);
+            _projectileMovement.Move(_flyInfo);
         }
 
         private void OnTriggerEnter(Collider other)
