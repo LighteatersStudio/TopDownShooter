@@ -41,7 +41,6 @@ namespace Gameplay.Weapons
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
-        
         private void Update()
         {
             if (_shotCooldownTimer > 0)
