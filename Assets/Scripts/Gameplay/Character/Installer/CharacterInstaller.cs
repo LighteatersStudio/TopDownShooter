@@ -9,14 +9,20 @@ namespace Gameplay
 {
     public class CharacterInstaller : MonoInstaller
     {
+        [Header("View components")]
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
-        [SerializeField] private ScriptableObject _characterFXList;
+        
+        [Header("Weapon settings")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private Projectile _projectilePrefab;
 
+        [Header("Effects")]
+        [SerializeField] private ScriptableObject _characterFXList;
+        
         [Inject] private StatsInfo _statsInfo;
         [Inject] private Func<Transform, GameObject> _modelFactoryMethod;
+        
         
         public override void InstallBindings()
         {
@@ -61,7 +67,7 @@ namespace Gameplay
                 .AsSingle()
                 .Lazy();
 
-            Container.BindFactory<Vector3, Vector3, float, TypeDamage, Projectile, Projectile.Factory>()
+            Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
                 .FromComponentInNewPrefab(_projectilePrefab)
                 .AsSingle()
                 .Lazy();

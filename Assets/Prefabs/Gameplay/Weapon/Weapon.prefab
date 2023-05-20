@@ -48,4 +48,4 @@ MonoBehaviour:
   _bulletAmount: 50
   _weaponDamage: 1
   _typeDamage: 0
-  _shotEffectPrefab: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}
+  _shotFX: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}

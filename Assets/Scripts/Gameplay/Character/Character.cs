@@ -6,20 +6,28 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponUser
     {
+        [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
-        [SerializeField] private Transform _weaponFiringPoint;
+        [SerializeField] private Transform _weaponRoot;
+        
+        [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
 
-        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>, IDamageCalculator> _initializer;
+        private DynamicMonoInitializer<StatsInfo, Func<Transform, GameObject>> _initializer;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
+        
         private bool IsDead => _stats.Health <= 0;
         
         public float HealthRelative => _stats.HealthRelative;
         public float MoveSpeed => _stats.MoveSpeed;
+        
+        public float AttackSpeed => _stats.AttackSpeed;
+        public Transform WeaponRoot => _weaponRoot;
+        
         public CharacterModelRoots ModelRoots { get; private set; }
         
         private Vector3 _fireDirection;
@@ -47,24 +55,20 @@ namespace Gameplay
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator, IWeapon weapon)
         {
-            _initializer = new(
-                statsInfo,
-                viewFactoryMethod,
-                damageCalculator);
+            _damageCalculator = damageCalculator;
             _weapon = weapon;
+            
+            _initializer = new(statsInfo, viewFactoryMethod);
         }
         
         protected void Start()
         {
-            _weapon.SetParent(_weaponFiringPoint);
             _initializer.Initialize(Load);
         }
 
-        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator)
+        private void Load(StatsInfo info, Func<Transform, GameObject> viewFactoryMethod)
         {
             _stats = new CharacterStats(info);
-            _damageCalculator = damageCalculator;
-
             ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
         }
 
@@ -115,13 +119,17 @@ namespace Gameplay
         
         public void Fire()
         {
-            _weapon.Shot();
-            Attacked?.Invoke();
+            if (_weapon.Shot())
+            {
+                Attacked?.Invoke();    
+            }
         }
         
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {
         }
+
+
     }
 }

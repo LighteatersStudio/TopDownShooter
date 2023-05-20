@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7804321971561553831}
   m_Layer: 0
-  m_Name: WeaponFiringPoint
+  m_Name: WeaponRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
-  _weaponFiringPoint: {fileID: 7804321971561553831}
+  _weaponRoot: {fileID: 7804321971561553831}
   _deathWaitTime: 10
 --- !u!114 &1287744693554637472
 MonoBehaviour:

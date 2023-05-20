@@ -9,6 +9,7 @@ namespace Gameplay
         public float MaxHealth { get; }
         public float Health { get; private set; }
         public float MoveSpeed { get; private set; }
+        public float AttackSpeed { get; private set; }
         public float HealthRelative => Health / MaxHealth;
         public bool Imunne { get; }
 
@@ -20,6 +21,7 @@ namespace Gameplay
             MaxHealth = info.MaxHealth;
             Health = info.Health;
             MoveSpeed = info.MoveSpeed;
+            AttackSpeed = info.AttackSpeed;
         }
 
         public void ApplyDamage(float damage)

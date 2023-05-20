@@ -1,21 +1,23 @@
-﻿using UnityEngine;
+﻿using FX;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay.Projectiles
 {
+    [RequireComponent(typeof(IProjectileMovement))]
     public class Projectile : MonoBehaviour
     {
         [SerializeField] private  float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
         
-        private float _damage;
-        private float _lifeTimer;
-        private TypeDamage _typeDamage;
-
         private IProjectileMovement _projectileMovement;
+        private PlayingFX.Factory _fxFactory;
 
-        private Vector3 _position;
-        private Vector3 _direction;
+        private FlyInfo _flyInfo;
+        private IAttackInfo _attackInfo;
+        
+        private float _lifeTimer;
+        
         
         private void Awake()
         {
@@ -23,18 +25,20 @@ namespace Gameplay.Projectiles
         }
 
         [Inject]
-        public void Construct(Vector3 position, Vector3 direction, float damage, TypeDamage typeDamage)
+        public void Construct(FlyInfo direction, IAttackInfo attackInfo, PlayingFX.Factory fxFactory)
         {
-            _position = position;
-            _direction = direction;
-            _damage = damage;
-            _typeDamage = typeDamage;
-            _lifeTimer = _timeForDestroyShot;
+            _flyInfo = direction;
+            _attackInfo = attackInfo;
+            
+            _fxFactory = fxFactory;
         }
 
         public void Launch()
         {
-            _projectileMovement.Move(_position, _direction);
+            transform.parent = null;
+            _lifeTimer = _timeForDestroyShot;
+            
+            _projectileMovement.Move(_flyInfo.Position, _flyInfo.Direction);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -45,7 +49,7 @@ namespace Gameplay.Projectiles
 
                 if (damageable != null)
                 {
-                    damageable.TakeDamage(new AttackInfo(_damage, _typeDamage));
+                    damageable.TakeDamage(_attackInfo);
                 }
                 
                 SpawnSparksEffect();
@@ -55,8 +59,8 @@ namespace Gameplay.Projectiles
         
         private void SpawnSparksEffect()
         {
-            var effect = Instantiate(_sparksEffect.gameObject, transform.position, Quaternion.identity);
-            Destroy(effect, _sparksEffect.main.startLifetime.constant);
+            var fx = _fxFactory.Create(_sparksEffect, transform.position);
+            fx.SetParent(transform);
         }
         
         private void Update()
@@ -69,7 +73,7 @@ namespace Gameplay.Projectiles
             }
         }
         
-        public class Factory : PlaceholderFactory<Vector3, Vector3, float, TypeDamage, Projectile>
+        public class Factory : PlaceholderFactory<FlyInfo, IAttackInfo, Projectile>
         {
         }
     }

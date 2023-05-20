@@ -7,5 +7,6 @@ namespace Gameplay
         public float MaxHealth;
         public float Health;
         public float MoveSpeed;
+        public float AttackSpeed;
     }
 }
