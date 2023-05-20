@@ -1,5 +1,4 @@
-﻿using System;
-using Services.Input;
+﻿using Services.Input;
 using Services.Pause;
 using UnityEngine;
 using Zenject;
@@ -30,8 +29,6 @@ namespace Gameplay
             _inputController.LookChanged += OnLookChanged;
             
             _inputController.FireChanged += OnFireChanged;
-            
-            _inputController.MeleeChanged+= OnMeleeChanged;
         }
 
         private void OnMoveChanged(Vector2 direction)
@@ -47,11 +44,6 @@ namespace Gameplay
         private void OnFireChanged()
         {
             _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
-        }
-
-        private void OnMeleeChanged()
-        {
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(Vector3.zero));
         }
         
         

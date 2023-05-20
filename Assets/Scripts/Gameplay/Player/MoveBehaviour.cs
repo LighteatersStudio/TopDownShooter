@@ -51,5 +51,11 @@ namespace Gameplay
         {
             _rigidbody.velocity = direction.normalized * Speed * force;
         }
+
+        public void Stop()
+        {
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+        }
     }
 }
