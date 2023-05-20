@@ -1,4 +1,6 @@
-﻿using Services.Input;
+﻿using System;
+using Services.Input;
+using Services.Pause;
 using UnityEngine;
 using Zenject;
 
@@ -9,13 +11,15 @@ namespace Gameplay
         private readonly IMovable _movingActor;
         private readonly IInputController _inputController;
         private readonly ICanFire _fireActor;
+        private readonly IPause _pause;
 
         [Inject]
-        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor)
+        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, IPause pause)
         {
             _fireActor = fireActor;
             _inputController = inputController;
             _movingActor = movingActor;
+            _pause = pause;
             
             Subscribe();
         }
@@ -32,22 +36,22 @@ namespace Gameplay
 
         private void OnMoveChanged(Vector2 direction)
         {
-            _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y));
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y)));
         }
         
         private void OnLookChanged(Vector2 direction)
         {
-            _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y);
+            _pause.TryInvokeIfNotPause(() => _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y));
         }
-        
+
         private void OnFireChanged()
-        {            
-            _fireActor.Fire();
+        {
+            _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
         }
 
         private void OnMeleeChanged()
         {
-            _movingActor.SetMoveForce(Vector3.zero);
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(Vector3.zero));
         }
         
         
