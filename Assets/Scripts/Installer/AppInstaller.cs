@@ -2,6 +2,7 @@
 using Level;
 using Loader;
 using Loading;
+using Services;
 using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,10 +21,15 @@ namespace Installer
         [SerializeField] private SoundSource _soundSource;
         [SerializeField] private UISoundSettings _uiSoundSettings;
         [SerializeField] private MusicList _musicList;
+        
+        [Header("Version")]
+        [SerializeField] private string _applicationVersion = "ApplicationVersion";
 
         
         public override void InstallBindings()
         {
+            BindVersion();
+            
             BindUI();
             BindAudio();
             BindLoadingService();
@@ -134,6 +140,17 @@ namespace Installer
                 .FromNew()
                 .AsSingle()
                 .Lazy();
+        }
+
+        private void BindVersion()
+        {
+            Debug.Log("Global installer: Bind version");
+            
+            Container.Bind<IApplicationVersion>()
+                .To<ApplicationVersion>()
+                .FromScriptableObjectResource(_applicationVersion)
+                .AsSingle()
+                .NonLazy();
         }
         
 
