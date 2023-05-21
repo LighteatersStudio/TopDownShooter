@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ApplicationVersion
   m_EditorClassIdentifier: 
   _version: 0.1a
-  _buildNumber: 1
+  _buildNumber: 2
