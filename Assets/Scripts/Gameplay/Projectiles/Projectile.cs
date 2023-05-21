@@ -56,13 +56,12 @@ namespace Gameplay.Projectiles
                 Destroy(gameObject);
             }
         }
-        
+
         private void SpawnSparksEffect()
         {
-            var fx = _fxFactory.Create(_sparksEffect, transform.position);
-            fx.SetParent(transform);
+            _fxFactory.Create(_sparksEffect, transform.position);
         }
-        
+
         private void Update()
         {
             _lifeTimer -= Time.deltaTime;
