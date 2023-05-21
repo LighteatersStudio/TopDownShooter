@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e4dd05ed60c448d9c84a70bdb6b8b1c, type: 3}
+  m_Name: HighColorScheme 2
+  m_EditorClassIdentifier: 
+  main: {r: 0.0141509175, g: 1, b: 0.09777161, a: 1}
+  second: {r: 0, g: 1, b: 0.8771584, a: 1}
+  third: {r: 0.08018869, g: 0.4882281, b: 1, a: 1}

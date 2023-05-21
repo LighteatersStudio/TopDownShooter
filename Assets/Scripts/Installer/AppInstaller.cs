@@ -1,4 +1,5 @@
 ﻿using Audio;
+using Coloring;
 using Level;
 using Loader;
 using Loading;
@@ -22,6 +23,9 @@ namespace Installer
         [SerializeField] private UISoundSettings _uiSoundSettings;
         [SerializeField] private MusicList _musicList;
         
+        [Header("GameColors")]
+        [SerializeField] private ColorSchemeSettings _colorSchemeSettings;
+        
         [Header("Version")]
         [SerializeField] private string _applicationVersion = "ApplicationVersion";
 
@@ -35,6 +39,8 @@ namespace Installer
             BindLoadingService();
             BindScenes();
             BindGameRuntime();
+
+            BindGameColoring();
         }
         
         private void BindUI()
@@ -136,6 +142,10 @@ namespace Installer
         {
             Debug.Log("Global installer: Bind game runtime");
             
+            Container.BindFactory<GameRunType, GameRun, GameRun.Factory>()
+                .FromNew()
+                .Lazy();
+            
             Container.Bind<GameRunProvider>()
                 .FromNew()
                 .AsSingle()
@@ -154,5 +164,19 @@ namespace Installer
         }
         
 
+        private void BindGameColoring()
+        {
+            Debug.Log("Global installer: Bind game coloring");
+
+            Container.Bind<ColorSchemeSettings>()
+                .FromScriptableObject(_colorSchemeSettings)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<GameColoring>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Level;
 using Services.Pause;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,13 +9,16 @@ namespace UI
     public class PauseMenu : PopupBase
     {
         [SerializeField] private Button _closeButton;
+        [SerializeField] private Button _breakRunButton;
         
         private IPause _pauseManager;
+        private IGameRun _gameRun;
 
         [Inject]
-        public void Construct(IPause pause)
+        public void Construct(IPause pause, IGameRun gameRun)
         {
             _pauseManager = pause;
+            _gameRun = gameRun;
         }
 
       
@@ -22,16 +26,24 @@ namespace UI
         {
             _pauseManager.Paused = true;
             _closeButton.onClick.AddListener(OnCloseButtonClicked);
+            _breakRunButton.onClick.AddListener(OnBreakRunButtonClicked);
         }
 
         private void OnDisable()
         {
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
+            _breakRunButton.onClick.RemoveListener(OnBreakRunButtonClicked);
         }
 
         private void OnCloseButtonClicked()
         {
             _pauseManager.Paused = false;
+            Close();
+        }
+        
+        private void OnBreakRunButtonClicked()
+        {
+            _gameRun.Finish();
             Close();
         }
     }

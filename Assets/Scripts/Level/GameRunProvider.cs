@@ -1,29 +1,24 @@
-﻿using Loading;
-using Zenject;
+﻿using Zenject;
 
 namespace Level
 {
     public class GameRunProvider
     {
-        private readonly LoadingService _loadingService;
-        private readonly LevelLoadingOperation _levelLoading;
-        private readonly MainMenuLoadingOperation _menuLoading;
+        private readonly GameRun.Factory _factory;
 
         private GameRun _gameRun;
 
         public IGameRun GameRun => _gameRun;
         
         [Inject]
-        public GameRunProvider(LoadingService loadingService, LevelLoadingOperation levelLoading, MainMenuLoadingOperation menuLoading)
+        public GameRunProvider(GameRun.Factory factory)
         {
-            _loadingService = loadingService;
-            _levelLoading = levelLoading;
-            _menuLoading = menuLoading;
+            _factory = factory;
         }
 
         public async void Run(GameRunType runType)
         {
-            _gameRun = new GameRun(runType, _loadingService, _levelLoading, _menuLoading);
+            _gameRun = _factory.Create(runType);
             await _gameRun.Start();
         }
     }
