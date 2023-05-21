@@ -8,6 +8,7 @@ namespace Gameplay.Weapons
     public class Weapon : MonoBehaviour, IWeapon
     {
         [Header("Shooting settings")]
+        [SerializeField] private Projectile _bulletPrefab;
         [SerializeField] private float _shotsPerSecond = 2f;
         [SerializeField] private int _bulletAmount = 50;
         
@@ -18,7 +19,6 @@ namespace Gameplay.Weapons
         [Header("FX")]
         [SerializeField] private ParticleSystem _shotFX;
 
-        private Projectile.Factory _projectileFactory;
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         
@@ -26,11 +26,9 @@ namespace Gameplay.Weapons
 
         
         [Inject]
-        private void Construct(Projectile.Factory projectileFactory, PlayingFX.Factory fxFactory, IWeaponUser user)
+        private void Construct(PlayingFX.Factory fxFactory, IWeaponUser user)
         {
-            _projectileFactory = projectileFactory;
             _fxFactory = fxFactory;
-            
             _user = user;
         }
         
@@ -77,12 +75,14 @@ namespace Gameplay.Weapons
         {
             Vector3 position = transform.position;
 
-            var projectile = _projectileFactory.Create(
+            var projectile = Instantiate(_bulletPrefab);
+            
+            projectile.Construct(
                 new FlyInfo {Position = position, Direction = transform.forward},
-                new AttackInfo(_weaponDamage, _typeDamage));
-            
+                new AttackInfo(_weaponDamage, _typeDamage), _fxFactory);
+
             projectile.Launch();
-            
+
             _fxFactory.Create(_shotFX, position);
         }
     }

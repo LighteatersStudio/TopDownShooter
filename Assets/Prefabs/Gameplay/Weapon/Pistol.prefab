@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8735c5ab6e4458dbf71a8054a65d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _bulletPrefab: {fileID: -5664317439026340688, guid: 409e7295cd3c52945b1529f069ee1bb8, type: 3}
   _shotsPerSecond: 2
   _bulletAmount: 12
   _weaponDamage: 2

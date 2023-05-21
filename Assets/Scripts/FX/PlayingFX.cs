@@ -22,12 +22,7 @@ namespace FX
             var particle = Instantiate(_particlePrefab, transform);
             particle.Play();
             
-            Destroy(gameObject, particle.main.duration);
-        }
-        
-        public void SetParent(Transform parent)
-        {
-            transform.SetParent(parent);
+            Destroy(gameObject, particle.main.startLifetime.constant);
         }
         
         public class Factory : PlaceholderFactory<ParticleSystem, Vector3, PlayingFX>
