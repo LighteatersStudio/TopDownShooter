@@ -7,7 +7,10 @@ namespace Infrastructure
     {
         public override void InstallBindings()
         {
-            Container.Bind<IUIBuildProcessor>().To<UIAudioBuildProcessor>();
+            Container.Bind<IUIBuildProcessor>()
+                .To<UIAudioBuildProcessor>()
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

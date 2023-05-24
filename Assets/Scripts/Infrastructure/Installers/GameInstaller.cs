@@ -20,11 +20,11 @@ namespace Infrastructure
         [SerializeField] private Character _characterPrefab;
         
         
-
         public override void InstallBindings()
         {
             BindScenarios();
             BindPlayer();
+            BindGameState();
             BindGameRun();
             BindGameStatesObserver();
 
@@ -65,6 +65,15 @@ namespace Infrastructure
                 .Lazy();
         }
 
+        private void BindGameState()
+        {
+            Container.Bind<IGameState>()
+                .To<GameStateManager>()
+                .FromNew()
+                .AsSingle()
+                .Lazy();
+        }
+        
         private void BindGameRun()
         {
             Debug.Log("Game installer: Bind game runtime");
@@ -90,8 +99,6 @@ namespace Infrastructure
             return null;
         }
 
-        
-
         private void BindGameStatesObserver()
         {
             Container.Bind<GameWinObserver>()
@@ -104,9 +111,7 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
         }
-        
-        
-        
+
         private void BindCamera()
         {
             Debug.Log("Game installer: Bind camera");
@@ -128,9 +133,7 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
         }
-        
 
-        
         private void BindCharacter()
         {
             Debug.Log("Game installer: Bind character");

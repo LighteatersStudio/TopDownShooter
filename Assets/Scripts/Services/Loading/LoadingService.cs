@@ -1,29 +1,29 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace Services.AppVersion.Loading
 {
     public class LoadingService
     {
-        /*private IUIRoot _uiRoot;
+        private ILoadingScreen _loadingScreen;
         
         [Inject]
-        public LoadingService(IUIRoot uiRoot)
+        public LoadingService(ILoadingScreen loadingScreen)
         {
-            _uiRoot = uiRoot;
-        }*/
+            _loadingScreen = loadingScreen;
+        }
         
         public async UniTask Load(ILoadingOperation loadingOperation)
         {
             var queue = new Queue<ILoadingOperation>();
             queue.Enqueue(loadingOperation);
-            // TODO; implement
-          //  await _uiRoot.Open<LoadingScreen>().Load(queue);
+            await _loadingScreen.Show(queue);
         }
         
         public async UniTask Load(Queue<ILoadingOperation> loadingOperations)
         {
-          //  await _uiRoot.Open<LoadingScreen>().Load(loadingOperations);
+            await _loadingScreen.Show(loadingOperations);
         }
     }
 }

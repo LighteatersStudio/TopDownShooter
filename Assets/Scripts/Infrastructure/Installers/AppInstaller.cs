@@ -18,6 +18,12 @@ namespace Infrastructure
         {
             Debug.Log("Global installer: Bind loading operation");
 
+            Container.Bind<ILoadingScreen>()
+                .To<LoadingScreenAdapter>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<LoadingService>()
                 .AsSingle()
                 .NonLazy();
