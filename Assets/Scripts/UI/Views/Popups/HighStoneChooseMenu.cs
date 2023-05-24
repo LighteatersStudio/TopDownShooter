@@ -1,9 +1,9 @@
-﻿using Level;
+﻿using Services.AppVersion.Level;
 using Zenject;
 
 namespace UI
 {
-    public class HighStoneChooseMenu : PopupBase
+    public class HighStoneChooseMenu : Popup
     {
         private GameRunProvider _gameRun;
         

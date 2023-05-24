@@ -1,5 +1,5 @@
-﻿using Services.Input;
-using Services.Pause;
+﻿using Gameplay.Services.Input;
+using Gameplay.Services.Pause;
 using UnityEngine;
 using Zenject;
 

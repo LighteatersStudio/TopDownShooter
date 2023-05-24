@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using UI.Framework;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 namespace UI
 {
-    public class MainMenu : PopupBase
+    public class MainMenu : Popup
     {
         [SerializeField] private Button _playButton;
 

@@ -1,5 +1,4 @@
-﻿using FX;
-using UnityEngine;
+﻿using Gameplay.Services.FX;
 using Zenject;
 
 namespace Gameplay

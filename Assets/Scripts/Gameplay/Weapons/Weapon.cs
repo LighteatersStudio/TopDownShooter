@@ -1,6 +1,6 @@
-using FX;
 using UnityEngine;
 using Gameplay.Projectiles;
+using Gameplay.Services.FX;
 using Zenject;
 
 namespace Gameplay.Weapons

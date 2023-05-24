@@ -1,14 +1,14 @@
 ﻿using System;
-using Level;
-using Services.GameTime;
+using Services.AppVersion.Level;
+using Gameplay.Services.GameTime;
 using UnityEngine;
 using Zenject;
-using Services.Pause;
+using Gameplay.Services.Pause;
 using TMPro;
 
 namespace UI
 {
-    public class WinLevelMenu : PopupBase
+    public class WinLevelMenu : Popup
     {
         [SerializeField] private TextMeshProUGUI _timerText;
         

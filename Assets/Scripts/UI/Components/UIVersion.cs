@@ -1,4 +1,4 @@
-﻿using Services;
+﻿using Services.AppVersion;
 using TMPro;
 using UnityEngine;
 using Zenject;
