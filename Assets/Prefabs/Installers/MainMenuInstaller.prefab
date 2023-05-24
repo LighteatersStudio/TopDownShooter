@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 932570741167590284}
+  - component: {fileID: -6883236702910550022}
+  - component: {fileID: 6857570451647304801}
   - component: {fileID: 932570741167590285}
   m_Layer: 0
   m_Name: MainMenuInstaller
@@ -32,6 +34,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6883236702910550022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932570741167590287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0b026e5523f9c44acfea241a4f5ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leafInstallers:
+  - {fileID: 6857570451647304801}
+  - {fileID: 932570741167590285}
+--- !u!114 &6857570451647304801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932570741167590287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c027289464903a84f826d34f3e3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiRoot: {fileID: 1742492003223578173, guid: 1fdb5733452c4c04a96cb53f63f83b3f, type: 3}
+  _globalUIBuilder: {fileID: 8895478004471453305, guid: d63141b147ccf1649a4e543bc769982b, type: 3}
+  _scopeName: MainMenu
 --- !u!114 &932570741167590285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,5 +76,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449e16f8d3324462b8166073c9eccfb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _builder: {fileID: 8895478004471453305, guid: d63141b147ccf1649a4e543bc769982b, type: 3}
-  _menuRoot: {fileID: 1742492003223578173, guid: 1fdb5733452c4c04a96cb53f63f83b3f, type: 3}

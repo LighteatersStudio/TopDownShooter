@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services
+namespace Services.AppVersion
 {
     [CreateAssetMenu(menuName = "LightEaters/Version", fileName = "ApplicationVersion", order = 0)]
     public class ApplicationVersion : ScriptableObject, IApplicationVersion

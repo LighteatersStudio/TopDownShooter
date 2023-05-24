@@ -1,9 +1,9 @@
 ﻿using Zenject;
-using Services.Pause;
+using Gameplay.Services.Pause;
 
 namespace UI
 {
-    public class StartLevelMenu : PopupBase
+    public class StartLevelMenu : Popup
     {
         private IPause _pauseManager;
 

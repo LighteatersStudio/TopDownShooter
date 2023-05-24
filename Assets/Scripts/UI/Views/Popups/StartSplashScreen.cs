@@ -2,7 +2,7 @@
 
 namespace UI
 {
-    public class StartSplashScreen : PopupBase
+    public class StartSplashScreen : Popup
     {
         private void Update()
         {

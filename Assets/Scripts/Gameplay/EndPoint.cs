@@ -1,17 +1,16 @@
-﻿using UI;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace Gameplay
 {
     public class EndPoint : MonoBehaviour
     {
-        private IUIRoot _uiRoot;
+        private IGameState _gameState;
         
         [Inject]
-        public void Construct(IUIRoot uiRoot)
+        public void Construct(IGameState gameState)
         {
-            _uiRoot = uiRoot;
+            _gameState = gameState;
         }
         
         
@@ -19,7 +18,7 @@ namespace Gameplay
         {
             if (other.GetComponent<Player>())
             {
-                _uiRoot.Open<WinLevelMenu>();
+                _gameState.Win();
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿namespace Services
+﻿namespace Services.AppVersion
 {
     public interface IApplicationVersion
     {

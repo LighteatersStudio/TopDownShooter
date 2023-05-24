@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6032338114108344527}
+  - component: {fileID: 7573587972311919696}
+  - component: {fileID: -1196963654466697849}
+  - component: {fileID: 2196999272501285394}
   - component: {fileID: 1167715141}
   m_Layer: 0
   m_Name: GameplayInstaller
@@ -32,6 +35,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7573587972311919696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032338114108344520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c0b026e5523f9c44acfea241a4f5ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leafInstallers:
+  - {fileID: -1196963654466697849}
+  - {fileID: 2196999272501285394}
+  - {fileID: 1167715141}
+--- !u!114 &-1196963654466697849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032338114108344520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933c027289464903a84f826d34f3e3b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiRoot: {fileID: 1742492003223578173, guid: 4ad4e5d681e2e5b4eba87a18f79cd9dd, type: 3}
+  _globalUIBuilder: {fileID: 8895478004471453305, guid: 14f177d253889c44c8acd828317e8eb6, type: 3}
+  _scopeName: Gameplay
+--- !u!114 &2196999272501285394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032338114108344520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d2cac36d9da49c68cfc0ba25c7b455e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInputActionsMap: {fileID: -944628639613478452, guid: 7204243c7727540028fb2dd08ab8b392, type: 3}
+  _playerInputPrefab: {fileID: 5776387706417208865, guid: 65f7b11787bb0e04798952537ae807d8, type: 3}
 --- !u!114 &1167715141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,11 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166a12e0d9444f4c88075e69018ed707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiRoot: {fileID: 1742492003223578173, guid: 4ad4e5d681e2e5b4eba87a18f79cd9dd, type: 3}
-  _builder: {fileID: 8895478004471453305, guid: 14f177d253889c44c8acd828317e8eb6, type: 3}
   _playerCamera: {fileID: 7910540456862953555, guid: 0734916c9becfe04fb5bb016f1f12eff, type: 3}
   _playerPrefab: {fileID: 4252321798439718732, guid: 6583108963dd87749b66c28b3ee27550, type: 3}
   _playerSettings: {fileID: 11400000, guid: 80452d2ea04c9bc499e5804b9cf14162, type: 2}
   _characterPrefab: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
-  _playerInputActionsMap: {fileID: -944628639613478452, guid: 7204243c7727540028fb2dd08ab8b392, type: 3}
-  _playerInputPrefab: {fileID: 5776387706417208865, guid: 65f7b11787bb0e04798952537ae807d8, type: 3}
