@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services.Application.Description
+namespace Services.Application.Description.Implementation
 {
     [CreateAssetMenu(menuName = "LightEaters/Application/Create ApplicationDescription", fileName = "ApplicationDescription", order = 0)]
     public class ApplicationDescription : ScriptableObject, IApplicationDescription
