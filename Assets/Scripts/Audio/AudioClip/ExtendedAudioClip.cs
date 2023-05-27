@@ -2,7 +2,7 @@
 
 namespace Audio
 {
-    [CreateAssetMenu(menuName = "LightEaters/Simple Audio Clip", fileName = "AudioClip", order = 0)]
+    [CreateAssetMenu(menuName = "LightEaters/Audio/Simple Audio Clip", fileName = "AudioClip", order = 0)]
     public class ExtendedAudioClip : ScriptableObject, IAudioClip
     {
         [SerializeField] private float _volume = 1;

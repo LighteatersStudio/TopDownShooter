@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Services.AppVersion.Loading
+namespace Services.Loading
 {
     public class LevelLoadingOperation : ILoadingOperation
     {

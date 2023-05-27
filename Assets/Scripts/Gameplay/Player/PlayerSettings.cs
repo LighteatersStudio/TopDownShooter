@@ -2,7 +2,7 @@
 
 namespace Gameplay
 {
-    [CreateAssetMenu(menuName = "LightEaters/Create PlayerSettings", fileName = "PlayerSettings", order = 0)]
+    [CreateAssetMenu(menuName = "LightEaters/Player/Create PlayerSettings", fileName = "PlayerSettings", order = 0)]
     public class PlayerSettings : ScriptableObject, IPlayerSettings 
     {
         [SerializeField] private StatsInfo _stats;

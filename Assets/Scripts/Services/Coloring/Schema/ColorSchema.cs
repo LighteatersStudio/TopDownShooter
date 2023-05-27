@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     [CreateAssetMenu(menuName = "LightEaters/Coloring/Create ColorSchema", fileName = "ColorSchema", order = 0)]
     public class ColorSchema : ScriptableObject, IColorSchema

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     public abstract class ColoringBase : MonoBehaviour
     {

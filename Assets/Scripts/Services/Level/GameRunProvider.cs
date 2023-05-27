@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Services.AppVersion.Level
+namespace Services.Level
 {
     public class GameRunProvider
     {

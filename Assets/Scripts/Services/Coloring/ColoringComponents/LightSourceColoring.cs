@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     [RequireComponent(typeof(Light))]
     public class LightSourceColoring : ColoringBase

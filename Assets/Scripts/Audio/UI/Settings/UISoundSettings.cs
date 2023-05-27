@@ -2,7 +2,7 @@
 
 namespace Audio
 {
-    [CreateAssetMenu(menuName = "LightEaters/Create UISoundSettings", fileName = "UISoundSettings", order = 0)]
+    [CreateAssetMenu(menuName = "LightEaters/Audio/Create UISoundSettings", fileName = "UISoundSettings", order = 0)]
     public class UISoundSettings: ScriptableObject, IUISounds
     {
         [SerializeField] ExtendedAudioClip _buttonClick;

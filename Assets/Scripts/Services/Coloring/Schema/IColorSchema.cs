@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     public interface IColorSchema
     {

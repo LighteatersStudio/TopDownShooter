@@ -1,4 +1,4 @@
-namespace Services.AppVersion.Loading
+namespace Services.Loading
 {
     public class SceneNames
     {
