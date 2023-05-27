@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Gameplay.Weapons;
 using Utility;
 using Zenject;
 
@@ -10,8 +11,9 @@ namespace Gameplay
         private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory> _initializer;
         private Character _character;
         private PlayerInputAdapter _inputAdapter;
-        
+
         public event Action Dead;
+       // public IWeapon Weapon { get; private set;}
 
 
         [Inject]
@@ -27,6 +29,7 @@ namespace Gameplay
         {
             _initializer.Initialize(Load);
             _character.Dead += OnDead;
+             //Weapon = _character.Weapon;
         }
         
         private void OnDestroy()

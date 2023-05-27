@@ -6,5 +6,6 @@ namespace Gameplay.Weapons
     {
         float AttackSpeed { get; }
         Transform WeaponRoot { get; }
+        IWeapon Weapon { get; }
     }
 }

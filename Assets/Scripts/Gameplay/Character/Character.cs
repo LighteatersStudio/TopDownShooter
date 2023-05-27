@@ -27,7 +27,8 @@ namespace Gameplay
         
         public float AttackSpeed => _stats.AttackSpeed;
         public Transform WeaponRoot => _weaponRoot;
-        
+        //public IWeapon Weapon { get; private set; }
+
         public CharacterModelRoots ModelRoots { get; private set; }
         
         private Vector3 _fireDirection;
