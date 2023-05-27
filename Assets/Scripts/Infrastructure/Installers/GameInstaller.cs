@@ -2,6 +2,7 @@
 using Gameplay;
 using Services.AppVersion.Level;
 using Infrastructure.Scenraios;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +20,8 @@ namespace Infrastructure
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         
+        [Header("Gameplay Entities: weapon")]
+        [SerializeField] private WeaponUISetting _weaponUISetting;
         
         public override void InstallBindings()
         {
@@ -30,6 +33,7 @@ namespace Infrastructure
 
             BindCamera();
             BindCharacter();
+            BingWeaponUI();
         }
         
         
@@ -61,6 +65,14 @@ namespace Infrastructure
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
                 .WithGameObjectName("Player")
+                .AsSingle()
+                .Lazy();
+        }
+
+        private void BingWeaponUI()
+        {
+            Container.Bind<WeaponUISetting>()
+                .FromScriptableObject(_weaponUISetting)
                 .AsSingle()
                 .Lazy();
         }

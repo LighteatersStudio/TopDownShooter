@@ -1,5 +1,4 @@
 ﻿using Gameplay;
-using Gameplay.Weapons;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
@@ -8,17 +7,19 @@ namespace UI
 {
     public class Hud : View
     {
-        private IWeapon _player;
+        [SerializeField] private WeaponView _weaponView;
+
+        private IPlayer _player;
         
         [Inject]
-        public void Construct(IWeapon player)
+        public void Construct(IPlayer player)
         {
             _player = player;
         }
 
-        private void CheckWeapon()
+        private void Start()
         {
-            //_player.;
+            _weaponView.Construct(_player.WeaponOwner);
         }
     }
 }

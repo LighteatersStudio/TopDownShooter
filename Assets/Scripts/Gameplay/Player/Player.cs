@@ -12,8 +12,9 @@ namespace Gameplay
         private Character _character;
         private PlayerInputAdapter _inputAdapter;
 
+        public IWeaponOwner WeaponOwner => _character;
+
         public event Action Dead;
-       // public IWeapon Weapon { get; private set;}
 
 
         [Inject]
@@ -29,7 +30,6 @@ namespace Gameplay
         {
             _initializer.Initialize(Load);
             _character.Dead += OnDead;
-             //Weapon = _character.Weapon;
         }
         
         private void OnDestroy()
