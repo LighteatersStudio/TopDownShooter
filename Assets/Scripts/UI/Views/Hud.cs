@@ -19,7 +19,7 @@ namespace UI
 
         private void Start()
         {
-            _weaponView.Construct(_player.WeaponOwner);
+            _weaponView.SetupWeaponOwner(_player.WeaponOwner);
         }
     }
 }

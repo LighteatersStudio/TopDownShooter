@@ -17,7 +17,7 @@ namespace UI
             _weaponUISetting = weaponUI;
         }
 
-        public void Construct(IWeaponOwner weaponOwner)
+        public void SetupWeaponOwner(IWeaponOwner weaponOwner)
         {
             _icon.sprite = _weaponUISetting.GetHudIcon(weaponOwner.Weapon);
         }
