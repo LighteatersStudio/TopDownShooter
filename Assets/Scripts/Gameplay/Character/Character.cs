@@ -11,6 +11,7 @@ namespace Gameplay
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private Transform _weaponRoot;
+        [SerializeField] private GameObject _reloadMessage;
         
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
@@ -124,8 +125,17 @@ namespace Gameplay
             {
                 Attacked?.Invoke();    
             }
+            else
+            {
+                _reloadMessage.SetActive(true);
+            }
         }
-        
+
+        public void Reload()
+        {
+            _weapon.Reload();
+            _reloadMessage.SetActive(false);
+        }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {

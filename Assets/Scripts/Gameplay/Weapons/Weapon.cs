@@ -22,7 +22,8 @@ namespace Gameplay.Weapons
 
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
-        
+        private AmmoClip _ammoClip;
+
         private float _shotCooldownTimer;
 
         public string WeaponType => _id;
@@ -36,8 +37,9 @@ namespace Gameplay.Weapons
         
         private void Start()
         {
+            _ammoClip = new AmmoClip(_bulletAmount);
             RefreshCooldown();
-            
+
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
@@ -51,13 +53,14 @@ namespace Gameplay.Weapons
 
         public bool Shot()
         {
-            if (_shotCooldownTimer > 0 || _bulletAmount == 0)
+            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo())
             {
+                Debug.Log("Need reload");
                 return false;
             }
             
             RefreshCooldown();
-            WasteBullet();
+            _ammoClip.Shot();
             SpawnProjectile();
 
             return true;
@@ -66,11 +69,6 @@ namespace Gameplay.Weapons
         private void RefreshCooldown()
         {
             _shotCooldownTimer = 1 / _shotsPerSecond * _user.AttackSpeed;
-        }
-
-        private void WasteBullet()
-        {
-            --_bulletAmount;
         }
 
         private void SpawnProjectile()
@@ -86,6 +84,11 @@ namespace Gameplay.Weapons
             projectile.Launch();
 
             _fxFactory.Create(_shotFX, position);
+        }
+        
+        public void Reload()
+        {
+            _ammoClip.Reload();
         }
     }
 }

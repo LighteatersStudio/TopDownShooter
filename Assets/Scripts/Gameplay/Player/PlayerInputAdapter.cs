@@ -29,6 +29,7 @@ namespace Gameplay
             _inputController.LookChanged += OnLookChanged;
             
             _inputController.FireChanged += OnFireChanged;
+            _inputController.ReloadChanged += OnReloadChanged;
         }
 
         private void OnMoveChanged(Vector2 direction)
@@ -44,6 +45,11 @@ namespace Gameplay
         private void OnFireChanged()
         {
             _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
+        }
+
+        private void OnReloadChanged()
+        {
+            _pause.TryInvokeIfNotPause(() => _fireActor.Reload());
         }
         
         
