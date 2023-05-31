@@ -6,7 +6,7 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponUser
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
@@ -27,6 +27,7 @@ namespace Gameplay
         
         public float AttackSpeed => _stats.AttackSpeed;
         public Transform WeaponRoot => _weaponRoot;
+        public IWeaponReadonly Weapon => _weapon;
         
         public CharacterModelRoots ModelRoots { get; private set; }
         

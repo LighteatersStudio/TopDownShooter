@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Gameplay.Weapons;
 using Utility;
 using Zenject;
 
@@ -10,7 +11,9 @@ namespace Gameplay
         private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory> _initializer;
         private Character _character;
         private PlayerInputAdapter _inputAdapter;
-        
+
+        public IWeaponOwner WeaponOwner => _character;
+
         public event Action Dead;
 
 

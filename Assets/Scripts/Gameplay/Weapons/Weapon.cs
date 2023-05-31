@@ -7,7 +7,8 @@ namespace Gameplay.Weapons
 {
     public class Weapon : MonoBehaviour, IWeapon
     {
-        [Header("Shooting settings")]
+        [Header("Shooting settings")] 
+        [SerializeField] private string _id;
         [SerializeField] private Projectile _bulletPrefab;
         [SerializeField] private float _shotsPerSecond = 2f;
         [SerializeField] private int _bulletAmount = 50;
@@ -24,7 +25,8 @@ namespace Gameplay.Weapons
         
         private float _shotCooldownTimer;
 
-        
+        public string WeaponType => _id;
+
         [Inject]
         private void Construct(PlayingFX.Factory fxFactory, IWeaponUser user)
         {
