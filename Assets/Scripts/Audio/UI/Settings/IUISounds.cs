@@ -7,5 +7,6 @@
         IAudioClip OpenMenu { get; }
         IAudioClip CloseMenu { get; }
         IAudioClip ShowMessage { get; }
+        IAudioClip ButtonHover { get; }
     }
 }

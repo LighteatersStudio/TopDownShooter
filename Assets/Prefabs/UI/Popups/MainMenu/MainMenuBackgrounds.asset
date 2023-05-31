@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MainMenuBackgrounds
   m_EditorClassIdentifier: 
   _sprites:
-  - {fileID: 21300000, guid: 8249427725cc0984f925c0e6114677b3, type: 3}
-  - {fileID: 21300000, guid: a73fd8e79e1f3c24a913b8a73cd939a0, type: 3}
+  - {fileID: 21300000, guid: 25dbbca6246ff304abe3ef1a877ba9c7, type: 3}
+  - {fileID: 21300000, guid: e174a851d5a766a478b303a8d7b79dc7, type: 3}
+  - {fileID: 21300000, guid: 226a68cd774e7e643b6b3a4581f4dadf, type: 3}

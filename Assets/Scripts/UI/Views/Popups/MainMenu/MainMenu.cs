@@ -12,7 +12,8 @@ namespace UI
         [Header("Controls")]
         [SerializeField] private TMP_Text _gameNameLabel;
         [SerializeField] private Image _backImage;
-        [SerializeField] private Button _playButton;
+        [SerializeField] private Button _startButton;
+        [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _exitButton;
         
         [Header("Settings")]
@@ -37,13 +38,15 @@ namespace UI
 
         private void OnEnable()
         {
-            _playButton.onClick.AddListener(LoadLevel);
+            _startButton.onClick.AddListener(LoadLevel);
+            _settingsButton.onClick.AddListener(OpenSettings);
             _exitButton.onClick.AddListener(ApplicationExit);
         }
 
         private void OnDisable()
         {
-            _playButton.onClick.RemoveListener(LoadLevel);
+            _startButton.onClick.RemoveListener(LoadLevel);
+            _settingsButton.onClick.RemoveListener(OpenSettings);
             _exitButton.onClick.RemoveListener(ApplicationExit);
         }
 
@@ -53,8 +56,14 @@ namespace UI
             Close();
         }
 
+        private void OpenSettings()
+        {
+            Debug.Log("Settings button clicked.");
+        }
+        
         private void ApplicationExit()
         {
+            Debug.Log("Application Quit.");
             Application.Quit();
         }
     }
