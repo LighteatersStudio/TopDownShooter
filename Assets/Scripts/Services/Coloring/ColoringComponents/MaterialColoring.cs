@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     [RequireComponent(typeof(Renderer))]
     public class MaterialColoring : ColoringBase

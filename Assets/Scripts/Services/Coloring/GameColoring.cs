@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     public class GameColoring : IInitializable 
     {

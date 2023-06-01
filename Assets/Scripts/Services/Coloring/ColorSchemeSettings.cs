@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services.AppVersion.Coloring
+namespace Services.Coloring
 {
     [CreateAssetMenu(menuName = "LightEaters/Coloring/Create ColorSchemeSettings", fileName = "ColorSchemeSettings", order = 0)]
     public class ColorSchemeSettings : ScriptableObject

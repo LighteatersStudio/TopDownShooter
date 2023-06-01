@@ -1,5 +1,5 @@
-﻿using Services.AppVersion.Level;
-using Services.AppVersion.Loading;
+﻿using Services.Level;
+using Services.Loading;
 using UnityEngine;
 using Zenject;
 

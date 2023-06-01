@@ -1,5 +1,8 @@
-﻿using Services.AppVersion;
-using Services.AppVersion.Coloring;
+﻿using Services.Application.Description;
+using Services.Application.Description.Implementation;
+using Services.Application.Version;
+using Services.Application.Version.Implementation;
+using Services.Coloring;
 using UnityEngine;
 using Zenject;
 
@@ -9,18 +12,25 @@ namespace Infrastructure
     {
         [Header("Version")]
         [SerializeField] private string _applicationVersion = "ApplicationVersion";
+        [SerializeField] private string _applicationDescription = "ApplicationDescription";
         
         [Header("GameColors")]
         [SerializeField] private ColorSchemeSettings _colorSchemeSettings;
         
         public override void InstallBindings()
         {
-            BindVersion();
+            BindApplicationServices();
             BindGameColoring();
         }
         
-        private void BindVersion()
+        private void BindApplicationServices()
         {
+            Container.Bind<IApplicationDescription>()
+                .To<ApplicationDescription>()
+                .FromScriptableObjectResource(_applicationDescription)
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<IApplicationVersion>()
                 .To<ApplicationVersion>()
                 .FromScriptableObjectResource(_applicationVersion)

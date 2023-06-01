@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Services.AppVersion.Loading;
+using Services.Loading;
 using UI;
 using UI.Framework;
 using Zenject;

@@ -1,4 +1,4 @@
-﻿namespace Services.AppVersion.Level
+﻿namespace Services.Level
 {
     public enum GameRunType
     {

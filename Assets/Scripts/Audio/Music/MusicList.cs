@@ -2,7 +2,7 @@
 
 namespace Audio
 {
-    [CreateAssetMenu(menuName = "LightEaters/Create MusicList", fileName = "MusicList", order = 0)]
+    [CreateAssetMenu(menuName = "LightEaters/Audio/Create MusicList", fileName = "MusicList", order = 0)]
     public class MusicList : ScriptableObject, IMusicList
     {
         [SerializeField] private AudioClip[] _musicList;

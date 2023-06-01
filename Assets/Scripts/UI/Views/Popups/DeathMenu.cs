@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Zenject;
-using Services.AppVersion.Level;
+using Services.Level;
 using TMPro;
 using Gameplay.Services.Pause;
 using Gameplay.Services.GameTime;
