@@ -6,6 +6,5 @@ namespace Gameplay
     {
         Vector3 LookDirection { get; set; }
         void Fire();
-        void Reload();
     }
 }

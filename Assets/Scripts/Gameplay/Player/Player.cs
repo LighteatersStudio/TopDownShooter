@@ -45,7 +45,7 @@ namespace Gameplay
             var moveBehaviour = gameObject.AddComponent<MoveBehaviour>();
             moveBehaviour.SetSpeedHandler(() => _character.MoveSpeed);
 
-            _inputAdapter = playerInputFactory.Create(moveBehaviour, _character);
+            _inputAdapter = playerInputFactory.Create(moveBehaviour, _character, _character);
         }
 
         public void SetPosition(Vector3 position)

@@ -1,47 +1,24 @@
-using System;
 using UnityEngine;
 
 namespace Gameplay.Weapons
 {
-    public class AmmoClip : IWeapon
+    public class AmmoClip
     {
-        private int _bulletAmount;
-        private int _maxBulletAmount;
+        private int _amount;
+        private int _size;
 
         public AmmoClip(int maxBulletAmount)
         {
-            _maxBulletAmount = maxBulletAmount;
-            _bulletAmount = maxBulletAmount;
+            _size = maxBulletAmount;
+            _amount = maxBulletAmount;
         }
 
-        public int MaxBulletAmount
+        public bool WasteBullet()
         {
-            get
+            if (_amount > 0)
             {
-                return _maxBulletAmount;
-            }
-            set => _maxBulletAmount = value;
-        }
-
-        public int CurrentBulletAmount
-        {
-            get
-            {
-                return _bulletAmount;
-            }
-            set
-            {
-                _bulletAmount = Mathf.Clamp(value, 0, _maxBulletAmount);
-            }
-        }
-
-        public bool Shot()
-        {
-            if (_bulletAmount > 0)
-            {
-                Debug.Log("Shoot");
-                --_bulletAmount;
-                Debug.Log(_bulletAmount);
+                --_amount;
+                Debug.Log(_amount);
                 return true;
             }
         
@@ -50,14 +27,12 @@ namespace Gameplay.Weapons
 
         public void Reload()
         {
-            _bulletAmount = _maxBulletAmount;
+            _amount = _size;
         }
 
         public bool HasAmmo()
         {
-            return _bulletAmount > 0;
+            return _amount > 0;
         }
-
-        public string WeaponType { get; }
     }
 }

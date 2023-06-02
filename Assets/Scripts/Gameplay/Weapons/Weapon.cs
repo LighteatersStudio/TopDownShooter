@@ -51,7 +51,7 @@ namespace Gameplay.Weapons
             }
         }
 
-        public bool Shot()
+        public bool WasteBullet()
         {
             if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo())
             {
@@ -60,7 +60,7 @@ namespace Gameplay.Weapons
             }
             
             RefreshCooldown();
-            _ammoClip.Shot();
+            _ammoClip.WasteBullet();
             SpawnProjectile();
 
             return true;

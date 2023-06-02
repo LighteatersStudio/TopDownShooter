@@ -58,7 +58,7 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
             
-            Container.BindFactory<IMovable, ICanFire, PlayerInputAdapter, PlayerInputAdapter.Factory>()
+            Container.BindFactory<IMovable, ICanFire, ICanReload, PlayerInputAdapter, PlayerInputAdapter.Factory>()
                 .AsSingle()
                 .Lazy();
             

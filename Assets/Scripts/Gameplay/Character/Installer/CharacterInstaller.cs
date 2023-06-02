@@ -78,7 +78,12 @@ namespace Gameplay
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
+            Container.Bind<ICanReload>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+
             Container.Bind<IWeaponUser>()
                 .To<Character>()
                 .FromResolve()
@@ -101,7 +106,7 @@ namespace Gameplay
                 .FromComponentInNewPrefab(_weaponPrefab)
                 .AsSingle()
                 .Lazy();
-
+            
             Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
                 .FromComponentInNewPrefab(_projectilePrefab)
                 .AsSingle()

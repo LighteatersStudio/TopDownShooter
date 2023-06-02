@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Utility;
 using Zenject;
@@ -6,12 +7,12 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, ICanReload, IWeaponOwner
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private Transform _weaponRoot;
-        [SerializeField] private GameObject _reloadMessage;
+        [SerializeField] private GameObject _reloadIndicator;
         
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
@@ -121,20 +122,20 @@ namespace Gameplay
         
         public void Fire()
         {
-            if (_weapon.Shot())
+            if (_weapon.WasteBullet())
             {
                 Attacked?.Invoke();    
             }
             else
             {
-                _reloadMessage.SetActive(true);
+                _reloadIndicator.SetActive(true);
             }
         }
 
         public void Reload()
         {
             _weapon.Reload();
-            _reloadMessage.SetActive(false);
+            _reloadIndicator.SetActive(false);
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
