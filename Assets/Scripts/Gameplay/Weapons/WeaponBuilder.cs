@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Gameplay.Weapons
 {
-    public class WeaponBuilder
+    public class WeaponBuilder : IWeaponBuilder
     {
         private Weapon _weaponPrefab;
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
 
+        
         
         public WeaponBuilder(Weapon weaponPrefab, PlayingFX.Factory fxFactory)
         {

@@ -27,8 +27,6 @@ namespace Gameplay.Weapons
             {
                 var weaponBuilder = new WeaponBuilder(_weaponPrefab, _fxFactory);
                 _character.ChangeWeapon(weaponBuilder);
-                
-                ChangeWeaponUIView?.Invoke();
             }
         }
     }

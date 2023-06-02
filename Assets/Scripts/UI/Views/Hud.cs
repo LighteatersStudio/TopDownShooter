@@ -2,7 +2,6 @@
 using UI.Framework;
 using UnityEngine;
 using Zenject;
-using Gameplay.Weapons;
 
 namespace UI
 {
@@ -11,25 +10,23 @@ namespace UI
         [SerializeField] private WeaponView _weaponView;
 
         private IPlayer _player;
-        private WeaponInitiator _weaponInitiator;
         
         
         [Inject]
-        public void Construct(IPlayer player, WeaponInitiator weaponInitiator)
+        public void Construct(IPlayer player)
         {
             _player = player;
-            _weaponInitiator = weaponInitiator;
         }
         
         private void Start()
         {
             ChangeViewWeapon();
-            _weaponInitiator.ChangeWeaponUIView += ChangeViewWeapon;
+            _player.WeaponOwner.ChangeWeaponUIView += ChangeViewWeapon;
         }
         
         private void OnDestroy()
         {
-            _weaponInitiator.ChangeWeaponUIView -= ChangeViewWeapon;
+            _player.WeaponOwner.ChangeWeaponUIView -= ChangeViewWeapon;
         }
 
         private void ChangeViewWeapon()
