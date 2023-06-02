@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-namespace UI.Framework
+namespace UI.Framework.Implementation
 {
     public class UIRoot : MonoBehaviour, IUIRoot
     {
