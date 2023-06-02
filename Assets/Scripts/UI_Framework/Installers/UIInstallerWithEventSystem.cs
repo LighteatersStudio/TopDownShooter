@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Infrastructure
+namespace UI.Framework.Implementation
 {
     public class UIInstallerWithEventSystem : UIInstaller
     {
