@@ -11,15 +11,21 @@ namespace UI
 
         private IPlayer _player;
         
+        
         [Inject]
         public void Construct(IPlayer player)
         {
             _player = player;
         }
-
+        
         private void Start()
         {
-            _weaponView.SetupWeaponOwner(_player.WeaponOwner);
+            InitWeapon();
+        }
+
+        private void InitWeapon()
+        {
+            _weaponView.SetupOwner(_player.WeaponOwner);
         }
     }
 }

@@ -188,7 +188,6 @@ MonoBehaviour:
   _healthBarPrefab: {fileID: 6605134139281467808, guid: 936803711da28d046a7e40b3f2079834, type: 3}
   _lookDirectionDisplayPrefab: {fileID: 9131443714891836163, guid: db5dfd9e4bff62c4aa3be58539cc1209, type: 3}
   _weaponPrefab: {fileID: 633196126572922620, guid: f9dd6edc38e9bce42823222796756611, type: 3}
-  _projectilePrefab: {fileID: 262872693701470091, guid: 6416c7f709c3cba4e8a3aaeee322d923, type: 3}
   _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}
 --- !u!114 &1262148185
 MonoBehaviour:
