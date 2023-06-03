@@ -14,6 +14,7 @@ namespace Gameplay.View
         [Header("Settings")]
         [SerializeField] private Vector3 _rootOffset;
         [SerializeField] private bool _hideOnBulletsAvailable = true;
+        [SerializeField] private float _reloadTime;
         
         private DynamicMonoInitializer<ICameraProvider> _initializer;
         private ICanReload _weaponOwner;
@@ -33,24 +34,24 @@ namespace Gameplay.View
 
         protected void OnDestroy()
         {
-            _weaponOwner.ReloadChanged -= OnReloadChanged;
+            _weaponOwner.Reloaded -= OnReloaded;
         }
 
         private void Initialize(ICameraProvider cameraProvider)
         {
             transform.localPosition = _rootOffset;
             
-            _weaponOwner.ReloadChanged += OnReloadChanged;
+            _weaponOwner.Reloaded += OnReloaded;
             
             _canvas.worldCamera = cameraProvider.MainCamera;
             _slider.maxValue = 1;
             
-            OnReloadChanged();
+            OnReloaded();
         }
 
-        private void OnReloadChanged()
+        private void OnReloaded()
         {
-            _slider.value = _weaponOwner.ReloadTime;
+            _slider.value = _reloadTime;
 
             RefreshView();
         }

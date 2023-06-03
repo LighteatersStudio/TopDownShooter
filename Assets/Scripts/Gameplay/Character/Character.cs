@@ -53,7 +53,7 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        public event Action ReloadChanged;
+        public event Action Reloaded;
 
 
         [Inject]
@@ -127,16 +127,16 @@ namespace Gameplay
             {
                 Attacked?.Invoke();    
             }
+            else
+            {
+                Reload();
+            }
         }
         
         public void Reload()
         {
-            if (!_weapon.WasteBullet())
-            {
-                ReloadChanged?.Invoke();
-            }
+            Reloaded?.Invoke();
         }
-
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {

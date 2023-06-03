@@ -53,7 +53,7 @@ namespace Gameplay.Weapons
 
         public bool WasteBullet()
         {
-            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo())
+            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo)
             {
                 Debug.Log("Need reload");
                 return false;
