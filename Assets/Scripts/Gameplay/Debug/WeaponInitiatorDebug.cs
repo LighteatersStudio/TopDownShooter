@@ -1,18 +1,16 @@
-﻿using System;
-using Gameplay.Services.FX;
+﻿using Gameplay.Services.FX;
+using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Weapons
+namespace Gameplay
 {
-    public class WeaponInitiator : MonoBehaviour
+    public class WeaponInitiatorDebug : MonoBehaviour
     {
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private Character _character;
         
         private PlayingFX.Factory _fxFactory;
-        
-        public event Action ChangeWeaponUIView;
 
         
         [Inject]

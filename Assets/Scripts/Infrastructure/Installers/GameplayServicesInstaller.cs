@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Input;
@@ -60,9 +61,9 @@ namespace Infrastructure
         
         private void BindWeaponBuilder()
         {
-            Container.Bind<WeaponInitiator>()
+            Container.Bind<WeaponInitiatorDebug>()
                 .FromNewComponentOnNewGameObject()
-                .WithGameObjectName(nameof(WeaponInitiator))
+                .WithGameObjectName(nameof(WeaponInitiatorDebug))
                 .AsSingle()
                 .NonLazy();
         }
