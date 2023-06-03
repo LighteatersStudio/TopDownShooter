@@ -5,24 +5,20 @@ namespace Gameplay.Weapons
 {
     public class WeaponBuilder : IWeaponBuilder
     {
-        private Weapon _weaponPrefab;
-        private PlayingFX.Factory _fxFactory;
-        private IWeaponUser _user;
+        private readonly Weapon _prefab;
+        private readonly PlayingFX.Factory _fxFactory;
 
         
-        
-        public WeaponBuilder(Weapon weaponPrefab, PlayingFX.Factory fxFactory)
+        public WeaponBuilder(Weapon prefab, PlayingFX.Factory fxFactory)
         {
-            _weaponPrefab = weaponPrefab;
+            _prefab = prefab;
             _fxFactory = fxFactory;
         }
 
-        public IWeapon CreateWeapon(IWeaponUser user)
+        public IWeapon Create(IWeaponUser weaponUser)
         {
-            _user = user;
-
-            var weapon = GameObject.Instantiate(_weaponPrefab);
-            weapon.Construct(_fxFactory, _user);
+            var weapon = Object.Instantiate(_prefab);
+            weapon.Construct(_fxFactory, weaponUser);
 
             return weapon;
         }

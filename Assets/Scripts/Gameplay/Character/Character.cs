@@ -51,7 +51,7 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        public event Action ChangeWeaponUIView;
+        public event Action<IWeaponReadonly, IWeaponReadonly> WeaponChanged;
 
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
@@ -130,11 +130,9 @@ namespace Gameplay
         public void ChangeWeapon(IWeaponBuilder weaponBuilder)
         {
             var oldWeapon = _weapon;
-            var newWeapon = weaponBuilder.CreateWeapon(this);
-
-            _weapon = newWeapon;
+            _weapon = weaponBuilder.Create(this);
             
-            ChangeWeaponUIView?.Invoke();
+            WeaponChanged?.Invoke(oldWeapon, _weapon);
             
             oldWeapon.Dispose();
         }

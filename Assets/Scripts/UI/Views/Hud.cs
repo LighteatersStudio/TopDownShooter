@@ -20,18 +20,12 @@ namespace UI
         
         private void Start()
         {
-            ChangeViewWeapon();
-            _player.WeaponOwner.ChangeWeaponUIView += ChangeViewWeapon;
-        }
-        
-        private void OnDestroy()
-        {
-            _player.WeaponOwner.ChangeWeaponUIView -= ChangeViewWeapon;
+            InitWeapon();
         }
 
-        private void ChangeViewWeapon()
+        private void InitWeapon()
         {
-            _weaponView.SetupWeaponOwner(_player.WeaponOwner);
+            _weaponView.SetupOwner(_player.WeaponOwner);
         }
     }
 }

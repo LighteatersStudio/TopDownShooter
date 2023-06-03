@@ -2,6 +2,6 @@
 {
     public interface IWeaponBuilder
     {
-        public IWeapon CreateWeapon(IWeaponUser user);
+        public IWeapon Create(IWeaponUser weaponUser);
     }
 }
