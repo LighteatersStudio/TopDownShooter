@@ -124,7 +124,7 @@ namespace Gameplay
         
         public void Fire()
         {
-            if (_weapon.WasteBullet())
+            if (_weapon.Shot())
             {
                 Attacked?.Invoke();    
             }

@@ -54,7 +54,7 @@ namespace Gameplay.Weapons
             }
         }
 
-        public bool WasteBullet()
+        public bool Shot()
         {
             if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo)
             {
