@@ -23,7 +23,7 @@ namespace UI
         {
             _owner = owner;
             
-            RefreshView(_owner.Weapon);
+            RefreshView();
             Unsubscribe();
             Subscribe();
         }
@@ -46,14 +46,14 @@ namespace UI
             }
         }
 
-        private void OnWeaponChanged(IWeaponReadonly oldWeapon, IWeaponReadonly newWeapon)
+        private void OnWeaponChanged()
         {
-            RefreshView(newWeapon);
+            RefreshView();
         }
         
-        private void RefreshView(IWeaponReadonly weapon)
+        private void RefreshView()
         {
-            _icon.sprite = _uiSetting.GetHudIcon(weapon);
+            _icon.sprite = _uiSetting.GetHudIcon(_owner.Weapon);
         }
     }
 }

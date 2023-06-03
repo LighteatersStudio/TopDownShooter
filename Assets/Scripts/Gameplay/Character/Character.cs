@@ -51,7 +51,7 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        public event Action<IWeaponReadonly, IWeaponReadonly> WeaponChanged;
+        public event Action WeaponChanged;
 
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
@@ -131,10 +131,9 @@ namespace Gameplay
         {
             var oldWeapon = _weapon;
             _weapon = weaponBuilder.Create(this);
-            
-            WeaponChanged?.Invoke(oldWeapon, _weapon);
-            
             oldWeapon.Dispose();
+            
+            WeaponChanged?.Invoke();
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>

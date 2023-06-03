@@ -5,6 +5,8 @@ namespace Gameplay.Weapons
     public interface IWeaponOwner : IWeaponUser
     {
         IWeaponReadonly Weapon { get; }
-        public event Action<IWeaponReadonly, IWeaponReadonly> WeaponChanged;
+        public event Action WeaponChanged;
+        
+        void ChangeWeapon(IWeaponBuilder weaponBuilder);
     }
 }

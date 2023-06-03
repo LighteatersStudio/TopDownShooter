@@ -1,10 +1,7 @@
-﻿using System;
-using Gameplay;
-using Gameplay.Services.FX;
+﻿using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
-using Gameplay.Weapons;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -21,7 +18,6 @@ namespace Infrastructure
         {
             BindInputController();
             BindTime();
-            BindWeaponBuilder();
             BindPauseManager();
             BindFX();
         }
@@ -59,14 +55,6 @@ namespace Infrastructure
                 .NonLazy();
         }
         
-        private void BindWeaponBuilder()
-        {
-            Container.Bind<WeaponInitiatorDebug>()
-                .FromNewComponentOnNewGameObject()
-                .WithGameObjectName(nameof(WeaponInitiatorDebug))
-                .AsSingle()
-                .NonLazy();
-        }
         
         private void BindPauseManager()
         {

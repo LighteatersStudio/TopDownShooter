@@ -8,15 +8,16 @@ namespace Gameplay
     public class WeaponInitiatorDebug : MonoBehaviour
     {
         [SerializeField] private Weapon _weaponPrefab;
-        [SerializeField] private Character _character;
+        private IPlayer _player;
         
         private PlayingFX.Factory _fxFactory;
 
         
         [Inject]
-        private void Construct(PlayingFX.Factory fxFactory)
+        private void Construct(PlayingFX.Factory fxFactory, IPlayer player)
         {
             _fxFactory = fxFactory;
+            _player = player;
         }
 
         private void Update()
@@ -24,7 +25,7 @@ namespace Gameplay
             if (Input.GetKeyDown(KeyCode.H))
             {
                 var weaponBuilder = new WeaponBuilder(_weaponPrefab, _fxFactory);
-                _character.ChangeWeapon(weaponBuilder);
+                _player.WeaponOwner.ChangeWeapon(weaponBuilder);
             }
         }
     }
