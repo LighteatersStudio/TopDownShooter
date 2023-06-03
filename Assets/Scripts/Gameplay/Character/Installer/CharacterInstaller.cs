@@ -14,6 +14,7 @@ namespace Gameplay
         
         [Header("View components")]
         [SerializeField] private HealthBar _healthBarPrefab;
+        [SerializeField] private ReloadBar _reloadBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
         
         [Header("Weapon settings")]
@@ -76,7 +77,12 @@ namespace Gameplay
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
+            Container.Bind<ICanReload>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+
             Container.Bind<IWeaponUser>()
                 .To<Character>()
                 .FromResolve()
@@ -107,6 +113,10 @@ namespace Gameplay
                 .FromComponentInNewPrefab(_healthBarPrefab)
                 .Lazy();
          
+            Container.BindFactory<ICanReload, ReloadBar, ReloadBar.Factory>()
+                .FromComponentInNewPrefab(_reloadBarPrefab)
+                .Lazy();
+
             Container.BindFactory<LookDirectionDisplay, LookDirectionDisplay.Factory>()
                 .FromComponentInNewPrefab(_lookDirectionDisplayPrefab)
                 .Lazy();

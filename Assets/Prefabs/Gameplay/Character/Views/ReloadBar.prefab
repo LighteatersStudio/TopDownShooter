@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 6605134139281467815}
   - component: {fileID: 6605134139281467814}
   - component: {fileID: 6605134139281467813}
-  - component: {fileID: 6605134139281467808}
+  - component: {fileID: -6512463384514603965}
   - component: {fileID: 6605134139281467809}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: ReloadBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &6605134139281467808
+--- !u!114 &-6512463384514603965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,17 +96,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6605134139281467819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e3b7f6d3b54590a5a1c2443c1e9790, type: 3}
+  m_Script: {fileID: 11500000, guid: 27bfe85c56aaa4416950a8d613ec7cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _canvas: {fileID: 6605134139281467814}
   _slider: {fileID: 6605134140160897088}
-  _sliderFiller: {fileID: 6605134139677054742}
-  _maxHealthColor: {r: 0, g: 1, b: 0, a: 1}
-  _minHealthColor: {r: 1, g: 0, b: 0, a: 1}
   _rootOffset: {x: 0, y: 1.5, z: 0}
-  _hideOnFullHealth: 1
-  _hideOnEmptyHealth: 1
+  _hideOnBulletsAvailable: 1
 --- !u!114 &6605134139281467809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +149,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -229,7 +225,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -254,7 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -287,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6605134140160897095
 RectTransform:
   m_ObjectHideFlags: 0

@@ -119,6 +119,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016f53de03014e918b98c7dc55081b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3872671653348171680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7786429927286086809}
+  - component: {fileID: 6597981592039585814}
+  m_Layer: 0
+  m_Name: ReloadBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7786429927286086809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872671653348171680}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7564954714399395941}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6597981592039585814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3872671653348171680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe428bc620cf64d32bb9341850819815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7564954714399395942
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +198,7 @@ Transform:
   - {fileID: 7070710791399760810}
   - {fileID: 1715054113}
   - {fileID: 7804321971561553831}
+  - {fileID: 7786429927286086809}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -186,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _character: {fileID: 7564954714399395940}
   _healthBarPrefab: {fileID: 6605134139281467808, guid: 936803711da28d046a7e40b3f2079834, type: 3}
+  _reloadBarPrefab: {fileID: -6512463384514603965, guid: 4becb2bebb5c24d418cd5a04e4222865, type: 3}
   _lookDirectionDisplayPrefab: {fileID: 9131443714891836163, guid: db5dfd9e4bff62c4aa3be58539cc1209, type: 3}
   _weaponPrefab: {fileID: 633196126572922620, guid: f9dd6edc38e9bce42823222796756611, type: 3}
   _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}

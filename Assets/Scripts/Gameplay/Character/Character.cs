@@ -6,7 +6,7 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, ICanReload, IWeaponOwner
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
@@ -26,6 +26,7 @@ namespace Gameplay
         public float MoveSpeed => _stats.MoveSpeed;
         
         public float AttackSpeed => _stats.AttackSpeed;
+
         public Transform WeaponRoot => _weaponRoot;
         public IWeaponReadonly Weapon => _weapon;
         
@@ -51,6 +52,7 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
+        public event Action Reloaded;
         public event Action WeaponChanged;
 
         [Inject]
@@ -126,6 +128,12 @@ namespace Gameplay
                 Attacked?.Invoke();    
             }
         }
+        
+        public void Reload()
+        {
+            _weapon.Reload();
+            Reloaded?.Invoke();
+        }    
 
         public void ChangeWeapon(IWeaponBuilder weaponBuilder)
         {

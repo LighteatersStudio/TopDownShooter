@@ -4,5 +4,6 @@ namespace Gameplay.Weapons
     {
         bool Shot();
         void Dispose();
+        void Reload();
     }
 }

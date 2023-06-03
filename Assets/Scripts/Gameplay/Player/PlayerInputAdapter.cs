@@ -11,14 +11,16 @@ namespace Gameplay
         private readonly IInputController _inputController;
         private readonly ICanFire _fireActor;
         private readonly IPause _pause;
+        private readonly ICanReload _reloadActor;
 
         [Inject]
-        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, IPause pause)
+        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, ICanReload reloadActor, IPause pause)
         {
             _fireActor = fireActor;
             _inputController = inputController;
             _movingActor = movingActor;
             _pause = pause;
+            _reloadActor = reloadActor;
             
             Subscribe();
         }
@@ -29,6 +31,7 @@ namespace Gameplay
             _inputController.LookChanged += OnLookChanged;
             
             _inputController.FireChanged += OnFireChanged;
+            _inputController.ReloadChanged += OnReloadChanged;
         }
 
         private void OnMoveChanged(Vector2 direction)
@@ -45,9 +48,14 @@ namespace Gameplay
         {
             _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
         }
+
+        private void OnReloadChanged()
+        {
+            _pause.TryInvokeIfNotPause(() => _reloadActor.Reload());
+        }
         
         
-        public class Factory : PlaceholderFactory<IMovable, ICanFire, PlayerInputAdapter>
+        public class Factory : PlaceholderFactory<IMovable, ICanFire, ICanReload, PlayerInputAdapter>
         {
         }
     }
