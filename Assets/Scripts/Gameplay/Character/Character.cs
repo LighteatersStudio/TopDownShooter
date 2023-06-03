@@ -135,6 +135,7 @@ namespace Gameplay
         
         public void Reload()
         {
+            _weapon.Reload();
             Reloaded?.Invoke();
         }
 
