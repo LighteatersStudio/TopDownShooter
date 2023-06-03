@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Gameplay.Weapons
 {
     public class AmmoClip
@@ -18,7 +16,6 @@ namespace Gameplay.Weapons
             if (_amount > 0)
             {
                 --_amount;
-                Debug.Log(_amount);
                 return true;
             }
         

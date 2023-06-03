@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Utility;
 using Zenject;
@@ -12,7 +11,6 @@ namespace Gameplay
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
         [SerializeField] private Transform _weaponRoot;
-        [SerializeField] private GameObject _reloadIndicator;
         
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
@@ -28,6 +26,8 @@ namespace Gameplay
         public float MoveSpeed => _stats.MoveSpeed;
         
         public float AttackSpeed => _stats.AttackSpeed;
+        public float ReloadTime { get; }
+
         public Transform WeaponRoot => _weaponRoot;
         public IWeaponReadonly Weapon => _weapon;
         
@@ -53,8 +53,9 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        
-        
+        public event Action ReloadChanged;
+
+
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator, IWeapon weapon)
         {
@@ -126,17 +127,16 @@ namespace Gameplay
             {
                 Attacked?.Invoke();    
             }
-            else
+        }
+        
+        public void Reload()
+        {
+            if (!_weapon.WasteBullet())
             {
-                _reloadIndicator.SetActive(true);
+                ReloadChanged?.Invoke();
             }
         }
 
-        public void Reload()
-        {
-            _weapon.Reload();
-            _reloadIndicator.SetActive(false);
-        }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
         {
