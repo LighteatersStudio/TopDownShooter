@@ -56,12 +56,16 @@ namespace Gameplay.Weapons
 
         public bool Shot()
         {
-            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo)
+            if (_shotCooldownTimer > 0)
             {
-                Debug.Log("Need reload");
                 return false;
             }
-
+            
+            if (!_ammoClip.HasAmmo)
+            {
+                Reload();
+            }
+            
             RefreshCooldown();
             _ammoClip.WasteBullet();
             SpawnProjectile();

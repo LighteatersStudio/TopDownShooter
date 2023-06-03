@@ -26,7 +26,6 @@ namespace Gameplay
         public float MoveSpeed => _stats.MoveSpeed;
         
         public float AttackSpeed => _stats.AttackSpeed;
-        public float ReloadTime { get; }
 
         public Transform WeaponRoot => _weaponRoot;
         public IWeaponReadonly Weapon => _weapon;
@@ -127,10 +126,6 @@ namespace Gameplay
             if (_weapon.Shot())
             {
                 Attacked?.Invoke();    
-            }
-            else
-            {
-                Reload();
             }
         }
         
