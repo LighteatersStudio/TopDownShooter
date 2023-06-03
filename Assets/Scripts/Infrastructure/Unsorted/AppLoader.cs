@@ -1,4 +1,4 @@
-﻿using Services.AppVersion.Loading;
+﻿using Services.Loading;
 using UnityEngine;
 using Zenject;
 

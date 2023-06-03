@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Services.AppVersion.Loading;
+using Services.Loading;
 using TMPro;
 using UI.Framework;
 using UnityEngine;

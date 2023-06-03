@@ -1,5 +1,4 @@
-﻿using System;
-using Gameplay.Services.FX;
+﻿using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
@@ -55,6 +54,7 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
         }
+        
         
         private void BindPauseManager()
         {

@@ -54,18 +54,19 @@ namespace Gameplay
         public event Action Attacked;
         public event Action Dead;
         public event Action Reloaded;
-
+        public event Action WeaponChanged;
 
         [Inject]
-        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod, IDamageCalculator damageCalculator, IWeapon weapon)
+        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
+            IDamageCalculator damageCalculator, IWeapon weapon)
         {
             _damageCalculator = damageCalculator;
             _weapon = weapon;
             _stats = new CharacterStats(statsInfo);
-            
+
             _initializer = new(viewFactoryMethod);
         }
-        
+
         protected void Start()
         {
             _initializer.Initialize(Load);
@@ -137,6 +138,15 @@ namespace Gameplay
         {
             _weapon.Reload();
             Reloaded?.Invoke();
+        }    
+
+        public void ChangeWeapon(IWeaponBuilder weaponBuilder)
+        {
+            var oldWeapon = _weapon;
+            _weapon = weaponBuilder.Create(this);
+            oldWeapon.Dispose();
+            
+            WeaponChanged?.Invoke();
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>

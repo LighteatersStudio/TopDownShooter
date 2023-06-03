@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace Services.AppVersion.Loading
+namespace Services.Loading
 {
     public class LoadingService
     {

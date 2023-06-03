@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Services.AppVersion.Coloring;
-using Services.AppVersion.Loading;
+using Services.Coloring;
+using Services.Loading;
 using Zenject;
 
-namespace Services.AppVersion.Level
+namespace Services.Level
 {
     public class GameRun : IGameRun
     {

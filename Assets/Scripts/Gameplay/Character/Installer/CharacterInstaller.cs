@@ -1,6 +1,5 @@
 ﻿using System;
 using Gameplay.View;
-using Gameplay.Projectiles;
 using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
@@ -20,7 +19,6 @@ namespace Gameplay
         
         [Header("Weapon settings")]
         [SerializeField] private Weapon _weaponPrefab;
-        [SerializeField] private Projectile _projectilePrefab;
 
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
@@ -105,11 +103,6 @@ namespace Gameplay
             Container.Bind<IWeapon>()
                 .To<Weapon>()
                 .FromComponentInNewPrefab(_weaponPrefab)
-                .AsSingle()
-                .Lazy();
-            
-            Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
-                .FromComponentInNewPrefab(_projectilePrefab)
                 .AsSingle()
                 .Lazy();
         }
