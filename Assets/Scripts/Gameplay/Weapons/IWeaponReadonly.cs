@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Gameplay.Weapons
+﻿namespace Gameplay.Weapons
 {
     public interface IWeaponReadonly
     {
         string WeaponType { get; }
-
-        event Action Disposed;
+        
+        IHaveAmmo Ammo { get; }
     }
 }
