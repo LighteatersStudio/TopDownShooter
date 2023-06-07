@@ -1,4 +1,5 @@
 ﻿using Gameplay.Weapons;
+using TMPro;
 using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
@@ -7,12 +8,19 @@ namespace UI
 {
     public class WeaponView : MonoBehaviour
     {
+        private const string EmptyAmmoLabel = "empty";
+        
         [SerializeField] private Image _icon;
+        [Header("Bullets")]
+        [SerializeField] private TMP_Text _bulletCount;
+        [SerializeField] private Color _haveAmmoColor = Color.white;
+        [SerializeField] private Color _emptyAmmoColor = Color.red;
 
         private WeaponUISetting _uiSetting;
         private IWeaponOwner _owner;
-
+        private IWeaponReadonly _currentWeapon;
         
+
         [Inject]
         public void Construct(WeaponUISetting weaponSettings)
         {
@@ -23,7 +31,7 @@ namespace UI
         {
             _owner = owner;
             
-            RefreshView();
+            OnWeaponChanged();
             Unsubscribe();
             Subscribe();
         }
@@ -48,12 +56,38 @@ namespace UI
 
         private void OnWeaponChanged()
         {
+            SubscribeToAmmo();
+            
+            OnAmmoChanged();
             RefreshView();
         }
-        
+
+        private void SubscribeToAmmo()
+        {
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Ammo.AmountChanged -= OnAmmoChanged;
+            }
+
+            _currentWeapon = _owner.Weapon;
+            _currentWeapon.Ammo.AmountChanged += OnAmmoChanged;
+        }
+
         private void RefreshView()
         {
             _icon.sprite = _uiSetting.GetHudIcon(_owner.Weapon);
+        }
+        private void OnAmmoChanged()
+        {
+            if (_currentWeapon.Ammo.Amount == 0)
+            {
+                _bulletCount.text = EmptyAmmoLabel;
+                _bulletCount.color = _emptyAmmoColor;
+                return;
+            }
+            
+            _bulletCount.text = _currentWeapon.Ammo.Amount.ToString();
+            _bulletCount.color = _haveAmmoColor;
         }
     }
 }

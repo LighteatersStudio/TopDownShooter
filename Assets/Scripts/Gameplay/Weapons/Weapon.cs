@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Gameplay.Projectiles;
 using Gameplay.Services.FX;
@@ -29,18 +28,20 @@ namespace Gameplay.Weapons
         private float _shotCooldownTimer;
 
         public string WeaponType => _id;
-        public event Action Disposed;
+        public IHaveAmmo Ammo => _ammoClip;
+        
 
         [Inject]
         public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user)
         {
             _fxFactory = fxFactory;
             _user = user;
+            
+            _ammoClip = new AmmoClip(_bulletAmount);
         }
 
         private void Start()
         {
-            _ammoClip = new AmmoClip(_bulletAmount);
             RefreshCooldown();
 
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
@@ -69,13 +70,12 @@ namespace Gameplay.Weapons
             RefreshCooldown();
             _ammoClip.WasteBullet();
             SpawnProjectile();
-
+            
             return true;
         }
 
         public void Dispose()
         {
-            Disposed?.Invoke();
             Destroy(gameObject);
         }
 
