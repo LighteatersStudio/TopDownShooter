@@ -36,11 +36,12 @@ namespace Gameplay.Weapons
         {
             _fxFactory = fxFactory;
             _user = user;
+            
+            _ammoClip = new AmmoClip(_bulletAmount);
         }
 
         private void Start()
         {
-            _ammoClip = new AmmoClip(_bulletAmount);
             RefreshCooldown();
 
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
