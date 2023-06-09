@@ -116,3 +116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cb2ca8e324b426e8156de15db04ed66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickingUp: {fileID: 11400000, guid: 80540f3345b92e642af4d60a602b63a7, type: 2}
+  _shot: {fileID: 0}
+  _reloading: {fileID: 0}

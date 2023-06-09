@@ -1,10 +1,25 @@
-﻿namespace Audio.Gameplay.Weapon.Elements
+﻿using UnityEngine;
+using Zenject;
+
+namespace Audio.Gameplay.Weapon.Elements
 {
-    public class SoundWeapon : SoundWeaponElement
+    public class SoundWeapon : MonoBehaviour
     {
-        protected void Start()
+        [SerializeField] private ExtendedAudioClip _pickingUp;
+        [SerializeField] private ExtendedAudioClip _shot;
+        [SerializeField] private ExtendedAudioClip _reloading;
+
+        private IAudioPlayer _audioPlayer;
+        
+        [Inject]
+        public virtual void Construct(IAudioPlayer audioPlayer)
         {
-            Play(Sounds.Replacement);
+            _audioPlayer = audioPlayer;
+        }
+        
+        private void Start()
+        {
+            _audioPlayer.PlayOneShoot(_pickingUp);
         }
     }
 }

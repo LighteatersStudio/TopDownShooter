@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 687a41726e9f4470b431713b14237aa3, type: 3}
-  m_Name: Reaplacement
+  m_Name: PickingUp
   m_EditorClassIdentifier: 
   _volume: 1
   _clip: {fileID: 8300000, guid: dc8ad87993ec7284b97ddf296b02da67, type: 3}
