@@ -1,4 +1,5 @@
 ﻿using Audio;
+using Audio.Gameplay.Weapon;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,7 @@ namespace Infrastructure
         [Header("Audio")]
         [SerializeField] private SoundSource _soundSource;
         [SerializeField] private UISoundSettings _uiSoundSettings;
+        [SerializeField] private WeaponSoundSettings _weaponSoundSettings;
         [SerializeField] private MusicList _musicList;
 
         public override void InstallBindings()
@@ -41,6 +43,12 @@ namespace Infrastructure
             Container.Bind<IUISounds>()
                 .To<UISoundSettings>()
                 .FromInstance(_uiSoundSettings)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<IWeaponSounds>()
+                .To<WeaponSoundSettings>()
+                .FromInstance(_weaponSoundSettings)
                 .AsSingle()
                 .NonLazy();
             

@@ -85,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundSource: {fileID: 5734604835648966028, guid: 7ff98c8cc17826849866e8ca834a4fbe, type: 3}
   _uiSoundSettings: {fileID: 11400000, guid: e1e30acea2097474d88486cdf69cc28f, type: 2}
+  _weaponSoundSettings: {fileID: 11400000, guid: 355ce51a5b401724f9b7c5b65f817ab1, type: 2}
   _musicList: {fileID: 11400000, guid: 0349bfc37dd540649b4b6364096b55cf, type: 2}
 --- !u!114 &204115043413753378
 MonoBehaviour:
@@ -111,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _applicationVersion: ApplicationVersion
+  _applicationDescription: ApplicationDescription
   _colorSchemeSettings: {fileID: 11400000, guid: 9f1798032b0be3b4dad43e8c1ca7e0a5, type: 2}
 --- !u!114 &8362516885837498339
 MonoBehaviour:
