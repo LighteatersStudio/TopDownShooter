@@ -24,6 +24,7 @@ namespace Gameplay.Weapons
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         private AmmoClip _ammoClip;
+        private PoolProjectiles _poolProjectiles;
 
         private float _shotCooldownTimer;
 
@@ -32,10 +33,11 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user)
+        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, PoolProjectiles poolProjectiles)
         {
             _fxFactory = fxFactory;
             _user = user;
+            _poolProjectiles = poolProjectiles;
             
             _ammoClip = new AmmoClip(_bulletAmount);
         }
@@ -92,7 +94,7 @@ namespace Gameplay.Weapons
 
             projectile.Construct(
                 new FlyInfo {Position = position, Direction = transform.forward},
-                new AttackInfo(_weaponDamage, _typeDamage), _fxFactory);
+                new AttackInfo(_weaponDamage, _typeDamage), _fxFactory, _poolProjectiles);
 
             projectile.Launch();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.Projectiles;
 using Services.Level;
 using Infrastructure.Scenraios;
 using UI;
@@ -34,6 +35,7 @@ namespace Infrastructure
             BindCamera();
             BindCharacter();
             BingWeaponUI();
+            BingPoolProjectiles();
         }
         
         
@@ -75,6 +77,15 @@ namespace Infrastructure
                 .FromScriptableObject(_weaponUISetting)
                 .AsSingle()
                 .Lazy();
+        }
+        
+        private void BingPoolProjectiles()
+        {
+            Container.Bind<PoolProjectiles>()
+                .FromNewComponentOnNewGameObject()
+                .WithGameObjectName(nameof(PoolProjectiles))
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindGameState()

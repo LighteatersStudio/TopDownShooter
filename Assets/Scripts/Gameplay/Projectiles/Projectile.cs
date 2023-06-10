@@ -12,6 +12,7 @@ namespace Gameplay.Projectiles
         
         private IProjectileMovement _projectileMovement;
         private PlayingFX.Factory _fxFactory;
+        private PoolProjectiles _poolProjectiles;
 
         private FlyInfo _flyInfo;
         private IAttackInfo _attackInfo;
@@ -25,17 +26,16 @@ namespace Gameplay.Projectiles
         }
 
         [Inject]
-        public void Construct(FlyInfo direction, IAttackInfo attackInfo, PlayingFX.Factory fxFactory)
+        public void Construct(FlyInfo direction, IAttackInfo attackInfo, PlayingFX.Factory fxFactory, PoolProjectiles poolProjectiles)
         {
             _flyInfo = direction;
             _attackInfo = attackInfo;
-            
+            _poolProjectiles = poolProjectiles;
             _fxFactory = fxFactory;
         }
 
         public void Launch()
         {
-            transform.parent = null;
             _lifeTimer = _timeForDestroyShot;
             
             _projectileMovement.Move(_flyInfo);
@@ -53,7 +53,7 @@ namespace Gameplay.Projectiles
                 }
                 
                 SpawnSparksEffect();
-                Destroy(gameObject);
+                PutProjectileInPool();
             }
         }
 
@@ -68,10 +68,16 @@ namespace Gameplay.Projectiles
 
             if (_lifeTimer <= 0)
             {
-                Destroy(gameObject);
+                PutProjectileInPool();
             }
         }
-        
+
+        private void PutProjectileInPool()
+        {
+            transform.parent = _poolProjectiles.transform;
+            gameObject.SetActive(false);
+        }
+
         public class Factory : PlaceholderFactory<FlyInfo, IAttackInfo, Projectile>
         {
         }
