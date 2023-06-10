@@ -6,8 +6,6 @@ namespace Audio.Gameplay.Weapon.Elements
     public class SoundWeapon : MonoBehaviour
     {
         [SerializeField] private ExtendedAudioClip _pickingUp;
-        [SerializeField] private ExtendedAudioClip _shot;
-        [SerializeField] private ExtendedAudioClip _reloading;
 
         private IAudioPlayer _audioPlayer;
         
