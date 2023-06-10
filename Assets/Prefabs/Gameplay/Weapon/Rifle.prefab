@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7333371037009615852}
   - component: {fileID: 4462191097789784739}
   - component: {fileID: 6614477310965171798}
+  - component: {fileID: 3345976010175882368}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -103,3 +104,18 @@ MonoBehaviour:
   _weaponDamage: 5
   _typeDamage: 0
   _shotFX: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}
+--- !u!114 &3345976010175882368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4604435199527199372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb2ca8e324b426e8156de15db04ed66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickingUp: {fileID: 11400000, guid: 80540f3345b92e642af4d60a602b63a7, type: 2}
+  _shot: {fileID: 0}
+  _reloading: {fileID: 0}
