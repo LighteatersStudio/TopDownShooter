@@ -1,5 +1,5 @@
 ﻿using System;
-using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace Services.Loading
 {
@@ -7,6 +7,8 @@ namespace Services.Loading
     {
         string Description { get; }
         
-        UniTask Launch(Action<float> progressHandler);
+        Task Launch(Action<float> progressHandler);
+
+        void AfterFinish();
     }
 }

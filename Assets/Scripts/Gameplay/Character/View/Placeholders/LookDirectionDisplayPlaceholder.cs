@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Utility;
+using Services.Utility;
 
 namespace Gameplay.View
 {

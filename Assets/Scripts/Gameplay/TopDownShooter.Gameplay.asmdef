@@ -2,8 +2,8 @@
     "name": "TopDownShooter.Gameplay",
     "rootNamespace": "",
     "references": [
-        "TopDownShooter.Utility",
         "TopDownShooter.Gameplay.Services",
+        "TopDownShooter.Services.Utility",
         "Zenject"
     ],
     "includePlatforms": [],

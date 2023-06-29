@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Services.Loading;
 using TMPro;
@@ -24,7 +25,7 @@ namespace UI
         private float _targetProgress;
         private bool _isProgress;
         
-        public async UniTask Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
+        public async Task Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
         {
             _isProgress = true;
             
@@ -37,6 +38,7 @@ namespace UI
 
                 await operation.Launch(OnProgress);
                 await WaitForBarFill();
+                operation.AfterFinish();
             }
 
             _isProgress = false;
