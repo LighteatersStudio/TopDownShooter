@@ -3,28 +3,25 @@ using Services.Coloring;
 using Services.Loading;
 using Zenject;
 
-namespace Services.Level
+namespace Meta.Level
 {
     public class GameRun : IGameRun
     {
-        private readonly LoadingService _loadingService;
-        private readonly LevelLoadingOperation _levelLoading;
-        private readonly MainMenuLoadingOperation _menuLoading;
+        private readonly ILoadingService _loadingService;
+        private readonly ILevelsNavigation _levelsNavigation;
         private readonly GameColoring _gameColoring;
         
         private readonly GameRunType _runType;
         
         public GameRun(GameRunType runType,
-            LoadingService loadingService,
-            LevelLoadingOperation levelLoading,
-            MainMenuLoadingOperation menuLoading,
+            ILoadingService loadingService,
+            ILevelsNavigation levelsNavigation,
             GameColoring gameColoring)
         {
             _runType = runType;
             
             _loadingService = loadingService;
-            _levelLoading = levelLoading;
-            _menuLoading = menuLoading;
+            _levelsNavigation = levelsNavigation;
             _gameColoring = gameColoring;
         }
 
@@ -32,13 +29,13 @@ namespace Services.Level
         {
             ChoiceGameColor();
 
-            await _loadingService.Load(_levelLoading);
+            await _loadingService.Load(_levelsNavigation.LevelLoading);
         }
 
         public async Task Finish()
         {
             RestoreDefaultGameColor();
-            await _loadingService.Load(_menuLoading);
+            await _loadingService.Load(_levelsNavigation.MainMenuLoading);
         }
         
         private void ChoiceGameColor()

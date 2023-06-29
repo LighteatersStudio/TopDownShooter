@@ -1,4 +1,4 @@
-namespace Services.Loading
+namespace Infrastructure.Loading
 {
     public class SceneNames
     {

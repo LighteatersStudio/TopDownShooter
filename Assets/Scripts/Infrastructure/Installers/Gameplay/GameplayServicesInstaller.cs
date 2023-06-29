@@ -2,6 +2,7 @@
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
+using Infrastructure.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;

@@ -5,7 +5,7 @@ using UI;
 using UI.Framework;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.Loading
 {
     public class LoadingScreenAdapter : ILoadingScreen
     {

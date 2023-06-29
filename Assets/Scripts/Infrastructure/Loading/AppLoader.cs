@@ -2,15 +2,15 @@
 using UnityEngine;
 using Zenject;
 
-namespace Loader
+namespace Infrastructure.Loading
 {
     public class AppLoader : MonoBehaviour
     {
-        private LoadingService _loadingService;
+        private ILoadingService _loadingService;
         private MainMenuLoadingOperation _menuLoadingOperation;
 
         [Inject]
-        public void Construct(LoadingService loadingService, MainMenuLoadingOperation menuLoadingOperation)
+        public void Construct(ILoadingService loadingService, MainMenuLoadingOperation menuLoadingOperation)
         {
             _loadingService = loadingService;
             _menuLoadingOperation = menuLoadingOperation;

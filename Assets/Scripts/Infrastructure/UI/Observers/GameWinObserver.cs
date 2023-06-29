@@ -3,7 +3,7 @@ using UI;
 using UI.Framework;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.UI
 {
     public class GameWinObserver
     {

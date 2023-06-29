@@ -1,13 +1,15 @@
 ﻿using System;
 using Gameplay;
-using Services.Level;
+using Meta.Level;
 using Infrastructure.Scenraios;
+using Infrastructure.UI;
 using UI;
 using UnityEngine;
 using Zenject;
 
 namespace Infrastructure
 {
+    
     public class GameInstaller : MonoInstaller
     {
         [Header("Level Entities")]

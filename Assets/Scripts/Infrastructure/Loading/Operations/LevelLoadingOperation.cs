@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+using Services.Loading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Services.Loading
+namespace Infrastructure.Loading
 {
     public class LevelLoadingOperation : ILoadingOperation
     {
@@ -19,7 +19,7 @@ namespace Services.Loading
             _sceneNames = sceneNames;
         }
         
-        public async UniTask Launch(Action<float> progressHandler)
+        public async Task Launch(Action<float> progressHandler)
         {
             progressHandler?.Invoke(0.5f);
 
@@ -36,6 +36,10 @@ namespace Services.Loading
                 progressHandler?.Invoke(1f);
                 taskResult.SetResult(true);
             }
+        }
+
+        public void AfterFinish()
+        {
         }
     }
 }

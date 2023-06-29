@@ -4,7 +4,7 @@ using UI.Framework;
 using UnityEngine;
 using Zenject;
 
-namespace Infrastructure
+namespace Infrastructure.UI
 {
     public class PlayerDeathObserver 
     {

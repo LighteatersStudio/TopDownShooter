@@ -1,5 +1,7 @@
-﻿using Services.Level;
+﻿using Infrastructure.Loading;
+using Meta.Level;
 using Services.Loading;
+using Services.Loading.Implementation;
 using UnityEngine;
 using Zenject;
 
@@ -24,7 +26,9 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
             
-            Container.Bind<LoadingService>()
+            Container.Bind<ILoadingService>()
+                .To<LoadingService>()
+                .FromNew()
                 .AsSingle()
                 .NonLazy();
             
@@ -52,6 +56,11 @@ namespace Infrastructure
         private void BindGameRun()
         {
             Debug.Log("Global installer: Bind game runtime");
+
+            Container.Bind<ILevelsNavigation>()
+                .To<LevelsNavigation>()
+                .FromNew()
+                .AsSingle().Lazy();
             
             Container.BindFactory<GameRunType, GameRun, GameRun.Factory>()
                 .FromNew()

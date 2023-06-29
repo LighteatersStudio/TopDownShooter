@@ -1,14 +1,9 @@
 {
-    "name": "TopDownShooter.UI",
+    "name": "TopDownShooter.Meta",
     "rootNamespace": "",
     "references": [
-        "GUID:e2c538c969a07ec4a83737df3124642d",
         "GUID:a4b62035425a73d46bf7f856187fa98d",
-        "GUID:e617c73ffc48cdf448de8ec39f4534bf",
-        "GUID:de93c55d63becf7499fe157351aa6258",
-        "GUID:92b4045f09ce5d54cb11893b17ba7fda",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

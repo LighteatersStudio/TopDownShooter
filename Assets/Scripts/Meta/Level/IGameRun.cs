@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.Level
+namespace Meta.Level
 {
     public interface IGameRun
     {
