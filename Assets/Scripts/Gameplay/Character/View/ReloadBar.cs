@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using Services.Utility;
 using Zenject;
@@ -18,7 +19,7 @@ namespace Gameplay.View
         
         private DynamicMonoInitializer<ICameraProvider> _initializer;
         private ICanReload _weaponOwner;
-        
+        private Coroutine _barFilling;
         
         [Inject]
         public void Construct(ICameraProvider cameraProvider, ICanReload weaponOwner)
@@ -30,6 +31,7 @@ namespace Gameplay.View
         protected void Start()
         {
             _initializer.Initialize(Initialize);
+            RefreshVisibility();
         }
 
         protected void OnDestroy()
@@ -45,22 +47,18 @@ namespace Gameplay.View
             
             _canvas.worldCamera = cameraProvider.MainCamera;
             _slider.maxValue = 1;
-            
-            OnReloaded();
         }
 
         private void OnReloaded()
         {
-            _slider.value = _reloadTime;
-
-            RefreshView();
+            if (_barFilling != null)
+            {
+                StopCoroutine(_barFilling);
+            }
+            
+            _barFilling = StartCoroutine(BarFilling());
         }
 
-        private void RefreshView()
-        {
-            RefreshVisibility();
-        }
- 
         private void RefreshVisibility()
         {
             if (_hideOnBulletsAvailable)
@@ -70,6 +68,20 @@ namespace Gameplay.View
             }
             
             _slider.gameObject.SetActive(true);
+        }
+
+        private IEnumerator BarFilling()
+        {
+            _slider.gameObject.SetActive(true);
+            
+            _slider.value = 0;
+            while (_slider.value < 1)
+            {
+                _slider.value += _reloadTime * Time.deltaTime;
+                yield return 0;
+            }
+            
+            RefreshVisibility();
         }
 
         public class Factory : PlaceholderFactory<ICanReload, ReloadBar>
