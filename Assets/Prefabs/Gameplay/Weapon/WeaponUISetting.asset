@@ -15,7 +15,5 @@ MonoBehaviour:
   _weaponIcons:
   - WeaponType: 1
     Icon: {fileID: 21300028, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
-  - WeaponType: 
-    Icon: {fileID: 0}
   - WeaponType: 2
     Icon: {fileID: 21300046, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
