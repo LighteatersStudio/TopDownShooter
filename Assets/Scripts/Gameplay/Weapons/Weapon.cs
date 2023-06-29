@@ -7,19 +7,20 @@ namespace Gameplay.Weapons
 {
     public class Weapon : MonoBehaviour, IWeapon
     {
-        [Header("Shooting settings")] [SerializeField]
-        private string _id;
-
+        [Header("Game ID")]
+        [SerializeField] private string _id;
+        
+        [Header("Shooting settings")]
         [SerializeField] private Projectile _bulletPrefab;
         [SerializeField] private float _shotsPerSecond = 2f;
         [SerializeField] private int _bulletAmount = 50;
 
-        [Header("Damage settings")] [SerializeField]
-        private float _weaponDamage = 1f;
-
+        [Header("Damage settings")] 
+        [SerializeField] private float _weaponDamage = 1f;
         [SerializeField] private TypeDamage _typeDamage = TypeDamage.Fire;
 
-        [Header("FX")] [SerializeField] private ParticleSystem _shotFX;
+        [Header("FX")] 
+        [SerializeField] private ParticleSystem _shotFX;
 
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
@@ -42,8 +43,7 @@ namespace Gameplay.Weapons
 
         private void Start()
         {
-            RefreshCooldown();
-
+            ResetCooldown();
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
@@ -57,19 +57,19 @@ namespace Gameplay.Weapons
 
         public bool Shot()
         {
-            if (_shotCooldownTimer > 0)
+            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo)
             {
                 return false;
             }
+            
+            _ammoClip.WasteBullet();
+            SpawnProjectile();
+            RefreshCooldown();
             
             if (!_ammoClip.HasAmmo)
             {
                 Reload();
             }
-            
-            RefreshCooldown();
-            _ammoClip.WasteBullet();
-            SpawnProjectile();
             
             return true;
         }
@@ -84,6 +84,11 @@ namespace Gameplay.Weapons
             _shotCooldownTimer = 1 / _shotsPerSecond * _user.AttackSpeed;
         }
 
+        private void ResetCooldown()
+        {
+            _shotCooldownTimer = 0;
+        }
+        
         private void SpawnProjectile()
         {
             Vector3 position = transform.position;
@@ -102,6 +107,7 @@ namespace Gameplay.Weapons
         public void Reload()
         {
             _ammoClip.Reload();
+            ResetCooldown();
         }
     }
 }

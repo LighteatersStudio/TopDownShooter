@@ -4,8 +4,8 @@ namespace Gameplay.Weapons
 {
     public interface IHaveAmmo
     {
-        int Amount { get; }
-        event Action AmountChanged;
+        int RemainAmmo { get; }
+        event Action RemainAmmoChanged;
 
     }
 }
