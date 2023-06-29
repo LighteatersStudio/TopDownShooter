@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using Utility;
+using Services.Utility;
 using Zenject;
 using Gameplay.Weapons;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Utility;
+using Services.Utility;
 using Zenject;
 
 namespace Gameplay.View

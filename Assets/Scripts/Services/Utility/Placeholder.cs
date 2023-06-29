@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Utility
+namespace Services.Utility
 {
     public abstract class Placeholder : MonoBehaviour
     {

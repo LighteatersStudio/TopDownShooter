@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Gameplay.Weapons;
-using Utility;
+using Services.Utility;
 using Zenject;
 
 namespace Gameplay

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utility
+namespace Services.Utility
 {
     public class DynamicMonoInitializer<TParameter>
     {
