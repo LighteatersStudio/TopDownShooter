@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Audio
+namespace Services.Audio
 {
     
     public class AudioPlayer : IAudioPlayer, IMusicPlayer

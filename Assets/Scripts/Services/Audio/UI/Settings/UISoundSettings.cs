@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Audio
+namespace Services.Audio
 {
     [CreateAssetMenu(menuName = "LightEaters/Audio/Create UISoundSettings", fileName = "UISoundSettings", order = 0)]
     public class UISoundSettings: ScriptableObject, IUISounds

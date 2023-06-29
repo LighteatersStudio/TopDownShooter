@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Audio
+namespace Services.Audio
 {
     public class AudioService : IAudioService
     {

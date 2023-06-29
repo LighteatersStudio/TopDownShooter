@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Audio
+namespace Services.Audio
 {
     [CreateAssetMenu(menuName = "LightEaters/Audio/Simple Audio Clip", fileName = "AudioClip", order = 0)]
     public class ExtendedAudioClip : ScriptableObject, IAudioClip

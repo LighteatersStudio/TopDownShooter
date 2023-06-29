@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Audio
+namespace Services.Audio
 {
     [RequireComponent(typeof(Button))]
     public class SoundButton: SoundUIElement, IPointerEnterHandler

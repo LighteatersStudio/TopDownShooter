@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Audio
+namespace Services.Audio
 {
     [RequireComponent(typeof(Toggle))]
     public class SoundToggle : SoundUIElement

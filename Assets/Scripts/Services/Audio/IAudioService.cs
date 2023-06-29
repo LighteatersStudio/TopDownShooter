@@ -1,4 +1,4 @@
-﻿namespace Audio
+﻿namespace Services.Audio
 {
     public interface IAudioService
     {

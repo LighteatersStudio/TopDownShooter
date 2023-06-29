@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Audio
+namespace Services.Audio
 {
     public interface IAudioClip
     {
