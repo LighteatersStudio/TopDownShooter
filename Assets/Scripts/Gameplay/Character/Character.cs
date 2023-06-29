@@ -60,7 +60,7 @@ namespace Gameplay
             IDamageCalculator damageCalculator, IWeapon weapon)
         {
             _damageCalculator = damageCalculator;
-            _weapon = weapon;
+            ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
 
             _initializer = new(viewFactoryMethod);
@@ -132,16 +132,32 @@ namespace Gameplay
         public void Reload()
         {
             _weapon.Reload();
-            Reloaded?.Invoke();
         }    
 
         public void ChangeWeapon(IWeaponBuilder weaponBuilder)
         {
-            var oldWeapon = _weapon;
-            _weapon = weaponBuilder.Create(this);
-            oldWeapon.Dispose();
+            ApplyNewWeapon(weaponBuilder.Create(this));
             
             WeaponChanged?.Invoke();
+        }
+
+        private void ApplyNewWeapon(IWeapon newWeapon)
+        {
+            var oldWeapon = _weapon;
+            
+            if (oldWeapon != null)
+            {
+                oldWeapon.ReloadStarted -= OnWeaponReloadStarted;
+                oldWeapon.Dispose();
+            }
+
+            _weapon = newWeapon;
+            _weapon.ReloadStarted += OnWeaponReloadStarted;
+        }
+
+        private void OnWeaponReloadStarted()
+        {
+            Reloaded?.Invoke();
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
