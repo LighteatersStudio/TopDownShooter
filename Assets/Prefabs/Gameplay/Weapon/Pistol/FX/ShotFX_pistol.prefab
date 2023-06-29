@@ -9753,7 +9753,7 @@ GameObject:
   - component: {fileID: 2764831253016688466}
   - component: {fileID: 6986662953940030802}
   m_Layer: 0
-  m_Name: ShotFX_Pistol
+  m_Name: ShotFX_pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

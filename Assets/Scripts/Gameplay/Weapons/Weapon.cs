@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Gameplay.Projectiles;
 using Gameplay.Services.FX;
@@ -30,6 +31,9 @@ namespace Gameplay.Weapons
 
         public string WeaponType => _id;
         public IHaveAmmo Ammo => _ammoClip;
+
+        public event Action ShotDone;
+        public event Action ReloadStarted;
         
 
         [Inject]
@@ -62,16 +66,23 @@ namespace Gameplay.Weapons
                 return false;
             }
             
-            _ammoClip.WasteBullet();
-            SpawnProjectile();
-            RefreshCooldown();
-            
+            ShotInternal();
+
             if (!_ammoClip.HasAmmo)
             {
                 Reload();
             }
             
             return true;
+        }
+
+        private void ShotInternal()
+        {
+            _ammoClip.WasteBullet();
+            SpawnProjectile();
+            RefreshCooldown();
+
+            ShotDone?.Invoke();
         }
 
         public void Dispose()
@@ -108,6 +119,8 @@ namespace Gameplay.Weapons
         {
             _ammoClip.Reload();
             ResetCooldown();
+            
+            ReloadStarted?.Invoke();
         }
     }
 }

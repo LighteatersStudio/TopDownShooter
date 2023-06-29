@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &771810800591342559
+--- !u!1 &4604435199527199372
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1146921225641236885}
-  - component: {fileID: 1554209282445973509}
-  - component: {fileID: 4650108512175966136}
-  - component: {fileID: 633196126572922620}
-  - component: {fileID: 6690705547204612585}
+  - component: {fileID: 8241451744958495596}
+  - component: {fileID: 7333371037009615852}
+  - component: {fileID: 4462191097789784739}
+  - component: {fileID: 6614477310965171798}
+  - component: {fileID: 3503946192121296682}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1146921225641236885
+--- !u!4 &8241451744958495596
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771810800591342559}
+  m_GameObject: {fileID: 4604435199527199372}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.68, z: 1.57}
+  m_LocalPosition: {x: -0, y: 0.96, z: 1.78}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1554209282445973509
+--- !u!33 &7333371037009615852
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771810800591342559}
-  m_Mesh: {fileID: -7182689631186222527, guid: 8f9696fb6017be144a307b6586855ac0, type: 3}
---- !u!23 &4650108512175966136
+  m_GameObject: {fileID: 4604435199527199372}
+  m_Mesh: {fileID: -4668445777007093364, guid: ffb3f5f9531da764c906b0baf3285c62, type: 3}
+--- !u!23 &4462191097789784739
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771810800591342559}
+  m_GameObject: {fileID: 4604435199527199372}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c16b6e19b642c247ba765631635ff9e, type: 2}
+  - {fileID: 2100000, guid: a3de5fdd82f571f4eb16a3c2530b4303, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,37 +85,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &633196126572922620
+--- !u!114 &6614477310965171798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771810800591342559}
+  m_GameObject: {fileID: 4604435199527199372}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a8735c5ab6e4458dbf71a8054a65d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 1
-  _bulletPrefab: {fileID: -5664317439026340688, guid: 409e7295cd3c52945b1529f069ee1bb8, type: 3}
-  _shotsPerSecond: 2
-  _bulletAmount: 12
-  _weaponDamage: 2
+  _id: 2
+  _bulletPrefab: {fileID: 262872693701470091, guid: 6416c7f709c3cba4e8a3aaeee322d923, type: 3}
+  _shotsPerSecond: 5
+  _bulletAmount: 100
+  _weaponDamage: 5
   _typeDamage: 0
-  _shotFX: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}
---- !u!114 &6690705547204612585
+  _shotFX: {fileID: 2764831253016688466, guid: 5f3b016774f640749a749a0749c36bf8, type: 3}
+--- !u!114 &3503946192121296682
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771810800591342559}
+  m_GameObject: {fileID: 4604435199527199372}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cb2ca8e324b426e8156de15db04ed66, type: 3}
+  m_Script: {fileID: 11500000, guid: 32268d0629c341db9379581340d83e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickingUp: {fileID: 11400000, guid: 80540f3345b92e642af4d60a602b63a7, type: 2}
-  _shot: {fileID: 0}
-  _reloading: {fileID: 0}
+  _pickingUp: {fileID: 11400000, guid: b879882fe7ee76d4083e4f6af42dcbbf, type: 2}
+  _shot: {fileID: 11400000, guid: 60c235b0f5e711549b904363227d6873, type: 2}
+  _reload: {fileID: 11400000, guid: 78b9b04d94028f841b019aece315b94f, type: 2}
