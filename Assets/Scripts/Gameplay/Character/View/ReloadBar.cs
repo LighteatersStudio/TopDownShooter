@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using Gameplay.Services.GameTime;
 using UnityEngine;
 using UnityEngine.UI;
 using Services.Utility;
@@ -15,11 +15,10 @@ namespace Gameplay.View
         [Header("Settings")]
         [SerializeField] private Vector3 _rootOffset;
         [SerializeField] private bool _hideOnBulletsAvailable = true;
-        [SerializeField] private float _reloadTime;
         
         private DynamicMonoInitializer<ICameraProvider> _initializer;
         private ICanReload _weaponOwner;
-        private Coroutine _barFilling;
+        private CooldownHandler _cooldown;
         
         [Inject]
         public void Construct(ICameraProvider cameraProvider, ICanReload weaponOwner)
@@ -49,14 +48,21 @@ namespace Gameplay.View
             _slider.maxValue = 1;
         }
 
-        private void OnReloaded()
+        private void OnReloaded(ICooldown cooldown)
         {
-            if (_barFilling != null)
-            {
-                StopCoroutine(_barFilling);
-            }
+            _slider.gameObject.SetActive(true);
             
-            _barFilling = StartCoroutine(BarFilling());
+            _cooldown?.Break();
+            _cooldown = new CooldownHandler(cooldown, OnProgressChanged, OnCompleted);
+
+            void OnProgressChanged(float progress)
+            {
+                _slider.value = progress;
+            }
+            void OnCompleted()
+            {
+                RefreshVisibility();
+            }
         }
 
         private void RefreshVisibility()
@@ -68,20 +74,6 @@ namespace Gameplay.View
             }
             
             _slider.gameObject.SetActive(true);
-        }
-
-        private IEnumerator BarFilling()
-        {
-            _slider.gameObject.SetActive(true);
-            
-            _slider.value = 0;
-            while (_slider.value < 1)
-            {
-                _slider.value += _reloadTime * Time.deltaTime;
-                yield return 0;
-            }
-            
-            RefreshVisibility();
         }
 
         public class Factory : PlaceholderFactory<ICanReload, ReloadBar>

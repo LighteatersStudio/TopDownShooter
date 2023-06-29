@@ -1,3 +1,4 @@
+using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
@@ -46,7 +47,7 @@ namespace Services.Audio.Weapon
         {
             _audioPlayer.PlayOneShoot(_shot);
         }
-        private void OnReloadStarted()
+        private void OnReloadStarted(ICooldown cooldown)
         {
             _audioPlayer.PlayOneShoot(_reload);
         }

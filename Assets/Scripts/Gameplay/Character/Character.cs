@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Services.GameTime;
 using UnityEngine;
 using Services.Utility;
 using Zenject;
@@ -52,7 +53,7 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        public event Action Reloaded;
+        public event Action<ICooldown> Reloaded;
         public event Action WeaponChanged;
 
         [Inject]
@@ -155,9 +156,9 @@ namespace Gameplay
             _weapon.ReloadStarted += OnWeaponReloadStarted;
         }
 
-        private void OnWeaponReloadStarted()
+        private void OnWeaponReloadStarted(ICooldown cooldown)
         {
-            Reloaded?.Invoke();
+            Reloaded?.Invoke(cooldown);
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>

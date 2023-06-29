@@ -1,4 +1,5 @@
-﻿using Gameplay.Weapons;
+﻿using Gameplay.Services.GameTime;
+using Gameplay.Weapons;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace UI
         private WeaponUISetting _uiSetting;
         private IWeaponOwner _owner;
         private IWeaponReadonly _currentWeapon;
+        private CooldownHandler _reloadCooldown;
         
 
         [Inject]
@@ -67,10 +69,12 @@ namespace UI
             if (_currentWeapon != null)
             {
                 _currentWeapon.Ammo.RemainAmmoChanged -= OnAmmoChanged;
+                _currentWeapon.Ammo.Reloaded -= OnWeaponReloadStarted;
             }
 
             _currentWeapon = _owner.Weapon;
             _currentWeapon.Ammo.RemainAmmoChanged += OnAmmoChanged;
+            _currentWeapon.Ammo.Reloaded += OnWeaponReloadStarted;
         }
 
         private void RefreshView()
@@ -88,6 +92,22 @@ namespace UI
             
             _bulletCount.text = _currentWeapon.Ammo.RemainAmmo.ToString();
             _bulletCount.color = _haveAmmoColor;
+        }
+
+        private void OnWeaponReloadStarted(ICooldown cooldown)
+        {
+            _reloadCooldown?.Break();
+            _reloadCooldown = new CooldownHandler(cooldown, OnProgressChanged, OnCompleted);
+
+            void OnProgressChanged(float progress)
+            {
+                _icon.fillAmount = 1 - progress;
+            }
+
+            void OnCompleted()
+            {
+                _icon.fillAmount = 1;
+            }
         }
     }
 }
