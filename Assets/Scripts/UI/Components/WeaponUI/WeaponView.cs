@@ -66,11 +66,11 @@ namespace UI
         {
             if (_currentWeapon != null)
             {
-                _currentWeapon.Ammo.AmountChanged -= OnAmmoChanged;
+                _currentWeapon.Ammo.RemainAmmoChanged -= OnAmmoChanged;
             }
 
             _currentWeapon = _owner.Weapon;
-            _currentWeapon.Ammo.AmountChanged += OnAmmoChanged;
+            _currentWeapon.Ammo.RemainAmmoChanged += OnAmmoChanged;
         }
 
         private void RefreshView()
@@ -79,14 +79,14 @@ namespace UI
         }
         private void OnAmmoChanged()
         {
-            if (_currentWeapon.Ammo.Amount == 0)
+            if (_currentWeapon.Ammo.RemainAmmo == 0)
             {
                 _bulletCount.text = EmptyAmmoLabel;
                 _bulletCount.color = _emptyAmmoColor;
                 return;
             }
             
-            _bulletCount.text = _currentWeapon.Ammo.Amount.ToString();
+            _bulletCount.text = _currentWeapon.Ammo.RemainAmmo.ToString();
             _bulletCount.color = _haveAmmoColor;
         }
     }

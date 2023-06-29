@@ -4,43 +4,40 @@ namespace Gameplay.Weapons
 {
     public class AmmoClip : IHaveAmmo
     {
-        private int _amount;
-        private int _size;
+        private readonly int _size;
+        private int _remainAmmo;
 
-        public int Amount
+        public bool HasAmmo => _remainAmmo > 0;
+        public int RemainAmmo
         {
-            get => _amount;
-            set
+            get => _remainAmmo;
+            private set
             {
-                _amount = value;
-                AmountChanged?.Invoke();
+                _remainAmmo = value;
+                RemainAmmoChanged?.Invoke();
             }
         }
-        
-        public event Action AmountChanged;
-        
-        public AmmoClip(int maxBulletAmount)
-        {
-            _size = maxBulletAmount;
-            Amount = maxBulletAmount;
-        }
-        
-        public bool HasAmmo => _amount > 0;
 
-        public bool WasteBullet()
-        {
-            if (_amount > 0)
-            {
-                --Amount;
-                return true;
-            }
+        public event Action RemainAmmoChanged;
         
-            return false;
+        
+        public AmmoClip(int size)
+        {
+            _size = size;
+            RemainAmmo = size;
+        }
+
+        public void WasteBullet()
+        {
+            if (RemainAmmo > 0)
+            {
+                --RemainAmmo;
+            }
         }
 
         public void Reload()
         {
-            Amount = _size;
+            RemainAmmo = _size;
         }
     }
 }
