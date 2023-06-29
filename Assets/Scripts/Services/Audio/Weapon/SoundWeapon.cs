@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace Audio.Gameplay.Weapon.Elements
+namespace Services.Audio.Weapon
 {
     public class SoundWeapon : MonoBehaviour
     {
