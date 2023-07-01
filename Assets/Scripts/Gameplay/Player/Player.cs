@@ -9,10 +9,13 @@ namespace Gameplay
 {
     public class Player : MonoBehaviour, IPlayer, ITicker
     {
-        private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory> _initializer;
+        [SerializeField] private WeaponSettings _defaultWeapon;
+        
+        private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory, Weapon.Factory> _initializer;
         private Character _character;
         private PlayerInputAdapter _inputAdapter;
-
+        private Weapon.Factory _weaponFactory;
+        
         public IWeaponOwner WeaponOwner => _character;
 
         public event Action Dead;
@@ -20,12 +23,16 @@ namespace Gameplay
 
 
         [Inject]
-        public void Construct(IPlayerSettings settings, Character.Factory characterFactory, PlayerInputAdapter.Factory inputAdapterFactory)
+        public void Construct(IPlayerSettings settings, Character.Factory characterFactory,
+            PlayerInputAdapter.Factory inputAdapterFactory, Weapon.Factory weaponFactory)
         {
-            _initializer = new DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory>(
-                settings,
-                characterFactory,
-                inputAdapterFactory);
+            _initializer =
+                new DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory,
+                    Weapon.Factory>(
+                    settings,
+                    characterFactory,
+                    inputAdapterFactory,
+                    weaponFactory);
         }
 
         private void Start()
@@ -43,8 +50,9 @@ namespace Gameplay
         {
             _character.Dead -= OnDead;
         }
-        
-        private void Load(IPlayerSettings settings, Character.Factory characterFactory, PlayerInputAdapter.Factory playerInputFactory)
+
+        private void Load(IPlayerSettings settings, Character.Factory characterFactory,
+            PlayerInputAdapter.Factory playerInputFactory, Weapon.Factory weaponFactory)
         {
             _character = characterFactory.Create(settings.Stats, parent => Instantiate(settings.Model, parent));
             _character.SetParent(transform);
@@ -53,8 +61,16 @@ namespace Gameplay
             moveBehaviour.SetSpeedHandler(() => _character.MoveSpeed);
 
             _inputAdapter = playerInputFactory.Create(moveBehaviour, _character, _character, this);
+            
+            _weaponFactory = weaponFactory;
+            ChangeWeapon(_defaultWeapon);
         }
 
+        public void ChangeWeapon(IWeaponSettings settings)
+        {
+            _character.ChangeWeapon(_weaponFactory.Create(settings, _character));
+        }
+        
         public void SetPosition(Vector3 position)
         {
             transform.position = position;

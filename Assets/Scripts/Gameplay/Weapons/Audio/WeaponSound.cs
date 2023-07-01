@@ -1,32 +1,23 @@
 using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
+using Services.Audio;
 using UnityEngine;
 using Zenject;
 
-namespace Services.Audio.Weapon
+namespace Gameplay.Weapons
 {
     public class WeaponSound : MonoBehaviour
     {
-        [SerializeField] private ExtendedAudioClip _pickingUp;
-        [SerializeField] private ExtendedAudioClip _shot;
-        [SerializeField] private ExtendedAudioClip _reload;
-        
         private IWeapon _owner;
         private IAudioPlayer _audioPlayer;
+        private IWeaponSoundSet _settings;
 
-        private void Awake()
-        {
-            _owner = GetComponent<IWeapon>();
-            if (_owner == null)
-            {
-                Debug.LogError("Weapon not founded");
-            }
-        }
-        
         [Inject]
-        public virtual void Construct(IAudioPlayer audioPlayer)
+        public virtual void Construct(IWeapon owner, IAudioPlayer audioPlayer, IWeaponSoundSet settings)
         {
+            _owner = owner;
             _audioPlayer = audioPlayer;
+            _settings = settings;
         }
 
         private void Start()
@@ -45,15 +36,15 @@ namespace Services.Audio.Weapon
 
         private void OnShotDone()
         {
-            _audioPlayer.PlayOneShoot(_shot);
+            _audioPlayer.PlayOneShoot(_settings.Shot);
         }
         private void OnReloadStarted(ICooldown cooldown)
         {
-            _audioPlayer.PlayOneShoot(_reload);
+            _audioPlayer.PlayOneShoot(_settings.Reload);
         }
         private void OnPickup()
         {
-            _audioPlayer.PlayOneShoot(_pickingUp);
+            _audioPlayer.PlayOneShoot(_settings.PickingUp);
         }
     }
 }

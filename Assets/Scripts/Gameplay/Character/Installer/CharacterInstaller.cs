@@ -17,9 +17,6 @@ namespace Gameplay
         [SerializeField] private ReloadBar _reloadBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
         
-        [Header("Weapon settings")]
-        [SerializeField] private Weapon _weaponPrefab;
-
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
         
@@ -101,8 +98,7 @@ namespace Gameplay
         private void BindWeapon()
         {
             Container.Bind<IWeapon>()
-                .To<Weapon>()
-                .FromComponentInNewPrefab(_weaponPrefab)
+                .FromInstance(new EmptyWeapon())
                 .AsSingle()
                 .Lazy();
         }

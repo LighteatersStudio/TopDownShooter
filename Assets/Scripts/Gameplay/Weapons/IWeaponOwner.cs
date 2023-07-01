@@ -6,7 +6,5 @@ namespace Gameplay.Weapons
     {
         IWeaponReadonly Weapon { get; }
         public event Action WeaponChanged;
-        
-        void ChangeWeapon(IWeaponBuilder weaponBuilder);
     }
 }

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: WeaponUISetting
   m_EditorClassIdentifier: 
   _weaponIcons:
-  - WeaponType: 1
+  - WeaponType: Pistol_1
     Icon: {fileID: 21300028, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
-  - WeaponType: 2
+  - WeaponType: Riffle_1
     Icon: {fileID: 21300046, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: EMPTY_WEAPON
+    Icon: {fileID: 21300038, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
