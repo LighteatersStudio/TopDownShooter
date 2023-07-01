@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System;
+using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using Services.Utility;
 using Zenject;
 
 namespace Gameplay
 {
-    public class Player : MonoBehaviour, IPlayer
+    public class Player : MonoBehaviour, IPlayer, ITicker
     {
         private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory> _initializer;
         private Character _character;
@@ -15,6 +16,7 @@ namespace Gameplay
         public IWeaponOwner WeaponOwner => _character;
 
         public event Action Dead;
+        public event Action<float> Tick;
 
 
         [Inject]
@@ -31,6 +33,11 @@ namespace Gameplay
             _initializer.Initialize(Load);
             _character.Dead += OnDead;
         }
+
+        private void Update()
+        {
+            Tick?.Invoke(Time.deltaTime);
+        }
         
         private void OnDestroy()
         {
@@ -45,7 +52,7 @@ namespace Gameplay
             var moveBehaviour = gameObject.AddComponent<MoveBehaviour>();
             moveBehaviour.SetSpeedHandler(() => _character.MoveSpeed);
 
-            _inputAdapter = playerInputFactory.Create(moveBehaviour, _character, _character);
+            _inputAdapter = playerInputFactory.Create(moveBehaviour, _character, _character, this);
         }
 
         public void SetPosition(Vector3 position)

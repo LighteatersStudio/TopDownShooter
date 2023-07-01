@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.Input;
+﻿using Gameplay.Services.GameTime;
+using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
 using UnityEngine;
 using Zenject;
@@ -12,15 +13,18 @@ namespace Gameplay
         private readonly ICanFire _fireActor;
         private readonly IPause _pause;
         private readonly ICanReload _reloadActor;
+        private readonly ITicker _ticker;
+
 
         [Inject]
-        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, ICanReload reloadActor, IPause pause)
+        public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, ICanReload reloadActor, IPause pause, ITicker ticker)
         {
             _fireActor = fireActor;
             _inputController = inputController;
             _movingActor = movingActor;
             _pause = pause;
             _reloadActor = reloadActor;
+            _ticker = ticker;
             
             Subscribe();
         }
@@ -44,9 +48,18 @@ namespace Gameplay
             _pause.TryInvokeIfNotPause(() => _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y));
         }
 
-        private void OnFireChanged()
+        private void OnFireChanged(bool isActive)
         {
-            _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
+            if (isActive)
+            {
+                _ticker.Tick -= RepeatAttack;
+                _ticker.Tick += RepeatAttack;
+                RepeatAttack(0);
+            }
+            else
+            {
+                _ticker.Tick -= RepeatAttack;
+            }
         }
 
         private void OnReloadChanged()
@@ -54,8 +67,12 @@ namespace Gameplay
             _pause.TryInvokeIfNotPause(() => _reloadActor.Reload());
         }
         
+        private void RepeatAttack(float deltaTime)
+        {
+            _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
+        }
         
-        public class Factory : PlaceholderFactory<IMovable, ICanFire, ICanReload, PlayerInputAdapter>
+        public class Factory : PlaceholderFactory<IMovable, ICanFire, ICanReload, ITicker, PlayerInputAdapter>
         {
         }
     }

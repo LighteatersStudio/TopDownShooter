@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.Services.GameTime;
 using Meta.Level;
 using Infrastructure.Scenraios;
 using Infrastructure.UI;
@@ -60,7 +61,7 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
             
-            Container.BindFactory<IMovable, ICanFire, ICanReload, PlayerInputAdapter, PlayerInputAdapter.Factory>()
+            Container.BindFactory<IMovable, ICanFire, ICanReload, ITicker, PlayerInputAdapter, PlayerInputAdapter.Factory>()
                 .AsSingle()
                 .Lazy();
             

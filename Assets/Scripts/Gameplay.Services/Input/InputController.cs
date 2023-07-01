@@ -19,7 +19,7 @@ namespace Gameplay.Services.Input
         
         public event Action<Vector2> MoveChanged;
         public event Action<Vector2> LookChanged;
-        public event Action FireChanged;
+        public event Action<bool> FireChanged;
         public event Action<Vector2> SpecialChanged;
         public event Action MeleeChanged;
         public event Action UseChanged;
@@ -42,9 +42,14 @@ namespace Gameplay.Services.Input
             LookChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
-        private void OnFire(InputAction.CallbackContext context)
+        private void OnFireStart(InputAction.CallbackContext context)
         {
-            FireChanged?.Invoke();
+            FireChanged?.Invoke(true);
+        }
+        
+        private void OnFireEnds(InputAction.CallbackContext context)
+        {
+            FireChanged?.Invoke(false);
         }
         
         private void OnSpecial(InputAction.CallbackContext context)
@@ -72,8 +77,10 @@ namespace Gameplay.Services.Input
             _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
             _inputActionAsset.FindAction(MoveActionName).canceled += OnMove;
             
+            _inputActionAsset.FindAction(FireActionName).performed += OnFireStart;
+            _inputActionAsset.FindAction(FireActionName).canceled += OnFireEnds;
+            
             _inputActionAsset.FindAction(LookActionName).performed += OnLook;
-            _inputActionAsset.FindAction(FireActionName).performed += OnFire;
             _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
             _inputActionAsset.FindAction(UseActionName).performed += OnUse;
             _inputActionAsset.FindAction(ReloadActionName).performed += OnReload;
