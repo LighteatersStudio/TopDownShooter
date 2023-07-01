@@ -100,7 +100,8 @@ MonoBehaviour:
   _id: 1
   _bulletPrefab: {fileID: -5664317439026340688, guid: 409e7295cd3c52945b1529f069ee1bb8, type: 3}
   _shotsPerSecond: 2
-  _bulletAmount: 12
+  _bulletAmount: 7
+  _reloadTime: 1
   _weaponDamage: 2
   _typeDamage: 0
   _shotFX: {fileID: 2764831253016688466, guid: dcae918f4efc04acab6ac1cc95b29f6c, type: 3}

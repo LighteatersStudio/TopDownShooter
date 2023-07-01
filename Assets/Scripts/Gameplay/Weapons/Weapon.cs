@@ -2,11 +2,12 @@ using System;
 using UnityEngine;
 using Gameplay.Projectiles;
 using Gameplay.Services.FX;
+using Gameplay.Services.GameTime;
 using Zenject;
 
 namespace Gameplay.Weapons
 {
-    public class Weapon : MonoBehaviour, IWeapon
+    public class Weapon : MonoBehaviour, IWeapon, ITicker
     {
         [Header("Game ID")]
         [SerializeField] private string _id;
@@ -15,6 +16,7 @@ namespace Gameplay.Weapons
         [SerializeField] private Projectile _bulletPrefab;
         [SerializeField] private float _shotsPerSecond = 2f;
         [SerializeField] private int _bulletAmount = 50;
+        [SerializeField] private int _reloadTime = 1;
 
         [Header("Damage settings")] 
         [SerializeField] private float _weaponDamage = 1f;
@@ -33,7 +35,8 @@ namespace Gameplay.Weapons
         public IHaveAmmo Ammo => _ammoClip;
 
         public event Action ShotDone;
-        public event Action ReloadStarted;
+        public event Action<ICooldown> ReloadStarted;
+        public event Action<float> Tick;
         
 
         [Inject]
@@ -42,12 +45,12 @@ namespace Gameplay.Weapons
             _fxFactory = fxFactory;
             _user = user;
             
-            _ammoClip = new AmmoClip(_bulletAmount);
+            _ammoClip = new AmmoClip(_bulletAmount, _reloadTime);
         }
 
         private void Start()
         {
-            ResetCooldown();
+            ResetShotCooldown();
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
@@ -57,6 +60,8 @@ namespace Gameplay.Weapons
             {
                 _shotCooldownTimer -= Time.deltaTime;
             }
+
+            Tick?.Invoke(Time.deltaTime);
         }
 
         public bool Shot()
@@ -80,7 +85,7 @@ namespace Gameplay.Weapons
         {
             _ammoClip.WasteBullet();
             SpawnProjectile();
-            RefreshCooldown();
+            RefreshShotCooldown();
 
             ShotDone?.Invoke();
         }
@@ -90,12 +95,12 @@ namespace Gameplay.Weapons
             Destroy(gameObject);
         }
 
-        private void RefreshCooldown()
+        private void RefreshShotCooldown()
         {
             _shotCooldownTimer = 1 / _shotsPerSecond * _user.AttackSpeed;
         }
 
-        private void ResetCooldown()
+        private void ResetShotCooldown()
         {
             _shotCooldownTimer = 0;
         }
@@ -117,10 +122,15 @@ namespace Gameplay.Weapons
         
         public void Reload()
         {
-            _ammoClip.Reload();
-            ResetCooldown();
+            if (_ammoClip.Reloading)
+            {
+                return;
+            }
             
-            ReloadStarted?.Invoke();
+            var cooldown = _ammoClip.Reload(this);
+            ResetShotCooldown();
+            
+            ReloadStarted?.Invoke(cooldown);
         }
     }
 }
