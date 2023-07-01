@@ -303,6 +303,17 @@
                 },
                 {
                     "name": "",
+                    "id": "805b2e62-8d0c-4d84-be24-1294331c5ffd",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "db85c4ab-b142-4a38-ae6c-77dec2f84dc4",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
