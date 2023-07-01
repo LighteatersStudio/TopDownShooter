@@ -5,7 +5,6 @@ using UnityEngine;
 namespace Gameplay.Weapons
 {
     [CreateAssetMenu(menuName = "LightEaters/Weapon/Create WeaponSettings", fileName = "WeaponSettings", order = 0)]
-    [Serializable]
     public class WeaponSettings : ScriptableObject, IWeaponSettings
     {
         [Header("Game ID")]

@@ -9,7 +9,7 @@ namespace Gameplay.Weapons
         private readonly float  _reloadTime;
         
         private int _remainAmmo;
-        private ICooldown _reloadCooldown = Cooldown.NewFinished();
+        private Cooldown _reloadCooldown = Cooldown.NewFinished();
         
         public bool HasAmmo => _remainAmmo > 0;
         public bool Reloading => !_reloadCooldown.IsFinish;
@@ -51,6 +51,11 @@ namespace Gameplay.Weapons
             return _reloadCooldown;
         }
 
+        public void StopReload()
+        {
+            _reloadCooldown.ForceFinish();
+        }
+        
         private void FinishReload()
         {
             RemainAmmo = _size;
