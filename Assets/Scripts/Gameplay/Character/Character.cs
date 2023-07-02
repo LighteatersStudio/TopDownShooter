@@ -135,10 +135,9 @@ namespace Gameplay
             _weapon.Reload();
         }    
 
-        public void ChangeWeapon(IWeaponBuilder weaponBuilder)
+        public void ChangeWeapon(IWeapon newWeapon)
         {
-            ApplyNewWeapon(weaponBuilder.Create(this));
-            
+            ApplyNewWeapon(newWeapon);
             WeaponChanged?.Invoke();
         }
 

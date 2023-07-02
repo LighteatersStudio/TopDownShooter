@@ -4,6 +4,7 @@
     "references": [
         "TopDownShooter.Gameplay.Services",
         "TopDownShooter.Services.Utility",
+        "TopDownShooter.Services.Audio",
         "Zenject"
     ],
     "includePlatforms": [],

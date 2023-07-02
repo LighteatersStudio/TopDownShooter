@@ -1,5 +1,4 @@
-﻿using Gameplay.Services.FX;
-using Gameplay.Weapons;
+﻿using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -7,16 +6,13 @@ namespace Gameplay
 {
     public class WeaponInitiatorDebug : MonoBehaviour
     {
-        [SerializeField] private Weapon _weaponPrefab;
+        [SerializeField] private WeaponSettings _weapon;
         private IPlayer _player;
         
-        private PlayingFX.Factory _fxFactory;
-
         
         [Inject]
-        private void Construct(PlayingFX.Factory fxFactory, IPlayer player)
+        private void Construct(IPlayer player)
         {
-            _fxFactory = fxFactory;
             _player = player;
         }
 
@@ -24,8 +20,7 @@ namespace Gameplay
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
-                var weaponBuilder = new WeaponBuilder(_weaponPrefab, _fxFactory);
-                _player.WeaponOwner.ChangeWeapon(weaponBuilder);
+                _player.ChangeWeapon(_weapon);
             }
         }
     }

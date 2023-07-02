@@ -9,29 +9,15 @@ namespace Gameplay.Weapons
 {
     public class Weapon : MonoBehaviour, IWeapon, ITicker
     {
-        [Header("Game ID")]
-        [SerializeField] private string _id;
-        
-        [Header("Shooting settings")]
-        [SerializeField] private Projectile _bulletPrefab;
-        [SerializeField] private float _shotsPerSecond = 2f;
-        [SerializeField] private int _bulletAmount = 50;
-        [SerializeField] private int _reloadTime = 1;
-
-        [Header("Damage settings")] 
-        [SerializeField] private float _weaponDamage = 1f;
-        [SerializeField] private TypeDamage _typeDamage = TypeDamage.Fire;
-
-        [Header("FX")] 
-        [SerializeField] private ParticleSystem _shotFX;
-
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         private AmmoClip _ammoClip;
 
+        private IWeaponSettings _settings;
+
         private float _shotCooldownTimer;
 
-        public string WeaponType => _id;
+        public string WeaponType => _settings.Id;
         public IHaveAmmo Ammo => _ammoClip;
 
         public event Action ShotDone;
@@ -40,18 +26,21 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user)
+        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings)
         {
             _fxFactory = fxFactory;
             _user = user;
+            _settings = settings;
             
-            _ammoClip = new AmmoClip(_bulletAmount, _reloadTime);
+            _ammoClip = new AmmoClip(_settings.AmmoClipSize, _settings.ReloadTime);
         }
 
         private void Start()
         {
-            ResetShotCooldown();
+            _settings.ViewFactory.Invoke(transform);
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
+            
+            ResetShotCooldown();
         }
 
         private void Update()
@@ -97,7 +86,7 @@ namespace Gameplay.Weapons
 
         private void RefreshShotCooldown()
         {
-            _shotCooldownTimer = 1 / _shotsPerSecond * _user.AttackSpeed;
+            _shotCooldownTimer = 1 / _settings.ShotsPerSecond * _user.AttackSpeed;
         }
 
         private void ResetShotCooldown()
@@ -109,15 +98,15 @@ namespace Gameplay.Weapons
         {
             Vector3 position = transform.position;
 
-            var projectile = Instantiate(_bulletPrefab);
+            var projectile = Instantiate(_settings.BulletPrefab);
 
             projectile.Construct(
                 new FlyInfo {Position = position, Direction = transform.forward},
-                new AttackInfo(_weaponDamage, _typeDamage), _fxFactory);
+                new AttackInfo(_settings.Damage, _settings.TypeDamage), _fxFactory);
 
             projectile.Launch();
 
-            _fxFactory.Create(_shotFX, position);
+            _fxFactory.Create(_settings.ShotFX, position);
         }
         
         public void Reload()
@@ -131,6 +120,10 @@ namespace Gameplay.Weapons
             ResetShotCooldown();
             
             ReloadStarted?.Invoke(cooldown);
+        }
+
+        public class Factory : PlaceholderFactory<IWeaponSettings, IWeaponUser, Weapon>
+        {
         }
     }
 }

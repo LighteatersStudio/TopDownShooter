@@ -2850,7 +2850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40ea7d145a34b1185a778d661aeab25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponPrefab: {fileID: 6614477310965171798, guid: 5386727d96de4324b8f2323374f2265c, type: 3}
+  _weapon: {fileID: 11400000, guid: f5ef9e351b65a7b43907509a19d7158f, type: 2}
 --- !u!4 &1185574939
 Transform:
   m_ObjectHideFlags: 0

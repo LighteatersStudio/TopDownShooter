@@ -1,6 +1,7 @@
 ﻿using System;
 using Gameplay;
 using Gameplay.Services.GameTime;
+using Gameplay.Weapons;
 using Meta.Level;
 using Infrastructure.Scenraios;
 using Infrastructure.UI;
@@ -24,6 +25,7 @@ namespace Infrastructure
         [SerializeField] private Character _characterPrefab;
         
         [Header("Gameplay Entities: weapon")]
+        [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
         
         public override void InstallBindings()
@@ -36,7 +38,7 @@ namespace Infrastructure
 
             BindCamera();
             BindCharacter();
-            BingWeaponUI();
+            BindWeapon();
         }
         
         
@@ -68,14 +70,6 @@ namespace Infrastructure
             Container.Bind<IPlayer>()
                 .FromComponentInNewPrefab(_playerPrefab)
                 .WithGameObjectName("Player")
-                .AsSingle()
-                .Lazy();
-        }
-
-        private void BingWeaponUI()
-        {
-            Container.Bind<WeaponUISetting>()
-                .FromScriptableObject(_weaponUISetting)
                 .AsSingle()
                 .Lazy();
         }
@@ -156,6 +150,20 @@ namespace Infrastructure
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
+        }
+        
+        private void BindWeapon()
+        {
+            Debug.Log("Game installer: Bind weapon");
+
+            Container.Bind<WeaponUISetting>()
+                .FromScriptableObject(_weaponUISetting)
+                .AsSingle()
+                .Lazy();
+            
+            Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
+                .FromSubContainerResolve()
+                .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
         }
     }
 }

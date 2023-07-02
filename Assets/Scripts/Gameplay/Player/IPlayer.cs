@@ -4,12 +4,14 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public interface IPlayer
+    public interface IPlayer 
     {
+        IWeaponOwner WeaponOwner { get; }
+        
         event Action Dead; 
 
         void SetPosition(Vector3 position);
-        
-        IWeaponOwner WeaponOwner { get; }
+
+        void ChangeWeapon(IWeaponSettings settings);
     }
 }
