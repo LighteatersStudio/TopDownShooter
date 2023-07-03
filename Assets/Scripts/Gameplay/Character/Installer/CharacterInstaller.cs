@@ -98,7 +98,7 @@ namespace Gameplay
         private void BindWeapon()
         {
             Container.Bind<IWeapon>()
-                .FromInstance(new EmptyWeapon())
+                .FromInstance(new IWeapon.Fake())
                 .AsSingle()
                 .Lazy();
         }

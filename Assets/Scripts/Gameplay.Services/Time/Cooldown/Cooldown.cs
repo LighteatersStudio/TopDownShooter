@@ -5,8 +5,8 @@ namespace Gameplay.Services.GameTime
     public class Cooldown : ICooldown
     {
         private readonly float _duration;
-        private readonly Action _finishHandler;
         private readonly ITicker _ticker;
+        private readonly Action _finishHandler;
         
         private float _timer;
 
@@ -18,8 +18,11 @@ namespace Gameplay.Services.GameTime
 
         private Cooldown()
         {
+            _ticker = new ITicker.Fake();
+            _duration = 1;
+            IsFinish = true;
         }
-        
+
         public Cooldown(float duration, ITicker ticker, Action finishHandler = null)
         {
             _duration = duration;
@@ -61,9 +64,15 @@ namespace Gameplay.Services.GameTime
             Completed?.Invoke();
         }
 
-        public static ICooldown NewFinished()
+        public void ForceFinish()
         {
-            return new Cooldown { IsFinish = true };
+            _timer = 0;
+            Finish();
+        }
+
+        public static Cooldown NewFinished()
+        {
+            return new Cooldown();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Gameplay.Weapons
 
         private IWeaponSettings _settings;
 
-        private float _shotCooldownTimer;
+        private Cooldown _shotCooldown;
 
         public string WeaponType => _settings.Id;
         public IHaveAmmo Ammo => _ammoClip;
@@ -33,29 +33,23 @@ namespace Gameplay.Weapons
             _settings = settings;
             
             _ammoClip = new AmmoClip(_settings.AmmoClipSize, _settings.ReloadTime);
+            _shotCooldown = Cooldown.NewFinished();
         }
 
         private void Start()
         {
             _settings.ViewFactory.Invoke(transform);
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
-            
-            ResetShotCooldown();
         }
 
         private void Update()
         {
-            if (_shotCooldownTimer > 0)
-            {
-                _shotCooldownTimer -= Time.deltaTime;
-            }
-
             Tick?.Invoke(Time.deltaTime);
         }
 
         public bool Shot()
         {
-            if (_shotCooldownTimer > 0 || !_ammoClip.HasAmmo)
+            if (!_shotCooldown.IsFinish || !_ammoClip.HasAmmo)
             {
                 return false;
             }
@@ -74,26 +68,22 @@ namespace Gameplay.Weapons
         {
             _ammoClip.WasteBullet();
             SpawnProjectile();
-            RefreshShotCooldown();
+            RefillShotCooldown();
 
             ShotDone?.Invoke();
         }
 
+        private void RefillShotCooldown()
+        {
+            _shotCooldown = new Cooldown(1 / _settings.ShotsPerSecond * _user.AttackSpeed, this);
+        }
+
         public void Dispose()
         {
+            _ammoClip.StopReload();
             Destroy(gameObject);
         }
 
-        private void RefreshShotCooldown()
-        {
-            _shotCooldownTimer = 1 / _settings.ShotsPerSecond * _user.AttackSpeed;
-        }
-
-        private void ResetShotCooldown()
-        {
-            _shotCooldownTimer = 0;
-        }
-        
         private void SpawnProjectile()
         {
             Vector3 position = transform.position;
@@ -116,8 +106,8 @@ namespace Gameplay.Weapons
                 return;
             }
             
+            _shotCooldown.ForceFinish();
             var cooldown = _ammoClip.Reload(this);
-            ResetShotCooldown();
             
             ReloadStarted?.Invoke(cooldown);
         }
