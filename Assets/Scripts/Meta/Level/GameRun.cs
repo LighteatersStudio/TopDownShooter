@@ -10,15 +10,15 @@ namespace Meta.Level
         private readonly ILoadingService _loadingService;
         private readonly ILevelsNavigation _levelsNavigation;
         private readonly GameColoring _gameColoring;
-        
-        private readonly GameRunType _runType;
-        
+
+        public GameRunType RunType { get; }
+
         public GameRun(GameRunType runType,
             ILoadingService loadingService,
             ILevelsNavigation levelsNavigation,
             GameColoring gameColoring)
         {
-            _runType = runType;
+            RunType = runType;
             
             _loadingService = loadingService;
             _levelsNavigation = levelsNavigation;
@@ -40,7 +40,7 @@ namespace Meta.Level
         
         private void ChoiceGameColor()
         {
-            _gameColoring.SwitchTo(_runType == GameRunType.High
+            _gameColoring.SwitchTo(RunType == GameRunType.High
                 ? _gameColoring.Settings.High
                 : _gameColoring.Settings.Stone);
         }
