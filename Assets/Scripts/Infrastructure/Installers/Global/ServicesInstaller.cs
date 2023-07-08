@@ -42,7 +42,7 @@ namespace Infrastructure
         {
             Debug.Log("Global installer: Bind game coloring");
 
-            Container.Bind<ColorSchemeSettings>()
+            Container.Bind<IColorSchemeSettings>()
                 .To<ColorSchemeSettings>()
                 .FromScriptableObject(_colorSchemeSettings)
                 .AsSingle()
