@@ -1,5 +1,4 @@
 ﻿using System;
-using Gameplay.Services.GameTime;
 using UnityEngine;
 using Services.Utility;
 using Zenject;
@@ -7,7 +6,7 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, ICanReload, IWeaponOwner
+    public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner, ICanReload
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
@@ -53,7 +52,6 @@ namespace Gameplay
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
-        public event Action<ICooldown> Reloaded;
         public event Action WeaponChanged;
 
         [Inject]
@@ -143,21 +141,8 @@ namespace Gameplay
 
         private void ApplyNewWeapon(IWeapon newWeapon)
         {
-            var oldWeapon = _weapon;
-            
-            if (oldWeapon != null)
-            {
-                oldWeapon.ReloadStarted -= OnWeaponReloadStarted;
-                oldWeapon.Dispose();
-            }
-
+            _weapon?.Dispose();
             _weapon = newWeapon;
-            _weapon.ReloadStarted += OnWeaponReloadStarted;
-        }
-
-        private void OnWeaponReloadStarted(ICooldown cooldown)
-        {
-            Reloaded?.Invoke(cooldown);
         }
 
         public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>

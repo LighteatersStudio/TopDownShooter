@@ -74,16 +74,16 @@ namespace Gameplay
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-
-            Container.Bind<ICanReload>()
+            
+            Container.Bind<IWeaponOwner>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-
-            Container.Bind<IWeaponUser>()
-                .To<Character>()
-                .FromResolve()
-                .AsCached();
+            
+            Container.Bind<IReloaded>()
+                .FromMethod(()=> new WeaponOwnerReloadProxy(Container.Resolve<IWeaponOwner>()))
+                .AsSingle()
+                .Lazy();
         }
 
         private void BindGameRules()
@@ -109,7 +109,7 @@ namespace Gameplay
                 .FromComponentInNewPrefab(_healthBarPrefab)
                 .Lazy();
          
-            Container.BindFactory<ICanReload, ReloadBar, ReloadBar.Factory>()
+            Container.BindFactory<IReloaded, ReloadBar, ReloadBar.Factory>()
                 .FromComponentInNewPrefab(_reloadBarPrefab)
                 .Lazy();
 

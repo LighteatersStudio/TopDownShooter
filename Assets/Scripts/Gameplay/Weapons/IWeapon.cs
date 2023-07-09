@@ -5,9 +5,6 @@ namespace Gameplay.Weapons
 {
     public interface IWeapon : IWeaponReadonly
     {
-        event Action ShotDone;
-        event Action<ICooldown> ReloadStarted;
-        
         bool Shot();
         void Dispose();
         void Reload();
@@ -17,7 +14,7 @@ namespace Gameplay.Weapons
             private const string Id= "EMPTY_WEAPON";
 
             public string WeaponType => Id;
-            public IHaveAmmo Ammo { get; } = new IHaveAmmo.Fake();
+            public int RemainAmmo => 0;
             public event Action ShotDone;
             public event Action<ICooldown> ReloadStarted;
             public bool Shot() => false;

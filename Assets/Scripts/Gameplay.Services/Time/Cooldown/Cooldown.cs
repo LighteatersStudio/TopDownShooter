@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace Gameplay.Services.GameTime
 {
@@ -16,24 +17,21 @@ namespace Gameplay.Services.GameTime
         public event Action ProgressChanged;
         public event Action Completed;
 
-        private Cooldown()
-        {
-            _ticker = new ITicker.Fake();
-            _duration = 1;
-            IsFinish = true;
-        }
-
-        public Cooldown(float duration, ITicker ticker, Action finishHandler = null)
+        public Cooldown(float duration, ITicker ticker, Action finishHandler)
         {
             _duration = duration;
             _ticker = ticker;
             _finishHandler = finishHandler;
-            
-            Launch();
         }
 
-        private void Launch()
+        public void Launch()
         {
+            if (IsFinish)
+            {
+                Debug.LogError("Launch failure. Cooldown already finished!");
+                return;
+            }
+            
             _timer = _duration;
             _ticker.Tick += Update;
         }
@@ -70,9 +68,21 @@ namespace Gameplay.Services.GameTime
             Finish();
         }
 
-        public static Cooldown NewFinished()
+        
+        public class Factory
         {
-            return new Cooldown();
+            public virtual Cooldown Create(float duration, ITicker ticker, Action finishHandler = null)
+            {
+                return new Cooldown(duration, ticker, finishHandler);
+            }
+
+            public virtual  Cooldown CreateFinished()
+            {
+                var instance = Create(1, new ITicker.Fake());
+                instance.Launch();
+                instance.ForceFinish();
+                return instance;
+            }
         }
     }
 }
