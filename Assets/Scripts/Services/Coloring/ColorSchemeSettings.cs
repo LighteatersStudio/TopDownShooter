@@ -3,7 +3,7 @@
 namespace Services.Coloring
 {
     [CreateAssetMenu(menuName = "LightEaters/Coloring/Create ColorSchemeSettings", fileName = "ColorSchemeSettings", order = 0)]
-    public class ColorSchemeSettings : ScriptableObject
+    public class ColorSchemeSettings : ScriptableObject, IColorSchemeSettings
     {
         [SerializeField] private ColorSchema _default;
         [SerializeField] private ColorSchema _high;

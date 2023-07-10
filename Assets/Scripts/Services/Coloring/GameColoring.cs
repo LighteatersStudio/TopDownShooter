@@ -4,14 +4,14 @@ namespace Services.Coloring
 {
     public class GameColoring : IInitializable 
     {
-        public ColorSchemeSettings Settings { get; }
+        public IColorSchemeSettings Settings { get; }
         public IColorSchema Current { get; private set; }
         
         public event System.Action<IColorSchema> Changed;
         
         
         [Inject]
-        public GameColoring(ColorSchemeSettings settings)
+        public GameColoring(IColorSchemeSettings settings)
         {
             Settings = settings;
         }

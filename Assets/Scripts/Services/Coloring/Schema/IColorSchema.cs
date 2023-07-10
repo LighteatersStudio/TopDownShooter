@@ -8,5 +8,12 @@ namespace Services.Coloring
         Color Main { get; } 
         Color Second { get; } 
         Color Third { get; }
+
+        public class Fake : IColorSchema
+        {
+            public Color Main => Color.white;
+            public Color Second => Color.black;
+            public Color Third => Color.red;
+        }
     }
 }

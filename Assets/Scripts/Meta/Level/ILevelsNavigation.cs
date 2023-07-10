@@ -6,5 +6,11 @@ namespace Meta.Level
     {
         ILoadingOperation LevelLoading { get; }
         ILoadingOperation MainMenuLoading { get; }
+
+        public class Fake : ILevelsNavigation
+        {
+            public ILoadingOperation LevelLoading { get; } = new ILoadingOperation.Fake();
+            public ILoadingOperation MainMenuLoading { get; } = new ILoadingOperation.Fake();
+        }
     }
 }
