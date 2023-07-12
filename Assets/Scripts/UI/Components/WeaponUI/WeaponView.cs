@@ -59,7 +59,6 @@ namespace UI
         private void OnWeaponChanged()
         {
             SubscribeToAmmo();
-            
             OnAmmoChanged();
             RefreshView();
         }
@@ -68,13 +67,13 @@ namespace UI
         {
             if (_currentWeapon != null)
             {
-                _currentWeapon.Ammo.RemainAmmoChanged -= OnAmmoChanged;
-                _currentWeapon.Ammo.Reloaded -= OnWeaponReloadStarted;
+                _currentWeapon.ShotDone -= OnAmmoChanged;
+                _currentWeapon.ReloadStarted -= OnWeaponReloadStarted;
             }
 
             _currentWeapon = _owner.Weapon;
-            _currentWeapon.Ammo.RemainAmmoChanged += OnAmmoChanged;
-            _currentWeapon.Ammo.Reloaded += OnWeaponReloadStarted;
+            _currentWeapon.ShotDone += OnAmmoChanged;
+            _currentWeapon.ReloadStarted += OnWeaponReloadStarted;
         }
 
         private void RefreshView()
@@ -83,14 +82,14 @@ namespace UI
         }
         private void OnAmmoChanged()
         {
-            if (_currentWeapon.Ammo.RemainAmmo == 0)
+            if (_currentWeapon.RemainAmmo == 0)
             {
                 _bulletCount.text = EmptyAmmoLabel;
                 _bulletCount.color = _emptyAmmoColor;
                 return;
             }
             
-            _bulletCount.text = _currentWeapon.Ammo.RemainAmmo.ToString();
+            _bulletCount.text = _currentWeapon.RemainAmmo.ToString();
             _bulletCount.color = _haveAmmoColor;
         }
 
@@ -107,6 +106,7 @@ namespace UI
             void OnCompleted()
             {
                 _icon.fillAmount = 1;
+                OnAmmoChanged();
             }
         }
     }

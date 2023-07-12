@@ -1,4 +1,5 @@
 ﻿using Gameplay.Services.GameTime;
+using Gameplay.Weapons;
 using UnityEngine;
 using UnityEngine.UI;
 using Services.Utility;
@@ -17,13 +18,13 @@ namespace Gameplay.View
         [SerializeField] private bool _hideOnBulletsAvailable = true;
         
         private DynamicMonoInitializer<ICameraProvider> _initializer;
-        private ICanReload _weaponOwner;
+        private IReloaded _source;
         private CooldownHandler _cooldown;
         
         [Inject]
-        public void Construct(ICameraProvider cameraProvider, ICanReload weaponOwner)
+        public void Construct(ICameraProvider cameraProvider, IReloaded source)
         {
-            _weaponOwner = weaponOwner;
+            _source = source;
             _initializer = new DynamicMonoInitializer<ICameraProvider>(cameraProvider);
         }
         
@@ -35,14 +36,14 @@ namespace Gameplay.View
 
         protected void OnDestroy()
         {
-            _weaponOwner.Reloaded -= OnReloaded;
+            _source.ReloadStarted -= OnReloaded;
         }
 
         private void Initialize(ICameraProvider cameraProvider)
         {
             transform.localPosition = _rootOffset;
             
-            _weaponOwner.Reloaded += OnReloaded;
+            _source.ReloadStarted += OnReloaded;
             
             _canvas.worldCamera = cameraProvider.MainCamera;
             _slider.maxValue = 1;
@@ -76,7 +77,7 @@ namespace Gameplay.View
             _slider.gameObject.SetActive(true);
         }
 
-        public class Factory : PlaceholderFactory<ICanReload, ReloadBar>
+        public class Factory : PlaceholderFactory<IReloaded, ReloadBar>
         {
         }
     }

@@ -7,18 +7,21 @@ using Zenject;
 
 namespace Gameplay.Weapons
 {
-    public class Weapon : MonoBehaviour, IWeapon, ITicker
+    public class Weapon : MonoBehaviour, IWeapon, ITicker, ICanReload
     {
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
-        private AmmoClip _ammoClip;
+        private Cooldown.Factory _cooldownFactory;
 
         private IWeaponSettings _settings;
 
         private Cooldown _shotCooldown;
+        private Cooldown _reloadCooldown;
 
         public string WeaponType => _settings.Id;
-        public IHaveAmmo Ammo => _ammoClip;
+
+        public int RemainAmmo { get; private set; }
+        private bool HasAmmo => RemainAmmo > 0;
 
         public event Action ShotDone;
         public event Action<ICooldown> ReloadStarted;
@@ -32,8 +35,10 @@ namespace Gameplay.Weapons
             _user = user;
             _settings = settings;
             
-            _ammoClip = new AmmoClip(_settings.AmmoClipSize, _settings.ReloadTime);
-            _shotCooldown = Cooldown.NewFinished();
+            _cooldownFactory = new Cooldown.Factory();
+            _shotCooldown = _cooldownFactory.CreateFinished();
+            _reloadCooldown = _cooldownFactory.CreateFinished();
+            RefillAmmoClip();
         }
 
         private void Start()
@@ -49,14 +54,14 @@ namespace Gameplay.Weapons
 
         public bool Shot()
         {
-            if (!_shotCooldown.IsFinish || !_ammoClip.HasAmmo)
+            if (!_shotCooldown.IsFinish || !HasAmmo)
             {
                 return false;
             }
             
             ShotInternal();
 
-            if (!_ammoClip.HasAmmo)
+            if (!HasAmmo)
             {
                 Reload();
             }
@@ -66,7 +71,7 @@ namespace Gameplay.Weapons
 
         private void ShotInternal()
         {
-            _ammoClip.WasteBullet();
+            RemainAmmo--;
             SpawnProjectile();
             RefillShotCooldown();
 
@@ -75,12 +80,13 @@ namespace Gameplay.Weapons
 
         private void RefillShotCooldown()
         {
-            _shotCooldown = new Cooldown(1 / _settings.ShotsPerSecond * _user.AttackSpeed, this);
+            _shotCooldown = _cooldownFactory.Create(1 / _settings.ShotsPerSecond * _user.AttackSpeed, this);
+            _shotCooldown.Launch();
         }
 
         public void Dispose()
         {
-            _ammoClip.StopReload();
+            _reloadCooldown.ForceFinish();
             Destroy(gameObject);
         }
 
@@ -101,17 +107,26 @@ namespace Gameplay.Weapons
         
         public void Reload()
         {
-            if (_ammoClip.Reloading)
+            if (!_reloadCooldown.IsFinish)
             {
                 return;
             }
             
             _shotCooldown.ForceFinish();
-            var cooldown = _ammoClip.Reload(this);
-            
-            ReloadStarted?.Invoke(cooldown);
+
+            _reloadCooldown = _cooldownFactory.Create(_settings.ReloadTime, this, RefillAmmoClip);
+            _reloadCooldown.Launch();
+
+            ReloadStarted?.Invoke(_reloadCooldown);
         }
 
+
+
+        private void RefillAmmoClip()
+        {
+            RemainAmmo = _settings.AmmoClipSize;
+        }
+        
         public class Factory : PlaceholderFactory<IWeaponSettings, IWeaponUser, Weapon>
         {
         }

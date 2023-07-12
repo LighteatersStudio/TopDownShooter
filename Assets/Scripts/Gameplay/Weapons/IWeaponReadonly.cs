@@ -1,9 +1,13 @@
-﻿namespace Gameplay.Weapons
+﻿using System;
+
+namespace Gameplay.Weapons
 {
-    public interface IWeaponReadonly
+    public interface IWeaponReadonly : IReloaded
     {
         string WeaponType { get; }
         
-        IHaveAmmo Ammo { get; }
+        int RemainAmmo { get; }
+        
+        event Action ShotDone;
     }
 }

@@ -6,17 +6,17 @@ namespace Gameplay.View
 {
     public sealed class ReloadBarPlaceholder : Placeholder<ReloadBar.Factory>
     {
-        private ICanReload _weaponOwner;
+        private IReloaded _source;
 
         [Inject]
-        public void Construct(ICanReload weaponOwner)
+        public void Construct(IReloaded source)
         {
-            _weaponOwner = weaponOwner;
+            _source = source;
         }
 
         protected override GameObject Create(ReloadBar.Factory factory)
         {
-            return factory.Create(_weaponOwner).gameObject;
+            return factory.Create(_source).gameObject;
         }
     }
 }
