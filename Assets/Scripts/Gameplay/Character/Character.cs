@@ -6,6 +6,7 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
+    [RequireComponent(typeof(OutlineSetting))]
     public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner, ICanReload
     {
         [Header("Component Roots")]
@@ -19,7 +20,11 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
+        private OutlineSetting _outlineSetting;
         
+        private Vector3 _fireDirection;
+        private TypeGameplayObjects _typeGameplayObjects;
+
         private bool IsDead => _stats.Health <= 0;
         
         public float HealthRelative => _stats.HealthRelative;
@@ -29,11 +34,7 @@ namespace Gameplay
 
         public Transform WeaponRoot => _weaponRoot;
         public IWeaponReadonly Weapon => _weapon;
-        
         public CharacterModelRoots ModelRoots { get; private set; }
-        
-        private Vector3 _fireDirection;
-
         public Vector3 LookDirection
         {
             get => _fireDirection;
@@ -53,21 +54,31 @@ namespace Gameplay
         public event Action Attacked;
         public event Action Dead;
         public event Action WeaponChanged;
-
+      
+        
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon)
+            IDamageCalculator damageCalculator, IWeapon weapon, TypeGameplayObjects typeGameplayObjects)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
 
             _initializer = new(viewFactoryMethod);
+
+            _typeGameplayObjects = typeGameplayObjects;
+        }
+
+        private void Awake()
+        {
+            _outlineSetting = GetComponent<OutlineSetting>();
         }
 
         protected void Start()
         {
             _initializer.Initialize(Load);
+
+            _outlineSetting.ChangeOutlineColor(_typeGameplayObjects);
         }
 
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
@@ -145,7 +156,7 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
-        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, Character>
+        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObjects, Character>
         {
         }
     }

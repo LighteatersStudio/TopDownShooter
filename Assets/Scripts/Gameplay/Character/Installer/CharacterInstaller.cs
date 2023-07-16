@@ -21,6 +21,7 @@ namespace Gameplay
         [SerializeField] private ScriptableObject _characterFXList;
         
         [Inject] private StatsInfo _statsInfo;
+        [Inject] private TypeGameplayObjects _typeGameplayObjects;
         [Inject] private Func<Transform, GameObject> _modelFactoryMethod;
         
         
@@ -49,6 +50,11 @@ namespace Gameplay
             
             Container.Bind<Func<Transform, GameObject>>()
                 .FromInstance(_modelFactoryMethod)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<TypeGameplayObjects>()
+                .FromInstance(_typeGameplayObjects)
                 .AsSingle()
                 .NonLazy();
         }
