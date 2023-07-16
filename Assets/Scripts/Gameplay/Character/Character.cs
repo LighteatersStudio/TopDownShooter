@@ -23,7 +23,7 @@ namespace Gameplay
         private OutlineSetting _outlineSetting;
         
         private Vector3 _fireDirection;
-        private TypeGameplayObjects _typeGameplayObjects;
+        private TypeGameplayObject _typeGameplayObject;
 
         private bool IsDead => _stats.Health <= 0;
         
@@ -58,7 +58,7 @@ namespace Gameplay
         
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon, TypeGameplayObjects typeGameplayObjects)
+            IDamageCalculator damageCalculator, IWeapon weapon, TypeGameplayObject typeGameplayObject)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
@@ -66,7 +66,7 @@ namespace Gameplay
 
             _initializer = new(viewFactoryMethod);
 
-            _typeGameplayObjects = typeGameplayObjects;
+            _typeGameplayObject = typeGameplayObject;
         }
 
         private void Awake()
@@ -78,7 +78,7 @@ namespace Gameplay
         {
             _initializer.Initialize(Load);
 
-            _outlineSetting.ChangeOutlineColor(_typeGameplayObjects);
+            _outlineSetting.ChangeOutlineColor(_typeGameplayObject);
         }
 
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
@@ -156,7 +156,7 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
-        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObjects, Character>
+        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObject, Character>
         {
         }
     }

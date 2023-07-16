@@ -147,7 +147,7 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind character");
 
-            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObjects, Character, Character.Factory>()
+            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObject, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
         }

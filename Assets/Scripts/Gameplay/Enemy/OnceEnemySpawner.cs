@@ -19,7 +19,7 @@ namespace Gameplay
         
         protected void Start()
         {
-            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent), TypeGameplayObjects.Enemy);
+            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent), TypeGameplayObject.Enemy);
             enemy.transform.position = transform.position;
             
             Destroy(gameObject);

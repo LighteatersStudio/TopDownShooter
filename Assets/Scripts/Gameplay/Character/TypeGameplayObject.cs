@@ -1,6 +1,6 @@
 ﻿namespace Gameplay
 {
-    public enum TypeGameplayObjects
+    public enum TypeGameplayObject
     {
         Player,
         Enemy

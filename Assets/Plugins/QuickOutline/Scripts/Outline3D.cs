@@ -97,6 +97,7 @@ public class Outline3D : MonoBehaviour {
 
     // Apply material properties immediately
     needsUpdate = true;
+    outlineMode = Mode.OutlineHidden;
   }
 
   void OnEnable() {

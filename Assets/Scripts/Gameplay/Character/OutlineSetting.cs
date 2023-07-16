@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -10,18 +11,16 @@ namespace Gameplay
         private Outline3D _outline3D;
 
 
-        public void ChangeOutlineColor(TypeGameplayObjects type)
+        public void ChangeOutlineColor(TypeGameplayObject type)
         {
             _outline3D = gameObject.AddComponent<Outline3D>();
-            _outline3D.OutlineMode = Outline3D.Mode.OutlineHidden;
 
-
-            if (type == TypeGameplayObjects.Player)
+            if (type == TypeGameplayObject.Player)
             {
                 _outline3D.OutlineColor = _green;
             }
             
-            if (type == TypeGameplayObjects.Enemy)
+            if (type == TypeGameplayObject.Enemy)
             {
                 _outline3D.OutlineColor = _red;
             }
