@@ -19,7 +19,6 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        private OutlinePlaceholder _outlinePlaceholder;
         
         private Vector3 _fireDirection;
 
