@@ -6,7 +6,6 @@ using Gameplay.Weapons;
 
 namespace Gameplay
 {
-    [RequireComponent(typeof(OutlineSetting))]
     public class Character : MonoBehaviour, ICharacter, IDamageable, IHaveHealth, ICanFire, IWeaponOwner, ICanReload
     {
         [Header("Component Roots")]
@@ -20,10 +19,9 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        private OutlineSetting _outlineSetting;
+        private OutlinePlaceholder _outlinePlaceholder;
         
         private Vector3 _fireDirection;
-        private TypeGameplayObject _typeGameplayObject;
 
         private bool IsDead => _stats.Health <= 0;
         
@@ -58,27 +56,15 @@ namespace Gameplay
         
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon, TypeGameplayObject typeGameplayObject)
+            IDamageCalculator damageCalculator, IWeapon weapon)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
 
             _initializer = new(viewFactoryMethod);
-
-            _typeGameplayObject = typeGameplayObject;
-        }
-
-        private void Awake()
-        {
-            _outlineSetting = GetComponent<OutlineSetting>();
-        }
-
-        protected void Start()
-        {
+            
             _initializer.Initialize(Load);
-
-            _outlineSetting.ChangeOutlineColor(_typeGameplayObject);
         }
 
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
