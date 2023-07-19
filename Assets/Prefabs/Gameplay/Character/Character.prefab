@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 7564954714399395940}
   - component: {fileID: 1287744693554637472}
   - component: {fileID: 1262148185}
+  - component: {fileID: -8160638930487884273}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -233,7 +234,6 @@ MonoBehaviour:
   _healthBarPrefab: {fileID: 6605134139281467808, guid: 936803711da28d046a7e40b3f2079834, type: 3}
   _reloadBarPrefab: {fileID: -6512463384514603965, guid: 4becb2bebb5c24d418cd5a04e4222865, type: 3}
   _lookDirectionDisplayPrefab: {fileID: 9131443714891836163, guid: db5dfd9e4bff62c4aa3be58539cc1209, type: 3}
-  _weaponPrefab: {fileID: 633196126572922620, guid: f9dd6edc38e9bce42823222796756611, type: 3}
   _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}
 --- !u!114 &1262148185
 MonoBehaviour:
@@ -253,6 +253,18 @@ MonoBehaviour:
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
+--- !u!114 &-8160638930487884273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7564954714399395942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c73a0e0014141d8b53de40f8c0b7637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7564954714408511391
 GameObject:
   m_ObjectHideFlags: 0

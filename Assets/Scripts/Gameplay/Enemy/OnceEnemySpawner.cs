@@ -10,7 +10,7 @@ namespace Gameplay
 
         private Character.Factory _characterFactory;
 
-        
+
         [Inject]
         protected void Construct(Character.Factory characterFactory)
         {
@@ -19,7 +19,7 @@ namespace Gameplay
         
         protected void Start()
         {
-            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent));
+            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent), TypeGameplayObject.Enemy);
             enemy.transform.position = transform.position;
             
             Destroy(gameObject);
