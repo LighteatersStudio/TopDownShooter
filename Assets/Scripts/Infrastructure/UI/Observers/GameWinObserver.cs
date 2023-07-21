@@ -7,8 +7,8 @@ namespace Infrastructure.UI
 {
     public class GameWinObserver
     {
-        private IUIRoot _uiRoot;
-        private IGameState _gameState;
+        private readonly IUIRoot _uiRoot;
+        private readonly IGameState _gameState;
         
         [Inject]
         public GameWinObserver(IUIRoot uiRoot, IGameState gameState)
@@ -16,15 +16,13 @@ namespace Infrastructure.UI
             _uiRoot = uiRoot;
             _gameState = gameState;
             
-            _gameState.Wined += OnWined;
+            _gameState.Won += OnWin;
         }
 
-        private void OnWined()
+        private void OnWin()
         {
-            _gameState.Wined -= OnWined;
+            _gameState.Won -= OnWin;
             _uiRoot.Open<WinLevelMenu>();
         }
-
-        
     }
 }
