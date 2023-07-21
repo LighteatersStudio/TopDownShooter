@@ -4,7 +4,7 @@ namespace Gameplay
 {
     public interface IGameState
     {
-        event Action Wined;
+        event Action Won;
         event Action PlayerDead;
         
         void Win();

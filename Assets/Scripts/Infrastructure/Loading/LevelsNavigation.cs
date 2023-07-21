@@ -11,7 +11,7 @@ namespace Infrastructure.Loading
         public LevelsNavigation(LevelLoadingOperation levelLoading, MainMenuLoadingOperation menuLoading)
         {
             LevelLoading = levelLoading;
-            MainMenuLoading = MainMenuLoading;
+            MainMenuLoading = menuLoading;
         }
     }
 }

@@ -4,13 +4,13 @@ namespace Gameplay
 {
     public class GameStateManager : IGameState
     {
-        public event Action Wined;
+        public event Action Won;
         public event Action PlayerDead;
         
 
         void IGameState.Win()
         {
-            Wined?.Invoke();
+            Won?.Invoke();
         }
 
         public void Death()
