@@ -30,9 +30,11 @@ namespace Gameplay
                 _rigidbody = gameObject.AddComponent<Rigidbody>();
             }
 
-            _rigidbody.constraints = RigidbodyConstraints.FreezePositionY
-                                     | RigidbodyConstraints.FreezeRotationX
-                                     | RigidbodyConstraints.FreezeRotationZ;
+            _rigidbody.constraints = RigidbodyConstraints.FreezePositionY |
+                                     RigidbodyConstraints.FreezeRotationX |
+                                     RigidbodyConstraints.FreezeRotationZ;
+
+            _rigidbody.freezeRotation = true;
         }
 
         private void AddCollider()
