@@ -17,6 +17,7 @@ namespace Gameplay
         private Weapon.Factory _weaponFactory;
         
         public IWeaponOwner WeaponOwner => _character;
+        public IHaveHealth Health => _character;
 
         public event Action Dead;
         public event Action<float> Tick;
