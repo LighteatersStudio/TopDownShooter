@@ -28,22 +28,12 @@ namespace UI
         private void Start()
         {
             _pauseManager.Paused = true;
-            UpdateTimeText(_timerText, _gameTime.Value);
+            UpdateTimeText();
         }
 
-        private void UpdateTimeText(TextMeshProUGUI text, float time)
+        private void UpdateTimeText()
         {
-            var timeSpan = TimeSpan.FromSeconds(time);
-            var hours = timeSpan.Hours;
-            var minutes = timeSpan.Minutes;
-            var seconds = timeSpan.Seconds;
-
-            text.text = string.Format("{0:D2}:{1:D2}", minutes, seconds);
-            
-            if (hours > 0)
-            {
-                text.text = string.Format("{0:D2}", hours) + text.text;
-            }
+            _timerText.text = _gameTime.ConvertToString();
         }
         
         public void ClickDoneLevelButton()
