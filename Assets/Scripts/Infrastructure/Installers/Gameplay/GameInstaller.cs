@@ -1,5 +1,8 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.Collectables;
+using Gameplay.Collectables.FirstAid;
+using Gameplay.Collectables.Installers;
 using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using Meta.Level;
@@ -27,7 +30,11 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
-        
+
+        [Header("Gameplay Entities: collectables")]
+        [SerializeField] private CollectableInstaller _collectableInstaller;
+        [SerializeField] private FirstAidKitSpawner _firstAidKitSpawner;
+
         public override void InstallBindings()
         {
             BindScenarios();
@@ -39,9 +46,20 @@ namespace Infrastructure
             BindCamera();
             BindCharacter();
             BindWeapon();
+            BindCollectables();
         }
-        
-        
+
+        private void BindCollectables()
+        {
+            Debug.Log("Game installer: Bind Collectables");
+            
+            Container.BindFactory<Vector3, FirstAidKitSpawner, FirstAidKitSpawner.Factory>()
+                .FromComponentInNewPrefab(_firstAidKitSpawner)
+                .AsSingle()
+                .Lazy();
+        }
+
+
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");

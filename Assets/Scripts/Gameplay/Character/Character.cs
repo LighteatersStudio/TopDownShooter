@@ -99,6 +99,11 @@ namespace Gameplay
             }
         }
 
+        public void RecoverHealth(float hpAmount)
+        {
+            _stats.ApplyHp(hpAmount);
+        }
+
         private void Death()
         {
             Dead?.Invoke();

@@ -11,10 +11,9 @@ namespace Gameplay
         public float MoveSpeed { get; private set; }
         public float AttackSpeed { get; private set; }
         public float HealthRelative => Health / MaxHealth;
-        public bool Imunne { get; }
+        public bool Immune { get; }
 
         public event Action HealthChanged;
-
 
         public CharacterStats(StatsInfo info)
         {
@@ -28,6 +27,13 @@ namespace Gameplay
         {
             Health = Mathf.Clamp(Health - damage, 0, MaxHealth);
 
+            HealthChanged?.Invoke();
+        }
+
+        public void ApplyHp(float healthUp)
+        {
+            Health = Mathf.Clamp(Health + healthUp, 0, MaxHealth);
+            
             HealthChanged?.Invoke();
         }
     }

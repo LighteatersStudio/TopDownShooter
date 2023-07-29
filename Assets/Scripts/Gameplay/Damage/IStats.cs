@@ -2,6 +2,6 @@
 {
     public interface IStats
     {
-        bool Imunne { get; }
+        bool Immune { get; }
     }
 }
