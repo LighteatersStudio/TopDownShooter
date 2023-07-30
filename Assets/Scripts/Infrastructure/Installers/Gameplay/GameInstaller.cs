@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay;
+using Gameplay.CollectableItems;
 using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using Meta.Level;
@@ -7,6 +8,7 @@ using Infrastructure.Scenraios;
 using Infrastructure.UI;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
@@ -24,6 +26,10 @@ namespace Infrastructure
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         
+        [FormerlySerializedAs("_itemSpawner")]
+        [Header("Gameplay Entities: collectables")]
+        [SerializeField] private ItemsFactory _itemsFactory;
+        
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
@@ -39,6 +45,7 @@ namespace Infrastructure
             BindCamera();
             BindCharacter();
             BindWeapon();
+            BindCollectables();
         }
         
         
@@ -150,6 +157,16 @@ namespace Infrastructure
             Container.BindFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObject, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
+        }
+        
+        private void BindCollectables()
+        {
+            Debug.Log("Game installer: Bind collectables");
+            
+            Container.BindFactory<ItemsFactory, ItemsFactory.Factory>()
+                .FromComponentInNewPrefab(_itemsFactory)
+                .AsSingle()
+                .Lazy();
         }
         
         private void BindWeapon()

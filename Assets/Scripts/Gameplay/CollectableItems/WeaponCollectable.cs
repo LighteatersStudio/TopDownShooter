@@ -2,25 +2,27 @@
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay
+namespace Gameplay.CollectableItems
 {
-    public class WeaponInitiatorDebug : MonoBehaviour
+    public class WeaponCollectable : MonoBehaviour
     {
         [SerializeField] private WeaponSettings _weapon;
+
         private IPlayer _player;
-        
-        
+
+
         [Inject]
-        private void Construct(IPlayer player)
+        public void Construct(IPlayer player)
         {
             _player = player;
         }
 
-        private void Update()
+        private void OnTriggerEnter(Collider other)
         {
-            if (Input.GetKeyDown(KeyCode.H))
+            if (other.GetComponent<Player>())
             {
                 _player.ChangeWeapon(_weapon);
+                Destroy(gameObject);
             }
         }
     }
