@@ -8,12 +8,10 @@ using Infrastructure.Scenraios;
 using Infrastructure.UI;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
 {
-    
     public class GameInstaller : MonoInstaller
     {
         [Header("Level Entities")]
@@ -26,7 +24,6 @@ namespace Infrastructure
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         
-        [FormerlySerializedAs("_itemSpawner")]
         [Header("Gameplay Entities: collectables")]
         [SerializeField] private ItemsFactory _itemsFactory;
         
@@ -47,7 +44,6 @@ namespace Infrastructure
             BindWeapon();
             BindCollectables();
         }
-        
         
         private void BindScenarios()
         {
