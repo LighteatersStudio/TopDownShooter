@@ -98,5 +98,4 @@ MonoBehaviour:
   _characterPrefab: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
   _weaponPrefab: {fileID: 4628974586498328097, guid: 2168753a697310c48a899f86019a5edc, type: 3}
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
-  _collectableInstaller: {fileID: 8528900471272037587, guid: f7c1b78f3bbb1fa47ad2fe4e3bdad2f3, type: 3}
-  _firstAidKitSpawner: {fileID: 3962879706288488041, guid: 055e5157e3fc5fc47bacb27e03e5579e, type: 3}
+  _firstAidKitPrefab: {fileID: 7663522477305382724, guid: 2de38d3fa28dda84f8de903ed0787a6b, type: 3}

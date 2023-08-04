@@ -101,7 +101,7 @@ namespace Gameplay
 
         public void RecoverHealth(float hpAmount)
         {
-            _stats.ApplyHp(hpAmount);
+            _stats.Heal(hpAmount);
         }
 
         private void Death()

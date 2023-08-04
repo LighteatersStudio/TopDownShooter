@@ -30,7 +30,7 @@ namespace Gameplay
             HealthChanged?.Invoke();
         }
 
-        public void ApplyHp(float healthUp)
+        public void Heal(float healthUp)
         {
             Health = Mathf.Clamp(Health + healthUp, 0, MaxHealth);
             
