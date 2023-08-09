@@ -25,7 +25,7 @@ namespace Infrastructure
         [SerializeField] private Character _characterPrefab;
         
         [Header("Gameplay Entities: collectables")]
-        [SerializeField] private ItemsFactory _itemsFactory;
+        [SerializeField] private WeaponCollectable _weaponCollectable;
         
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
@@ -159,8 +159,8 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind collectables");
             
-            Container.BindFactory<ItemsFactory, ItemsFactory.Factory>()
-                .FromComponentInNewPrefab(_itemsFactory)
+            Container.BindFactory<Vector3, WeaponCollectable, WeaponCollectable.Factory>()
+                .FromComponentInNewPrefab(_weaponCollectable)
                 .AsSingle()
                 .Lazy();
         }

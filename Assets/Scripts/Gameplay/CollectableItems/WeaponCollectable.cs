@@ -12,9 +12,10 @@ namespace Gameplay.CollectableItems
 
 
         [Inject]
-        public void Construct(IPlayer player)
+        public void Construct(IPlayer player, Vector3 newPosition)
         {
             _player = player;
+            transform.position = newPosition;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -24,6 +25,10 @@ namespace Gameplay.CollectableItems
                 _player.ChangeWeapon(_weapon);
                 Destroy(gameObject);
             }
+        }
+
+        public class Factory : PlaceholderFactory<Vector3, WeaponCollectable>
+        {
         }
     }
 }
