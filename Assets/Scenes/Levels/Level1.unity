@@ -281,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: -956769535494897031, guid: 6ae80fca12b101b46b5d5e8fad06ed04, type: 3}
     - target: {fileID: 5091325505281952112, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner (2)
+      value: WeaponPlaceholder (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_RootOrder
@@ -2723,7 +2723,7 @@ PrefabInstance:
       objectReference: {fileID: 6025845301379476998, guid: 6ae80fca12b101b46b5d5e8fad06ed04, type: 3}
     - target: {fileID: 5091325505281952112, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner (1)
+      value: WeaponPlaceholder (1)
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_RootOrder
@@ -5934,7 +5934,7 @@ PrefabInstance:
       objectReference: {fileID: 7929053185743901215, guid: 3ad5815162c619743a15ddc4c1df414c, type: 3}
     - target: {fileID: 5091325505281952112, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_Name
-      value: ItemSpawner
+      value: WeaponPlaceholder
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_RootOrder

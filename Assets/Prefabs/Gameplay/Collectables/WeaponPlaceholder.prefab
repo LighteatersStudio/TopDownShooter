@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7117178119667781508}
   - component: {fileID: -6700495251420669566}
   m_Layer: 0
-  m_Name: ItemSpawner
+  m_Name: WeaponPlaceholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
