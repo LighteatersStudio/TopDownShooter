@@ -99,3 +99,4 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 799623494326944143, guid: ad63464bec1f8a04f853df2636823114, type: 3}
   _weaponPrefab: {fileID: 4628974586498328097, guid: 2168753a697310c48a899f86019a5edc, type: 3}
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
+  _firstAidKitPrefab: {fileID: 7663522477305382724, guid: 2de38d3fa28dda84f8de903ed0787a6b, type: 3}
