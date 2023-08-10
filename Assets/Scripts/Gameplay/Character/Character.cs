@@ -141,7 +141,7 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
-        public class Factory : PlaceholderFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObject, Character>
+        public class Factory : PlaceholderFactory<CharacterSettings, Character>
         {
         }
     }
