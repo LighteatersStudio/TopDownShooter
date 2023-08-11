@@ -20,10 +20,7 @@ namespace Gameplay
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
         
-        [Inject] private StatsInfo _statsInfo;
-        [Inject] private TypeGameplayObject _typeGameplayObject;
-        [Inject] private Func<Transform, GameObject> _modelFactoryMethod;
-        
+        [Inject] private CharacterSettings _settings;
         
         public override void InstallBindings()
         {
@@ -44,17 +41,17 @@ namespace Gameplay
         private void BindInjectedParameters()
         {
             Container.Bind<StatsInfo>()
-                .FromInstance(_statsInfo)
+                .FromInstance(_settings.Stats)
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<Func<Transform, GameObject>>()
-                .FromInstance(_modelFactoryMethod)
+                .FromInstance(_settings.ModelFactory)
                 .AsSingle()
                 .NonLazy();
             
             Container.Bind<TypeGameplayObject>()
-                .FromInstance(_typeGameplayObject)
+                .FromInstance(_settings.IsEnemy)
                 .AsSingle()
                 .NonLazy();
         }

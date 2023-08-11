@@ -1,25 +1,32 @@
-﻿using UnityEngine;
+﻿using Gameplay.AI;
+using UnityEngine;
 using Zenject;
 
-namespace Gameplay
+namespace Gameplay.Enemy
 {
     public class OnceEnemySpawner : MonoBehaviour
     {
         [SerializeField] private StatsInfo _statsInfo = new() {MaxHealth = 100, Health = 100, MoveSpeed = 1, AttackSpeed = 1};
         [SerializeField] private GameObject _modelPrefab;
 
-        private Character.Factory _characterFactory;
-
+        [SerializeField] private SimpleEnemyAI _simpleEnemyAI;
+        
+        private EnemyFactory _enemyFactory;
 
         [Inject]
-        protected void Construct(Character.Factory characterFactory)
+        protected void Construct(EnemyFactory enemyFactory)
         {
-            _characterFactory = characterFactory;
+            _enemyFactory = enemyFactory;
         }
-        
+         
         protected void Start()
         {
-            var enemy = _characterFactory.Create(_statsInfo, parent => Instantiate(_modelPrefab, parent), TypeGameplayObject.Enemy);
+            var settings = new CharacterSettings(_statsInfo,
+                parent => Instantiate(_modelPrefab, parent),
+                TypeGameplayObject.Enemy);
+            
+            var enemy = _enemyFactory.Create(settings, _simpleEnemyAI);
+            
             enemy.transform.position = transform.position;
             
             Destroy(gameObject);

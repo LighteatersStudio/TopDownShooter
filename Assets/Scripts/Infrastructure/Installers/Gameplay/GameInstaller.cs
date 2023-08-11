@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using Gameplay;
+using Gameplay.AI;
+using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
 using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
@@ -24,6 +26,7 @@ namespace Infrastructure
         
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
+        [SerializeField] private Character _enemyPrefab;
         
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
@@ -55,8 +58,8 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
         }
-
-
+        
+        
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
@@ -162,9 +165,14 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind character");
 
-            Container.BindFactory<StatsInfo, Func<Transform, GameObject>, TypeGameplayObject, Character, Character.Factory>()
+            Container.BindFactory<CharacterSettings, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
+
+            Container.BindFactory<CharacterSettings, IAIBehaviourInstaller, Character, EnemyFactory>()
+                .FromSubContainerResolve()
+                .ByInstaller<EnemyInstaller>()
+                .WithArguments(_enemyPrefab);
         }
         
         private void BindWeapon()
