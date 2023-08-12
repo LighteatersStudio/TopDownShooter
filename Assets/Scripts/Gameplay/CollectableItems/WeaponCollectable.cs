@@ -6,28 +6,31 @@ namespace Gameplay.CollectableItems
 {
     public class WeaponCollectable : MonoBehaviour
     {
-        [SerializeField] private WeaponSettings _weapon;
-
-        private IPlayer _player;
+        private WeaponSettings _weapon;
 
 
         [Inject]
-        public void Construct(IPlayer player, Vector3 newPosition)
+        public void Construct(Vector3 newPosition, WeaponSettings weaponSettings)
         {
-            _player = player;
             transform.position = newPosition;
+            _weapon = weaponSettings;
+        }
+
+        private void Start()
+        {
+            Instantiate(_weapon.ViewPrefab, transform.position, Quaternion.identity, transform);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Player>())
             {
-                _player.ChangeWeapon(_weapon);
+                other.GetComponent<Player>().ChangeWeapon(_weapon);
                 Destroy(gameObject);
             }
         }
 
-        public class Factory : PlaceholderFactory<Vector3, WeaponCollectable>
+        public class Factory : PlaceholderFactory<Vector3, WeaponSettings, WeaponCollectable>
         {
         }
     }

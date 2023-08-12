@@ -37,6 +37,7 @@ namespace Gameplay.Weapons
         public TypeDamage TypeDamage => _typeDamage;
         public Projectile BulletPrefab => _bulletPrefab;
         public ParticleSystem ShotFX => _shotFX;
+        public GameObject ViewPrefab => _viewPrefab;
         public Func<Transform, GameObject> ViewFactory => CreateView;
 
         public IWeaponSoundSet Sounds => _sounds;

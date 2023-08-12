@@ -159,7 +159,7 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind collectables");
             
-            Container.BindFactory<Vector3, WeaponCollectable, WeaponCollectable.Factory>()
+            Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
                 .AsSingle()
                 .Lazy();
