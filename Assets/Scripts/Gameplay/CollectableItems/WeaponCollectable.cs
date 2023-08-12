@@ -18,7 +18,7 @@ namespace Gameplay.CollectableItems
 
         private void Start()
         {
-            Instantiate(_weapon.ViewPrefab, transform.position, Quaternion.identity, transform);
+            _weapon.ViewFactory.Invoke(transform);
         }
 
         private void OnTriggerEnter(Collider other)
