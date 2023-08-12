@@ -18,7 +18,7 @@ namespace Gameplay.CollectableItems
 
         private void Start()
         {
-            _weapon.ViewFactory.Invoke(transform);
+            _weapon.ViewFactory(transform);
         }
 
         private void OnTriggerEnter(Collider other)
