@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Gameplay.Services.GameTime;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace Gameplay.AI
             return true;
         }
         
-        public Task<bool> MoveTo(Vector3 position)
+        public Task<bool> MoveTo(Vector3 position, CancellationToken token)
         {
             if (_currentMoving != null && !_currentMoving.IsFinished)
             {
@@ -55,6 +56,8 @@ namespace Gameplay.AI
             }
 
             _currentMoving = new MovingAction(_agent, this, position);
+            token.Register(() => { _currentMoving.Break(); });
+            
             return _currentMoving.Launch();
         }
     }

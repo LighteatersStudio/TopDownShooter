@@ -6,11 +6,11 @@ namespace Gameplay.Enemy
     public class EnemyInstaller : Installer<EnemyInstaller>
     {
         private readonly Character _characterPrefab;
-        private readonly CharacterSettings _characterSettings;
+        private readonly ICharacterSettings _characterSettings;
         private readonly IAIBehaviourInstaller _iuiBehaviourInstaller;
 
         [Inject]
-        public EnemyInstaller(Character characterPrefab, CharacterSettings characterSettings, IAIBehaviourInstaller iuiBehaviourInstaller)
+        public EnemyInstaller(Character characterPrefab, ICharacterSettings characterSettings, IAIBehaviourInstaller iuiBehaviourInstaller)
         {
             _characterPrefab = characterPrefab;
             _characterSettings = characterSettings;
@@ -19,7 +19,7 @@ namespace Gameplay.Enemy
 
         public override void InstallBindings()
         {
-            Container.Bind<CharacterSettings>()
+            Container.Bind<ICharacterSettings>()
                 .FromInstance(_characterSettings);
 
             Container.Bind<IAIBehaviourInstaller>()

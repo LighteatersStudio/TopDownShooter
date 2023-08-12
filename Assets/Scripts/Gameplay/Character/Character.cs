@@ -146,7 +146,7 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
-        public class Factory : PlaceholderFactory<CharacterSettings, Character>
+        public class Factory : PlaceholderFactory<ICharacterSettings, Character>
         {
         }
     }

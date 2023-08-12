@@ -20,7 +20,7 @@ namespace Gameplay
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
         
-        [Inject] private CharacterSettings _settings;
+        [Inject] private ICharacterSettings _settings;
         
         public override void InstallBindings()
         {

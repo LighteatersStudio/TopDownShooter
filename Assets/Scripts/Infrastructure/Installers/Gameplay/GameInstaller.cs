@@ -165,11 +165,11 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind character");
 
-            Container.BindFactory<CharacterSettings, Character, Character.Factory>()
+            Container.BindFactory<ICharacterSettings, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
 
-            Container.BindFactory<CharacterSettings, IAIBehaviourInstaller, Character, EnemyFactory>()
+            Container.BindFactory<ICharacterSettings, IAIBehaviourInstaller, Character, EnemyFactory>()
                 .FromSubContainerResolve()
                 .ByInstaller<EnemyInstaller>()
                 .WithArguments(_enemyPrefab);

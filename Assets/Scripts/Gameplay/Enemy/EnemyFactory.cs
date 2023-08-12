@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Gameplay.Enemy
 {
-    public class EnemyFactory : PlaceholderFactory<CharacterSettings, IAIBehaviourInstaller, Character>
+    public class EnemyFactory : PlaceholderFactory<ICharacterSettings, IAIBehaviourInstaller, Character>
     {
     }
 }
