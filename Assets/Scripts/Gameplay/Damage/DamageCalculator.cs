@@ -4,7 +4,7 @@
     {
         public float Calculate(IAttackInfo attackInfo, IStats stats)
         {
-            if (stats.Imunne)
+            if (stats.Immune)
             {
                 return 0;
             }

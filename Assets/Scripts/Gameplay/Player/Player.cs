@@ -55,7 +55,10 @@ namespace Gameplay
         private void Load(IPlayerSettings settings, Character.Factory characterFactory,
             PlayerInputAdapter.Factory playerInputFactory, Weapon.Factory weaponFactory)
         {
-            _character = characterFactory.Create(settings.Stats, parent => Instantiate(settings.Model, parent), TypeGameplayObject.Player);
+            var characterSettings = new CharacterSettings(settings.Stats, parent => Instantiate(settings.Model, parent),
+                TypeGameplayObject.Player);
+            
+            _character = characterFactory.Create(characterSettings);
             _character.SetParent(transform);
 
             var moveBehaviour = gameObject.AddComponent<MoveBehaviour>();

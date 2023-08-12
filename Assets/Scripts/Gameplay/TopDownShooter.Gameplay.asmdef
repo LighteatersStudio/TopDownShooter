@@ -6,7 +6,8 @@
         "TopDownShooter.Services.Utility",
         "TopDownShooter.Services.Audio",
         "Zenject",
-        "Plugin.Outline"
+        "Plugin.Outline",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
