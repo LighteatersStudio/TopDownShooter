@@ -30,7 +30,7 @@ namespace Gameplay.AI
         {
             _ticker.Tick += OnTick;
             
-            if (!_agent.SetDestination(_position))
+            if (!_agent || !_agent.SetDestination(_position))
             {
                 Finish(false);
             }
