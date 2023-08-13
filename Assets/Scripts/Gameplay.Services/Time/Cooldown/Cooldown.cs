@@ -76,7 +76,7 @@ namespace Gameplay.Services.GameTime
                 return new Cooldown(duration, ticker, finishHandler);
             }
 
-            public virtual  Cooldown CreateFinished()
+            public virtual Cooldown CreateFinished()
             {
                 var instance = Create(1, new ITicker.Fake());
                 instance.Launch();

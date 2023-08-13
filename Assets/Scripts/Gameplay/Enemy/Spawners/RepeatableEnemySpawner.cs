@@ -1,43 +1,55 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Gameplay.Services.GameTime;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay.Enemy
 {
-    public class RepeatableEnemySpawner : EnemySpawner
+    public class RepeatableEnemySpawner : EnemySpawner, ITicker
     {
         [SerializeField] private float _spawnDelayS = 5f;
         [SerializeField] private int _spawnCount = 5;
+        [SerializeField] private bool _firstSpawnOnStart = true;
         
         private readonly List<Character> _spawnedEnemies = new();
-
-        private bool _isInitialized;
+        private Cooldown.Factory _cooldownFactory;
+        private Cooldown _currentCooldown;
+        public event Action<float> Tick;
         
+        
+        [Inject]
+        private void Construct(Cooldown.Factory cooldownFactory)
+        {
+            _cooldownFactory = cooldownFactory;
+        }
+
         protected void Start()
         {
-            StartCoroutine(SpawnCoroutine());
+            _currentCooldown = _cooldownFactory.CreateFinished();
+            
+            if (_firstSpawnOnStart && CanSpawned())
+            {
+                SpawnOne();
+            }
         }
 
-        private IEnumerator SpawnCoroutine()
+        private void Update()
         {
-            if (_spawnCount > 0)
-            {
-                SpawnOne();
-            }
+            Tick?.Invoke(Time.deltaTime);
 
-            while (true)
+            if (_currentCooldown.IsFinish && CanSpawned())
             {
-                while (_spawnedEnemies.Count >= _spawnCount)
-                {
-                    yield return 0;    
-                }
-                
-                yield return new WaitForSeconds(_spawnDelayS);
-                SpawnOne();
+                _currentCooldown = _cooldownFactory.Create(_spawnDelayS, this, SpawnOne);
+                _currentCooldown.Launch();
             }
         }
-
-
+        
+        private bool CanSpawned()
+        {
+            return _spawnedEnemies.Count < _spawnCount;
+        }
+        
         private void SpawnOne()
         {
             var enemy = Spawn();

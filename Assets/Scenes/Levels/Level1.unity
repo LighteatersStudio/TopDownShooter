@@ -2406,7 +2406,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 189234673090815563, guid: 055e5157e3fc5fc47bacb27e03e5579e, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 189234673090815563, guid: 055e5157e3fc5fc47bacb27e03e5579e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2710,7 +2710,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1039585608
 PrefabInstance:
@@ -2795,7 +2795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3112,7 +3112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40ea7d145a34b1185a778d661aeab25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weapon: {fileID: 11400000, guid: f5ef9e351b65a7b43907509a19d7158f, type: 2}
 --- !u!4 &1185574939
 Transform:
   m_ObjectHideFlags: 0
@@ -3126,7 +3125,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1188400315
 GameObject:
@@ -3962,7 +3961,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5237370067961838052, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5237370067961838052, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4014,7 +4013,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7799263032749928775, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
       propertyPath: _spawnDelayS
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7799263032749928775, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
+      propertyPath: _firstSpawnOnStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7799263032749928775, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
       propertyPath: _enemySettings._simpleEnemyAI._patrolPath._points.Array.size
@@ -4692,7 +4695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7117178119667781508, guid: d9136a536455ca44593bb063c7487206, type: 3}
       propertyPath: m_LocalPosition.x

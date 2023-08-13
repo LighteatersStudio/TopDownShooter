@@ -54,6 +54,10 @@ namespace Infrastructure
                 .WithGameObjectName(nameof(GameTimer))
                 .AsSingle()
                 .NonLazy();
+
+            Container.Bind<Cooldown.Factory>()
+                .AsSingle()
+                .Lazy();
         }
         
         
