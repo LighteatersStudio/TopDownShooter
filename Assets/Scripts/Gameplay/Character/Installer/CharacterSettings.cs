@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Gameplay
 {
-    public class CharacterSettings
+    
+    public class CharacterSettings : ICharacterSettings
     {
-        public readonly StatsInfo Stats;
-        public readonly Func<Transform, GameObject> ModelFactory;
-        public readonly TypeGameplayObject IsEnemy;
-
+        public StatsInfo Stats { get; }
+        public Func<Transform, GameObject> ModelFactory { get; }
+        public TypeGameplayObject IsEnemy { get; }
+        
         public CharacterSettings(StatsInfo stats, Func<Transform, GameObject> modelFactory, TypeGameplayObject isEnemy)
         {
             Stats = stats;

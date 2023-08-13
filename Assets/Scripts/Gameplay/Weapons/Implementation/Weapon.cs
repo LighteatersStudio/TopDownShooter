@@ -29,13 +29,13 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings)
+        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings, Cooldown.Factory cooldownFactory)
         {
             _fxFactory = fxFactory;
             _user = user;
             _settings = settings;
             
-            _cooldownFactory = new Cooldown.Factory();
+            _cooldownFactory = cooldownFactory;
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
             RefillAmmoClip();

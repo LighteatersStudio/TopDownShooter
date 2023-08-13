@@ -56,7 +56,7 @@ namespace Gameplay.AI
         private void Finish(bool result)
         {
             _ticker.Tick -= OnTick;
-            _movingProcess.SetResult(result);
+            _movingProcess.TrySetResult(result);
         }
     }
 }
