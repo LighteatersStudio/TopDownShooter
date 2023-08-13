@@ -1,5 +1,6 @@
 using System;
 using Gameplay;
+using Gameplay.CollectableItems;
 using Gameplay.AI;
 using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
@@ -28,12 +29,14 @@ namespace Infrastructure
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private Character _enemyPrefab;
         
+        [Header("Gameplay Entities: collectables")]
+        [SerializeField] private WeaponCollectable _weaponCollectable;
+        [SerializeField] private FirstAidKit _firstAidKitPrefab;
+        
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
 
-        [Header("Gameplay Entities: collectables")]
-        [SerializeField] private FirstAidKit _firstAidKitPrefab;
 
         public override void InstallBindings()
         {
@@ -48,17 +51,6 @@ namespace Infrastructure
             BindWeapon();
             BindCollectables();
         }
-
-        private void BindCollectables()
-        {
-            Debug.Log("Game installer: Bind Collectables");
-            
-            Container.BindFactory<Vector3, FirstAidKit, FirstAidKit.Factory>()
-                .FromComponentInNewPrefab(_firstAidKitPrefab)
-                .AsSingle()
-                .Lazy();
-        }
-        
         
         private void BindScenarios()
         {
@@ -173,6 +165,21 @@ namespace Infrastructure
                 .FromSubContainerResolve()
                 .ByInstaller<EnemyInstaller>()
                 .WithArguments(_enemyPrefab);
+        }
+        
+        private void BindCollectables()
+        {
+            Debug.Log("Game installer: Bind collectables");
+            
+            Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
+                .FromComponentInNewPrefab(_weaponCollectable)
+                .AsSingle()
+                .Lazy();
+            
+            Container.BindFactory<Vector3, FirstAidKit, FirstAidKit.Factory>()
+                .FromComponentInNewPrefab(_firstAidKitPrefab)
+                .AsSingle()
+                .Lazy();
         }
         
         private void BindWeapon()
