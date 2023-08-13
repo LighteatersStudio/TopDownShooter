@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
@@ -28,22 +30,32 @@ namespace Gameplay.AI
             
             do
             {
-                foreach (var pathPoint in path.Points)
-                {
-                    if (!await _moving.MoveTo(pathPoint, _token))
-                    {
-                        Debug.LogError($"MovePoint NOT reachable: {pathPoint}");
-                    }
-                }
-
+                await MoveThrowPath(path.Points, _token);
                 await UniTask.Yield();
+                
                 path = _path.Reverse();
             }
             while (!_token.IsCancellationRequested);
             
             return new StateResult(_factory.Create(_token), false);
         }
-       
+
+        private async Task MoveThrowPath(IEnumerable<Vector3> points, CancellationToken token)
+        {
+            foreach (var pathPoint in points)
+            {
+                if(token.IsCancellationRequested)
+                {
+                    break;
+                }
+                    
+                if (!await _moving.MoveTo(pathPoint, token) && !token.IsCancellationRequested)
+                {
+                    Debug.LogError($"MovePoint NOT REACHED: {pathPoint}");
+                }
+            }
+        }
+        
         public class Factory : PlaceholderFactory<CancellationToken, PatrolAIState>
         {
         }
