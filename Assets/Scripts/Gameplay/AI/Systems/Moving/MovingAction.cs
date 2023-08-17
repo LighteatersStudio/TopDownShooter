@@ -45,7 +45,7 @@ namespace Gameplay.AI
         
         private void OnTick(float deltaTime)
         {
-            var dist=_agent.remainingDistance;
+            var dist = _agent.remainingDistance;
 
             if (float.IsInfinity(dist) ||
                 (_agent.pathStatus == NavMeshPathStatus.PathComplete && _agent.remainingDistance < DistanceThreshold))
