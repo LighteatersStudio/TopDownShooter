@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using ModestTree;
 using UnityEngine;
 using Zenject;
 
@@ -29,16 +27,6 @@ namespace Gameplay.AI
             _token = token;
             _observeArea = observeArea;
             _attackingAIFactory = attackingAIFactory;
-
-            _observeArea.TargetsChanged += OnTargetsChanged;
-        }
-        
-        private void OnTargetsChanged()
-        {
-            if (!_observeArea.TargetsTransforms.IsEmpty())
-            {
-                _targetTransform = _observeArea.TargetsTransforms.First();
-            }
         }
 
         public async Task<StateResult> Launch()
@@ -47,9 +35,9 @@ namespace Gameplay.AI
             
             do
             {
-                if (!_observeArea.TargetsTransforms.IsEmpty())
+                if (_observeArea.HasTarget)
                 {
-                    return new StateResult(_attackingAIFactory.Create(_targetTransform, _token), true);
+                    return new StateResult(_attackingAIFactory.Create(_token), true);
                 }
 
                 await MoveThroughPath(path.Points, _token);
@@ -66,7 +54,7 @@ namespace Gameplay.AI
         {
             foreach (var pathPoint in points)
             {
-                if (token.IsCancellationRequested || !_observeArea.TargetsTransforms.IsEmpty())
+                if (token.IsCancellationRequested || _observeArea.HasTarget)
                 {
                     break;
                 }

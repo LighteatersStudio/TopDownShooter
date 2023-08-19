@@ -4,27 +4,29 @@ using UnityEngine;
 
 namespace Gameplay.AI
 {
-    public class ObserveArea : MonoBehaviour, IObserveArea
+    public class ObserveArea : MonoBehaviour
     {
         public event Action TargetsChanged;
 
-        private readonly List<Transform> _targetsTransform = new();
+        private readonly List<Transform> _targetsTransforms = new();
 
-        public IEnumerable<Transform> TargetsTransforms => _targetsTransform;
+        public bool HasTarget => _targetsTransforms.Count > 0;
+
+        public IEnumerable<Transform> TargetsTransforms => _targetsTransforms;
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<Player>())
             {
-                _targetsTransform.Add(other.gameObject.transform);
+                _targetsTransforms.Add(other.gameObject.transform);
                 TargetsChanged?.Invoke();
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.GetComponent<Player>() && _targetsTransform.Count != 0)
+            if (other.gameObject.GetComponent<Player>() && _targetsTransforms.Count != 0)
             {
-                _targetsTransform.Clear();
+                _targetsTransforms.Clear();
                 TargetsChanged?.Invoke();
             }
         }

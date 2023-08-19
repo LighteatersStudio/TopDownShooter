@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using ModestTree;
-using UnityEngine;
 using Zenject;
 
 namespace Gameplay.AI
@@ -15,34 +14,22 @@ namespace Gameplay.AI
         private readonly Character _character;
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
-        private Transform _targetTransform;
         
-        public AttackingAIState(Transform targetTransform, CancellationToken token, Character character,
+        public AttackingAIState(CancellationToken token, Character character,
             NavMeshMoving moving, ObserveArea observeArea, IdleAIState.Factory idleAIFactory)
         {
             _token = token;
             _idleAIFactory = idleAIFactory;
             _character = character;
-            _targetTransform = targetTransform;
             _moving = moving;
             _observeArea = observeArea;
-
-            _observeArea.TargetsChanged += OnTargetsChanged;
-        }
-
-        private void OnTargetsChanged()
-        {
-            if (!_observeArea.TargetsTransforms.IsEmpty())
-            {
-                _targetTransform = _observeArea.TargetsTransforms.First();
-            }
         }
 
         public async Task<StateResult> Launch()
         {
             do
             {
-                if (_observeArea.TargetsTransforms.IsEmpty())
+                if (!_observeArea.HasTarget)
                 {
                     break;
                 }
@@ -51,9 +38,7 @@ namespace Gameplay.AI
                 await UniTask.Yield();
             }
             while (!_token.IsCancellationRequested);
-
-            _observeArea.TargetsChanged -= OnTargetsChanged;
-
+            
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
 
@@ -65,11 +50,11 @@ namespace Gameplay.AI
             }
             
             _moving.Stop();
-            _character.LookDirection = _targetTransform.position;
+            _character.LookDirection = _observeArea.TargetsTransforms.First().position;
             _character.Fire();
         }
 
-        public class Factory : PlaceholderFactory<Transform, CancellationToken, AttackingAIState>
+        public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>
         {
         }
     }
