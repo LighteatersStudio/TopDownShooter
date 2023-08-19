@@ -61,17 +61,12 @@ namespace Gameplay.AI
             return _currentMoving.Launch();
         }
 
-        public Task<bool> Stop(CancellationToken token)
+        public void Stop()
         {
             if (_currentMoving != null)
             {
                 _currentMoving.Break();
             }
-
-            _currentMoving = new MovingAction(_agent, this, transform.position);
-            token.Register(() => { _currentMoving.Break(); });
-
-            return _currentMoving.Launch();
         }
     }
 }

@@ -1,27 +1,31 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gameplay.AI
 {
     public class ObserveArea : MonoBehaviour, IObserveArea
     {
-        public event Action<Transform> EnemyFound;
-        public event Action EnemyEscaped;
+        public event Action TargetsChanged;
 
+        private readonly List<Transform> _targetsTransform = new();
+
+        public IEnumerable<Transform> TargetsTransforms => _targetsTransform;
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<Player>())
             {
-                EnemyFound?.Invoke(other.gameObject.transform);
+                _targetsTransform.Add(other.gameObject.transform);
+                TargetsChanged?.Invoke();
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.gameObject.GetComponent<Player>())
+            if (other.gameObject.GetComponent<Player>() && _targetsTransform.Count != 0)
             {
-                EnemyEscaped?.Invoke();
+                _targetsTransform.Clear();
+                TargetsChanged?.Invoke();
             }
         }
     }

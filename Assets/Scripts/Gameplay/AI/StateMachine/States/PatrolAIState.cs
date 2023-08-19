@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using ModestTree;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +18,6 @@ namespace Gameplay.AI
         private readonly ObserveArea _observeArea;
         private readonly AttackingAIState.Factory _attackingAIFactory;
         
-        private bool _isEnemyFound;
         private Transform _targetTransform;
 
         public PatrolAIState(NavMeshMoving moving, MovingPath path, IdleAIState.Factory factory, CancellationToken token, 
@@ -29,13 +30,15 @@ namespace Gameplay.AI
             _observeArea = observeArea;
             _attackingAIFactory = attackingAIFactory;
 
-            _observeArea.EnemyFound += OnEnemyFound;
+            _observeArea.TargetsChanged += OnTargetsChanged;
         }
         
-        private void OnEnemyFound(Transform targetTransform)
+        private void OnTargetsChanged()
         {
-            _isEnemyFound = true;
-            _targetTransform = targetTransform;
+            if (!_observeArea.TargetsTransforms.IsEmpty())
+            {
+                _targetTransform = _observeArea.TargetsTransforms.First();
+            }
         }
 
         public async Task<StateResult> Launch()
@@ -44,7 +47,7 @@ namespace Gameplay.AI
             
             do
             {
-                if (_isEnemyFound)
+                if (!_observeArea.TargetsTransforms.IsEmpty())
                 {
                     return new StateResult(_attackingAIFactory.Create(_targetTransform, _token), true);
                 }
@@ -63,7 +66,7 @@ namespace Gameplay.AI
         {
             foreach (var pathPoint in points)
             {
-                if (token.IsCancellationRequested || _isEnemyFound)
+                if (token.IsCancellationRequested || !_observeArea.TargetsTransforms.IsEmpty())
                 {
                     break;
                 }
