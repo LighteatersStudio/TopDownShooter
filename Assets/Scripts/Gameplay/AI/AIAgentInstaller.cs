@@ -8,9 +8,10 @@ namespace Gameplay.AI
     {
         [SerializeField] private AIAgent _aiAgent;
         [SerializeField] private NavMeshMoving _movingSystems;
-        
-        [Inject] IAIBehaviourInstaller _behaviourInstaller;
-            
+        [SerializeField] private ObserveArea _observeArea;
+
+        [Inject] private IAIBehaviourInstaller _behaviourInstaller;
+
         public override void InstallBindings()
         {
             BindSystems();
@@ -23,6 +24,10 @@ namespace Gameplay.AI
         { 
             Container.Bind<AIAgent>()
                 .FromInstance(_aiAgent)
+                .AsSingle();
+            
+            Container.Bind<ObserveArea>()
+                .FromInstance(_observeArea)
                 .AsSingle();
         }
 

@@ -60,5 +60,13 @@ namespace Gameplay.AI
             
             return _currentMoving.Launch();
         }
+
+        public void Stop()
+        {
+            if (_currentMoving != null)
+            {
+                _currentMoving.Break();
+            }
+        }
     }
 }

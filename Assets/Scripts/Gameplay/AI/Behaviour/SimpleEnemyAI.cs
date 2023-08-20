@@ -32,6 +32,7 @@ namespace Gameplay.AI
             Container.BindFactory<CancellationToken, InitAIState, InitAIState.Factory>();
             Container.BindFactory<CancellationToken, IdleAIState, IdleAIState.Factory>();
             Container.BindFactory<CancellationToken, PatrolAIState, PatrolAIState.Factory>();
+            Container.BindFactory<CancellationToken, AttackingAIState, AttackingAIState.Factory>();
         }
     }
 }
