@@ -9,7 +9,7 @@ namespace Gameplay.AI
     {
         private const float MovementThreshold = 0.01f;
         
-        [SerializeField][Range(0,360)] private int _angel = 30;
+        [SerializeField][Range(0,360)] private int _angle = 30;
         [SerializeField] private int _rotationSpeed = 2;
 
         private readonly List<Transform> _targetsTransforms = new();
@@ -47,13 +47,13 @@ namespace Gameplay.AI
         
         private void RotationRight()
         {
-            _rotationTween = transform.DOLocalRotate(new Vector3(0f, _angel, 0f), _rotationSpeed, RotateMode.Fast)
+            _rotationTween = transform.DOLocalRotate(new Vector3(0f, _angle, 0f), _rotationSpeed, RotateMode.Fast)
                 .OnComplete(RotationLeft);
         }
         
         private void RotationLeft()
         {
-            _rotationTween = transform.DOLocalRotate(new Vector3(0f, -_angel, 0f), _rotationSpeed, RotateMode.Fast)
+            _rotationTween = transform.DOLocalRotate(new Vector3(0f, -_angle, 0f), _rotationSpeed, RotateMode.Fast)
                 .OnComplete(RotationRight);
         }
         
