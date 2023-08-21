@@ -16,7 +16,6 @@ namespace Gameplay.AI
         
         private Tween _rotationTween;
         private Vector3 _lastPosition;
-        private bool _isMoving;
         
         public event Action TargetsChanged;
         public bool HasTarget => _targetsTransforms.Count > 0;
@@ -60,25 +59,24 @@ namespace Gameplay.AI
         private void KillRotationTween()
         {
             _rotationTween.Kill();
-            transform.rotation = new Quaternion();
+            transform.localRotation = Quaternion.identity;
         }
 
         private void Update()
         {
-            _isMoving = Mathf.Abs(transform.position.magnitude - _lastPosition.magnitude) > MovementThreshold ;
+            var isMoving = Vector3.Distance(transform.position, _lastPosition) > MovementThreshold;
             _lastPosition = transform.position;
 
-            ProcessRotation();
+            ProcessRotation(isMoving);
         }
 
-        private void ProcessRotation()
+        private void ProcessRotation(bool isMoving)
         {
-            if (_isMoving && _rotationTween.IsActive())
+            if (isMoving && _rotationTween.IsActive())
             {
                 KillRotationTween();
-                _isMoving = false;
             }
-            else if (!_isMoving && !_rotationTween.IsActive())
+            else if (!isMoving && !_rotationTween.IsActive())
             {
                 RotationRight();
             }
