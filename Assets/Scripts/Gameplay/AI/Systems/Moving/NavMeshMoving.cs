@@ -50,23 +50,16 @@ namespace Gameplay.AI
         
         public Task<bool> MoveTo(Vector3 position, CancellationToken token)
         {
-            if (_currentMoving != null && !_currentMoving.IsFinished)
-            {
-                _currentMoving.Break();
-            }
-
-            _currentMoving = new MovingAction(_agent, this, position);
-            token.Register(() => { _currentMoving.Break(); });
+            Stop();
+            token.Register(Stop);
             
+            _currentMoving = new MovingAction(_agent, this, position);
             return _currentMoving.Launch();
         }
 
         public void Stop()
         {
-            if (_currentMoving != null)
-            {
-                _currentMoving.Break();
-            }
+            _currentMoving?.Break();
         }
     }
 }

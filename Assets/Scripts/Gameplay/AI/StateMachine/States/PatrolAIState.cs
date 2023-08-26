@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using UnityEditor.AppleTV;
 using UnityEngine;
 using Zenject;
 
@@ -11,15 +12,17 @@ namespace Gameplay.AI
     {
         private readonly NavMeshMoving _moving;
         private readonly MovingPath _path;
-        private readonly IdleAIState.Factory _factory;
         private readonly CancellationToken _token;
         private readonly ObserveArea _observeArea;
+        private readonly IdleAIState.Factory _factory;
         private readonly AttackingAIState.Factory _attackingAIFactory;
         
-        private Transform _targetTransform;
-
-        public PatrolAIState(NavMeshMoving moving, MovingPath path, IdleAIState.Factory factory, CancellationToken token, 
-            ObserveArea observeArea, AttackingAIState.Factory attackingAIFactory)
+        public PatrolAIState(NavMeshMoving moving,
+            MovingPath path,
+            IdleAIState.Factory factory,
+            CancellationToken token,
+            ObserveArea observeArea,
+            AttackingAIState.Factory attackingAIFactory)
         {
             _moving = moving;
             _path = path;
@@ -52,20 +55,45 @@ namespace Gameplay.AI
 
         private async Task MoveThroughPath(IEnumerable<Vector3> points, CancellationToken token)
         {
+            var internalToken = GetTargetChangedToken(token);
+
             foreach (var pathPoint in points)
             {
-                if (token.IsCancellationRequested || _observeArea.HasTarget)
+                if (internalToken.IsCancellationRequested || _observeArea.HasTarget)
                 {
                     break;
                 }
                     
-                if (!await _moving.MoveTo(pathPoint, token) && !token.IsCancellationRequested)
+                if (!await _moving.MoveTo(pathPoint, internalToken) && !internalToken.IsCancellationRequested)
                 {
                     Debug.LogError($"MovePoint NOT REACHED: {pathPoint}");
                 }
             }
         }
-        
+
+        private CancellationToken GetTargetChangedToken(CancellationToken parentToken)
+        {
+            CancellationTokenSource internalSource = new CancellationTokenSource();
+            parentToken.Register(() => internalSource.Cancel());
+
+            var internalToken = internalSource.Token;
+
+            _observeArea.TargetsChanged += OnTargetChanged;
+
+            void OnTargetChanged()
+            {
+                if (!_observeArea.HasTarget)
+                {
+                    return;
+                }
+                
+                _observeArea.TargetsChanged -= OnTargetChanged;
+                internalSource.Cancel();
+            }
+
+            return internalToken;
+        }
+
         public class Factory : PlaceholderFactory<CancellationToken, PatrolAIState>
         {
         }

@@ -55,6 +55,11 @@ namespace Gameplay.AI
         }
         private void Finish(bool result)
         {
+            if (!_agent.isStopped)
+            {
+                _agent.ResetPath();
+            }
+            
             _ticker.Tick -= OnTick;
             _movingProcess.TrySetResult(result);
         }
