@@ -31,6 +31,7 @@ namespace Gameplay.AI
             {
                 if (!_observeArea.HasTarget)
                 {
+                    _observeArea.DeactivateAttackCollider();
                     break;
                 }
                 
@@ -52,6 +53,7 @@ namespace Gameplay.AI
             _moving.Stop();
             _character.LookDirection = _observeArea.TargetsTransforms.First().position;
             _character.Fire();
+            _observeArea.ActivateAttackCollider();
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

@@ -5,21 +5,21 @@ using UnityEngine;
 
 namespace Gameplay.AI
 {
-    [RequireComponent(typeof(BoxCollider),typeof(SphereCollider))]
+    [RequireComponent(typeof(BoxCollider), typeof(SphereCollider))]
     public class ObserveArea : MonoBehaviour
     {
         private const float MovementThreshold = 0.01f;
-        
-        [SerializeField][Range(0,360)] private int _angle = 30;
+
+        [SerializeField] [Range(0, 360)] private int _angle = 30;
         [SerializeField] private int _rotationSpeed = 2;
 
         private readonly List<Transform> _targetsTransforms = new();
-        
+
         private Tween _rotationTween;
         private Vector3 _lastPosition;
         private BoxCollider _boxCollider;
         private SphereCollider _sphereCollider;
-        
+
         public event Action TargetsChanged;
         public bool HasTarget => _targetsTransforms.Count > 0;
         public IEnumerable<Transform> TargetsTransforms => _targetsTransforms;
@@ -28,11 +28,16 @@ namespace Gameplay.AI
         {
             if (other.gameObject.GetComponent<Player>())
             {
+                foreach (var target in _targetsTransforms)
+                {
+                    if (other.gameObject.transform == target)
+                    {
+                        return;
+                    }
+                }
+
                 _targetsTransforms.Add(other.gameObject.transform);
                 TargetsChanged?.Invoke();
-
-                _sphereCollider.enabled = true;
-                _boxCollider.enabled = false;
             }
         }
 
@@ -42,9 +47,6 @@ namespace Gameplay.AI
             {
                 _targetsTransforms.Remove(other.gameObject.transform);
                 TargetsChanged?.Invoke();
-                
-                _sphereCollider.enabled = false;
-                _boxCollider.enabled = true;
             }
         }
 
@@ -59,19 +61,19 @@ namespace Gameplay.AI
             _sphereCollider.enabled = false;
             _lastPosition = transform.position;
         }
-        
+
         private void RotationRight()
         {
             _rotationTween = transform.DOLocalRotate(new Vector3(0f, _angle, 0f), _rotationSpeed, RotateMode.Fast)
                 .OnComplete(RotationLeft);
         }
-        
+
         private void RotationLeft()
         {
             _rotationTween = transform.DOLocalRotate(new Vector3(0f, -_angle, 0f), _rotationSpeed, RotateMode.Fast)
                 .OnComplete(RotationRight);
         }
-        
+
         private void KillRotationTween()
         {
             _rotationTween.Kill();
@@ -99,6 +101,20 @@ namespace Gameplay.AI
             {
                 RotationRight();
             }
+        }
+
+        public void ActivateAttackCollider()
+        {
+            _sphereCollider.enabled = true;
+            _boxCollider.enabled = false;
+
+            KillRotationTween();
+        }
+
+        public void DeactivateAttackCollider()
+        {
+            _sphereCollider.enabled = false;
+            _boxCollider.enabled = true;
         }
     }
 }
