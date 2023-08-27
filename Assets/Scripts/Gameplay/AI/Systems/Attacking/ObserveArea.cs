@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Gameplay.AI
 {
+    [RequireComponent(typeof(BoxCollider),typeof(SphereCollider))]
     public class ObserveArea : MonoBehaviour
     {
         private const float MovementThreshold = 0.01f;
@@ -16,6 +17,8 @@ namespace Gameplay.AI
         
         private Tween _rotationTween;
         private Vector3 _lastPosition;
+        private BoxCollider _boxCollider;
+        private SphereCollider _sphereCollider;
         
         public event Action TargetsChanged;
         public bool HasTarget => _targetsTransforms.Count > 0;
@@ -27,6 +30,9 @@ namespace Gameplay.AI
             {
                 _targetsTransforms.Add(other.gameObject.transform);
                 TargetsChanged?.Invoke();
+
+                _sphereCollider.enabled = true;
+                _boxCollider.enabled = false;
             }
         }
 
@@ -36,11 +42,21 @@ namespace Gameplay.AI
             {
                 _targetsTransforms.Remove(other.gameObject.transform);
                 TargetsChanged?.Invoke();
+                
+                _sphereCollider.enabled = false;
+                _boxCollider.enabled = true;
             }
+        }
+
+        private void Awake()
+        {
+            _boxCollider = GetComponent<BoxCollider>();
+            _sphereCollider = GetComponent<SphereCollider>();
         }
 
         private void Start()
         {
+            _sphereCollider.enabled = false;
             _lastPosition = transform.position;
         }
         
@@ -67,7 +83,10 @@ namespace Gameplay.AI
             var isMoving = Vector3.Distance(transform.position, _lastPosition) > MovementThreshold;
             _lastPosition = transform.position;
 
-            ProcessRotation(isMoving);
+            if (_boxCollider.enabled)
+            {
+                ProcessRotation(isMoving);
+            }
         }
 
         private void ProcessRotation(bool isMoving)
