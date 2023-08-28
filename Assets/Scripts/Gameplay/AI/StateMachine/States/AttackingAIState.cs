@@ -31,7 +31,6 @@ namespace Gameplay.AI
             {
                 if (!_observeArea.HasTarget)
                 {
-                    _observeArea.DeactivateAttackCollider();
                     break;
                 }
                 
@@ -39,6 +38,8 @@ namespace Gameplay.AI
                 await UniTask.Yield();
             }
             while (!_token.IsCancellationRequested);
+            
+            _observeArea.DeactivateAttackCollider();
             
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
