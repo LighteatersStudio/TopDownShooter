@@ -39,6 +39,8 @@ namespace Gameplay.AI
             }
             while (!_token.IsCancellationRequested);
             
+            _observeArea.DeactivateAttackCollider();
+            
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
 
@@ -52,6 +54,7 @@ namespace Gameplay.AI
             _moving.Stop();
             _character.LookDirection = _observeArea.TargetsTransforms.First().position;
             _character.Fire();
+            _observeArea.ActivateAttackCollider();
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

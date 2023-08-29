@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8742745518038668124}
   - component: {fileID: 294029071802927037}
   - component: {fileID: 6741710852538616386}
+  - component: {fileID: 2343531630170842836}
   m_Layer: 0
   m_Name: ObserveArea
   m_TagString: Untagged
@@ -45,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0553b6e9ce849f79ff372423151fe76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _angel: 30
-  targetTransform: {fileID: 0}
+  _angle: 30
+  _rotationSpeed: 2
 --- !u!65 &6741710852538616386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68,3 +69,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 5}
   m_Center: {x: 0, y: 0, z: 3}
+--- !u!135 &2343531630170842836
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4304642242387282231}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 5.5
+  m_Center: {x: 0, y: 0, z: 0}
