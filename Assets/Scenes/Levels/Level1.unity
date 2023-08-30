@@ -2859,6 +2859,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _weaponSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 4f092de5fcee75d4aa8f5fa8122a9636, type: 2}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _enemySettings._statsInfo.MoveSpeed
       value: 10
       objectReference: {fileID: 0}

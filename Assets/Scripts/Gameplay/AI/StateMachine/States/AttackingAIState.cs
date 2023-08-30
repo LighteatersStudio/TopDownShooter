@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using ModestTree;
 using Zenject;
 
 namespace Gameplay.AI
@@ -27,6 +26,9 @@ namespace Gameplay.AI
 
         public async Task<StateResult> Launch()
         {
+            _moving.Stop();
+            _observeArea.ActivateAttackCollider();
+
             do
             {
                 if (!_observeArea.HasTarget)
@@ -34,7 +36,9 @@ namespace Gameplay.AI
                     break;
                 }
                 
-                StopAndShoot();
+                _character.LookDirection = _observeArea.TargetsTransforms.First().position;
+                _character.Fire();
+                
                 await UniTask.Yield();
             }
             while (!_token.IsCancellationRequested);
@@ -42,19 +46,6 @@ namespace Gameplay.AI
             _observeArea.DeactivateAttackCollider();
             
             return new StateResult(_idleAIFactory.Create(_token), true);
-        }
-
-        private void StopAndShoot()
-        {
-            if (_observeArea.TargetsTransforms.IsEmpty())
-            {
-                return;
-            }
-            
-            _moving.Stop();
-            _character.LookDirection = _observeArea.TargetsTransforms.First().position;
-            _character.Fire();
-            _observeArea.ActivateAttackCollider();
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>
