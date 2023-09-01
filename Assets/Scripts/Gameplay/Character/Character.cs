@@ -37,7 +37,7 @@ namespace Gameplay
             get => _fireDirection;
             set
             {
-                _fireDirection = value - transform.position; 
+                _fireDirection = value; 
                 ChangeLookDirection(_fireDirection);
             }
         }

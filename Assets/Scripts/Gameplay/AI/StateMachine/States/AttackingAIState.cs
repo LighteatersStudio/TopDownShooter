@@ -36,7 +36,7 @@ namespace Gameplay.AI
                     break;
                 }
                 
-                _character.LookDirection = _observeArea.TargetsTransforms.First().position;
+                _character.LookDirection = _observeArea.TargetsTransforms.First().position - _character.transform.position;
                 _character.Fire();
                 
                 await UniTask.Yield();
