@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay.AI
@@ -35,8 +36,11 @@ namespace Gameplay.AI
                 {
                     break;
                 }
-                
-                _character.LookDirection = _observeArea.TargetsTransforms.First().position - _character.transform.position;
+
+                var lookDirection = new Vector3(
+                    _observeArea.TargetsTransforms.First().position.x - _character.transform.position.x, 0,
+                    _observeArea.TargetsTransforms.First().position.z - _character.transform.position.z);
+                _character.LookDirection = lookDirection;
                 _character.Fire();
                 
                 await UniTask.Yield();

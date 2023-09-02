@@ -106,11 +106,6 @@ namespace Gameplay.AI
 
         public void ActivateAttackCollider()
         {
-            if (!_sphereCollider)
-            {
-                return;
-            }
-            
             _sphereCollider.enabled = true;
             _boxCollider.enabled = false;
 
@@ -119,7 +114,7 @@ namespace Gameplay.AI
 
         public void DeactivateAttackCollider()
         {
-            if (!_sphereCollider)
+            if (!this)
             {
                 return;
             }

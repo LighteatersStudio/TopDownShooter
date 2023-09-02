@@ -17,15 +17,13 @@ namespace Gameplay.Enemy
         private readonly List<Character> _spawnedEnemies = new();
         private Cooldown.Factory _cooldownFactory;
         private Cooldown _currentCooldown;
-        private Weapon.Factory _weaponFactory;
         public event Action<float> Tick;
         
         
         [Inject]
-        private void Construct(Cooldown.Factory cooldownFactory, Weapon.Factory weaponFactory)
+        private void Construct(Cooldown.Factory cooldownFactory)
         {
             _cooldownFactory = cooldownFactory;
-            _weaponFactory = weaponFactory;
         }
 
         protected void Start()
@@ -56,10 +54,9 @@ namespace Gameplay.Enemy
         
         private void SpawnOne()
         {
-            var enemy = Spawn();
+            var enemy = Spawn(_weaponSettings);
             _spawnedEnemies.Add(enemy);
             enemy.Dead += OnDead; 
-            enemy.ChangeWeapon(_weaponFactory.Create(_weaponSettings, enemy));
 
             void OnDead()
             {
