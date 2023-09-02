@@ -2,74 +2,41 @@
 using System;
 using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
-using Services.Utility;
 using Zenject;
 
 namespace Gameplay
 {
-    public class Player : MonoBehaviour, IPlayer, ITicker
+    public class Player : MonoBehaviour, IPlayer
     {
-        [SerializeField] private WeaponSettings _defaultWeapon;
-        
-        private DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory, Weapon.Factory> _initializer;
+        private IPlayerSettings _settings;
         private Character _character;
-        private PlayerInputAdapter _inputAdapter;
         private Weapon.Factory _weaponFactory;
+        
         
         public IWeaponOwner WeaponOwner => _character;
         public IHaveHealth Health => _character;
 
         public event Action Dead;
-        public event Action<float> Tick;
-
 
         [Inject]
-        public void Construct(IPlayerSettings settings, Character.Factory characterFactory,
-            PlayerInputAdapter.Factory inputAdapterFactory, Weapon.Factory weaponFactory)
+        public void Construct(IPlayerSettings settings, Character character, Weapon.Factory weaponFactory)
         {
-            _initializer =
-                new DynamicMonoInitializer<IPlayerSettings, Character.Factory, PlayerInputAdapter.Factory,
-                    Weapon.Factory>(
-                    settings,
-                    characterFactory,
-                    inputAdapterFactory,
-                    weaponFactory);
+            _settings = settings;
+            _character = character;
+            _weaponFactory = weaponFactory;
         }
 
         private void Start()
         {
-            _initializer.Initialize(Load);
+            ChangeWeapon(_settings.DefaultWeapon);
             _character.Dead += OnDead;
         }
 
-        private void Update()
-        {
-            Tick?.Invoke(Time.deltaTime);
-        }
-        
         private void OnDestroy()
         {
             _character.Dead -= OnDead;
         }
-
-        private void Load(IPlayerSettings settings, Character.Factory characterFactory,
-            PlayerInputAdapter.Factory playerInputFactory, Weapon.Factory weaponFactory)
-        {
-            var characterSettings = new CharacterSettings(settings.Stats, parent => Instantiate(settings.Model, parent),
-                TypeGameplayObject.Player);
-            
-            _character = characterFactory.Create(characterSettings);
-            _character.SetParent(transform);
-
-            var moveBehaviour = gameObject.AddComponent<MoveBehaviour>();
-            moveBehaviour.SetSpeedHandler(() => _character.MoveSpeed);
-
-            _inputAdapter = playerInputFactory.Create(moveBehaviour, _character, _character, this);
-            
-            _weaponFactory = weaponFactory;
-            ChangeWeapon(_defaultWeapon);
-        }
-
+        
         public void ChangeWeapon(IWeaponSettings settings)
         {
             _character.ChangeWeapon(_weaponFactory.Create(settings, _character));

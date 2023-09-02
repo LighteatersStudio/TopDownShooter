@@ -83,6 +83,11 @@ namespace Gameplay
                 .FromResolve()
                 .AsCached();
             
+            Container.Bind<ICanReload>()
+                .To<Character>()
+                .FromResolve()
+                .AsCached();
+            
             Container.Bind<IReloaded>()
                 .FromMethod(()=> new WeaponOwnerReloadProxy(Container.Resolve<IWeaponOwner>()))
                 .AsSingle()

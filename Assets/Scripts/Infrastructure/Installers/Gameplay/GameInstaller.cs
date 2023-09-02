@@ -1,10 +1,8 @@
-using System;
 using Gameplay;
 using Gameplay.CollectableItems;
 using Gameplay.AI;
 using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
-using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using Meta.Level;
 using Infrastructure.Scenraios;
@@ -22,13 +20,13 @@ namespace Infrastructure
         [SerializeField]private Camera _playerCamera;
         
         [Header("Gameplay Entities: player")]
-        [SerializeField] private Player _playerPrefab;
         [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private Player _playerPrefab;
         
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private Character _enemyPrefab;
-        
+
         [Header("Gameplay Entities: collectables")]
         [SerializeField] private WeaponCollectable _weaponCollectable;
         [SerializeField] private FirstAidKit _firstAidKitPrefab;
@@ -73,15 +71,12 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
             
-            Container.BindFactory<IMovable, ICanFire, ICanReload, ITicker, PlayerInputAdapter, PlayerInputAdapter.Factory>()
-                .AsSingle()
-                .Lazy();
-            
             Container.Bind<IPlayer>()
-                .FromComponentInNewPrefab(_playerPrefab)
-                .WithGameObjectName("Player")
+                .To<Player>()
+                .FromSubContainerResolve()
+                .ByNewContextPrefab(_playerPrefab)
                 .AsSingle()
-                .Lazy();
+                .NonLazy();
         }
 
         private void BindGameState()

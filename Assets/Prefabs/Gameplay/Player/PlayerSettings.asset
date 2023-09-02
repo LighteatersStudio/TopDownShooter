@@ -18,3 +18,5 @@ MonoBehaviour:
     MoveSpeed: 10
     AttackSpeed: 1
   _model: {fileID: 7673487251499248760, guid: 1e461d2f90f7fb345bb9173731202a03, type: 3}
+  _characterPrefab: {fileID: 8416849737033881989, guid: c1fe326bad380aa4c8ce4b801046cd19, type: 3}
+  _defaultWeapon: {fileID: 11400000, guid: 4f092de5fcee75d4aa8f5fa8122a9636, type: 2}
