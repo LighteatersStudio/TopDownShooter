@@ -23,9 +23,11 @@ namespace Gameplay.CollectableItems
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<Player>())
+            var player = other.GetComponent<IPlayer>();
+            
+            if ( player != null)
             {
-                other.GetComponent<Player>().ChangeWeapon(_weapon);
+                player.ChangeWeapon(_weapon);
                 Destroy(gameObject);
             }
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
@@ -11,9 +12,11 @@ namespace Gameplay
         [SerializeField] private bool _moveLeft;
         [SerializeField] private bool _moveBackward;
         [SerializeField] private bool _stop;
-        private void Start()
+        
+        [Inject]
+        public void Construct(IMovable movable)
         {
-            _movable = GetComponent<IMovable>();
+            _movable = movable;
         }
         
         private void Update()

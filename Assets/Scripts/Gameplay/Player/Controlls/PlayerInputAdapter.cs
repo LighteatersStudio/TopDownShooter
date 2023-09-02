@@ -71,9 +71,5 @@ namespace Gameplay
         {
             _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
         }
-        
-        public class Factory : PlaceholderFactory<IMovable, ICanFire, ICanReload, ITicker, PlayerInputAdapter>
-        {
-        }
     }
 }
