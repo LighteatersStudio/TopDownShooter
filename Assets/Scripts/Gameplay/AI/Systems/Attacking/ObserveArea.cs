@@ -82,8 +82,9 @@ namespace Gameplay.AI
 
         private void Update()
         {
-            var isMoving = Vector3.Distance(transform.position, _lastPosition) > MovementThreshold;
-            _lastPosition = transform.position;
+            var position = transform.position;
+            var isMoving = Vector3.Distance(position, _lastPosition) > MovementThreshold;
+            _lastPosition = position;
 
             if (_boxCollider.enabled)
             {
@@ -113,6 +114,11 @@ namespace Gameplay.AI
 
         public void DeactivateAttackCollider()
         {
+            if (!this)
+            {
+                return;
+            }
+            
             _sphereCollider.enabled = false;
             _boxCollider.enabled = true;
         }

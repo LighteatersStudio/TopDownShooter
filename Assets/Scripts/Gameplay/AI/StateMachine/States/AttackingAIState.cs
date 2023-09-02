@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using ModestTree;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay.AI
@@ -27,14 +27,22 @@ namespace Gameplay.AI
 
         public async Task<StateResult> Launch()
         {
+            _moving.Stop();
+            _observeArea.ActivateAttackCollider();
+
             do
             {
                 if (!_observeArea.HasTarget)
                 {
                     break;
                 }
+
+                var lookDirection = new Vector3(
+                    _observeArea.TargetsTransforms.First().position.x - _character.transform.position.x, 0,
+                    _observeArea.TargetsTransforms.First().position.z - _character.transform.position.z);
+                _character.LookDirection = lookDirection;
+                _character.Fire();
                 
-                StopAndShoot();
                 await UniTask.Yield();
             }
             while (!_token.IsCancellationRequested);
@@ -42,19 +50,6 @@ namespace Gameplay.AI
             _observeArea.DeactivateAttackCollider();
             
             return new StateResult(_idleAIFactory.Create(_token), true);
-        }
-
-        private void StopAndShoot()
-        {
-            if (_observeArea.TargetsTransforms.IsEmpty())
-            {
-                return;
-            }
-            
-            _moving.Stop();
-            _character.LookDirection = _observeArea.TargetsTransforms.First().position;
-            _character.Fire();
-            _observeArea.ActivateAttackCollider();
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

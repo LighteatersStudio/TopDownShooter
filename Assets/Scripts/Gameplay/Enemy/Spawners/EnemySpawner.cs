@@ -1,3 +1,4 @@
+using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -8,19 +9,23 @@ namespace Gameplay.Enemy
         [SerializeField] private SimpleEnemySettings _enemySettings;
         
         private EnemyFactory _enemyFactory;
+        private Weapon.Factory _weaponFactory;
+
         
         [Inject]
-        protected void Construct(EnemyFactory enemyFactory)
+        protected void Construct(EnemyFactory enemyFactory, Weapon.Factory weaponFactory)
         {
             _enemyFactory = enemyFactory;
+            _weaponFactory = weaponFactory;
         }
         
         
-        protected Character Spawn()
+        protected Character Spawn(WeaponSettings weaponSettings)
         {
             var enemy = _enemyFactory.Create(_enemySettings, _enemySettings.SimpleEnemyAI);
             
             enemy.transform.position = transform.position;
+            enemy.ChangeWeapon(_weaponFactory.Create(weaponSettings, enemy));
 
             return enemy;
         }

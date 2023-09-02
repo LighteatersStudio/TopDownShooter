@@ -38,7 +38,7 @@ namespace Gameplay
             set
             {
                 _fireDirection = value; 
-                ChangeLookDirection(value);
+                ChangeLookDirection(_fireDirection);
             }
         }
         
@@ -118,7 +118,7 @@ namespace Gameplay
 
         private void ChangeLookDirection(Vector3 direction)
         {
-            transform.forward = direction;
+            transform.forward = direction.normalized;
         }
         
         public void Fire()

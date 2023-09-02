@@ -14,7 +14,7 @@ namespace UI
         [SerializeField] private Image _icon;
         [Header("Bullets")]
         [SerializeField] private TMP_Text _bulletCount;
-        [SerializeField] private Color _haveAmmoColor = Color.white;
+        [SerializeField] private Color _haveAmmoColor = Color.black;
         [SerializeField] private Color _emptyAmmoColor = Color.red;
 
         private WeaponUISetting _uiSetting;
