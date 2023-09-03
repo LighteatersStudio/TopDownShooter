@@ -1,3 +1,4 @@
+using Gameplay.Projectiles;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,8 @@ namespace Gameplay.Weapons
         {
             BindInjectedParameters();
             BindWeaponSelf();
+            BindProjectile();
+                
             BindSound();
         }
 
@@ -44,6 +47,12 @@ namespace Gameplay.Weapons
                 .NonLazy();
         }
 
+        private void BindProjectile()
+        {
+            Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
+                .FromComponentInNewPrefab(_settings.BulletPrefab);
+        }
+        
         private void BindSound()
         {
             Container.Bind<IWeaponSoundSet>()

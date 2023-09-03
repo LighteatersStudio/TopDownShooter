@@ -12,6 +12,7 @@ namespace Gameplay.Weapons
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         private Cooldown.Factory _cooldownFactory;
+        private Projectile.Factory _projectileFactory;
 
         private IWeaponSettings _settings;
 
@@ -29,11 +30,12 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings, Cooldown.Factory cooldownFactory)
+        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings, Projectile.Factory projectileFactory,  Cooldown.Factory cooldownFactory)
         {
             _fxFactory = fxFactory;
             _user = user;
             _settings = settings;
+            _projectileFactory = projectileFactory;
             
             _cooldownFactory = cooldownFactory;
             _shotCooldown = _cooldownFactory.CreateFinished();
@@ -94,12 +96,9 @@ namespace Gameplay.Weapons
         {
             Vector3 position = transform.position;
 
-            var projectile = Instantiate(_settings.BulletPrefab);
-
-            projectile.Construct(
-                new FlyInfo {Position = position, Direction = transform.forward},
-                new AttackInfo(_settings.Damage, _settings.TypeDamage), _fxFactory);
-
+            var projectile = _projectileFactory.Create(
+                new FlyInfo { Position = position, Direction = transform.forward },
+                new AttackInfo(_settings.Damage, _settings.TypeDamage));
             projectile.Launch();
 
             _fxFactory.Create(_settings.ShotFX, position);
@@ -119,8 +118,6 @@ namespace Gameplay.Weapons
 
             ReloadStarted?.Invoke(_reloadCooldown);
         }
-
-
 
         private void RefillAmmoClip()
         {
