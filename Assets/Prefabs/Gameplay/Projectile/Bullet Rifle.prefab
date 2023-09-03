@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2895452334554819448}
   - component: {fileID: 1349630022850185909}
   - component: {fileID: 6146172277075952905}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bullet Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,10 +122,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5582422470701671162}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -139,8 +150,17 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5582422470701671162}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
+  serializedVersion: 2
   m_Radius: 0.0033162434
   m_Height: 0.026674218
   m_Direction: 2
@@ -150,6 +170,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 2714556614359889875}
     m_Modifications:
     - target: {fileID: 4373948086709113380, guid: 44a6edc785700c640a81e078bfe01277, type: 3}
@@ -228,7 +249,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TailFromShot(Rifle Bullet)
       objectReference: {fileID: 0}
+    - target: {fileID: 7457925777585348668, guid: 44a6edc785700c640a81e078bfe01277, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44a6edc785700c640a81e078bfe01277, type: 3}
 --- !u!4 &9107394549236098874 stripped
 Transform:
