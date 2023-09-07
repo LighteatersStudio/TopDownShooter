@@ -12,36 +12,24 @@ namespace Gameplay.AI
         private readonly CancellationToken _token;
         private readonly IdleAIState.Factory _idleAIFactory;
         private readonly ObserveArea _observeArea;
-        private readonly AttackingAIState.Factory _attackingAIFactory;
         
         public PursueTargetAIState(CancellationToken token,
             IdleAIState.Factory idleAIFactory,
             ObserveArea observeArea,
-            NavMeshMoving moving,
-            AttackingAIState.Factory attackingAIFactory)
+            NavMeshMoving moving)
         {
             _token = token;
             _idleAIFactory = idleAIFactory;
             _observeArea = observeArea;
             _moving = moving;
-            _attackingAIFactory = attackingAIFactory;
         }
 
         public async Task<StateResult> Launch()
         {
             _observeArea.ActivateAttackCollider();
 
-            do
-            {
-                if (_observeArea.HasTarget)
-                {
-                    return new StateResult(_attackingAIFactory.Create(_token), true);
-                }
-
-                await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
-                await UniTask.Yield();
-            }
-            while (_token.IsCancellationRequested);
+            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
+            await UniTask.Yield();
 
             _observeArea.DeactivateAttackCollider();
 
@@ -50,10 +38,35 @@ namespace Gameplay.AI
 
         private async Task MoveToLastTargetPosition(Vector3 point, CancellationToken token)
         {
-            if (!await _moving.MoveTo(point, token))
+            var internalToken = GetTargetChangedToken(token);
+            
+            if (!await _moving.MoveTo(point, internalToken) && !internalToken.IsCancellationRequested)
             {
                 Debug.LogError($"MovePoint NOT REACHED: {point}");
             }
+        }
+        
+        private CancellationToken GetTargetChangedToken(CancellationToken parentToken)
+        {
+            CancellationTokenSource internalSource = new CancellationTokenSource();
+            parentToken.Register(() => internalSource.Cancel());
+
+            var internalToken = internalSource.Token;
+
+            _observeArea.TargetsChanged += OnTargetChanged;
+            
+            void OnTargetChanged()
+            {
+                if (!_observeArea.HasTarget)
+                {
+                    return;
+                }
+                
+                _observeArea.TargetsChanged -= OnTargetChanged;
+                internalSource.Cancel();
+            }
+            
+            return internalToken;
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, PursueTargetAIState>
