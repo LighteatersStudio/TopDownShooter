@@ -34,6 +34,9 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
+        
+        [Header("Gameplay Entities: outline")]
+        [SerializeField] private OutlineSettings _outlineSettings;
 
 
         public override void InstallBindings()
@@ -48,6 +51,8 @@ namespace Infrastructure
             BindCharacter();
             BindWeapon();
             BindCollectables();
+            BindFriendOrFoeSystem();
+            BindOutline();
         }
         
         private void BindScenarios()
@@ -152,7 +157,7 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind character");
 
-            Container.BindFactory<ICharacterSettings, Character, Character.Factory>()
+            Container.BindFactory<ICharacterSettings, IFriendOrFoeTag, Character, Character.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<CharacterInstaller>(_characterPrefab);
 
@@ -189,6 +194,24 @@ namespace Infrastructure
             Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
+        }
+
+        private void BindFriendOrFoeSystem()
+        {
+            Container.Bind<IFriendFoeSystem>()
+                .To<CommonFriendFoeSystem>()
+                .AsSingle();
+
+            Container.Bind<FriendOrFoeFactory>()
+                .AsSingle();
+        }
+
+        private void BindOutline()
+        {
+            Container.Bind<IOutlineSettings>()
+                .To<OutlineSettings>()
+                .FromScriptableObject(_outlineSettings)
+                .AsSingle();
         }
     }
 }

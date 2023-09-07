@@ -21,13 +21,14 @@ namespace Gameplay
         [SerializeField] private ScriptableObject _characterFXList;
         
         [Inject] private ICharacterSettings _settings;
+        [Inject] private IFriendOrFoeTag _friendOrFoeTag;
         
         public override void InstallBindings()
         {
             BindInjectedParameters();
             
             BindCharacterSelf();
-            
+            BindFriendForComponent();
             BindGameRules();
             BindWeapon();
             BindView();
@@ -49,11 +50,13 @@ namespace Gameplay
                 .FromInstance(_settings.ModelFactory)
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<TypeGameplayObject>()
-                .FromInstance(_settings.IsEnemy)
-                .AsSingle()
-                .NonLazy();
+
+            if (!Container.HasBinding<IFriendOrFoeTag>())
+            {
+                Container.Bind<IFriendOrFoeTag>()
+                    .FromInstance(_friendOrFoeTag)
+                    .AsCached();
+            }
         }
 
         private void BindCharacterSelf()
@@ -92,6 +95,14 @@ namespace Gameplay
                 .FromMethod(()=> new WeaponOwnerReloadProxy(Container.Resolve<IWeaponOwner>()))
                 .AsSingle()
                 .Lazy();
+        }
+
+        private void BindFriendForComponent()
+        {
+            Container.Bind<FriendOrFoeComponent>()
+                .FromNewComponentOnRoot()
+                .AsCached()
+                .NonLazy();
         }
 
         private void BindGameRules()

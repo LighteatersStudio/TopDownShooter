@@ -15,6 +15,7 @@ namespace Gameplay.Projectiles
         private IProjectileMovement _projectileMovement;
         private PlayingFX.Factory _fxFactory;
         private Cooldown.Factory _cooldownFactory;
+        private IFriendFoeSystem _friendFoeSystem;
 
         private FlyInfo _flyInfo;
         private IAttackInfo _attackInfo;
@@ -30,10 +31,11 @@ namespace Gameplay.Projectiles
         }
 
         [Inject]
-        public void Construct(FlyInfo direction, IAttackInfo attackInfo, PlayingFX.Factory fxFactory, Cooldown.Factory cooldownFactory)
+        public void Construct(FlyInfo direction, IAttackInfo attackInfo, IFriendFoeSystem friendFoeSystem, PlayingFX.Factory fxFactory, Cooldown.Factory cooldownFactory)
         {
             _flyInfo = direction;
             _attackInfo = attackInfo;
+            _friendFoeSystem = friendFoeSystem;
             _fxFactory = fxFactory;
             _cooldownFactory = cooldownFactory;
         }
@@ -50,15 +52,16 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.GetComponent<Player>())
+            var target = other.GetComponent<IDamageable>();
+            if (target == null)
             {
-                var damageable = other.GetComponent<IDamageable>();
+                return;
+            }
 
-                if (damageable != null)
-                {
-                    damageable.TakeDamage(_attackInfo);
-                }
-                
+            var fiendOrFoeTag = other.GetComponent<IFriendOrFoeTag>();
+            if (fiendOrFoeTag == null || _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, fiendOrFoeTag))
+            {
+                target.TakeDamage(_attackInfo);
                 SpawnSparksEffect();
                 Destroy(gameObject);
             }

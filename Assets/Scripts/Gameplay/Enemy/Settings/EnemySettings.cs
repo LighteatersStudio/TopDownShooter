@@ -14,7 +14,6 @@ namespace Gameplay.Enemy
         
         public StatsInfo Stats => _statsInfo;
         public Func<Transform, GameObject> ModelFactory => parent => Object.Instantiate(_modelPrefab, parent);
-        public TypeGameplayObject IsEnemy => TypeGameplayObject.Enemy;
         
         public TEnemyAI SimpleEnemyAI => _simpleEnemyAI;
     }

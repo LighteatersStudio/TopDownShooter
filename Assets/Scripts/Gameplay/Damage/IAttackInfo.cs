@@ -4,5 +4,6 @@
     {
        float Damage { get; }
        TypeDamage TypeDamage { get; }
+       IFriendOrFoeTag FriendOrFoeTag { get; }
     }
 }
