@@ -22,7 +22,6 @@ namespace Gameplay.AI
             _points = points;
             _pingPong = pingPong;
         }
-        
 
         public MovingPath Reverse()
         {

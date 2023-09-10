@@ -10,18 +10,16 @@ namespace Gameplay.AI
     public class AttackingAIState : IAIState
     {
         private readonly CancellationToken _token;
-        private readonly IdleAIState.Factory _idleAIFactory;
         private readonly Character _character;
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
         private readonly PursueTargetAIState.Factory _pursueTargetAIFactory;
-        
+
         public AttackingAIState(CancellationToken token, Character character,
-            NavMeshMoving moving, ObserveArea observeArea, IdleAIState.Factory idleAIFactory,
+            NavMeshMoving moving, ObserveArea observeArea,
             PursueTargetAIState.Factory pursueTargetAIFactory)
         {
             _token = token;
-            _idleAIFactory = idleAIFactory;
             _character = character;
             _moving = moving;
             _observeArea = observeArea;

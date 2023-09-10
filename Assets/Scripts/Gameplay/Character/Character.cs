@@ -128,7 +128,7 @@ namespace Gameplay
                 Attacked?.Invoke();    
             }
         }
-        
+
         public void Reload()
         {
             _weapon.Reload();

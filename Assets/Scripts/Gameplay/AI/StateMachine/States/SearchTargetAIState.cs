@@ -6,54 +6,67 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PursueTargetAIState: IAIState
+    public class SearchTargetAIState: IAIState
     {
-        private readonly NavMeshMoving _moving;
+        private const int RotationSpeed = 50;
+        private const int FullRotation = 360;
+        
+        private float _currentRotation;
+        
+        private readonly TargetSearchPoint _point;
         private readonly CancellationToken _token;
-        private readonly SearchTargetAIState.Factory _searchTargetFactory;
-        private readonly ObserveArea _observeArea;
         private readonly IdleAIState.Factory _idleAIFactory;
+        private readonly NavMeshMoving _moving;
+        private readonly ObserveArea _observeArea;
+        private readonly Character _character;
 
-        public PursueTargetAIState(CancellationToken token,
-            SearchTargetAIState.Factory searchTargetFactory,
-            ObserveArea observeArea,
+        public SearchTargetAIState(CancellationToken token,
+            IdleAIState.Factory idleAIFactory,
+            TargetSearchPoint point,
             NavMeshMoving moving,
-            IdleAIState.Factory idleAIFactory)
+            ObserveArea observeArea,
+            Character character)
         {
+            _point = point;
             _token = token;
-            _searchTargetFactory = searchTargetFactory;
-            _observeArea = observeArea;
-            _moving = moving;
             _idleAIFactory = idleAIFactory;
+            _moving = moving;
+            _observeArea = observeArea;
+            _character = character;
         }
 
         public async Task<StateResult> Launch()
         {
-            _observeArea.ActivateAttackCollider();
+            await MoveToSearchTargetPosition(_point.Point, _token);
 
-            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
-            await UniTask.Yield();
-
-            if (!_observeArea.HasTarget)
+            do
             {
-                return new StateResult(_searchTargetFactory.Create(_token), true);
-            }
+                if (_observeArea.HasTarget)
+                {
+                    break;
+                }
+                
+                _observeArea.KillRotationTween();
+                _character.transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
+                _currentRotation += RotationSpeed * Time.deltaTime;
+                
+                await UniTask.Yield();
 
-            _observeArea.DeactivateAttackCollider();
+            } while (_currentRotation <= FullRotation);
 
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
 
-        private async Task MoveToLastTargetPosition(Vector3 point, CancellationToken token)
+        private async Task MoveToSearchTargetPosition(Vector3 point, CancellationToken token)
         {
             var internalToken = GetTargetChangedToken(token);
-            
+
             if (!await _moving.MoveTo(point, internalToken) && !internalToken.IsCancellationRequested)
             {
                 Debug.LogError($"MovePoint NOT REACHED: {point}");
             }
         }
-        
+
         private CancellationToken GetTargetChangedToken(CancellationToken parentToken)
         {
             CancellationTokenSource internalSource = new CancellationTokenSource();
@@ -76,8 +89,8 @@ namespace Gameplay.AI
             
             return internalToken;
         }
-
-        public class Factory : PlaceholderFactory<CancellationToken, PursueTargetAIState>
+        
+        public class Factory : PlaceholderFactory<CancellationToken, SearchTargetAIState>
         {
         }
     }
