@@ -98,7 +98,7 @@ namespace Gameplay.Weapons
 
             var projectile = _projectileFactory.Create(
                 new FlyInfo { Position = position, Direction = transform.forward },
-                new AttackInfo(_settings.Damage, _settings.TypeDamage));
+                new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
             projectile.Launch();
 
             _fxFactory.Create(_settings.ShotFX, position);

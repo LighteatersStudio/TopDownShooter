@@ -30,6 +30,7 @@ namespace Gameplay
         public float AttackSpeed => _stats.AttackSpeed;
 
         public Transform WeaponRoot => _weaponRoot;
+        public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
         public Vector3 LookDirection
@@ -55,11 +56,12 @@ namespace Gameplay
         
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon)
+            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
+            FriendOrFoeTag = friendOrFoeTag;
 
             _initializer = new(viewFactoryMethod);
             
@@ -111,11 +113,6 @@ namespace Gameplay
             Destroy(gameObject, _deathWaitTime);
         }
 
-        public void SetParent(Transform parent)
-        {
-            transform.SetParent(parent);
-        }
-
         private void ChangeLookDirection(Vector3 direction)
         {
             transform.forward = direction.normalized;
@@ -146,7 +143,7 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
-        public class Factory : PlaceholderFactory<ICharacterSettings, Character>
+        public class Factory : PlaceholderFactory<ICharacterSettings, IFriendOrFoeTag, Character>
         {
         }
     }

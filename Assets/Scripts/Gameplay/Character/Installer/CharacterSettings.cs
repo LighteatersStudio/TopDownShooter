@@ -8,13 +8,11 @@ namespace Gameplay
     {
         public StatsInfo Stats { get; }
         public Func<Transform, GameObject> ModelFactory { get; }
-        public TypeGameplayObject IsEnemy { get; }
         
-        public CharacterSettings(StatsInfo stats, Func<Transform, GameObject> modelFactory, TypeGameplayObject isEnemy)
+        public CharacterSettings(StatsInfo stats, Func<Transform, GameObject> modelFactory)
         {
             Stats = stats;
             ModelFactory = modelFactory;
-            IsEnemy = isEnemy;
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Gameplay
 
         public StatsInfo Stats => _stats;
         public Func<Transform, GameObject> ModelFactory =>  parent => Instantiate(_model, parent);
-        public TypeGameplayObject IsEnemy => TypeGameplayObject.Player;
-        
         public IWeaponSettings DefaultWeapon => _defaultWeapon;
     }
 }
