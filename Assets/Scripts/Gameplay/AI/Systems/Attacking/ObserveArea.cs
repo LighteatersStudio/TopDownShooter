@@ -17,12 +17,14 @@ namespace Gameplay.AI
 
         private Tween _rotationTween;
         private Vector3 _lastPosition;
+        private Vector3 _lastTargetPosition;
         private BoxCollider _boxCollider;
         private SphereCollider _sphereCollider;
 
         public event Action TargetsChanged;
         public bool HasTarget => _targetsTransforms.Count > 0;
         public IEnumerable<Transform> TargetsTransforms => _targetsTransforms;
+        public Vector3 LastTargetPosition => _lastTargetPosition;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -47,6 +49,8 @@ namespace Gameplay.AI
             {
                 _targetsTransforms.Remove(other.gameObject.transform);
                 TargetsChanged?.Invoke();
+                
+                _lastTargetPosition = other.transform.position;
             }
         }
 

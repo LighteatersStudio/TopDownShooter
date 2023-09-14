@@ -52,7 +52,7 @@ namespace Gameplay.AI
         {
             Stop();
             token.Register(Stop);
-            
+
             _currentMoving = new MovingAction(_agent, this, position);
             return _currentMoving.Launch();
         }

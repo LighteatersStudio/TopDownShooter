@@ -14,15 +14,18 @@ namespace Gameplay.AI
         private readonly Character _character;
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
+        private readonly PursueTargetAIState.Factory _pursueTargetAIFactory;
         
         public AttackingAIState(CancellationToken token, Character character,
-            NavMeshMoving moving, ObserveArea observeArea, IdleAIState.Factory idleAIFactory)
+            NavMeshMoving moving, ObserveArea observeArea, IdleAIState.Factory idleAIFactory,
+            PursueTargetAIState.Factory pursueTargetAIFactory)
         {
             _token = token;
             _idleAIFactory = idleAIFactory;
             _character = character;
             _moving = moving;
             _observeArea = observeArea;
+            _pursueTargetAIFactory = pursueTargetAIFactory;
         }
 
         public async Task<StateResult> Launch()
@@ -49,7 +52,7 @@ namespace Gameplay.AI
             
             _observeArea.DeactivateAttackCollider();
             
-            return new StateResult(_idleAIFactory.Create(_token), true);
+            return new StateResult(_pursueTargetAIFactory.Create(_token), true);
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

@@ -7,7 +7,7 @@ namespace Gameplay.AI
 {
     public class MovingAction
     {
-        private const float DistanceThreshold = 1e-1f;
+        private const float DistanceThreshold = 1e-3f;
         
         private readonly NavMeshAgent _agent;
         private readonly ITicker _ticker;
@@ -42,9 +42,18 @@ namespace Gameplay.AI
         {
             Finish(false);
         }
-        
+
+        private int _index; //HACK!!!
+
         private void OnTick(float deltaTime)
         {
+            _index++;
+
+            if (_index < 10)
+            {
+                return;
+            }
+
             var dist = _agent.remainingDistance;
 
             if (float.IsInfinity(dist) ||
@@ -53,6 +62,7 @@ namespace Gameplay.AI
                 Finish(true);
             }
         }
+
         private void Finish(bool result)
         {
             if (!_agent.isStopped)
