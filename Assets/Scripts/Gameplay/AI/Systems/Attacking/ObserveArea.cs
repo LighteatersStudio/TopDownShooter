@@ -78,10 +78,15 @@ namespace Gameplay.AI
                 .OnComplete(RotationRight);
         }
 
-        public void KillRotationTween()
+        private void KillRotationTween()
         {
             _rotationTween.Kill();
             transform.localRotation = Quaternion.identity;
+        }
+
+        public void StopRatation()
+        {
+            KillRotationTween();
         }
 
         private void Update()

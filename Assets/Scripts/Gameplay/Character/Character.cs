@@ -146,6 +146,11 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
+        public void Rotation(float rotationSpeed)
+        {
+            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        }
+
         public class Factory : PlaceholderFactory<ICharacterSettings, Character>
         {
         }

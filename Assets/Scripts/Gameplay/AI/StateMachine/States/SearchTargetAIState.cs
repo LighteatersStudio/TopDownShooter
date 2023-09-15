@@ -45,11 +45,11 @@ namespace Gameplay.AI
                 {
                     break;
                 }
-                
-                _observeArea.KillRotationTween();
-                _character.transform.Rotate(Vector3.up * RotationSpeed * Time.deltaTime);
+
+                _observeArea.StopRatation();
+                _character.Rotation(RotationSpeed);
                 _currentRotation += RotationSpeed * Time.deltaTime;
-                
+
                 await UniTask.Yield();
 
             } while (_currentRotation <= FullRotation);
