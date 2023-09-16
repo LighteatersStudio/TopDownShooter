@@ -8,10 +8,8 @@ namespace Gameplay.AI
 {
     public class SearchTargetAIState: IAIState
     {
-        private const int RotationSpeed = 50;
+        private const int Angle = 50;
         private const int FullRotation = 360;
-        
-        private float _currentRotation;
         
         private readonly TargetSearchPoint _point;
         private readonly CancellationToken _token;
@@ -19,13 +17,15 @@ namespace Gameplay.AI
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
         private readonly Character _character;
+        private readonly AttackingAIState.Factory _attackingAIFactory;
 
         public SearchTargetAIState(CancellationToken token,
             IdleAIState.Factory idleAIFactory,
             TargetSearchPoint point,
             NavMeshMoving moving,
             ObserveArea observeArea,
-            Character character)
+            Character character,
+            AttackingAIState.Factory attackingAIFactory)
         {
             _point = point;
             _token = token;
@@ -33,27 +33,33 @@ namespace Gameplay.AI
             _moving = moving;
             _observeArea = observeArea;
             _character = character;
+            _attackingAIFactory = attackingAIFactory;
         }
 
         public async Task<StateResult> Launch()
         {
+            _observeArea.DeactivateAttackCollider();
+            
             await MoveToSearchTargetPosition(_point.Point, _token);
+            
+            float currentRotation = 0;
 
-            do
+            while (currentRotation <= FullRotation && !_observeArea.HasTarget)
             {
-                if (_observeArea.HasTarget)
-                {
-                    break;
-                }
-
+                var rotationSpeed = Angle * Time.deltaTime;
+                
                 _observeArea.StopRatation();
-                _character.Rotation(RotationSpeed);
-                _currentRotation += RotationSpeed * Time.deltaTime;
+                _character.Rotate(rotationSpeed);
+                currentRotation += rotationSpeed;
 
                 await UniTask.Yield();
+            }
 
-            } while (_currentRotation <= FullRotation);
-
+            if (_observeArea.HasTarget)
+            {
+                return new StateResult(_attackingAIFactory.Create(_token), true);
+            }
+            
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
 

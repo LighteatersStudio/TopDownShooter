@@ -12,19 +12,19 @@ namespace Gameplay.AI
         private readonly CancellationToken _token;
         private readonly SearchTargetAIState.Factory _searchTargetFactory;
         private readonly ObserveArea _observeArea;
-        private readonly IdleAIState.Factory _idleAIFactory;
+        private readonly AttackingAIState.Factory _attackingAIFactory;
 
         public PursueTargetAIState(CancellationToken token,
             SearchTargetAIState.Factory searchTargetFactory,
             ObserveArea observeArea,
             NavMeshMoving moving,
-            IdleAIState.Factory idleAIFactory)
+            AttackingAIState.Factory attackingAIFactory)
         {
             _token = token;
             _searchTargetFactory = searchTargetFactory;
             _observeArea = observeArea;
             _moving = moving;
-            _idleAIFactory = idleAIFactory;
+            _attackingAIFactory = attackingAIFactory;
         }
 
         public async Task<StateResult> Launch()
@@ -32,16 +32,13 @@ namespace Gameplay.AI
             _observeArea.ActivateAttackCollider();
 
             await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
-            await UniTask.Yield();
 
             if (!_observeArea.HasTarget)
             {
                 return new StateResult(_searchTargetFactory.Create(_token), true);
             }
 
-            _observeArea.DeactivateAttackCollider();
-
-            return new StateResult(_idleAIFactory.Create(_token), true);
+            return new StateResult(_attackingAIFactory.Create(_token), true);
         }
 
         private async Task MoveToLastTargetPosition(Vector3 point, CancellationToken token)
