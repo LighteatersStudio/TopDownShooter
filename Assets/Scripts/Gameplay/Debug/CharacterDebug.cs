@@ -9,12 +9,14 @@ namespace Gameplay
         [SerializeField] bool _takeDamage;
         
         private Character _character;
+        private FriendOrFoeFactory _friendOrFoeFactory;
 
         
         [Inject]
-        public void Construct(Character character)
+        public void Construct(Character character, FriendOrFoeFactory friendOrFoeFactory)
         {
             _character = character;
+            _friendOrFoeFactory = friendOrFoeFactory;
         }
 
         private void Update()
@@ -28,7 +30,7 @@ namespace Gameplay
 
         private void TakeDamage()
         {
-            _character.TakeDamage(new AttackInfo(_damage, TypeDamage.Fire));
+            _character.TakeDamage(new AttackInfo(_damage, TypeDamage.Fire, _friendOrFoeFactory.CreateEnemyTeam()));
         }
     }
 }
