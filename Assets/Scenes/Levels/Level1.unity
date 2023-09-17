@@ -2705,7 +2705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942768632}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12, y: 0, z: -18.97}
+  m_LocalPosition: {x: 9.85, y: 0, z: -8.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2871,6 +2871,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoint._point.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoint._point.z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._pingPong
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _enemySettings._simpleEnemyAI._patrolPath._points.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -2897,6 +2909,26 @@ PrefabInstance:
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _enemySettings._simpleEnemyAI._patrolPath._points.Array.data[3].z
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.data[0].x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.data[0].z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.data[1].x
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.data[1].z
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 2370865988010644911, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: m_RootOrder
@@ -4010,6 +4042,10 @@ PrefabInstance:
     - target: {fileID: 7799263032749928775, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
       propertyPath: _enemySettings._simpleEnemyAI._patrolPath._points.Array.data[1].z
       value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7799263032749928775, guid: 3e84959dc851fbd4084f22b1b7116b7a, type: 3}
+      propertyPath: _enemySettings._simpleEnemyAI._searchTargetPoints._points.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

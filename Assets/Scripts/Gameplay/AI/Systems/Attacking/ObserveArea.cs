@@ -84,6 +84,11 @@ namespace Gameplay.AI
             transform.localRotation = Quaternion.identity;
         }
 
+        public void StopRatation()
+        {
+            KillRotationTween();
+        }
+
         private void Update()
         {
             var position = transform.position;

@@ -143,6 +143,11 @@ namespace Gameplay
             _weapon = newWeapon;
         }
 
+        public void Rotate(float angle)
+        {
+            transform.Rotate(Vector3.up * angle);
+        }
+
         public class Factory : PlaceholderFactory<ICharacterSettings, IFriendOrFoeTag, Character>
         {
         }

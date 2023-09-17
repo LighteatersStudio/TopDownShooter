@@ -34,7 +34,7 @@ namespace Gameplay.AI
         public async Task<StateResult> Launch()
         {
             var path = _path;
-            
+
             do
             {
                 if (_observeArea.HasTarget)
@@ -44,11 +44,11 @@ namespace Gameplay.AI
 
                 await MoveThroughPath(path.Points, _token);
                 await UniTask.Yield();
-                
+
                 path = _path.Reverse();
-            }
-            while (!_token.IsCancellationRequested);
-            
+
+            } while (!_token.IsCancellationRequested);
+
             return new StateResult(_factory.Create(_token), false);
         }
 
