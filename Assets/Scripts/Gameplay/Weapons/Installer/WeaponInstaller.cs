@@ -7,6 +7,7 @@ namespace Gameplay.Weapons
     public class WeaponInstaller : MonoInstaller
     {
         [SerializeField] private Weapon _weapon;
+        [SerializeField] private ProjectilePool _projectilePool;
 
         [Inject] private IWeaponSettings _settings;
         [Inject] private IWeaponUser _weaponUser;
@@ -16,6 +17,7 @@ namespace Gameplay.Weapons
             BindInjectedParameters();
             BindWeaponSelf();
             BindProjectile();
+            BindProjectilePool();
                 
             BindSound();
         }
@@ -47,12 +49,22 @@ namespace Gameplay.Weapons
                 .NonLazy();
         }
 
+        private void BindProjectilePool()
+        {
+            Container.Bind<ProjectilePool>()
+                .FromInstance(_projectilePool)
+                .AsCached()
+                .NonLazy();
+        }
+
         private void BindProjectile()
         {
             Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
-                .FromComponentInNewPrefab(_settings.BulletPrefab);
+                .FromMonoPoolableMemoryPool(pool => pool
+                    .FromComponentInNewPrefab(_settings.BulletPrefab)
+                    .UnderTransformGroup("ProjectilePool"));
         }
-        
+
         private void BindSound()
         {
             Container.Bind<IWeaponSoundSet>()

@@ -12,10 +12,8 @@ namespace Gameplay.Weapons
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         private Cooldown.Factory _cooldownFactory;
-        private Projectile.Factory _projectileFactory;
-
+        private ProjectilePool _projectilePool;
         private IWeaponSettings _settings;
-
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
 
@@ -30,16 +28,21 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings, Projectile.Factory projectileFactory,  Cooldown.Factory cooldownFactory)
+        public void Construct(ProjectilePool projectilePool,
+            PlayingFX.Factory fxFactory,
+            IWeaponUser user,
+            IWeaponSettings settings,
+            Cooldown.Factory cooldownFactory)
         {
             _fxFactory = fxFactory;
             _user = user;
             _settings = settings;
-            _projectileFactory = projectileFactory;
-            
+            _projectilePool = projectilePool;
             _cooldownFactory = cooldownFactory;
+            
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
+            
             RefillAmmoClip();
         }
 
@@ -53,7 +56,7 @@ namespace Gameplay.Weapons
         {
             Tick?.Invoke(Time.deltaTime);
         }
-
+       
         public bool Shot()
         {
             if (!_shotCooldown.IsFinish || !HasAmmo)
@@ -96,11 +99,10 @@ namespace Gameplay.Weapons
         {
             Vector3 position = transform.position;
 
-            var projectile = _projectileFactory.Create(
+            _projectilePool.AddProjectile(
                 new FlyInfo { Position = position, Direction = transform.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
-            projectile.Launch();
-
+            
             _fxFactory.Create(_settings.ShotFX, position);
         }
         
