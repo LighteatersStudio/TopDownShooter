@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4628974586498328097}
   - component: {fileID: 6867816720831963694}
   - component: {fileID: 700602704737005345}
-  - component: {fileID: 4032754470974421361}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -60,7 +59,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon: {fileID: 4628974586498328097}
-  _projectilePool: {fileID: 4032754470974421361}
 --- !u!114 &700602704737005345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,15 +77,3 @@ MonoBehaviour:
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 0}
---- !u!114 &4032754470974421361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8870466953233795931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a1db8a89abe411492f0a12f96d52240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

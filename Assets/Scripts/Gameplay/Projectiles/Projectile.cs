@@ -1,6 +1,7 @@
 ﻿using System;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
+using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -15,8 +16,8 @@ namespace Gameplay.Projectiles
         private PlayingFX.Factory _fxFactory;
         private Cooldown.Factory _cooldownFactory;
         private FlyInfo _flyInfo;
-        private ProjectilePool _projectilePool;
         private Cooldown _cooldown;
+        private IWeapon _weapon;
         private IFriendFoeSystem _friendFoeSystem;
         private IAttackInfo _attackInfo;
         private IMemoryPool _pool;
@@ -32,15 +33,15 @@ namespace Gameplay.Projectiles
         }
 
         [Inject]
-        public void Construct(ProjectilePool projectilePool,
+        public void Construct(IWeapon weapon,
             IFriendFoeSystem friendFoeSystem,
             PlayingFX.Factory fxFactory,
             Cooldown.Factory cooldownFactory)
         {
+            _weapon = weapon;
             _friendFoeSystem = friendFoeSystem;
             _fxFactory = fxFactory;
             _cooldownFactory = cooldownFactory;
-            _projectilePool = projectilePool;
         }
 
         public void Launch()
@@ -59,7 +60,7 @@ namespace Gameplay.Projectiles
 
             SpawnSparksEffect();
 
-            _projectilePool.RemoveProjectile(this);
+            _weapon.RemoveProjectile(this);
 
             if (target == null)
             {
@@ -86,7 +87,7 @@ namespace Gameplay.Projectiles
 
         private void DestroyByLifeTime()
         {
-            _projectilePool.RemoveProjectile(this);
+            _weapon.RemoveProjectile(this);
         }
 
         public void OnDespawned()

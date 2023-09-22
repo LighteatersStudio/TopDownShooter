@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Gameplay.Projectiles;
 using Gameplay.Services.FX;
@@ -12,10 +14,11 @@ namespace Gameplay.Weapons
         private PlayingFX.Factory _fxFactory;
         private IWeaponUser _user;
         private Cooldown.Factory _cooldownFactory;
-        private ProjectilePool _projectilePool;
+        private Projectile.Factory _projectileFactory;
         private IWeaponSettings _settings;
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
+        private List<Projectile> _projectiles;
 
         public string WeaponType => _settings.Id;
 
@@ -28,7 +31,7 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(ProjectilePool projectilePool,
+        public void Construct(Projectile.Factory projectileFactory,
             PlayingFX.Factory fxFactory,
             IWeaponUser user,
             IWeaponSettings settings,
@@ -37,8 +40,9 @@ namespace Gameplay.Weapons
             _fxFactory = fxFactory;
             _user = user;
             _settings = settings;
-            _projectilePool = projectilePool;
+            _projectileFactory = projectileFactory;
             _cooldownFactory = cooldownFactory;
+            _projectiles = new List<Projectile>();
             
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
@@ -94,18 +98,31 @@ namespace Gameplay.Weapons
             _reloadCooldown.ForceFinish();
             Destroy(gameObject);
         }
+        
+        public void RemoveProjectile(Projectile projectile)
+        {
+            if (_projectiles.Any())
+            {
+                projectile = _projectiles[0];
+                _projectiles.Remove(projectile);
+                projectile.Dispose();
+            }
+        }
 
         private void SpawnProjectile()
         {
             Vector3 position = transform.position;
 
-            _projectilePool.AddProjectile(
+            var projectile = _projectileFactory.Create(
                 new FlyInfo { Position = position, Direction = transform.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
             
+            projectile.Launch();
+            
+            _projectiles.Add(projectile);
             _fxFactory.Create(_settings.ShotFX, position);
         }
-        
+
         public void Reload()
         {
             if (!_reloadCooldown.IsFinish)
