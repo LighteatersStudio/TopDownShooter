@@ -13,12 +13,10 @@ namespace Gameplay.Weapons
         private IWeaponUser _user;
         private Cooldown.Factory _cooldownFactory;
         private Projectile.Factory _projectileFactory;
-
         private IWeaponSettings _settings;
-
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
-
+        
         public string WeaponType => _settings.Id;
 
         public int RemainAmmo { get; private set; }
@@ -30,16 +28,21 @@ namespace Gameplay.Weapons
         
 
         [Inject]
-        public void Construct(PlayingFX.Factory fxFactory, IWeaponUser user, IWeaponSettings settings, Projectile.Factory projectileFactory,  Cooldown.Factory cooldownFactory)
+        public void Construct(Projectile.Factory projectileFactory,
+            PlayingFX.Factory fxFactory,
+            IWeaponUser user,
+            IWeaponSettings settings,
+            Cooldown.Factory cooldownFactory)
         {
             _fxFactory = fxFactory;
             _user = user;
             _settings = settings;
             _projectileFactory = projectileFactory;
-            
             _cooldownFactory = cooldownFactory;
+            
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
+            
             RefillAmmoClip();
         }
 
@@ -53,7 +56,7 @@ namespace Gameplay.Weapons
         {
             Tick?.Invoke(Time.deltaTime);
         }
-
+       
         public bool Shot()
         {
             if (!_shotCooldown.IsFinish || !HasAmmo)
@@ -89,9 +92,20 @@ namespace Gameplay.Weapons
         public void Dispose()
         {
             _reloadCooldown.ForceFinish();
+            ClearPool();
             Destroy(gameObject);
         }
 
+        private void ClearPool()
+        {
+            Vector3 position = transform.position;
+            var projectile = _projectileFactory.Create(
+                new FlyInfo { Position = position, Direction = transform.forward },
+                new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
+
+            projectile.ClearPool();
+        }
+        
         private void SpawnProjectile()
         {
             Vector3 position = transform.position;
@@ -99,11 +113,12 @@ namespace Gameplay.Weapons
             var projectile = _projectileFactory.Create(
                 new FlyInfo { Position = position, Direction = transform.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
+            
             projectile.Launch();
-
+            
             _fxFactory.Create(_settings.ShotFX, position);
         }
-        
+
         public void Reload()
         {
             if (!_reloadCooldown.IsFinish)

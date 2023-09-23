@@ -47,12 +47,14 @@ namespace Gameplay.Weapons
                 .NonLazy();
         }
 
-        private void BindProjectile()
+       private void BindProjectile()
         {
             Container.BindFactory<FlyInfo, IAttackInfo, Projectile, Projectile.Factory>()
-                .FromComponentInNewPrefab(_settings.BulletPrefab);
+                .FromMonoPoolableMemoryPool(pool => pool
+                    .FromComponentInNewPrefab(_settings.BulletPrefab)
+                    .UnderTransformGroup("ProjectilePool"));
         }
-        
+
         private void BindSound()
         {
             Container.Bind<IWeaponSoundSet>()
