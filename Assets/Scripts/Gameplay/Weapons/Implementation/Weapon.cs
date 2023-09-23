@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Gameplay.Projectiles;
 using Gameplay.Services.FX;
@@ -18,8 +16,7 @@ namespace Gameplay.Weapons
         private IWeaponSettings _settings;
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
-        private List<Projectile> _projectiles;
-
+        
         public string WeaponType => _settings.Id;
 
         public int RemainAmmo { get; private set; }
@@ -42,7 +39,6 @@ namespace Gameplay.Weapons
             _settings = settings;
             _projectileFactory = projectileFactory;
             _cooldownFactory = cooldownFactory;
-            _projectiles = new List<Projectile>();
             
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
@@ -96,19 +92,20 @@ namespace Gameplay.Weapons
         public void Dispose()
         {
             _reloadCooldown.ForceFinish();
+            ClearPool();
             Destroy(gameObject);
         }
-        
-        public void RemoveProjectile(Projectile projectile)
-        {
-            if (_projectiles.Any())
-            {
-                projectile = _projectiles[0];
-                _projectiles.Remove(projectile);
-                projectile.Dispose();
-            }
-        }
 
+        private void ClearPool()
+        {
+            Vector3 position = transform.position;
+            var projectile = _projectileFactory.Create(
+                new FlyInfo { Position = position, Direction = transform.forward },
+                new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
+
+            projectile.ClearPool();
+        }
+        
         private void SpawnProjectile()
         {
             Vector3 position = transform.position;
@@ -119,7 +116,6 @@ namespace Gameplay.Weapons
             
             projectile.Launch();
             
-            _projectiles.Add(projectile);
             _fxFactory.Create(_settings.ShotFX, position);
         }
 

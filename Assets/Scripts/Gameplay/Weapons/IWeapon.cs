@@ -9,7 +9,6 @@ namespace Gameplay.Weapons
         bool Shot();
         void Dispose();
         void Reload();
-        void RemoveProjectile(Projectile projectile);
 
         public class Fake : IWeapon
         {
@@ -22,7 +21,6 @@ namespace Gameplay.Weapons
             public bool Shot() => false;
             public void Dispose(){}
             public void Reload(){}
-            public void RemoveProjectile(Projectile projectile){}
         }
     }
 }
