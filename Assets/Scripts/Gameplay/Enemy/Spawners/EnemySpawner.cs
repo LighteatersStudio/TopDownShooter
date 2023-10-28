@@ -23,7 +23,7 @@ namespace Gameplay.Enemy
         protected Character Spawn(WeaponSettings weaponSettings)
         {
             var enemy = _enemyFactory.Create(_enemySettings, _enemySettings.SimpleEnemyAI);
-            
+
             enemy.transform.position = transform.position;
             enemy.ChangeWeapon(_weaponFactory.Create(weaponSettings, enemy));
 
