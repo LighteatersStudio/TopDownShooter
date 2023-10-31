@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 4de207a488014c5418e1f69e72bce67a
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: curve1
+    100002: finger1_Joint1
+    100004: finger1_Joint2
+    100006: finger1_Joint3
+    100008: finger1_MetaCarpel
+    100010: finger2_Joint1
+    100012: finger2_Joint2
+    100014: finger2_Joint3
+    100016: finger2_MetaCarpel
+    100018: finger3_Joint1
+    100020: finger3_Joint2
+    100022: finger3_Joint3
+    100024: finger3_MetaCarpel
+    100026: follicle1
+    100028: group1
+    100030: //RootNode
+    100032: head1_head
+    100034: head1_neck
+    100036: joint01
+    100038: joint12
+    100040: joint24
+    100042: joint25
+    100044: joint26
+    100046: joint27
+    100048: L_Huzi_1
+    100050: L_Huzi_10
+    100052: L_Huzi_11
+    100054: L_Huzi_2
+    100056: L_Huzi_3
+    100058: L_Huzi_4
+    100060: L_Huzi_5
+    100062: L_Huzi_6
+    100064: L_Huzi_7
+    100066: L_Huzi_8
+    100068: L_Huzi_9
+    100070: leftArm1_LoResClavical
+    100072: leftArm1_LoResHand
+    100074: leftArm1_LoResLowerArm
+    100076: leftArm1_LoResUpperArm
+    100078: leftLeg1_LoResFoot
+    100080: leftLeg1_LoResLowerLeg
+    100082: leftLeg1_LoResToe
+    100084: leftLeg1_LoResUpperLeg
+    100086: R_Huzi_1
+    100088: R_Huzi_10
+    100090: R_Huzi_11
+    100092: R_Huzi_2
+    100094: R_Huzi_3
+    100096: R_Huzi_4
+    100098: R_Huzi_5
+    100100: R_Huzi_6
+    100102: R_Huzi_7
+    100104: R_Huzi_8
+    100106: R_Huzi_9
+    100108: rightArm1_LoResClavical
+    100110: rightArm1_LoResHand
+    100112: rightArm1_LoResLowerArm
+    100114: rightArm1_LoResUpperArm
+    100116: rightLeg1_LoResFoot
+    100118: rightLeg1_LoResLowerLeg
+    100120: rightLeg1_LoResToe
+    100122: rightLeg1_LoResUpperLeg
+    100124: spine1_loResPelvis
+    100126: spine1_loResSpine1
+    100128: spine1_loResSpine2
+    100130: spine1_loResSpine3
+    100132: tail2_Joint1
+    100134: tail2_Joint2
+    100136: tail2_Joint3
+    100138: tail2_Joint4
+    100140: tail2_Joint5
+    100142: thumb1_Joint1
+    100144: thumb1_Joint2
+    100146: thumb1_Joint3
+    100148: TSMGWorldJoint
+    400000: curve1
+    400002: finger1_Joint1
+    400004: finger1_Joint2
+    400006: finger1_Joint3
+    400008: finger1_MetaCarpel
+    400010: finger2_Joint1
+    400012: finger2_Joint2
+    400014: finger2_Joint3
+    400016: finger2_MetaCarpel
+    400018: finger3_Joint1
+    400020: finger3_Joint2
+    400022: finger3_Joint3
+    400024: finger3_MetaCarpel
+    400026: follicle1
+    400028: group1
+    400030: //RootNode
+    400032: head1_head
+    400034: head1_neck
+    400036: joint01
+    400038: joint12
+    400040: joint24
+    400042: joint25
+    400044: joint26
+    400046: joint27
+    400048: L_Huzi_1
+    400050: L_Huzi_10
+    400052: L_Huzi_11
+    400054: L_Huzi_2
+    400056: L_Huzi_3
+    400058: L_Huzi_4
+    400060: L_Huzi_5
+    400062: L_Huzi_6
+    400064: L_Huzi_7
+    400066: L_Huzi_8
+    400068: L_Huzi_9
+    400070: leftArm1_LoResClavical
+    400072: leftArm1_LoResHand
+    400074: leftArm1_LoResLowerArm
+    400076: leftArm1_LoResUpperArm
+    400078: leftLeg1_LoResFoot
+    400080: leftLeg1_LoResLowerLeg
+    400082: leftLeg1_LoResToe
+    400084: leftLeg1_LoResUpperLeg
+    400086: R_Huzi_1
+    400088: R_Huzi_10
+    400090: R_Huzi_11
+    400092: R_Huzi_2
+    400094: R_Huzi_3
+    400096: R_Huzi_4
+    400098: R_Huzi_5
+    400100: R_Huzi_6
+    400102: R_Huzi_7
+    400104: R_Huzi_8
+    400106: R_Huzi_9
+    400108: rightArm1_LoResClavical
+    400110: rightArm1_LoResHand
+    400112: rightArm1_LoResLowerArm
+    400114: rightArm1_LoResUpperArm
+    400116: rightLeg1_LoResFoot
+    400118: rightLeg1_LoResLowerLeg
+    400120: rightLeg1_LoResToe
+    400122: rightLeg1_LoResUpperLeg
+    400124: spine1_loResPelvis
+    400126: spine1_loResSpine1
+    400128: spine1_loResSpine2
+    400130: spine1_loResSpine3
+    400132: tail2_Joint1
+    400134: tail2_Joint2
+    400136: tail2_Joint3
+    400138: tail2_Joint4
+    400140: tail2_Joint5
+    400142: thumb1_Joint1
+    400144: thumb1_Joint2
+    400146: thumb1_Joint3
+    400148: TSMGWorldJoint
+    7400000: loop
+    7400002: noloop
+    7400004: attack
+    7400006: end
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: attack
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: TSMGWorldJoint
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/leftLeg1_LoResUpperLeg
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/leftLeg1_LoResUpperLeg/leftLeg1_LoResLowerLeg
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/leftLeg1_LoResUpperLeg/leftLeg1_LoResLowerLeg/leftLeg1_LoResFoot
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/leftLeg1_LoResUpperLeg/leftLeg1_LoResLowerLeg/leftLeg1_LoResFoot/leftLeg1_LoResToe
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/rightLeg1_LoResUpperLeg
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/rightLeg1_LoResUpperLeg/rightLeg1_LoResLowerLeg
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/rightLeg1_LoResUpperLeg/rightLeg1_LoResLowerLeg/rightLeg1_LoResFoot
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResPelvis/rightLeg1_LoResUpperLeg/rightLeg1_LoResLowerLeg/rightLeg1_LoResFoot/rightLeg1_LoResToe
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1/tail2_Joint2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1/tail2_Joint2/tail2_Joint3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1/tail2_Joint2/tail2_Joint3/group1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1/tail2_Joint2/tail2_Joint3/tail2_Joint4
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/leftArm1_LoResClavical/leftArm1_LoResUpperArm/leftArm1_LoResLowerArm/leftArm1_LoResHand/tail2_Joint1/tail2_Joint2/tail2_Joint3/tail2_Joint4/tail2_Joint5
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger1_MetaCarpel
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger1_MetaCarpel/finger1_Joint1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger1_MetaCarpel/finger1_Joint1/finger1_Joint2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger1_MetaCarpel/finger1_Joint1/finger1_Joint2/finger1_Joint3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger2_MetaCarpel
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger2_MetaCarpel/finger2_Joint1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger2_MetaCarpel/finger2_Joint1/finger2_Joint2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger2_MetaCarpel/finger2_Joint1/finger2_Joint2/finger2_Joint3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger3_MetaCarpel
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger3_MetaCarpel/finger3_Joint1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger3_MetaCarpel/finger3_Joint1/finger3_Joint2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/finger3_MetaCarpel/finger3_Joint1/finger3_Joint2/finger3_Joint3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/joint01
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/thumb1_Joint1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/thumb1_Joint1/thumb1_Joint2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/rightArm1_LoResClavical/rightArm1_LoResUpperArm/rightArm1_LoResLowerArm/rightArm1_LoResHand/thumb1_Joint1/thumb1_Joint2/thumb1_Joint3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/follicle1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/follicle1/curve1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6/L_Huzi_7
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6/L_Huzi_7/L_Huzi_8
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6/L_Huzi_7/L_Huzi_8/L_Huzi_9
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6/L_Huzi_7/L_Huzi_8/L_Huzi_9/L_Huzi_10
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/L_Huzi_1/L_Huzi_2/L_Huzi_3/L_Huzi_4/L_Huzi_5/L_Huzi_6/L_Huzi_7/L_Huzi_8/L_Huzi_9/L_Huzi_10/L_Huzi_11
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6/R_Huzi_7
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6/R_Huzi_7/R_Huzi_8
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6/R_Huzi_7/R_Huzi_8/R_Huzi_9
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6/R_Huzi_7/R_Huzi_8/R_Huzi_9/R_Huzi_10
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint12/R_Huzi_1/R_Huzi_2/R_Huzi_3/R_Huzi_4/R_Huzi_5/R_Huzi_6/R_Huzi_7/R_Huzi_8/R_Huzi_9/R_Huzi_10/R_Huzi_11
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint24
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint24/joint25
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint24/joint25/joint26
+        weight: 1
+      - path: TSMGWorldJoint/spine1_loResSpine1/spine1_loResSpine2/spine1_loResSpine3/head1_neck/head1_head/joint24/joint25/joint26/joint27
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 295ab50f31e49784e92688374bcc5209,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
