@@ -1,5 +1,7 @@
+using Gameplay.AI;
 using Gameplay.Weapons;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 namespace Gameplay.Enemy
@@ -18,13 +20,13 @@ namespace Gameplay.Enemy
             _enemyFactory = enemyFactory;
             _weaponFactory = weaponFactory;
         }
-        
-        
+
+
         protected Character Spawn(WeaponSettings weaponSettings)
         {
             var enemy = _enemyFactory.Create(_enemySettings, _enemySettings.SimpleEnemyAI);
-
             enemy.transform.position = transform.position;
+            
             enemy.ChangeWeapon(_weaponFactory.Create(weaponSettings, enemy));
 
             return enemy;
