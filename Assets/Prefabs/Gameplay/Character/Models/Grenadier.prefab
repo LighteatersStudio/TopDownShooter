@@ -16432,6 +16432,8 @@ GameObject:
   m_Component:
   - component: {fileID: 470064}
   - component: {fileID: 9593386}
+  - component: {fileID: -1297127323325673893}
+  - component: {fileID: 6103446451359640688}
   m_Layer: 0
   m_Name: Grenadier
   m_TagString: Untagged
@@ -16466,7 +16468,7 @@ Animator:
   m_GameObject: {fileID: 170064}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 837a553eb02eff647b8756f4d37d0868, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 170c628278018d3409927d226c0320e9, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -16477,6 +16479,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-1297127323325673893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa46df61488a4911b20b238c5bb2da43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6103446451359640688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 156535450d884f868699d8f64ec00912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _head: {fileID: 467682}
 --- !u!1 &193622
 GameObject:
   m_ObjectHideFlags: 0
