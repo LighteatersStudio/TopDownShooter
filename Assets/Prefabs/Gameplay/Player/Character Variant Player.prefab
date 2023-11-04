@@ -28,6 +28,14 @@ PrefabInstance:
       propertyPath: _monoInstallers.Array.data[2]
       value: 
       objectReference: {fileID: 8961034958541764891}
+    - target: {fileID: 2323227509379616764, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_Name
+      value: ProjectileRoot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: _projectileRoot
+      value: 
+      objectReference: {fileID: 8105410043366348358}
     - target: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -76,6 +84,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Variant Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -116,6 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0ae0b658826464b94e6597e8c2193fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8105410043366348358 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+  m_PrefabInstance: {fileID: 2031886521234082273}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8416849737033881991 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}

@@ -55,10 +55,9 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            var target = other.GetComponent<IDamageable>();
+           var target = other.GetComponent<IDamageable>();
 
             SpawnSparksEffect();
-
             Dispose();
 
             if (target == null)

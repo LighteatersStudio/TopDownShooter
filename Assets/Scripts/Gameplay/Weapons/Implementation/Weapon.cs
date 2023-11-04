@@ -105,17 +105,17 @@ namespace Gameplay.Weapons
 
             projectile.ClearPool();
         }
-        
+
         private void SpawnProjectile()
         {
-            Vector3 position = transform.position;
+            var position = _user.ProjectileRoot.position;
 
             var projectile = _projectileFactory.Create(
-                new FlyInfo { Position = position, Direction = transform.forward },
+                new FlyInfo { Position = position, Direction = _user.ProjectileRoot.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
-            
+
             projectile.Launch();
-            
+
             _fxFactory.Create(_settings.ShotFX, position);
         }
 

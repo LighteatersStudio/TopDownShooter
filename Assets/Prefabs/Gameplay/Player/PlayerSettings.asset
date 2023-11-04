@@ -18,4 +18,4 @@ MonoBehaviour:
     MoveSpeed: 10
     AttackSpeed: 1
   _model: {fileID: 170064, guid: 505d3bc1212d6cd42a01918e9a452939, type: 3}
-  _defaultWeapon: {fileID: 11400000, guid: 4f092de5fcee75d4aa8f5fa8122a9636, type: 2}
+  _defaultWeapon: {fileID: 11400000, guid: ff92bec409cdbdd40b251c07932dbeef, type: 2}

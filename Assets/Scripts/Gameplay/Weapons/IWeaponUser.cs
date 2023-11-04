@@ -6,6 +6,7 @@ namespace Gameplay.Weapons
     {
         float AttackSpeed { get; }
         Transform WeaponRoot { get; }
+        Transform ProjectileRoot { get; }
         IFriendOrFoeTag FriendOrFoeTag { get; }
     }
 }

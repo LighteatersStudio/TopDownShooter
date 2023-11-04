@@ -10,7 +10,7 @@ namespace Gameplay
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
-        [SerializeField] private Transform _weaponRoot;
+        [SerializeField] private Transform _projectileRoot;
         
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
@@ -19,6 +19,7 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
+        private Transform _weaponRoot;
         
         private Vector3 _fireDirection;
 
@@ -30,6 +31,7 @@ namespace Gameplay
         public float AttackSpeed => _stats.AttackSpeed;
 
         public Transform WeaponRoot => _weaponRoot;
+        public Transform ProjectileRoot => _projectileRoot;
         public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
@@ -68,6 +70,16 @@ namespace Gameplay
             _initializer.Initialize(Load);
         }
 
+        private void Start()
+        {
+            Transform requiredObject = FindObjectInHierarchy(_viewRoot, "R");
+
+            if (requiredObject != null)
+            {
+                _weaponRoot = requiredObject;
+            }
+        }
+
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
         {
             ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
@@ -77,7 +89,30 @@ namespace Gameplay
         {
             var model = viewFactoryMethod(_viewRoot);
             model.GetComponent<CharacterAnimator>().Construct(this);
+
             return model.GetComponent<CharacterModelRoots>();
+        }
+
+        private Transform FindObjectInHierarchy(Transform parentObject, string objectName)
+        {
+            Transform foundObject = parentObject.transform.Find(objectName);
+
+            if (foundObject != null)
+            {
+                return foundObject;
+            }
+
+            foreach (Transform child in parentObject.transform)
+            {
+                Transform foundInChildren = FindObjectInHierarchy(child, objectName);
+                
+                if (foundInChildren != null)
+                {
+                    return foundInChildren;
+                }
+            }
+
+            return null;
         }
 
         public void TakeDamage(IAttackInfo attackInfo)
