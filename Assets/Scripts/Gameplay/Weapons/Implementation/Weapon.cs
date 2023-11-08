@@ -16,6 +16,7 @@ namespace Gameplay.Weapons
         private IWeaponSettings _settings;
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
+        private Transform _muzzleRoot;
         
         public string WeaponType => _settings.Id;
 
@@ -50,6 +51,13 @@ namespace Gameplay.Weapons
         {
             _settings.ViewFactory.Invoke(transform);
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
+            
+            Transform requiredMuzzle = FindObjectInHierarchy(transform, "Muzzle");
+
+            if (requiredMuzzle != null)
+            {
+                _muzzleRoot = requiredMuzzle;
+            }
         }
 
         private void Update()
@@ -98,9 +106,9 @@ namespace Gameplay.Weapons
 
         private void ClearPool()
         {
-            Vector3 position = transform.position;
+            Vector3 position = _user.ProjectileRoot.position;
             var projectile = _projectileFactory.Create(
-                new FlyInfo { Position = position, Direction = transform.forward },
+                new FlyInfo { Position = position, Direction = _user.ProjectileRoot.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
 
             projectile.ClearPool();
@@ -109,14 +117,16 @@ namespace Gameplay.Weapons
         private void SpawnProjectile()
         {
             var position = _user.ProjectileRoot.position;
-
+            var direction = _user.ProjectileRoot.forward;
+            
             var projectile = _projectileFactory.Create(
-                new FlyInfo { Position = position, Direction = _user.ProjectileRoot.forward },
+                new FlyInfo { Position = position, Direction = direction },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
 
             projectile.Launch();
 
-            _fxFactory.Create(_settings.ShotFX, position);
+           var fx = _fxFactory.Create(_settings.ShotFX, new FXContext(_muzzleRoot.position,_muzzleRoot.forward));
+           fx.transform.SetParent(_muzzleRoot);
         }
 
         public void Reload()
@@ -132,6 +142,28 @@ namespace Gameplay.Weapons
             _reloadCooldown.Launch();
 
             ReloadStarted?.Invoke(_reloadCooldown);
+        }
+        
+        private Transform FindObjectInHierarchy(Transform parentObject, string objectName)
+        {
+            Transform foundObject = parentObject.transform.Find(objectName);
+
+            if (foundObject != null)
+            {
+                return foundObject;
+            }
+
+            foreach (Transform child in parentObject.transform)
+            {
+                Transform foundInChildren = FindObjectInHierarchy(child, objectName);
+                
+                if (foundInChildren != null)
+                {
+                    return foundInChildren;
+                }
+            }
+
+            return null;
         }
 
         private void RefillAmmoClip()

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Uzi
   m_EditorClassIdentifier: 
   _id: Riffle_1
-  _shotsPerSecond: 5
-  _ammoClipSize: 50
+  _shotsPerSecond: 12
+  _ammoClipSize: 100
   _reloadTime: 2
   _damage: 5
   _typeDamage: 0

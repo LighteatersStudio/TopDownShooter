@@ -79,7 +79,7 @@ namespace Infrastructure
         private void BindFX()
         {
             Debug.Log("Game installer: Bind FX");
-            Container.BindFactory<ParticleSystem, Vector3, PlayingFX, PlayingFX.Factory>()
+            Container.BindFactory<ParticleSystem, FXContext, PlayingFX, PlayingFX.Factory>()
                 .FromNewComponentOnNewGameObject()
                 .AsSingle()
                 .Lazy();

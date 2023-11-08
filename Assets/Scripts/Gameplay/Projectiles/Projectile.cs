@@ -55,7 +55,7 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-           var target = other.GetComponent<IDamageable>();
+            var target = other.GetComponent<IDamageable>();
 
             SpawnSparksEffect();
             Dispose();
@@ -75,7 +75,7 @@ namespace Gameplay.Projectiles
 
         private void SpawnSparksEffect()
         {
-            _fxFactory.Create(_sparksEffect, transform.position);
+            _fxFactory.Create(_sparksEffect, new FXContext(transform.position, -transform.forward));
         }
 
         private void Update()
