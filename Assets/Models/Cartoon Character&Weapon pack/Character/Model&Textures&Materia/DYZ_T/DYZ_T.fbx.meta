@@ -1,0 +1,108 @@
+fileFormatVersion: 2
+guid: 1f99f027b9279dd42b02806ad8a69760
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: JIQIREN
+    100002: leftArm1_LoResClavical
+    100004: leftArm1_LoResHand
+    100006: leftArm1_LoResLowerArm
+    100008: leftArm1_LoResUpperArm
+    100010: leftLeg1_LoResFoot
+    100012: leftLeg1_LoResLowerLeg
+    100014: leftLeg1_LoResToe
+    100016: leftLeg1_LoResUpperLeg
+    100018: rightArm1_LoResClavical
+    100020: rightArm1_LoResHand
+    100022: rightArm1_LoResLowerArm
+    100024: rightArm1_LoResUpperArm
+    100026: rightLeg1_LoResFoot
+    100028: rightLeg1_LoResLowerLeg
+    100030: rightLeg1_LoResToe
+    100032: rightLeg1_LoResUpperLeg
+    100034: spine1_loResPelvis
+    100036: spine1_loResSpine1
+    100038: spine1_loResSpine2
+    100040: spine1_loResSpine3
+    100042: TSMGWorldJoint
+    100044: //RootNode
+    400000: JIQIREN
+    400002: leftArm1_LoResClavical
+    400004: leftArm1_LoResHand
+    400006: leftArm1_LoResLowerArm
+    400008: leftArm1_LoResUpperArm
+    400010: leftLeg1_LoResFoot
+    400012: leftLeg1_LoResLowerLeg
+    400014: leftLeg1_LoResToe
+    400016: leftLeg1_LoResUpperLeg
+    400018: rightArm1_LoResClavical
+    400020: rightArm1_LoResHand
+    400022: rightArm1_LoResLowerArm
+    400024: rightArm1_LoResUpperArm
+    400026: rightLeg1_LoResFoot
+    400028: rightLeg1_LoResLowerLeg
+    400030: rightLeg1_LoResToe
+    400032: rightLeg1_LoResUpperLeg
+    400034: spine1_loResPelvis
+    400036: spine1_loResSpine1
+    400038: spine1_loResSpine2
+    400040: spine1_loResSpine3
+    400042: TSMGWorldJoint
+    400044: //RootNode
+    4300000: JIQIREN
+    9500000: //RootNode
+    13700000: JIQIREN
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
