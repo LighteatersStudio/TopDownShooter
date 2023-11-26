@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.AI;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using UnityEngine;
@@ -57,6 +58,11 @@ namespace Gameplay.Projectiles
         {
             var target = other.GetComponent<IDamageable>();
 
+            if (other.GetComponent<ObserveArea>())
+            {
+                return;
+            }
+            
             SpawnSparksEffect();
             Dispose();
 

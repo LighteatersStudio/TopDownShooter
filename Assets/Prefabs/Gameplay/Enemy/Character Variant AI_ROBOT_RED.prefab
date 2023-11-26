@@ -143,7 +143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_Name
-      value: Character Variant AI
+      value: Character Variant AI_ROBOT_RED
       objectReference: {fileID: 0}
     - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -177,6 +177,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6403490563354715172}
+    - targetCorrespondingSourceObject: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3477533832838759514}
   m_SourcePrefab: {fileID: 100100000, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
 --- !u!1 &799623494326944141 stripped
 GameObject:
@@ -245,6 +248,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100d496b9ab34773ab217ffc027261f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &3477533832838759514
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799623494326944141}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Height: 1.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!4 &799623494326944142 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}

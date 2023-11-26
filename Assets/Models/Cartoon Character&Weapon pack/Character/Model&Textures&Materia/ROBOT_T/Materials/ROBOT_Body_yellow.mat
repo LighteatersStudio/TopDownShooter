@@ -8,16 +8,11 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ROBOT_Body_yellow
-  m_Shader: {fileID: 4800000, guid: cd2daeeb3a92cd14489709ac662cf135, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: fd986db61ae19e1499e2418427784500, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - TCP2_RAMPTEXT
-  m_InvalidKeywords:
-  - OUTLINES
-  - TCP2_OUTLINE_CONST_SIZE
-  - TCP2_RIM
-  - TCP2_SPEC
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -28,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: a2626b725b936324d87b30b372ee04c7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -40,24 +39,54 @@ Material:
         m_Texture: {fileID: 2800000, guid: abc83c21d57d4a74cabe12065fa1a8b2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SmoothnessMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AmbientEnvironmentMultiplier: 1
     - _Cutoff: 0.5
     - _DstBlend: 10
+    - _EdgeDiffuse: 0.001
+    - _EdgeDistanceAttenuation: 0.001
+    - _EdgeRim: 0.001
+    - _EdgeShadowAttenuation: 1
+    - _EdgeSpecular: 0.001
     - _Offset1: 0
     - _Offset2: 0
     - _Outline: 0.2
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _RampSmooth: 0.1
     - _RampThreshold: 0.5
+    - _RimAmount: 0.25
     - _RimMax: 1
     - _RimMin: 0.4871795
     - _RimPower: 2.5
+    - _RimStrength: 1
+    - _RimThreshold: 0.15
     - _Shininess: 0.21437466
+    - _Smoothness: 0
     - _SpecSmooth: 0.05
     - _SrcBlend: 5
     - _TexLod: 5
     - _ZSmooth: -0.5
     m_Colors:
+    - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _HColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
     - _OutlineColor: {r: 0.14901961, g: 0.14901961, b: 0.14901961, a: 1}
@@ -66,3 +95,16 @@ Material:
     - _SColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.32352942, g: 0.32352942, b: 0.32352942, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &7194288161129829297
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
