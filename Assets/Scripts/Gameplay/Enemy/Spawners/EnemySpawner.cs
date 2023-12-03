@@ -1,7 +1,5 @@
-using Gameplay.AI;
 using Gameplay.Weapons;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 namespace Gameplay.Enemy
