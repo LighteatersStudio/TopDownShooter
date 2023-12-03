@@ -19,14 +19,13 @@ namespace Gameplay.Weapons
         private Transform _muzzleRoot;
         
         public string WeaponType => _settings.Id;
-
         public int RemainAmmo { get; private set; }
         private bool HasAmmo => RemainAmmo > 0;
 
         public event Action ShotDone;
         public event Action<ICooldown> ReloadStarted;
         public event Action<float> Tick;
-        
+
 
         [Inject]
         public void Construct(Projectile.Factory projectileFactory,
@@ -40,24 +39,21 @@ namespace Gameplay.Weapons
             _settings = settings;
             _projectileFactory = projectileFactory;
             _cooldownFactory = cooldownFactory;
-            
+
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
-            
+
             RefillAmmoClip();
         }
 
         private void Start()
         {
-            _settings.ViewFactory.Invoke(transform);
-            transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
+            var model = _settings.ViewFactory.Invoke(transform);
+            var modelRoot = model.GetComponent<WeaponModelRoots>();
             
-            Transform requiredMuzzle = FindObjectInHierarchy(transform, "Muzzle");
-
-            if (requiredMuzzle != null)
-            {
-                _muzzleRoot = requiredMuzzle;
-            }
+            _muzzleRoot = modelRoot.Muzzle;
+            
+            transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
         private void Update()
@@ -144,28 +140,6 @@ namespace Gameplay.Weapons
             ReloadStarted?.Invoke(_reloadCooldown);
         }
         
-        private Transform FindObjectInHierarchy(Transform parentObject, string objectName)
-        {
-            Transform foundObject = parentObject.transform.Find(objectName);
-
-            if (foundObject != null)
-            {
-                return foundObject;
-            }
-
-            foreach (Transform child in parentObject.transform)
-            {
-                Transform foundInChildren = FindObjectInHierarchy(child, objectName);
-                
-                if (foundInChildren != null)
-                {
-                    return foundInChildren;
-                }
-            }
-
-            return null;
-        }
-
         private void RefillAmmoClip()
         {
             RemainAmmo = _settings.AmmoClipSize;

@@ -16472,3 +16472,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _head: {fileID: 467682}
+  _rightHand: {fileID: 467698}

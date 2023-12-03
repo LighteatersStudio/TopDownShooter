@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4549816782507610806}
   - component: {fileID: 4549816782504776300}
   - component: {fileID: 4549816782505447468}
+  - component: {fileID: 770823752642918624}
   m_Layer: 0
   m_Name: ROBOT_Gun
   m_TagString: Untagged
@@ -84,6 +85,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &770823752642918624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549816782507998854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4b3ce452734765b0d30d42919679ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzle: {fileID: 2314402026493909697}
 --- !u!1001 &3133223630903578596
 PrefabInstance:
   m_ObjectHideFlags: 0

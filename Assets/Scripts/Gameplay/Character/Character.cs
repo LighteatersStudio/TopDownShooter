@@ -70,19 +70,11 @@ namespace Gameplay
             _initializer.Initialize(Load);
         }
 
-        private void Start()
-        {
-            Transform requiredObject = FindObjectInHierarchy(_viewRoot, "R");
-
-            if (requiredObject != null)
-            {
-                _weaponRoot = requiredObject;
-            }
-        }
-
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
         {
             ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
+            
+            _weaponRoot = ModelRoots.RightHand;
         }
 
         private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
@@ -91,28 +83,6 @@ namespace Gameplay
             model.GetComponent<CharacterAnimator>().Construct(this);
 
             return model.GetComponent<CharacterModelRoots>();
-        }
-
-        private Transform FindObjectInHierarchy(Transform parentObject, string objectName)
-        {
-            Transform foundObject = parentObject.transform.Find(objectName);
-
-            if (foundObject != null)
-            {
-                return foundObject;
-            }
-
-            foreach (Transform child in parentObject.transform)
-            {
-                Transform foundInChildren = FindObjectInHierarchy(child, objectName);
-                
-                if (foundInChildren != null)
-                {
-                    return foundInChildren;
-                }
-            }
-
-            return null;
         }
 
         public void TakeDamage(IAttackInfo attackInfo)

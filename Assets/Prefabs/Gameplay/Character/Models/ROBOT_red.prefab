@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _head: {fileID: 479780}
+  _rightHand: {fileID: 479894}
 --- !u!1 &179780
 GameObject:
   m_ObjectHideFlags: 0
