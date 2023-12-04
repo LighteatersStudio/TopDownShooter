@@ -16,7 +16,7 @@ namespace Gameplay.Weapons
         private IWeaponSettings _settings;
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
-        private Transform _muzzleRoot;
+        private WeaponModelRoots _muzzleRoot;
         
         public string WeaponType => _settings.Id;
         public int RemainAmmo { get; private set; }
@@ -49,10 +49,8 @@ namespace Gameplay.Weapons
         private void Start()
         {
             var model = _settings.ViewFactory.Invoke(transform);
-            var modelRoot = model.GetComponent<WeaponModelRoots>();
-            
-            _muzzleRoot = modelRoot.Muzzle;
-            
+            _muzzleRoot = model.GetComponent<WeaponModelRoots>();
+           
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
@@ -121,8 +119,8 @@ namespace Gameplay.Weapons
 
             projectile.Launch();
 
-           var fx = _fxFactory.Create(_settings.ShotFX, new FXContext(_muzzleRoot.position,_muzzleRoot.forward));
-           fx.transform.SetParent(_muzzleRoot);
+           var fx = _fxFactory.Create(_settings.ShotFX, new FXContext(_muzzleRoot.Muzzle.position,_muzzleRoot.Muzzle.forward));
+           fx.transform.SetParent(_muzzleRoot.transform);
         }
 
         public void Reload()

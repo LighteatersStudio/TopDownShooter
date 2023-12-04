@@ -56,8 +56,6 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            var target = other.GetComponent<IDamageable>();
-
             if (other.GetComponent<ObserveArea>())
             {
                 return;
@@ -65,6 +63,8 @@ namespace Gameplay.Projectiles
             
             SpawnSparksEffect();
             Dispose();
+            
+            var target = other.GetComponent<IDamageable>();
 
             if (target == null)
             {
