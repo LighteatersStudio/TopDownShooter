@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: _monoInstallers.Array.data[2]
       value: 
       objectReference: {fileID: 8961034958541764891}
+    - target: {fileID: 2323227509379616764, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_Name
+      value: ProjectileRoot
+      objectReference: {fileID: 0}
     - target: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -76,8 +80,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Variant Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2323227509379616764, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
@@ -250,4 +267,4 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}

@@ -34,12 +34,12 @@ namespace Gameplay
         private void OnDead()
         {
             Unsubscribe();
-            _fxFactory.Create(_fxList.DeadFx, _character.ModelRoots.Head.position);
+            _fxFactory.Create(_fxList.DeadFx, new FXContext(_character.ModelRoots.Head.position, _character.ModelRoots.Head.forward));
         }
 
         private void OnDamaged()
         {
-            _fxFactory.Create(_fxList.HitFx, _character.ModelRoots.Head.position);
+            _fxFactory.Create(_fxList.HitFx, new FXContext(_character.ModelRoots.Head.position, _character.ModelRoots.Head.forward));
         }
     }
 }

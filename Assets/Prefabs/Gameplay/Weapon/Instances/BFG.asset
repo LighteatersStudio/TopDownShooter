@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728f61e9bc0d4670987b5a9dea1252b9, type: 3}
+  m_Name: BFG
+  m_EditorClassIdentifier: 
+  _id: Riffle_1
+  _shotsPerSecond: 10
+  _ammoClipSize: 50
+  _reloadTime: 3
+  _damage: 20
+  _typeDamage: 0
+  _viewPrefab: {fileID: 193388, guid: e839f44dcfb20e8479e1df7caa4b689e, type: 3}
+  _bulletPrefab: {fileID: 7652417235582060901, guid: 9d129638a85502849b34acde5c8361a1, type: 3}
+  _shotFX: {fileID: 1870224526385031359, guid: 4c2358077fd6ec046ab42c02d4d63e7c, type: 3}
+  _sounds:
+    _pickedUp: {fileID: 0}
+    _shot: {fileID: 0}
+    _reload: {fileID: 0}

@@ -10,7 +10,6 @@ namespace Gameplay
     {
         [Header("Component Roots")]
         [SerializeField] private Transform _viewRoot;
-        [SerializeField] private Transform _weaponRoot;
         
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
@@ -29,7 +28,9 @@ namespace Gameplay
         
         public float AttackSpeed => _stats.AttackSpeed;
 
-        public Transform WeaponRoot => _weaponRoot;
+        public Transform WeaponRoot => ModelRoots.Weapon;
+
+        public Transform ProjectileRoot => ModelRoots.Projectile;
         public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
@@ -77,6 +78,7 @@ namespace Gameplay
         {
             var model = viewFactoryMethod(_viewRoot);
             model.GetComponent<CharacterAnimator>().Construct(this);
+
             return model.GetComponent<CharacterModelRoots>();
         }
 

@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7804321971561553831}
   m_Layer: 0
-  m_Name: WeaponRoot
+  m_Name: ProjectileRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7564954714399395941}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3005667997710167655
 GameObject:
@@ -194,10 +194,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7804321971561553831}
   - {fileID: 7564954714408511390}
   - {fileID: 7070710791399760810}
   - {fileID: 1715054113}
-  - {fileID: 7804321971561553831}
   - {fileID: 7786429927286086809}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
-  _weaponRoot: {fileID: 7804321971561553831}
+  _projectileRoot: {fileID: 7804321971561553831}
   _deathWaitTime: 10
 --- !u!114 &1287744693554637472
 MonoBehaviour:

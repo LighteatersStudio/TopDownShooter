@@ -145,9 +145,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character Variant AI
       objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.481
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5222
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.088
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5877383001790776800, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+    - {fileID: 2323227509379616764, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       insertIndex: -1

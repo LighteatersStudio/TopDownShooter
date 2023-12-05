@@ -33,21 +33,14 @@ namespace Gameplay.AI
         {
             Tick?.Invoke(Time.deltaTime);
         }
-        
+
         public bool Setup()
         {
             _agent.speed = _character.MoveSpeed;
 
-            if (!_agent.FindClosestEdge(out var hit))
-            {
-                Debug.LogError("Not found NavMesh closest edge");
-                return false;
-            }
-            
-            _agent.Warp(hit.position);
-            return true;
+            return _agent.Warp(transform.position);
         }
-        
+
         public Task<bool> MoveTo(Vector3 position, CancellationToken token)
         {
             Stop();

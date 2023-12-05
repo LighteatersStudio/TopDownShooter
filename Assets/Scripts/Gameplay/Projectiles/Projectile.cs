@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.AI;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using UnityEngine;
@@ -55,11 +56,15 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            var target = other.GetComponent<IDamageable>();
-
+            if (other.GetComponent<ObserveArea>())
+            {
+                return;
+            }
+            
             SpawnSparksEffect();
-
             Dispose();
+            
+            var target = other.GetComponent<IDamageable>();
 
             if (target == null)
             {
@@ -76,7 +81,7 @@ namespace Gameplay.Projectiles
 
         private void SpawnSparksEffect()
         {
-            _fxFactory.Create(_sparksEffect, transform.position);
+            _fxFactory.Create(_sparksEffect, new FXContext(transform.position, -transform.forward));
         }
 
         private void Update()

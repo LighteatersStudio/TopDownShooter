@@ -25,7 +25,7 @@ namespace Gameplay.Projectiles
 
         private void Update()
         {
-            _cachedTransform.position += transform.forward * Time.deltaTime * _speed;
+            _cachedTransform.position += _cachedTransform.forward * Time.deltaTime * _speed;
         }
     }
 }

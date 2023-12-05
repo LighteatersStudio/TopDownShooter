@@ -16,16 +16,16 @@ namespace Gameplay.Weapons
         private IWeaponSettings _settings;
         private Cooldown _shotCooldown;
         private Cooldown _reloadCooldown;
+        private WeaponModelRoots _modelRoot;
         
         public string WeaponType => _settings.Id;
-
         public int RemainAmmo { get; private set; }
         private bool HasAmmo => RemainAmmo > 0;
 
         public event Action ShotDone;
         public event Action<ICooldown> ReloadStarted;
         public event Action<float> Tick;
-        
+
 
         [Inject]
         public void Construct(Projectile.Factory projectileFactory,
@@ -39,16 +39,18 @@ namespace Gameplay.Weapons
             _settings = settings;
             _projectileFactory = projectileFactory;
             _cooldownFactory = cooldownFactory;
-            
+
             _shotCooldown = _cooldownFactory.CreateFinished();
             _reloadCooldown = _cooldownFactory.CreateFinished();
-            
+
             RefillAmmoClip();
         }
 
         private void Start()
         {
-            _settings.ViewFactory.Invoke(transform);
+            var model = _settings.ViewFactory.Invoke(transform);
+            _modelRoot = model.GetComponent<WeaponModelRoots>();
+           
             transform.SetParentAndZeroPositionRotation(_user.WeaponRoot);
         }
 
@@ -98,25 +100,27 @@ namespace Gameplay.Weapons
 
         private void ClearPool()
         {
-            Vector3 position = transform.position;
+            Vector3 position = _user.ProjectileRoot.position;
             var projectile = _projectileFactory.Create(
-                new FlyInfo { Position = position, Direction = transform.forward },
+                new FlyInfo { Position = position, Direction = _user.ProjectileRoot.forward },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
 
             projectile.ClearPool();
         }
-        
+
         private void SpawnProjectile()
         {
-            Vector3 position = transform.position;
-
+            var position = _user.ProjectileRoot.position;
+            var direction = _user.ProjectileRoot.forward;
+            
             var projectile = _projectileFactory.Create(
-                new FlyInfo { Position = position, Direction = transform.forward },
+                new FlyInfo { Position = position, Direction = direction },
                 new AttackInfo(_settings.Damage, _settings.TypeDamage, _user.FriendOrFoeTag));
-            
+
             projectile.Launch();
-            
-            _fxFactory.Create(_settings.ShotFX, position);
+
+           var fx = _fxFactory.Create(_settings.ShotFX, new FXContext(_modelRoot.Muzzle.position,_modelRoot.Muzzle.forward));
+           fx.transform.SetParent(_modelRoot.transform);
         }
 
         public void Reload()
@@ -133,7 +137,7 @@ namespace Gameplay.Weapons
 
             ReloadStarted?.Invoke(_reloadCooldown);
         }
-
+        
         private void RefillAmmoClip()
         {
             RemainAmmo = _settings.AmmoClipSize;
