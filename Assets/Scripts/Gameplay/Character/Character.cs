@@ -18,8 +18,6 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        private Transform _weaponRoot;
-        private Transform _projectileRoot;
         
         private Vector3 _fireDirection;
 
@@ -30,9 +28,9 @@ namespace Gameplay
         
         public float AttackSpeed => _stats.AttackSpeed;
 
-        public Transform WeaponRoot => _weaponRoot;
+        public Transform WeaponRoot => ModelRoots.Weapon;
 
-        public Transform ProjectileRoot => _projectileRoot;
+        public Transform ProjectileRoot => ModelRoots.Projectile;
         public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
@@ -74,9 +72,6 @@ namespace Gameplay
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
         {
             ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
-            
-            _weaponRoot = ModelRoots.Weapon;
-            _projectileRoot = ModelRoots.ProjectileRoot;
         }
 
         private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
