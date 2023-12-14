@@ -7860,11 +7860,11 @@ PrefabInstance:
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _weaponSettings
       value: 
-      objectReference: {fileID: 11400000, guid: 6ef6cbf8078458f4799b05c4ec400f91, type: 2}
+      objectReference: {fileID: 11400000, guid: 1847356b7ae959b4ab2e91e1095240e1, type: 2}
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _enemySettings._modelPrefab
       value: 
-      objectReference: {fileID: 179778, guid: 2a153d3826ec445468f78a05919c1ac2, type: 3}
+      objectReference: {fileID: 135022, guid: c5207312659923b48aee1c1807c07579, type: 3}
     - target: {fileID: 2370865988010644910, guid: ee53cf2c32b76984685c5bd6535592ce, type: 3}
       propertyPath: _enemySettings._statsInfo.MoveSpeed
       value: 10

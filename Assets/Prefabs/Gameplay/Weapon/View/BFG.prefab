@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4b3ce452734765b0d30d42919679ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 2130892373913495398}
+  <Muzzle>k__BackingField: {fileID: 2130892373913495398}
 --- !u!1 &193390
 GameObject:
   m_ObjectHideFlags: 0
