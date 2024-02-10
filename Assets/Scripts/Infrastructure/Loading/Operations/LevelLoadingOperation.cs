@@ -23,7 +23,7 @@ namespace Infrastructure.Loading
         {
             progressHandler?.Invoke(0.5f);
 
-            var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.Level1);
+            var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.Level3);
             
             var taskResult = new TaskCompletionSource<bool>();
             loadingOperation.completed += OnLoaded;
