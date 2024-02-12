@@ -34,10 +34,6 @@ namespace Gameplay
             Vector3 desiredPosition = _target.position + _offset;
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
             transform.SetPositionAndRotation(smoothedPosition, _rotationOffset);
-            // transform.position = smoothedPosition;
-            // var lookTarget = new Vector3()
-            // Vector3 lookPosition = new Vector3(smoothedPosition.x, _target.position.y, smoothedPosition.z);
-            // transform.LookAt(lookPosition);
         }
     }
 }
