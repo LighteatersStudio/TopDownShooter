@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcf59ee914924431ae289738f64a1414, type: 3}
-  m_Name: FirstPlayerSettings
+  m_Name: SecondtPlayerCharcterSettings
   m_EditorClassIdentifier: 
   _stats:
     MaxHealth: 100
     Health: 100
     MoveSpeed: 10
     AttackSpeed: 1
-  _model: {fileID: 170064, guid: 505d3bc1212d6cd42a01918e9a452939, type: 3}
-  _defaultWeapon: {fileID: 11400000, guid: ff92bec409cdbdd40b251c07932dbeef, type: 2}
+  _model: {fileID: 196216, guid: a8c6357ee4849d042aa3a31eb83c5d8b, type: 3}
+  _defaultWeapon: {fileID: 11400000, guid: 450ff11da32defc42878d13bb9aceb07, type: 2}

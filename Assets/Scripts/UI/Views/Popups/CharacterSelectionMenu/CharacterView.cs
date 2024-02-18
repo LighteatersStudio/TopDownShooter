@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.Views.Popups.CharacterSelectionMenu
 {
     public class CharacterView : MonoBehaviour
     {
@@ -10,30 +10,26 @@ namespace UI
         [SerializeField] private GameObject _notSelectedView;
         [SerializeField] private GameObject _characterLight;
         [SerializeField] private Button _button;
-        [SerializeField] private CharacterView _otherCharacterView;
-        
-        [field: SerializeField] public bool IsToggled { get; protected set; }
+        [field: SerializeField] public bool IsToggled { get; private set; }
 
-        public event Action<bool> OnToggle;
+        public event Action Toggled;
 
         private void Start()
         {
-            _button.onClick.AddListener(ToggleObjects);
+            _button.onClick.AddListener(() => SetToggle());
         }
 
-        private void ToggleObjects()
+        public void SetToggle(bool isSilence = false)
         {
-            if (_otherCharacterView != null && _otherCharacterView.IsToggled)
-            {
-                _otherCharacterView.ToggleObjects();
-            }
-
             IsToggled = !IsToggled;
             _characterLight.SetActive(IsToggled);
             _selectedView.SetActive(IsToggled);
             _notSelectedView.SetActive(!IsToggled);
-            
-            OnToggle?.Invoke(IsToggled);
+
+            if (!isSilence)
+            {
+                Toggled?.Invoke();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d90f8f160fe4118ad1ff75c37fd2ac1, type: 3}
-  m_Name: AllPlayersData
+  m_Name: CharactersSettings
   m_EditorClassIdentifier: 
   <PlayerSettingsArray>k__BackingField:
   - {fileID: 11400000, guid: 7e5e59efa8570f647b7c804efe7f9664, type: 2}

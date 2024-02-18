@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 204115043413753378}
   - component: {fileID: -1836698832478261220}
   - component: {fileID: 8362516885837498339}
-  - component: {fileID: 3284845122008310736}
+  - component: {fileID: 8935362038654220901}
   m_Layer: 0
   m_Name: AppInstaller
   m_TagString: Untagged
@@ -56,7 +56,7 @@ MonoBehaviour:
   - {fileID: 204115043413753378}
   - {fileID: -1836698832478261220}
   - {fileID: 8362516885837498339}
-  - {fileID: 3284845122008310736}
+  - {fileID: 8935362038654220901}
 --- !u!114 &1518887348426973762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d9135a8d574e36b8902e6e04f027bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3284845122008310736
+--- !u!114 &8935362038654220901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8229114719343782071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199e8727b2a74fe3826e21e9696b67d8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f7bf50928894cefa2126586ecdbc8b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerSettings: {fileID: 11400000, guid: 4bb1f51a16bfed94fb6a1e13e0862b8a, type: 2}
+  _playerSettings: {fileID: 11400000, guid: e056b892dd6466c46af8cb8c1a92c1be, type: 2}

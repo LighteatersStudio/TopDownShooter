@@ -819,7 +819,6 @@ MonoBehaviour:
   _notSelectedView: {fileID: 8880559434344888586}
   _characterLight: {fileID: 432718533827692562}
   _button: {fileID: 1087360825450410945}
-  _otherCharacterView: {fileID: 2531797956369349660}
   <IsToggled>k__BackingField: 0
 --- !u!1 &2060334075325512992
 GameObject:
@@ -1068,7 +1067,6 @@ MonoBehaviour:
   _notSelectedView: {fileID: 8132781913706603636}
   _characterLight: {fileID: 7901762691436320199}
   _button: {fileID: 7741419705382052588}
-  _otherCharacterView: {fileID: 7042135608022676354}
   <IsToggled>k__BackingField: 0
 --- !u!1 &2989827372913032322
 GameObject:
@@ -2190,10 +2188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df89cb0b1d749c6adab3bdfd58bb5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstCharacterView: {fileID: 2531797956369349660}
-  _secondCharacterView: {fileID: 7042135608022676354}
-  _firstPlayerSettings: {fileID: 11400000, guid: 7e5e59efa8570f647b7c804efe7f9664, type: 2}
-  _secondPlayerSettings: {fileID: 11400000, guid: ef6a1bf72bdbc9642a2e3627b70a8f8b, type: 2}
+  _characterViews:
+  - {fileID: 2531797956369349660}
+  - {fileID: 7042135608022676354}
   _toBattleButton: {fileID: 7941775726425409785}
 --- !u!1 &7227941450542008410
 GameObject:
@@ -3289,7 +3286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6eb8811bf24ad5bb332dc2c80b9d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 4
+  _durationS: 4
 --- !u!1001 &6275272532193777927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3668,4 +3665,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6eb8811bf24ad5bb332dc2c80b9d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _duration: 4
+  _durationS: 4
