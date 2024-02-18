@@ -11,13 +11,13 @@ namespace Infrastructure.Loading
 {
     public class LoadArenaService : ILoadArenaService
     {
-        private readonly ArenaLIstSettings _arenaLIstSettings;
+        private readonly ArenaListSettings _arenaListSettings;
         private TaskCompletionSource<bool> _currentTask;
 
         [Inject]
-        public LoadArenaService(ArenaLIstSettings arenaLIstSettings)
+        public LoadArenaService(ArenaListSettings arenaListSettings)
         {
-            _arenaLIstSettings = arenaLIstSettings;
+            _arenaListSettings = arenaListSettings;
         }
 
         public async Task<bool> TryLoadArena(string name)
@@ -55,13 +55,13 @@ namespace Infrastructure.Loading
 
         public async Task LoadRandomArena()
         {
-            if (!_arenaLIstSettings.ArenaList.Any())
+            if (!_arenaListSettings.ArenaList.Any())
             {
                 Debug.LogAssertion("There are no arenas on the list");
                 return;
             }
 
-            var randomAreaName = RandomAreaName(_arenaLIstSettings.ArenaList);
+            var randomAreaName = RandomAreaName(_arenaListSettings.ArenaList);
             await TryLoadArena(randomAreaName);
         }
 

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 08cf16570d6a46bb9f9716656a9fd549, type: 3}
-  m_Name: ArenaLIstSettings
+  m_Name: ArenaListSettings
   m_EditorClassIdentifier: 
   <Arenas>k__BackingField:
   - _sceneName: LevelBaseSize

@@ -20,7 +20,7 @@ namespace Infrastructure
         [SerializeField] private ColorSchemeSettings _colorSchemeSettings;
 
         [Header("ArenaList")]
-        [SerializeField] private ArenaLIstSettings _arenaListSettings;
+        [SerializeField] private ArenaListSettings _arenaListSettings;
 
         public override void InstallBindings()
         {
@@ -67,7 +67,7 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<ArenaLIstSettings>()
+            Container.Bind<ArenaListSettings>()
                 .FromInstance(_arenaListSettings)
                 .AsSingle()
                 .NonLazy();
