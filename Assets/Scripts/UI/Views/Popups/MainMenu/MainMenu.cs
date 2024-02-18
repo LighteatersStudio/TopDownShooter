@@ -52,7 +52,7 @@ namespace UI
 
         private void LoadLevel()
         {
-            _uiRoot.Open<HighStoneChooseMenu>();
+            _uiRoot.Open<CharacterSelectionScreen>();
             Close();
         }
 
