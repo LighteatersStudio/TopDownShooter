@@ -1,11 +1,9 @@
-﻿using Infrastructure.Loading;
-using Services.Application.Description;
+﻿using Services.Application.Description;
 using Services.Application.Description.Implementation;
 using Services.Application.Version;
 using Services.Application.Version.Implementation;
 using Services.Coloring;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
@@ -19,14 +17,10 @@ namespace Infrastructure
         [Header("GameColors")]
         [SerializeField] private ColorSchemeSettings _colorSchemeSettings;
 
-        [Header("ArenaList")]
-        [SerializeField] private ArenaListSettings _arenaListSettings;
-
         public override void InstallBindings()
         {
             BindApplicationServices();
             BindGameColoring();
-            BindArenaLoadService();
         }
 
         private void BindApplicationServices()
@@ -56,19 +50,6 @@ namespace Infrastructure
 
             Container.BindInterfacesAndSelfTo<GameColoring>()
                 .FromNew()
-                .AsSingle()
-                .NonLazy();
-        }
-
-        private void BindArenaLoadService()
-        {
-            Container.Bind<ILoadArenaService>()
-                .To<LoadArenaService>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.Bind<ArenaListSettings>()
-                .FromInstance(_arenaListSettings)
                 .AsSingle()
                 .NonLazy();
         }

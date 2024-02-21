@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6917969605586775290}
   - component: {fileID: 204115043413753378}
   - component: {fileID: -1836698832478261220}
+  - component: {fileID: 9179591372990053167}
   - component: {fileID: 8362516885837498339}
   m_Layer: 0
   m_Name: AppInstaller
@@ -55,6 +56,7 @@ MonoBehaviour:
   - {fileID: 204115043413753378}
   - {fileID: -1836698832478261220}
   - {fileID: 8362516885837498339}
+  - {fileID: 9179591372990053167}
 --- !u!114 &1518887348426973762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,6 +115,18 @@ MonoBehaviour:
   _applicationVersion: ApplicationVersion
   _applicationDescription: ApplicationDescription
   _colorSchemeSettings: {fileID: 11400000, guid: 9f1798032b0be3b4dad43e8c1ca7e0a5, type: 2}
+--- !u!114 &9179591372990053167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8229114719343782071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03523df704344f919655035f30a44511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _arenaListSettings: {fileID: 11400000, guid: 59fb9020564ad49bca8f418d31488c77, type: 2}
 --- !u!114 &8362516885837498339
 MonoBehaviour:

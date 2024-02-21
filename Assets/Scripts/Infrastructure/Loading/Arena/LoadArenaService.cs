@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace Infrastructure.Loading
@@ -62,26 +62,17 @@ namespace Infrastructure.Loading
             }
 
             var randomAreaName = RandomAreaName(_arenaListSettings.ArenaList);
-            await TryLoadArena(randomAreaName);
+            var loadStarted = await TryLoadArena(randomAreaName);
+            if (!loadStarted)
+            {
+                Debug.LogError($"Failed to load arend with name - {randomAreaName}.");
+            }
         }
 
-        private string RandomAreaName(IEnumerable<IArena> arenas)
+        private string RandomAreaName(IReadOnlyCollection<IArena> arenas)
         {
-            string randomAreaName = String.Empty;
             var randomIndex = Random.Range(0, arenas.Count());
-            var index = 0;
-            foreach (var arena in arenas)
-            {
-                if (index == randomIndex)
-                {
-                    randomAreaName = arena.SceneName;
-                    break;
-                }
-
-                index++;
-            }
-
-            return randomAreaName;
+            return arenas.ElementAt(randomIndex).SceneName;
         }
     }
 }

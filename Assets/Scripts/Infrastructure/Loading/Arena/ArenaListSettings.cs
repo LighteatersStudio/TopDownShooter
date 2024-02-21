@@ -6,20 +6,7 @@ namespace Infrastructure.Loading
     [CreateAssetMenu(fileName = "ArenaListSettings", menuName = "Project/ArenaListSettings")]
     public class ArenaListSettings : ScriptableObject
     {
-        [field: SerializeField] private Arena[] Arenas { get; set; } = new Arena[] { };
-
-        public IEnumerable<IArena> ArenaList
-        {
-            get
-            {
-                foreach (var arena in Arenas)
-                {
-                    if (arena is IArena arenaInterface)
-                    {
-                        yield return arenaInterface;
-                    }
-                }
-            }
-        }
+        [field: SerializeField] private Arena[] _arenas { get; set; }
+        public IReadOnlyCollection<IArena> ArenaList => _arenas;
     }
 }

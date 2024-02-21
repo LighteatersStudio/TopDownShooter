@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Services.Loading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Infrastructure.Loading
@@ -25,22 +24,13 @@ namespace Infrastructure.Loading
         {
             progressHandler?.Invoke(0.5f);
 
-            // await _loadArenaService.TryLoadArena(_sceneNames.LevelBaseSize);
-            await _loadArenaService.LoadRandomArena();
+            bool loadStarted = await _loadArenaService.TryLoadArena(_sceneNames.LevelBaseSize);
+            if (!loadStarted)
+            {
+                Debug.LogError($"Failed to start scene loading with name - {_sceneNames.LevelBaseSize}.");
+            }
+            
             progressHandler?.Invoke(1f);
-            // var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.LevelBaseSize);
-            //
-            // var taskResult = new TaskCompletionSource<bool>();
-            // loadingOperation.completed += OnLoaded;
-            //
-            // await taskResult.Task;
-            //
-            // void OnLoaded(AsyncOperation operation)
-            // {
-            //     loadingOperation.completed -= OnLoaded;
-            //     progressHandler?.Invoke(1f);
-            //     taskResult.SetResult(true);
-            // }
         }
 
         public void AfterFinish()
