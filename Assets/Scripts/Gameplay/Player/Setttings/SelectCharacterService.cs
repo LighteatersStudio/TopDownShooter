@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Weapons;
 using UnityEngine;
 using Zenject;
 
@@ -35,6 +36,14 @@ namespace Gameplay
             IndexSaved?.Invoke(_index);
         }
 
-       
+        public StatsInfo GetCharacterStats()
+        {
+            return _playerCharactersSettings.PlayerSettingsArray[_index].Stats;
+        }
+        
+        public IWeaponSettings GetStartWeaponStats()
+        {
+            return  _playerCharactersSettings.PlayerSettingsArray[_index].DefaultWeapon;
+        }
     }
 }
