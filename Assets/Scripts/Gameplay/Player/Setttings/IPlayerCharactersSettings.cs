@@ -1,7 +1,9 @@
-﻿namespace Gameplay
+﻿using System.Collections.Generic;
+
+namespace Gameplay
 {
     public interface IPlayerCharactersSettings
     {
-        PlayerSettings[] PlayerSettingsArray { get; }
+        IEnumerable<PlayerSettings> PlayerSettingsArray { get; }
     }
 }
