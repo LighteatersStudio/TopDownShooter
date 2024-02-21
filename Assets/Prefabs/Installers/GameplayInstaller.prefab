@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 7910540456862953555, guid: 0734916c9becfe04fb5bb016f1f12eff, type: 3}
-  _playerSettings: {fileID: 11400000, guid: 80452d2ea04c9bc499e5804b9cf14162, type: 2}
+  _playerSettings: {fileID: 11400000, guid: ef6a1bf72bdbc9642a2e3627b70a8f8b, type: 2}
   _playerPrefab: {fileID: 1672881163020592751, guid: c1fe326bad380aa4c8ce4b801046cd19, type: 3}
   _characterPrefab: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
   _enemyPrefab: {fileID: 799623494326944143, guid: d1255cf75f6d57d448def7255072aa1f, type: 3}
