@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d90f8f160fe4118ad1ff75c37fd2ac1, type: 3}
   m_Name: CharactersSettings
   m_EditorClassIdentifier: 
-  <PlayerSettingsArray>k__BackingField:
+  _playerSettingsArray:
   - {fileID: 11400000, guid: 7e5e59efa8570f647b7c804efe7f9664, type: 2}
   - {fileID: 11400000, guid: ef6a1bf72bdbc9642a2e3627b70a8f8b, type: 2}

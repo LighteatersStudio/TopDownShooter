@@ -1,5 +1,6 @@
 ﻿using System;
 using Gameplay.Weapons;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -14,12 +15,9 @@ namespace Gameplay
         {
             get
             {
-                if (_index < 0 || _index >= _playerCharactersSettings.PlayerSettingsArray.Length)
-                {
-                    Debug.LogError("Index is out of range");
-                }
+                var playerSettingsList = _playerCharactersSettings.PlayerSettingsArray.ToList();
 
-                return _playerCharactersSettings.PlayerSettingsArray[_index];
+                return playerSettingsList[_index];
             }
         }
 
@@ -31,8 +29,15 @@ namespace Gameplay
         
         public void SetPlayerSettings(int index)
         {
-            _index = index;
-            
+            if (index < 0 || index >= _playerCharactersSettings.PlayerSettingsArray.Count())
+            {
+                Debug.LogError("Index is out of range");
+            }
+            else
+            {
+                _index = index;
+            }
+
             IndexSaved?.Invoke(_index);
         }
 

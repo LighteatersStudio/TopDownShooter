@@ -31,5 +31,10 @@ namespace UI.Views.Popups.CharacterSelectionMenu
                 Toggled?.Invoke();
             }
         }
+
+        private void OnDisable()
+        {
+            _button.onClick.RemoveListener(() => SetToggle());
+        }
     }
 }
