@@ -37,8 +37,16 @@ namespace Infrastructure
         
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
-
-
+        
+        private SelectCharacterService _selectCharacterService;
+        
+        
+        [Inject]
+        public void Construct(SelectCharacterService selectCharacterService)
+        {
+            _selectCharacterService = selectCharacterService;
+        }
+        
         public override void InstallBindings()
         {
             BindScenarios();
@@ -72,7 +80,7 @@ namespace Infrastructure
 
             Container.Bind<IPlayerSettings>()
                 .To<PlayerSettings>()
-                .FromScriptableObject(_playerSettings)
+                .FromScriptableObject(_selectCharacterService.GetPlayerSettings)
                 .AsSingle()
                 .Lazy();
             

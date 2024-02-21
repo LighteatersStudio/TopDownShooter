@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 204115043413753378}
   - component: {fileID: -1836698832478261220}
   - component: {fileID: 8362516885837498339}
+  - component: {fileID: 8935362038654220901}
   m_Layer: 0
   m_Name: AppInstaller
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5544477350559261163
 MonoBehaviour:
@@ -55,6 +56,7 @@ MonoBehaviour:
   - {fileID: 204115043413753378}
   - {fileID: -1836698832478261220}
   - {fileID: 8362516885837498339}
+  - {fileID: 8935362038654220901}
 --- !u!114 &1518887348426973762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,7 +87,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundSource: {fileID: 5734604835648966028, guid: 7ff98c8cc17826849866e8ca834a4fbe, type: 3}
   _uiSoundSettings: {fileID: 11400000, guid: e1e30acea2097474d88486cdf69cc28f, type: 2}
-  _weaponSoundSettings: {fileID: 11400000, guid: 355ce51a5b401724f9b7c5b65f817ab1, type: 2}
   _musicList: {fileID: 11400000, guid: 0349bfc37dd540649b4b6364096b55cf, type: 2}
 --- !u!114 &204115043413753378
 MonoBehaviour:
@@ -126,3 +127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d9135a8d574e36b8902e6e04f027bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8935362038654220901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8229114719343782071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f7bf50928894cefa2126586ecdbc8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 11400000, guid: e056b892dd6466c46af8cb8c1a92c1be, type: 2}

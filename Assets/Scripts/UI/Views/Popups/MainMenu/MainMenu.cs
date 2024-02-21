@@ -1,6 +1,8 @@
 ﻿using Services.Application.Description;
 using TMPro;
 using UI.Framework;
+using UI.Views.Popups;
+using UI.Views.Popups.CharacterSelectionMenu;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -52,7 +54,7 @@ namespace UI
 
         private void LoadLevel()
         {
-            _uiRoot.Open<HighStoneChooseMenu>();
+            _uiRoot.Open<CharacterSelectionScreen>();
             Close();
         }
 
