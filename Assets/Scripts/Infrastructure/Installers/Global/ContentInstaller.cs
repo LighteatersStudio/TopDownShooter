@@ -16,15 +16,7 @@ namespace Infrastructure
 
         private void BindArenaLoadService()
         {
-            Container.Bind<ILoadArenaService>()
-                .To<LoadArenaService>()
-                .AsSingle()
-                .NonLazy();
-
-            Container.Bind<ArenaListSettings>()
-                .FromInstance(_arenaListSettings)
-                .AsSingle()
-                .NonLazy();
+            LoadArenaSubInstaller.Install(Container, _arenaListSettings);
         }
     }
 }

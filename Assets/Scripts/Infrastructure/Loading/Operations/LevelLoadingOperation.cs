@@ -29,7 +29,7 @@ namespace Infrastructure.Loading
             {
                 Debug.LogError($"Failed to start scene loading with name - {_sceneNames.LevelBaseSize}.");
             }
-            
+
             progressHandler?.Invoke(1f);
         }
 
