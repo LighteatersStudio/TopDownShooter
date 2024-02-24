@@ -1,49 +1,64 @@
-﻿using System.Text;
-using Gameplay;
-using Sirenix.OdinInspector;
+﻿using Gameplay;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
 namespace UI.Views.Popups.CharacterSelectionMenu
 {
-    public class CharacterStatsView: MonoBehaviour
+    public class CharacterStatsView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _textStats;
-        
+        [SerializeField] private TMP_Text _maxHealthText,
+            _healthText,
+            _moveSpeedText,
+            _attackSpeed,
+            _gunNameText,
+            _shortPerSecondText,
+            _ammoClipSizeTxt,
+            _reloadTimeText,
+            _damageText;
+
+        [SerializeField] private GameObject _chooseCharacterView;
+        [SerializeField] private GameObject _characteristicsView;
+
         private SelectCharacterService _selectCharacterService;
-        
-        
+
+
         [Inject]
         public void Construct(SelectCharacterService selectCharacterService)
         {
             _selectCharacterService = selectCharacterService;
         }
 
-        [Button]
-        void SetupCharacteristics()
+        public void Setup(bool isStats)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            
-            var characterStats = _selectCharacterService.GetCharacterStats(); 
+            if (isStats)
+            {
+                _chooseCharacterView.gameObject.SetActive(false);
+                _characteristicsView.gameObject.SetActive(true);
+                
+                SetupCharacteristics();
+            }
+            else
+            {
+                _chooseCharacterView.gameObject.SetActive(true);
+                _characteristicsView.gameObject.SetActive(false);
+            }
+        }
+        
+        private void SetupCharacteristics()
+        {
+            var characterStats = _selectCharacterService.GetCharacterStats();
             var startWeaponStats = _selectCharacterService.GetStartWeaponStats();
-
-            stringBuilder.AppendLine("Character Stats");
-            stringBuilder.AppendLine("MaxHealth: " + $"{characterStats.MaxHealth}");
-            stringBuilder.AppendLine("Health: " + $"{characterStats.Health}");
-            stringBuilder.AppendLine("Move Speed: " + $"{characterStats.MoveSpeed}");
-            stringBuilder.AppendLine("Attack Speed: " + $"{characterStats.AttackSpeed}");
-            stringBuilder.AppendLine("Start Weapon Stats");
-            stringBuilder.AppendLine("Gun: " + $"{startWeaponStats.Id}");
-            stringBuilder.AppendLine("Shot Per Second: " + $"{startWeaponStats.ShotsPerSecond}");
-            stringBuilder.AppendLine("Ammo Clip Size: " + $"{startWeaponStats.AmmoClipSize}");
-            stringBuilder.AppendLine("Reload Time: " + $"{startWeaponStats.ReloadTime}");
-            stringBuilder.AppendLine("Damage: " + $"{startWeaponStats.Damage}");
-           
             
-            string result = stringBuilder.ToString();
-            
-            _textStats.text = result;
+            _maxHealthText.text = $"{characterStats.MaxHealth}";
+            _healthText.text = $"{characterStats.Health}";
+            _moveSpeedText.text = $"{characterStats.MoveSpeed}";
+            _attackSpeed.text = $"{characterStats.AttackSpeed}";
+            _gunNameText.text = $"{startWeaponStats.Id}";
+            _shortPerSecondText.text = $"{startWeaponStats.ShotsPerSecond}";
+            _ammoClipSizeTxt.text = $"{startWeaponStats.AmmoClipSize}";
+            _reloadTimeText.text = $"{startWeaponStats.ReloadTime}";
+            _damageText.text = $"{startWeaponStats.Damage}";
         }
     }
 }

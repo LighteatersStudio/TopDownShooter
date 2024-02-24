@@ -11,22 +11,18 @@ namespace Gameplay
         private IPlayerCharactersSettings _playerCharactersSettings;
         private int _index;
         public event Action<int> IndexSaved;
-        public PlayerSettings GetPlayerSettings
-        {
-            get
-            {
-                var playerSettingsList = _playerCharactersSettings.PlayerSettingsArray.ToList();
-
-                return playerSettingsList[_index];
-            }
-        }
+        public PlayerSettings GetPlayerSettings => _playerCharactersSettings.PlayerSettingsArray.ToList()[_index];
+        public StatsInfo GetCharacterStats() =>
+            _playerCharactersSettings.PlayerSettingsArray.ToList()[_index].Stats;
+        public IWeaponSettings GetStartWeaponStats() =>
+            _playerCharactersSettings.PlayerSettingsArray.ToList()[_index].DefaultWeapon;
 
         [Inject]
         public void Construct(IPlayerCharactersSettings playerCharactersSettings)
         {
             _playerCharactersSettings = playerCharactersSettings;
         }
-        
+
         public void SetPlayerSettings(int index)
         {
             if (index < 0 || index >= _playerCharactersSettings.PlayerSettingsArray.Count())
@@ -39,16 +35,6 @@ namespace Gameplay
             }
 
             IndexSaved?.Invoke(_index);
-        }
-
-        public StatsInfo GetCharacterStats()
-        {
-            return _playerCharactersSettings.PlayerSettingsArray[_index].Stats;
-        }
-        
-        public IWeaponSettings GetStartWeaponStats()
-        {
-            return  _playerCharactersSettings.PlayerSettingsArray[_index].DefaultWeapon;
         }
     }
 }

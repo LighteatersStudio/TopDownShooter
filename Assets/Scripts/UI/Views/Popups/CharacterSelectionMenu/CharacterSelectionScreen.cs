@@ -11,6 +11,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
     {
         [SerializeField] private CharacterView[] _characterViews;
         [SerializeField] private Button _toBattleButton;
+        [SerializeField] private CharacterStatsView _characterStatsView;
 
         private GameRunProvider _gameRun;
         private SelectCharacterService _selectCharacterService;
@@ -47,13 +48,14 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         private void SyncToggleState(int characterIndex)
         {
             _selectCharacterService.SetPlayerSettings(characterIndex);
-            
+
             ToggleSelectedCharacterIndex(characterIndex);
             SwitchCharacters(characterIndex);
-            
+
             _toBattleButton.gameObject.SetActive(_selectedCharacters.Count > 0);
+            _characterStatsView.Setup(_selectedCharacters.Count > 0);
         }
-        
+
         private void ToggleSelectedCharacterIndex(int index)
         {
             if (_selectedCharacters.Contains(index))
@@ -87,7 +89,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         private void OnDestroy()
         {
             _toBattleButton.onClick.RemoveListener(ActivateHighMode);
-            
+
             for (int i = 0; i < _characterViews.Length; i++)
             {
                 int index = i;
