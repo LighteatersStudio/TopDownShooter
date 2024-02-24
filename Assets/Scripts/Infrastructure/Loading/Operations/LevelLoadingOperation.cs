@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Services.Loading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Infrastructure.Loading
@@ -12,30 +11,26 @@ namespace Infrastructure.Loading
         public string Description => "Loading Level...";
 
         private readonly SceneNames _sceneNames;
+        private readonly ILoadArenaService _loadArenaService;
 
         [Inject]
-        public LevelLoadingOperation(SceneNames sceneNames)
+        public LevelLoadingOperation(SceneNames sceneNames, ILoadArenaService loadArenaService)
         {
             _sceneNames = sceneNames;
+            _loadArenaService = loadArenaService;
         }
 
         public async Task Launch(Action<float> progressHandler)
         {
             progressHandler?.Invoke(0.5f);
 
-            var loadingOperation = SceneManager.LoadSceneAsync(_sceneNames.LevelBaseSize);
-
-            var taskResult = new TaskCompletionSource<bool>();
-            loadingOperation.completed += OnLoaded;
-
-            await taskResult.Task;
-
-            void OnLoaded(AsyncOperation operation)
+            bool loadStarted = await _loadArenaService.TryLoadArena(_sceneNames.LevelBaseSize);
+            if (!loadStarted)
             {
-                loadingOperation.completed -= OnLoaded;
-                progressHandler?.Invoke(1f);
-                taskResult.SetResult(true);
+                Debug.LogError($"Failed to start scene loading with name - {_sceneNames.LevelBaseSize}.");
             }
+
+            progressHandler?.Invoke(1f);
         }
 
         public void AfterFinish()
