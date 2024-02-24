@@ -20,26 +20,25 @@ namespace Infrastructure.Loading
             _arenaListSettings = arenaListSettings;
         }
 
-        public async Task<bool> TryLoadArena(string name)
+        public Task<bool> TryLoadArena(string name)
         {
             if (!Application.CanStreamedLevelBeLoaded(name))
             {
                 Debug.LogAssertion($"Not valid scene name - {name}.");
-                return false;
+                return Task.FromResult(false);
             }
 
             if (_currentTask != null)
             {
                 Debug.LogAssertion("Scene load in process");
-                return false;
+                return Task.FromResult(false);
             }
 
             var loadingOperation = SceneManager.LoadSceneAsync(name);
-
             _currentTask = new TaskCompletionSource<bool>();
             loadingOperation.completed += OnLoaded;
 
-            await _currentTask.Task;
+            return _currentTask.Task;
 
             void OnLoaded(AsyncOperation operation)
             {
@@ -49,8 +48,6 @@ namespace Infrastructure.Loading
 
                 Debug.Log($"LoadArenaService: {name} loaded");
             }
-
-            return true;
         }
 
         public async Task LoadRandomArena()
