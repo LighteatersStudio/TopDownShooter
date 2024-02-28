@@ -53,7 +53,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             SwitchCharacters(characterIndex);
 
             _toBattleButton.gameObject.SetActive(_selectedCharacters.Count > 0);
-            _characterStatsView.Setup(_selectedCharacters.Count > 0);
+            _characterStatsView.Setup(_selectedCharacters.Count > 0, _selectCharacterService.GetPlayerSettings);
         }
 
         private void ToggleSelectedCharacterIndex(int index)

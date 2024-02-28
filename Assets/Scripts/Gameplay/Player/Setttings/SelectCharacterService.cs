@@ -12,10 +12,6 @@ namespace Gameplay
         private int _index;
         public event Action<int> IndexSaved;
         public PlayerSettings GetPlayerSettings => _playerCharactersSettings.PlayerSettingsArray.ToList()[_index];
-        public StatsInfo GetCharacterStats() =>
-            _playerCharactersSettings.PlayerSettingsArray.ToList()[_index].Stats;
-        public IWeaponSettings GetStartWeaponStats() =>
-            _playerCharactersSettings.PlayerSettingsArray.ToList()[_index].DefaultWeapon;
 
         [Inject]
         public void Construct(IPlayerCharactersSettings playerCharactersSettings)

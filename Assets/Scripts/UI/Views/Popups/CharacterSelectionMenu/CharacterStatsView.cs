@@ -1,42 +1,32 @@
 ﻿using Gameplay;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace UI.Views.Popups.CharacterSelectionMenu
 {
     public class CharacterStatsView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _maxHealthText,
-            _healthText,
-            _moveSpeedText,
-            _attackSpeed,
-            _gunNameText,
-            _shortPerSecondText,
-            _ammoClipSizeTxt,
-            _reloadTimeText,
-            _damageText;
-
+        [SerializeField] private TMP_Text _maxHealthText;
+        [SerializeField] private TMP_Text _healthText;
+        [SerializeField] private TMP_Text _moveSpeedText;
+        [SerializeField] private TMP_Text _attackSpeed;
+        [SerializeField] private TMP_Text _gunNameText;
+        [SerializeField] private TMP_Text _shortPerSecondText;
+        [SerializeField] private TMP_Text _ammoClipSizeTxt;
+        [SerializeField] private TMP_Text _reloadTimeText;
+        [SerializeField] private TMP_Text _damageText;
         [SerializeField] private GameObject _chooseCharacterView;
         [SerializeField] private GameObject _characteristicsView;
 
-        private SelectCharacterService _selectCharacterService;
 
-
-        [Inject]
-        public void Construct(SelectCharacterService selectCharacterService)
-        {
-            _selectCharacterService = selectCharacterService;
-        }
-
-        public void Setup(bool isStats)
+        public void Setup(bool isStats, PlayerSettings playerSettings)
         {
             if (isStats)
             {
                 _chooseCharacterView.gameObject.SetActive(false);
                 _characteristicsView.gameObject.SetActive(true);
-                
-                SetupCharacteristics();
+
+                SetupCharacteristics(playerSettings);
             }
             else
             {
@@ -44,12 +34,12 @@ namespace UI.Views.Popups.CharacterSelectionMenu
                 _characteristicsView.gameObject.SetActive(false);
             }
         }
-        
-        private void SetupCharacteristics()
+
+        private void SetupCharacteristics(PlayerSettings playerSettings)
         {
-            var characterStats = _selectCharacterService.GetCharacterStats();
-            var startWeaponStats = _selectCharacterService.GetStartWeaponStats();
-            
+            var characterStats = playerSettings.Stats;
+            var startWeaponStats = playerSettings.DefaultWeapon;
+
             _maxHealthText.text = $"{characterStats.MaxHealth}";
             _healthText.text = $"{characterStats.Health}";
             _moveSpeedText.text = $"{characterStats.MoveSpeed}";

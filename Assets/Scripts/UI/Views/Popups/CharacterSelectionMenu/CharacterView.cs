@@ -6,7 +6,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 {
     public class CharacterView : MonoBehaviour
     {
-        private static readonly int Battlecry = Animator.StringToHash("Battlecry");
+        private readonly int _battlecry = Animator.StringToHash("Battlecry");
         
         [SerializeField] private GameObject _selectedView;
         [SerializeField] private GameObject _notSelectedView;
@@ -27,7 +27,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         {
             IsToggled = !IsToggled;
             
-            _animator.SetBool(Battlecry, IsToggled);
+            _animator.SetBool(_battlecry, IsToggled);
             _characterLight.SetActive(IsToggled);
             _selectedView.SetActive(IsToggled);
             _notSelectedView.SetActive(!IsToggled);
