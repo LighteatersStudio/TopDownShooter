@@ -24,7 +24,7 @@ namespace Infrastructure.Loading
         {
             progressHandler?.Invoke(0.5f);
 
-            bool loadStarted = await _loadArenaService.TryLoadArena(_sceneNames.LevelBaseSize);
+            bool loadStarted = await _loadArenaService.LoadRandomArena();
             if (!loadStarted)
             {
                 Debug.LogError($"Failed to start scene loading with name - {_sceneNames.LevelBaseSize}.");

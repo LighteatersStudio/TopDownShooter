@@ -5,6 +5,6 @@ namespace Infrastructure.Loading
     public interface ILoadArenaService
     {
         Task<bool> TryLoadArena(string name);
-        Task LoadRandomArena();
+        Task<bool> LoadRandomArena();
     }
 }
