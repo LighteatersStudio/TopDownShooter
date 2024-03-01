@@ -15,7 +15,7 @@ namespace Infrastructure
             BindScenes();
             BindGameRun();
         }
-        
+
         private void BindLoadingService()
         {
             Debug.Log("Global installer: Bind loading operation");
@@ -25,34 +25,32 @@ namespace Infrastructure
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<ILoadingService>()
                 .To<LoadingService>()
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<MainMenuLoadingOperation>()
+
+            Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>()
                 .FromNew()
-                .AsSingle()
                 .Lazy();
-            
-            Container.Bind<LevelLoadingOperation>()
+
+            Container.BindFactory<LevelLoadingOperation, LevelLoadingOperation.Factory>()
                 .FromNew()
-                .AsSingle()
                 .Lazy();
         }
 
         private void BindScenes()
         {
             Debug.Log("Global installer: Bind scenes");
-            
+
             Container.Bind<SceneNames>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();
         }
-        
+
         private void BindGameRun()
         {
             Debug.Log("Global installer: Bind game runtime");
@@ -61,11 +59,11 @@ namespace Infrastructure
                 .To<LevelsNavigation>()
                 .FromNew()
                 .AsSingle().Lazy();
-            
+
             Container.BindFactory<GameRunType, GameRun, GameRun.Factory>()
                 .FromNew()
                 .Lazy();
-            
+
             Container.Bind<GameRunProvider>()
                 .FromNew()
                 .AsSingle()

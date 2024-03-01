@@ -5,13 +5,16 @@ namespace Infrastructure.Loading
 {
     public class LevelsNavigation : ILevelsNavigation
     {
-        public ILoadingOperation LevelLoading { get; }
-        public ILoadingOperation MainMenuLoading { get; }
+        public ILoadingOperation LevelLoading => _levelLoadingFactory.Create();
+        public ILoadingOperation MainMenuLoading => _mainMenuLoadingFactory.Create();
 
-        public LevelsNavigation(LevelLoadingOperation levelLoading, MainMenuLoadingOperation menuLoading)
+        private readonly LevelLoadingOperation.Factory _levelLoadingFactory;
+        private readonly MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
+
+        public LevelsNavigation(LevelLoadingOperation.Factory levelLoadingFactory, MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
         {
-            LevelLoading = levelLoading;
-            MainMenuLoading = menuLoading;
+            _levelLoadingFactory = levelLoadingFactory;
+            _mainMenuLoadingFactory = mainMenuLoadingFactory;
         }
     }
 }

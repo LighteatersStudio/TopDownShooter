@@ -36,5 +36,9 @@ namespace Infrastructure.Loading
         public void AfterFinish()
         {
         }
+
+        public class Factory : PlaceholderFactory<LevelLoadingOperation>
+        {
+        }
     }
 }
