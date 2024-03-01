@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Infrastructure.Loading
 {
-    public class LevelLoadingOperation : ILoadingOperation
+    public class ArenaLoadingOperation : ILoadingOperation
     {
         public string Description => "Loading Level...";
 
@@ -14,7 +14,7 @@ namespace Infrastructure.Loading
         private readonly ILoadArenaService _loadArenaService;
 
         [Inject]
-        public LevelLoadingOperation(SceneNames sceneNames, ILoadArenaService loadArenaService)
+        public ArenaLoadingOperation(SceneNames sceneNames, ILoadArenaService loadArenaService)
         {
             _sceneNames = sceneNames;
             _loadArenaService = loadArenaService;
@@ -37,7 +37,7 @@ namespace Infrastructure.Loading
         {
         }
 
-        public class Factory : PlaceholderFactory<LevelLoadingOperation>
+        public class Factory : PlaceholderFactory<ArenaLoadingOperation>
         {
         }
     }

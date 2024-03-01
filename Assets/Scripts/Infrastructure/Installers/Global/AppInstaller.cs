@@ -36,7 +36,7 @@ namespace Infrastructure
                 .FromNew()
                 .Lazy();
 
-            Container.BindFactory<LevelLoadingOperation, LevelLoadingOperation.Factory>()
+            Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>()
                 .FromNew()
                 .Lazy();
         }

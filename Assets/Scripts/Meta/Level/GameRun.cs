@@ -33,6 +33,12 @@ namespace Meta.Level
             await _loadingService.Load(_levelsNavigation.LevelLoading);
         }
 
+        public async Task NextRandomArena()
+        {
+            _gameRunContext.OnNextArena();
+            await _loadingService.Load(_levelsNavigation.LevelLoading);
+        }
+
         public async Task Finish()
         {
             RestoreDefaultGameColor();
