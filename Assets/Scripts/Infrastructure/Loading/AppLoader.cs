@@ -1,4 +1,5 @@
-﻿using Services.Loading;
+﻿using Meta.Level;
+using Services.Loading;
 using UnityEngine;
 using Zenject;
 
@@ -7,13 +8,13 @@ namespace Infrastructure.Loading
     public class AppLoader : MonoBehaviour
     {
         private ILoadingService _loadingService;
-        private MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
+        private ILevelsNavigation _levelsNavigation;
 
         [Inject]
-        public void Construct(ILoadingService loadingService, MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
+        public void Construct(ILoadingService loadingService, ILevelsNavigation levelsNavigation)
         {
             _loadingService = loadingService;
-            _mainMenuLoadingFactory = mainMenuLoadingFactory;
+            _levelsNavigation = levelsNavigation;
         }
 
         protected void Start()
@@ -23,7 +24,7 @@ namespace Infrastructure.Loading
 
         private async void LoadGame()
         {
-            await _loadingService.Load(_mainMenuLoadingFactory.Create());
+            await _loadingService.Load(_levelsNavigation.MainMenuLoading);
         }
     }
 }
