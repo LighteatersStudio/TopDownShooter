@@ -50,16 +50,16 @@ namespace Infrastructure.Loading
             }
         }
 
-        public Task<bool> LoadRandomArena()
+        public async Task LoadRandomArena()
         {
             if (!_arenaListSettings.ArenaList.Any())
             {
                 Debug.LogAssertion("There are no arenas on the list");
-                return Task.FromResult(false);
+                return;
             }
 
             var randomAreaName = RandomAreaName(_arenaListSettings.ArenaList);
-            return TryLoadArena(randomAreaName);
+            await TryLoadArena(randomAreaName);
         }
 
         private string RandomAreaName(IReadOnlyCollection<IArena> arenas)

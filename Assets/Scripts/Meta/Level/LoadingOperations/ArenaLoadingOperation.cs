@@ -10,13 +10,11 @@ namespace Infrastructure.Loading
     {
         public string Description => "Loading Level...";
 
-        private readonly SceneNames _sceneNames;
         private readonly ILoadArenaService _loadArenaService;
 
         [Inject]
-        public ArenaLoadingOperation(SceneNames sceneNames, ILoadArenaService loadArenaService)
+        public ArenaLoadingOperation(ILoadArenaService loadArenaService)
         {
-            _sceneNames = sceneNames;
             _loadArenaService = loadArenaService;
         }
 
@@ -24,11 +22,7 @@ namespace Infrastructure.Loading
         {
             progressHandler?.Invoke(0.5f);
 
-            bool loadStarted = await _loadArenaService.LoadRandomArena();
-            if (!loadStarted)
-            {
-                Debug.LogError($"Failed to start scene loading with name - {_sceneNames.LevelBaseSize}.");
-            }
+            await _loadArenaService.LoadRandomArena();
 
             progressHandler?.Invoke(1f);
         }

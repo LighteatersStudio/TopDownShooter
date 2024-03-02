@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Infrastructure.Loading;
 using Services.Coloring;
 using Services.Loading;
 using Zenject;
@@ -8,7 +9,8 @@ namespace Meta.Level
     public class GameRun : IGameRun
     {
         private readonly ILoadingService _loadingService;
-        private readonly ILevelsNavigation _levelsNavigation;
+        private readonly MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
+        private readonly ArenaLoadingOperation.Factory _arenaLoadingOperationFactory;
         private readonly GameColoring _gameColoring;
         private readonly GameRunContext _gameRunContext = new();
 
@@ -16,33 +18,35 @@ namespace Meta.Level
 
         public GameRun(GameRunType runType,
             ILoadingService loadingService,
-            ILevelsNavigation levelsNavigation,
-            GameColoring gameColoring)
+            GameColoring gameColoring,
+            ArenaLoadingOperation.Factory arenaLoadingOperationFactory,
+            MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
         {
             RunType = runType;
 
             _loadingService = loadingService;
-            _levelsNavigation = levelsNavigation;
             _gameColoring = gameColoring;
+            _arenaLoadingOperationFactory = arenaLoadingOperationFactory;
+            _mainMenuLoadingFactory = mainMenuLoadingFactory;
         }
 
         public async Task Start()
         {
             ChoiceGameColor();
 
-            await _loadingService.Load(_levelsNavigation.LevelLoading);
+            await _loadingService.Load(_arenaLoadingOperationFactory.Create());
         }
 
         public async Task NextRandomArena()
         {
             _gameRunContext.OnNextArena();
-            await _loadingService.Load(_levelsNavigation.LevelLoading);
+            await _loadingService.Load(_arenaLoadingOperationFactory.Create());
         }
 
         public async Task Finish()
         {
             RestoreDefaultGameColor();
-            await _loadingService.Load(_levelsNavigation.MainMenuLoading);
+            await _loadingService.Load(_mainMenuLoadingFactory.Create());
         }
 
         private void ChoiceGameColor()
