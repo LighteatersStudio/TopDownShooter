@@ -15,10 +15,8 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 
         private GameRunProvider _gameRun;
         private SelectCharacterService _selectCharacterService;
-        private int _characterIndex;
-
         private readonly List<int> _selectedCharacters = new();
-
+        private int _characterIndex;
 
         [Inject]
         public void Construct(GameRunProvider gameRun, SelectCharacterService selectCharacterService)
