@@ -16,13 +16,14 @@ namespace Meta.Level
 
         public GameRunType RunType { get; }
 
-        public GameRun(GameRunType runType,
+        public GameRun(GameRunParameters gameRunParameters,
             ILoadingService loadingService,
             GameColoring gameColoring,
             ArenaLoadingOperation.Factory arenaLoadingOperationFactory,
             MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
         {
-            RunType = runType;
+            RunType = gameRunParameters.RunType;
+            _gameRunContext.CharacterIndex = gameRunParameters.CharacterIndex;
 
             _loadingService = loadingService;
             _gameColoring = gameColoring;
@@ -62,7 +63,7 @@ namespace Meta.Level
         }
 
 
-        public class Factory : PlaceholderFactory<GameRunType, GameRun>
+        public class Factory : PlaceholderFactory<GameRunParameters, GameRun>
         {
         }
     }

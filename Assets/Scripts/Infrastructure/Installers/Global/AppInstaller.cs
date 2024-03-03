@@ -55,7 +55,7 @@ namespace Infrastructure
         {
             Debug.Log("Global installer: Bind game runtime");
 
-            Container.BindFactory<GameRunType, GameRun, GameRun.Factory>()
+            Container.BindFactory<GameRunParameters, GameRun, GameRun.Factory>()
                 .FromNew()
                 .Lazy();
 

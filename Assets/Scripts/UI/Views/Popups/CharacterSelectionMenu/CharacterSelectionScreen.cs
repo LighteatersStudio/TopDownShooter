@@ -15,8 +15,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 
         private GameRunProvider _gameRun;
         private SelectCharacterService _selectCharacterService;
-        private int _index;
-        private bool _isSecondOn;
+        private int _characterIndex;
 
         private readonly List<int> _selectedCharacters = new();
 
@@ -35,18 +34,21 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             for (int i = 0; i < _characterViews.Length; i++)
             {
                 int index = i;
-                _characterViews[i].Toggled += () => CharacterToggleHandler(index);
+                void OnToggled() => SyncToggleState(index);
+                _characterViews[i].Toggled += OnToggled;
             }
         }
 
         private void ActivateHighMode()
         {
-            _gameRun.Run(GameRunType.High);
+            var parameters = new GameRunParameters(GameRunType.High, _characterIndex);
+            _gameRun.Run(parameters);
             Close();
         }
 
         private void SyncToggleState(int characterIndex)
         {
+            _characterIndex = characterIndex;
             _selectCharacterService.SetPlayerSettings(characterIndex);
 
             ToggleSelectedCharacterIndex(characterIndex);
@@ -81,11 +83,6 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             }
         }
 
-        private void CharacterToggleHandler(int index)
-        {
-            SyncToggleState(index);
-        }
-
         private void OnDestroy()
         {
             _toBattleButton.onClick.RemoveListener(ActivateHighMode);
@@ -93,7 +90,8 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             for (int i = 0; i < _characterViews.Length; i++)
             {
                 int index = i;
-                _characterViews[i].Toggled -= () => CharacterToggleHandler(index);
+                void OnToggled() => SyncToggleState(index);
+                _characterViews[i].Toggled -= OnToggled;
             }
         }
     }
