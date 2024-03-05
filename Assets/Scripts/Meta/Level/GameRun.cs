@@ -12,7 +12,7 @@ namespace Meta.Level
         private readonly MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
         private readonly ArenaLoadingOperation.Factory _arenaLoadingOperationFactory;
         private readonly GameColoring _gameColoring;
-        private readonly GameRunContext _gameRunContext = new();
+        private readonly GameRunContext _gameRunContext;
 
         public GameRunType RunType { get; }
 
@@ -23,7 +23,7 @@ namespace Meta.Level
             MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
         {
             RunType = gameRunParameters.RunType;
-            _gameRunContext.CharacterIndex = gameRunParameters.CharacterIndex;
+            _gameRunContext = new GameRunContext(gameRunParameters.CharacterIndex);
 
             _loadingService = loadingService;
             _gameColoring = gameColoring;
@@ -38,7 +38,7 @@ namespace Meta.Level
             await _loadingService.Load(_arenaLoadingOperationFactory.Create());
         }
 
-        public async Task NextRandomArena()
+        public async Task NextLevel()
         {
             _gameRunContext.OnNextArena();
             await _loadingService.Load(_arenaLoadingOperationFactory.Create());

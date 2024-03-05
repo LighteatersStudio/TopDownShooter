@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gameplay;
 using Meta.Level;
 using UnityEngine;
@@ -29,11 +30,9 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         {
             _toBattleButton.onClick.AddListener(ActivateHighMode);
 
-            for (int i = 0; i < _characterViews.Length; i++)
+            foreach (var characterView in _characterViews)
             {
-                int index = i;
-                void OnToggled() => SyncToggleState(index);
-                _characterViews[i].Toggled += OnToggled;
+                characterView.Toggled += SyncToggleState;
             }
         }
 
@@ -44,13 +43,13 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             Close();
         }
 
-        private void SyncToggleState(int characterIndex)
+        private void SyncToggleState(CharacterView characterView)
         {
-            _characterIndex = characterIndex;
-            _selectCharacterService.SetPlayerSettings(characterIndex);
+            _characterIndex = Array.IndexOf(_characterViews, characterView);
+            _selectCharacterService.SetPlayerSettings(_characterIndex);
 
-            ToggleSelectedCharacterIndex(characterIndex);
-            SwitchCharacters(characterIndex);
+            ToggleSelectedCharacterIndex(_characterIndex);
+            SwitchCharacters(_characterIndex);
 
             _toBattleButton.gameObject.SetActive(_selectedCharacters.Count > 0);
             _characterStatsView.Setup(_selectedCharacters.Count > 0, _selectCharacterService.GetPlayerSettings);
@@ -85,11 +84,9 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         {
             _toBattleButton.onClick.RemoveListener(ActivateHighMode);
 
-            for (int i = 0; i < _characterViews.Length; i++)
+            foreach (var characterView in _characterViews)
             {
-                int index = i;
-                void OnToggled() => SyncToggleState(index);
-                _characterViews[i].Toggled -= OnToggled;
+                characterView.Toggled -= SyncToggleState;
             }
         }
     }

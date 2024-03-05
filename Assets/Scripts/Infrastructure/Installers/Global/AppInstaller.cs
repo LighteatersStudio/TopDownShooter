@@ -32,13 +32,8 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>()
-                .FromNew()
-                .Lazy();
-
-            Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>()
-                .FromNew()
-                .Lazy();
+            Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>();
+            Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>();
         }
 
         private void BindScenes()

@@ -4,7 +4,7 @@ namespace Meta.Level
 {
     public interface IGameRun
     {
-        Task NextRandomArena();
+        Task NextLevel();
         Task Finish();
     }
 }

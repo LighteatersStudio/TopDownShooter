@@ -24,7 +24,7 @@ namespace Infrastructure.Loading
         {
             if (!Application.CanStreamedLevelBeLoaded(name))
             {
-                Debug.LogAssertion($"Not valid scene name - {name}.");
+                Debug.LogError($"Not valid scene name - {name}.");
                 return Task.FromResult(false);
             }
 
@@ -54,7 +54,7 @@ namespace Infrastructure.Loading
         {
             if (!_arenaListSettings.ArenaList.Any())
             {
-                Debug.LogAssertion("There are no arenas on the list");
+                Debug.LogError("There are no arenas on the list");
                 return;
             }
 
