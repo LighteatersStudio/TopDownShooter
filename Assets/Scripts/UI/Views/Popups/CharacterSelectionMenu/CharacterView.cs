@@ -7,16 +7,16 @@ namespace UI.Views.Popups.CharacterSelectionMenu
     public class CharacterView : MonoBehaviour
     {
         private readonly int _battlecry = Animator.StringToHash("Battlecry");
-        
+
         [SerializeField] private GameObject _selectedView;
         [SerializeField] private GameObject _notSelectedView;
         [SerializeField] private GameObject _characterLight;
         [SerializeField] private Button _button;
         [SerializeField] private Animator _animator;
-        
+
         [field: SerializeField] public bool IsToggled { get; private set; }
 
-        public event Action Toggled;
+        public event Action<CharacterView> Toggled;
 
         private void Start()
         {
@@ -26,7 +26,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         public void SetToggle(bool isSilence = false)
         {
             IsToggled = !IsToggled;
-            
+
             _animator.SetBool(_battlecry, IsToggled);
             _characterLight.SetActive(IsToggled);
             _selectedView.SetActive(IsToggled);
@@ -34,7 +34,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 
             if (!isSilence)
             {
-                Toggled?.Invoke();
+                Toggled?.Invoke(this);
             }
         }
 

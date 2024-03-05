@@ -1,4 +1,5 @@
 ﻿using Meta.Level;
+using UnityEngine;
 using Zenject;
 
 namespace UI
@@ -6,22 +7,26 @@ namespace UI
     public class HighStoneChooseMenu : Popup
     {
         private GameRunProvider _gameRun;
-        
+
         [Inject]
         public void Construct(GameRunProvider gameRun)
         {
             _gameRun = gameRun;
         }
-        
+
         public void ActivateHighMode()
         {
-            _gameRun.Run(GameRunType.High);
+            var parameters = new GameRunParameters(GameRunType.High, 0);
+            Debug.Log("Symbol index not selected and set = 0");
+            _gameRun.Run(parameters);
             Close();
         }
 
         public void ActivateStoneMode()
         {
-            _gameRun.Run(GameRunType.Stone);
+            var parameters = new GameRunParameters(GameRunType.High, 0);
+            Debug.Log("Symbol index not selected and set = 0");
+            _gameRun.Run(parameters);
             Close();
         }
     }

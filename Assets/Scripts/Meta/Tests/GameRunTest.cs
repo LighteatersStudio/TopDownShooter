@@ -14,47 +14,46 @@ namespace Meta.Tests
             Container.Bind<ILoadingService>()
                 .To<ILoadingService.Fake>()
                 .AsSingle();
-            
-            Container.Bind<ILevelsNavigation>()
-                .To<ILevelsNavigation.Fake>()
-                .AsSingle();
-            
+
             Container.Bind<IColorSchemeSettings>()
                 .To<IColorSchemeSettings.Fake>()
                 .AsSingle();
-            
+
             Container.Bind<GameColoring>().AsSingle();
-            
-            Container.BindFactory<GameRunType, GameRun, GameRun.Factory>().AsSingle();
+
+            Container.BindFactory<GameRunParameters, GameRun, GameRun.Factory>().AsSingle();
         }
-        
+
         [Test]
         public void Bind()
         {
             var factory = Container.TryResolve<GameRun.Factory>();
-            
+
             Assert.NotNull(factory,"Resolving from container failed. Problem with installing");
         }
-        
+
         [Test]
         public void Create()
         {
             var factory = Container.Resolve<GameRun.Factory>();
-            
-            var run = factory.Create(GameRunType.High);
-            
+
+            var parameters = new GameRunParameters(GameRunType.High, 0);
+            var run = factory.Create(parameters);
+
             Assert.NotNull(run,"Object creating fail");
         }
-        
+
         [Test]
         public void RunType()
         {
             var factory = Container.Resolve<GameRun.Factory>();
-            
-            var run = factory.Create(GameRunType.High);
+
+            var parametersHigh = new GameRunParameters(GameRunType.High, 0);
+            var run = factory.Create(parametersHigh);
             Assert.IsTrue(run.RunType == GameRunType.High);
-            
-            run = factory.Create(GameRunType.Stone);
+
+            var parametersStone = new GameRunParameters(GameRunType.Stone, 0);
+            run = factory.Create(parametersStone);
             Assert.IsTrue(run.RunType == GameRunType.Stone);
         }
     }

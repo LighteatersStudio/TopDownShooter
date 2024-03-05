@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gameplay;
 using Meta.Level;
 using UnityEngine;
@@ -15,11 +16,8 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 
         private GameRunProvider _gameRun;
         private SelectCharacterService _selectCharacterService;
-        private int _index;
-        private bool _isSecondOn;
-
         private readonly List<int> _selectedCharacters = new();
-
+        private int _characterIndex;
 
         [Inject]
         public void Construct(GameRunProvider gameRun, SelectCharacterService selectCharacterService)
@@ -32,25 +30,26 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         {
             _toBattleButton.onClick.AddListener(ActivateHighMode);
 
-            for (int i = 0; i < _characterViews.Length; i++)
+            foreach (var characterView in _characterViews)
             {
-                int index = i;
-                _characterViews[i].Toggled += () => CharacterToggleHandler(index);
+                characterView.Toggled += SyncToggleState;
             }
         }
 
         private void ActivateHighMode()
         {
-            _gameRun.Run(GameRunType.High);
+            var parameters = new GameRunParameters(GameRunType.High, _characterIndex);
+            _gameRun.Run(parameters);
             Close();
         }
 
-        private void SyncToggleState(int characterIndex)
+        private void SyncToggleState(CharacterView characterView)
         {
-            _selectCharacterService.SetPlayerSettings(characterIndex);
+            _characterIndex = Array.IndexOf(_characterViews, characterView);
+            _selectCharacterService.SetPlayerSettings(_characterIndex);
 
-            ToggleSelectedCharacterIndex(characterIndex);
-            SwitchCharacters(characterIndex);
+            ToggleSelectedCharacterIndex(_characterIndex);
+            SwitchCharacters(_characterIndex);
 
             _toBattleButton.gameObject.SetActive(_selectedCharacters.Count > 0);
             _characterStatsView.Setup(_selectedCharacters.Count > 0, _selectCharacterService.GetPlayerSettings);
@@ -81,19 +80,13 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             }
         }
 
-        private void CharacterToggleHandler(int index)
-        {
-            SyncToggleState(index);
-        }
-
         private void OnDestroy()
         {
             _toBattleButton.onClick.RemoveListener(ActivateHighMode);
 
-            for (int i = 0; i < _characterViews.Length; i++)
+            foreach (var characterView in _characterViews)
             {
-                int index = i;
-                _characterViews[i].Toggled -= () => CharacterToggleHandler(index);
+                characterView.Toggled -= SyncToggleState;
             }
         }
     }

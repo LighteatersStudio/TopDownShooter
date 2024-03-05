@@ -24,7 +24,7 @@ namespace Infrastructure.Loading
         {
             if (!Application.CanStreamedLevelBeLoaded(name))
             {
-                Debug.LogAssertion($"Not valid scene name - {name}.");
+                Debug.LogError($"Not valid scene name - {name}.");
                 return Task.FromResult(false);
             }
 
@@ -54,16 +54,12 @@ namespace Infrastructure.Loading
         {
             if (!_arenaListSettings.ArenaList.Any())
             {
-                Debug.LogAssertion("There are no arenas on the list");
+                Debug.LogError("There are no arenas on the list");
                 return;
             }
 
             var randomAreaName = RandomAreaName(_arenaListSettings.ArenaList);
-            var loadStarted = await TryLoadArena(randomAreaName);
-            if (!loadStarted)
-            {
-                Debug.LogError($"Failed to load arend with name - {randomAreaName}.");
-            }
+            await TryLoadArena(randomAreaName);
         }
 
         private string RandomAreaName(IReadOnlyCollection<IArena> arenas)
