@@ -15,7 +15,7 @@ MonoBehaviour:
   _stats:
     MaxHealth: 120
     Health: 120
-    MoveSpeed: 20
+    MoveSpeed: 10
     AttackSpeed: 1
   _model: {fileID: 196216, guid: a8c6357ee4849d042aa3a31eb83c5d8b, type: 3}
   _defaultWeapon: {fileID: 11400000, guid: 450ff11da32defc42878d13bb9aceb07, type: 2}
