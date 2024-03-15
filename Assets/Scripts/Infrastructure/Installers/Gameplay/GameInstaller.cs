@@ -3,6 +3,7 @@ using Gameplay.CollectableItems;
 using Gameplay.AI;
 using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
+using Gameplay.Collectables.SpawnSystem;
 using Gameplay.Weapons;
 using Meta.Level;
 using Infrastructure.Scenraios;
@@ -13,16 +14,16 @@ using Zenject;
 
 namespace Infrastructure
 {
-    
+
     public class GameInstaller : MonoInstaller
     {
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
-        
+
         [Header("Gameplay Entities: player")]
         [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private Player _playerPrefab;
-        
+
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private Character _enemyPrefab;
@@ -30,23 +31,24 @@ namespace Infrastructure
         [Header("Gameplay Entities: collectables")]
         [SerializeField] private WeaponCollectable _weaponCollectable;
         [SerializeField] private FirstAidKit _firstAidKitPrefab;
-        
+        [SerializeField] private FirstAidKitSettings _firstAidKitSettings;
+
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
-        
+
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
-        
+
         private SelectCharacterService _selectCharacterService;
-        
-        
+
+
         [Inject]
         public void Construct(SelectCharacterService selectCharacterService)
         {
             _selectCharacterService = selectCharacterService;
         }
-        
+
         public override void InstallBindings()
         {
             BindScenarios();
@@ -62,11 +64,11 @@ namespace Infrastructure
             BindFriendOrFoeSystem();
             BindOutline();
         }
-        
+
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
-            
+
             Container.Bind<GameSessionStartScenario>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName(nameof(GameSessionStartScenario))
@@ -83,7 +85,7 @@ namespace Infrastructure
                 .FromScriptableObject(_selectCharacterService.GetPlayerSettings)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.Bind<IPlayer>()
                 .To<Player>()
                 .FromSubContainerResolve()
@@ -100,7 +102,7 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
         }
-        
+
         private void BindGameRun()
         {
             Debug.Log("Game installer: Bind game runtime");
@@ -110,7 +112,7 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
         }
-        
+
         private IGameRun GetGameRun()
         {
             foreach (var container in Container.ParentContainers)
@@ -132,7 +134,7 @@ namespace Infrastructure
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<PlayerDeathObserver>()
                 .FromNew()
                 .AsSingle()
@@ -148,12 +150,12 @@ namespace Infrastructure
                 .WithGameObjectName("MainCamera")
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<CameraTrackingTarget>()
                 .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
                 .AsSingle()
                 .Lazy();
-            
+
             Container.Bind<ICameraProvider>()
                 .To<CameraProvider>()
                 .FromNew()
@@ -174,22 +176,38 @@ namespace Infrastructure
                 .ByInstaller<EnemyInstaller>()
                 .WithArguments(_enemyPrefab);
         }
-        
+
         private void BindCollectables()
         {
             Debug.Log("Game installer: Bind collectables");
-            
+
             Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.BindFactory<Vector3, FirstAidKit, FirstAidKit.Factory>()
                 .FromComponentInNewPrefab(_firstAidKitPrefab)
                 .AsSingle()
                 .Lazy();
+
+            Container.Bind(typeof(IFirstAidKitSettings), typeof(IFirstAidKitSpawnSettings))
+                .To<FirstAidKitSettings>()
+                .FromInstance(_firstAidKitSettings)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind(typeof(ITickable))
+                .To<FirstAidKitSpawner>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind(typeof(ISpawnSpaceSetup), typeof(IConsumableSpawnPoint))
+                .To<ConsumableSpawnPoint>()
+                .AsSingle()
+                .Lazy();
         }
-        
+
         private void BindWeapon()
         {
             Debug.Log("Game installer: Bind weapon");
@@ -198,7 +216,7 @@ namespace Infrastructure
                 .FromScriptableObject(_weaponUISetting)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
