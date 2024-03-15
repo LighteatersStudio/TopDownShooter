@@ -8,17 +8,36 @@ namespace Gameplay.Collectables.FirstAid
     {
         [SerializeField] private float _hpUpAmount;
 
+        private IFirstAidKitSettings _firstAidKitSettings;
+        private float _timer;
+
         [Inject]
-        public void Construct(Vector3 newPosition)
+        public void Construct(Vector3 newPosition, IFirstAidKitSettings firstAidKitSettings)
         {
             transform.position = newPosition;
+            _firstAidKitSettings = firstAidKitSettings;
         }
-        
+
+        private void Update()
+        {
+            if (_timer > _firstAidKitSettings.LifeTime)
+            {
+                Destroy(gameObject);
+            }
+
+            _timer += Time.deltaTime;
+        }
+
         public void OnTriggerEnter(Collider other)
         {
             var target = other.gameObject.GetComponent<Player>();
-            
+
             if (target == null)
+            {
+                return;
+            }
+
+            if (target.Health.HealthRelative.Equals(1f))
             {
                 return;
             }
