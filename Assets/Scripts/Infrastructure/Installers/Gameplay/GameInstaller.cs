@@ -202,8 +202,8 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind(typeof(ISpawnSpaceSetup), typeof(IConsumableSpawnPoint))
-                .To<ConsumableSpawnPoint>()
+            Container.Bind(typeof(ISpawnSpaceSetup), typeof(IConsumableSpawnSystem))
+                .To<ConsumableSpawnSystem>()
                 .AsSingle()
                 .Lazy();
         }

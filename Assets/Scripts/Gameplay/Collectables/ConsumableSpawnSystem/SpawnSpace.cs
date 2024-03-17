@@ -6,7 +6,7 @@ namespace Gameplay.Collectables.SpawnSystem
     [RequireComponent(typeof(Collider))]
     public class SpawnSpace : MonoBehaviour
     {
-        [SerializeField] private Collider _spawnSpaceCollider;
+        public Collider SpaceCollider;
 
         private ISpawnSpaceSetup _spawnSpaceSetup;
 
@@ -18,7 +18,13 @@ namespace Gameplay.Collectables.SpawnSystem
 
         private void Start()
         {
-            _spawnSpaceSetup.SetArenaSpawnSpace(_spawnSpaceCollider);
+            SpaceCollider = GetComponent<Collider>();
+            _spawnSpaceSetup.SetArenaSpawnSpace(this);
+        }
+
+        private void OnDestroy()
+        {
+            _spawnSpaceSetup.RemoveSpawnSpace(this);
         }
     }
 }

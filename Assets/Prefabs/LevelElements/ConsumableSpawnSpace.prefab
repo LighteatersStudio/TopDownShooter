@@ -118,4 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7288332b62c64602b259cd4e647b79d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnSpaceCollider: {fileID: 4702570166323211376}
+  SpaceCollider: {fileID: 4702570166323211376}

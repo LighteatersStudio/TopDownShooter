@@ -6,18 +6,18 @@ namespace Gameplay.Collectables.FirstAid
 {
     public class FirstAidKitSpawner : ITickable
     {
-        private readonly IConsumableSpawnPoint _consumableSpawnPoint;
+        private readonly IConsumableSpawnSystem _consumableSpawnSystem;
         private readonly FirstAidKit.Factory _firstAidKitFactory;
         private readonly IFirstAidKitSpawnSettings _spawnSettings;
 
         private float _timer = 0;
 
         [Inject]
-        public FirstAidKitSpawner(IConsumableSpawnPoint consumableSpawnPoint,
+        public FirstAidKitSpawner(IConsumableSpawnSystem consumableSpawnSystem,
             FirstAidKit.Factory firstAidKitFactory,
             IFirstAidKitSpawnSettings spawnSettings)
         {
-            _consumableSpawnPoint = consumableSpawnPoint;
+            _consumableSpawnSystem = consumableSpawnSystem;
             _firstAidKitFactory = firstAidKitFactory;
             _spawnSettings = spawnSettings;
         }
@@ -26,7 +26,7 @@ namespace Gameplay.Collectables.FirstAid
         {
             if (_timer > _spawnSettings.DelaySpawn)
             {
-                _firstAidKitFactory.Create(_consumableSpawnPoint.GetSpawnPoint());
+                _firstAidKitFactory.Create(_consumableSpawnSystem.GetSpawnPoint());
                 _timer = 0;
                 return;
             }

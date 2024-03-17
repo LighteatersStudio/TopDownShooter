@@ -4,6 +4,7 @@ namespace Gameplay.Collectables.SpawnSystem
 {
     public interface ISpawnSpaceSetup
     {
-        void SetArenaSpawnSpace(Collider collider);
+        void SetArenaSpawnSpace(SpawnSpace spawnSpace);
+        void RemoveSpawnSpace(SpawnSpace spawnSpace);
     }
 }
