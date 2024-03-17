@@ -37,7 +37,7 @@ namespace Gameplay.Collectables.FirstAid
                 return;
             }
 
-            if (target.Health.HealthRelative.Equals(1f))
+            if (IsPlayerFullHp(target))
             {
                 return;
             }
@@ -48,6 +48,11 @@ namespace Gameplay.Collectables.FirstAid
             GetComponent<RotateCollectables>().StopRotation();
 
             Destroy(gameObject);
+        }
+
+        private bool IsPlayerFullHp(Player player)
+        {
+            return player.Health.HealthRelative.Equals(1f);
         }
 
         public class Factory : PlaceholderFactory<Vector3, FirstAidKit>

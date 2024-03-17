@@ -1,37 +1,24 @@
 using Gameplay.Collectables.SpawnSystem;
-using UnityEngine;
 using Zenject;
 
 namespace Gameplay.Collectables.FirstAid
 {
-    public class FirstAidKitSpawner : ITickable
+    public class FirstAidKitSpawner : ISpawner
     {
         private readonly IConsumableSpawnSystem _consumableSpawnSystem;
         private readonly FirstAidKit.Factory _firstAidKitFactory;
-        private readonly IFirstAidKitSpawnSettings _spawnSettings;
-
-        private float _timer = 0;
 
         [Inject]
         public FirstAidKitSpawner(IConsumableSpawnSystem consumableSpawnSystem,
-            FirstAidKit.Factory firstAidKitFactory,
-            IFirstAidKitSpawnSettings spawnSettings)
+            FirstAidKit.Factory firstAidKitFactory)
         {
             _consumableSpawnSystem = consumableSpawnSystem;
             _firstAidKitFactory = firstAidKitFactory;
-            _spawnSettings = spawnSettings;
         }
 
-        public void Tick()
+        public void Spawn()
         {
-            if (_timer > _spawnSettings.DelaySpawn)
-            {
-                _firstAidKitFactory.Create(_consumableSpawnSystem.GetSpawnPoint());
-                _timer = 0;
-                return;
-            }
-
-            _timer += Time.deltaTime;
+            _firstAidKitFactory.Create(_consumableSpawnSystem.GetSpawnPoint());
         }
     }
 }

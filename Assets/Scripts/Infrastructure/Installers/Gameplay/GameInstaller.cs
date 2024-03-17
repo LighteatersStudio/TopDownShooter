@@ -29,6 +29,7 @@ namespace Infrastructure
         [SerializeField] private Character _enemyPrefab;
 
         [Header("Gameplay Entities: collectables")]
+        [SerializeField]private ConsumableSpawnSettings _consumableSpawnSettings;
         [SerializeField] private WeaponCollectable _weaponCollectable;
         [SerializeField] private FirstAidKit _firstAidKitPrefab;
         [SerializeField] private FirstAidKitSettings _firstAidKitSettings;
@@ -41,7 +42,6 @@ namespace Infrastructure
         [SerializeField] private OutlineSettings _outlineSettings;
 
         private SelectCharacterService _selectCharacterService;
-
 
         [Inject]
         public void Construct(SelectCharacterService selectCharacterService)
@@ -191,14 +191,24 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
 
-            Container.Bind(typeof(IFirstAidKitSettings), typeof(IFirstAidKitSpawnSettings))
+            Container.Bind(typeof(IFirstAidKitSettings))
                 .To<FirstAidKitSettings>()
                 .FromInstance(_firstAidKitSettings)
                 .AsSingle()
                 .Lazy();
 
+            Container.Bind(typeof(ConsumableSpawnSettings))
+                .To<ConsumableSpawnSettings>()
+                .FromInstance(_consumableSpawnSettings)
+                .AsSingle()
+                .Lazy();
+
             Container.Bind(typeof(ITickable))
-                .To<FirstAidKitSpawner>()
+                .To<GeneralConsumablesSpawner>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind<FirstAidKitSpawner>()
                 .AsSingle()
                 .NonLazy();
 
