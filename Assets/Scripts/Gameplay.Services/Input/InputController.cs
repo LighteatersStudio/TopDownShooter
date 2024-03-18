@@ -35,6 +35,7 @@ namespace Gameplay.Services.Input
         private void OnMove(InputAction.CallbackContext context)
         {
             MoveChanged?.Invoke(context.ReadValue<Vector2>());
+            Debug.Log(context.ReadValue<Vector2>());
         }
 
         private void OnLook(InputAction.CallbackContext context)

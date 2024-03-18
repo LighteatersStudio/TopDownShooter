@@ -25,6 +25,7 @@ namespace Infrastructure.Scenraios
 
             _uiRoot.Open<Hud>();
             _uiRoot.Open<StartLevelMenu>();
+            _uiRoot.Open<TouchControlsView>();
 
             Destroy(gameObject);
         }

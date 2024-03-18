@@ -40,7 +40,8 @@ namespace Gameplay
 
         private void OnMoveChanged(Vector2 direction)
         {
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y)));
+            //_pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y)));
+            _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y));
         }
         
         private void OnLookChanged(Vector2 direction)
