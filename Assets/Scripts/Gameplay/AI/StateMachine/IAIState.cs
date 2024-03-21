@@ -1,9 +1,17 @@
+using System;
 using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
     public interface IAIState
     {
-        Task<StateResult> Launch();
+        void Begin();
+        Task<IAIState> Launch();
+        void Release();
+    }
+
+    public interface IStateTransition
+    {
+        event Action<IAIState> Activated;
     }
 }

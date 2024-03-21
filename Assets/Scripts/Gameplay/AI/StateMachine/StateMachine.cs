@@ -39,8 +39,7 @@ namespace Gameplay.AI
                     Debug.Log($"[{_name}] AI launch state: {currentState.GetType().Name}");   
                 }
 
-                var result = await currentState.Launch();
-                currentState = result.NextState;
+                currentState = await currentState.Launch();
             }
         }
     }

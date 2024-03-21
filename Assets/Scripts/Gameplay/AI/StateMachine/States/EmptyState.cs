@@ -1,32 +1,30 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
-    public class ErrorState : StateBase
+    public class EmptyState : IAIState
     {
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 
-        public ErrorState(CancellationToken token)
-            : base(token, Array.Empty<IStateTransition>())
+        public EmptyState(CancellationToken token)
         {
             _taskCompletionSource = new TaskCompletionSource<StateResult>();
-
             token.Register(() => { _taskCompletionSource.TrySetCanceled(); });
         }
 
-        protected override void BeginInternal()
+        public void Begin()
         {
         }
 
-        protected override async Task<IAIState> LaunchInternal(CancellationToken token)
+        public async Task<IAIState> Launch()
         {
             await _taskCompletionSource.Task;
-            return new EmptyState(token);
+            
+            return new EmptyState(CancellationToken.None);
         }
 
-        protected override void EndInternal()
+        public void Release()
         {
         }
     }
