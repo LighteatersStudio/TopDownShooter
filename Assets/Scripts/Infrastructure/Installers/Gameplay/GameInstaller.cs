@@ -191,8 +191,7 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
 
-            Container.Bind(typeof(IFirstAidKitSettings))
-                .To<FirstAidKitSettings>()
+            Container.Bind<FirstAidKitSettings>()
                 .FromInstance(_firstAidKitSettings)
                 .AsSingle()
                 .Lazy();
@@ -203,12 +202,13 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
 
-            Container.Bind(typeof(ITickable))
+            Container.Bind(typeof(ITickable), typeof(IInitializable))
                 .To<GeneralConsumablesSpawner>()
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<FirstAidKitSpawner>()
+            Container.Bind(typeof(IFirstAidKitSpawner))
+                .To<FirstAidKitSpawner>()
                 .AsSingle()
                 .NonLazy();
 

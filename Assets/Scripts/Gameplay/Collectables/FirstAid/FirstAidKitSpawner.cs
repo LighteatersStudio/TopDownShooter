@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Gameplay.Collectables.FirstAid
 {
-    public class FirstAidKitSpawner : ISpawner
+    public class FirstAidKitSpawner : IFirstAidKitSpawner
     {
         private readonly IConsumableSpawnSystem _consumableSpawnSystem;
         private readonly FirstAidKit.Factory _firstAidKitFactory;

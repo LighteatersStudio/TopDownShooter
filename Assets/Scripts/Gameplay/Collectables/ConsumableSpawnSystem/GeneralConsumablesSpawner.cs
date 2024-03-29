@@ -1,28 +1,35 @@
+using System.Collections.Generic;
 using Gameplay.Collectables.FirstAid;
 using UnityEngine;
 using Zenject;
 
 namespace Gameplay.Collectables.SpawnSystem
 {
-    public class GeneralConsumablesSpawner : ITickable
+    public class GeneralConsumablesSpawner : ITickable, IInitializable
     {
-        private readonly ISpawner _firstAidKitSpawner;
+        private readonly List<ISpawner> _spawners = new();
+        private readonly IFirstAidKitSpawner _firstAidKitSpawner;
         private readonly ConsumableSpawnSettings _consumableSpawnSettings;
 
         private float _timer = 0;
 
         [Inject]
-        public GeneralConsumablesSpawner(FirstAidKitSpawner firstAidKitSpawner, ConsumableSpawnSettings consumableSpawnSettings)
+        public GeneralConsumablesSpawner(IFirstAidKitSpawner firstAidKitSpawner, ConsumableSpawnSettings consumableSpawnSettings)
         {
             _firstAidKitSpawner = firstAidKitSpawner;
             _consumableSpawnSettings = consumableSpawnSettings;
+        }
+
+        public void Initialize()
+        {
+            _spawners.Add(_firstAidKitSpawner);
         }
 
         public void Tick()
         {
             if (_timer > _consumableSpawnSettings.DelaySpawn)
             {
-                Spawn();
+                SpawnByRandomSpawner();
                 _timer = 0;
                 return;
             }
@@ -30,9 +37,16 @@ namespace Gameplay.Collectables.SpawnSystem
             _timer += Time.deltaTime;
         }
 
-        private void Spawn()
+        private void SpawnByRandomSpawner()
         {
-            _firstAidKitSpawner.Spawn();
+            var count = _spawners.Count;
+            if (count == 0)
+            {
+                return;
+            }
+
+            int index = Random.Range(0, _spawners.Count);
+            _spawners[index].Spawn();
         }
     }
 }

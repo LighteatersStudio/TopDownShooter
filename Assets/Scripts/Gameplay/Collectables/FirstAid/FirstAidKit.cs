@@ -8,11 +8,11 @@ namespace Gameplay.Collectables.FirstAid
     {
         [SerializeField] private float _hpUpAmount;
 
-        private IFirstAidKitSettings _firstAidKitSettings;
+        private FirstAidKitSettings _firstAidKitSettings;
         private float _timer;
 
         [Inject]
-        public void Construct(Vector3 newPosition, IFirstAidKitSettings firstAidKitSettings)
+        public void Construct(Vector3 newPosition, FirstAidKitSettings firstAidKitSettings)
         {
             transform.position = newPosition;
             _firstAidKitSettings = firstAidKitSettings;
