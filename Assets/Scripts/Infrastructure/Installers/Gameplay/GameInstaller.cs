@@ -1,9 +1,9 @@
 using Gameplay;
 using Gameplay.CollectableItems;
 using Gameplay.AI;
+using Gameplay.Collectables.ConsumableSpawnSystem;
 using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
-using Gameplay.Collectables.SpawnSystem;
 using Gameplay.Weapons;
 using Meta.Level;
 using Infrastructure.Scenraios;
@@ -99,8 +99,7 @@ namespace Infrastructure
             Container.Bind<IGameState>()
                 .To<GameStateManager>()
                 .FromNew()
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
         }
 
         private void BindGameRun()
@@ -152,15 +151,13 @@ namespace Infrastructure
                 .NonLazy();
 
             Container.Bind<CameraTrackingTarget>()
-                .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
-                .AsSingle()
-                .Lazy();
+                .FromMethod(() => Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
+                .AsSingle();
 
             Container.Bind<ICameraProvider>()
                 .To<CameraProvider>()
                 .FromNew()
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
         }
 
         private void BindCharacter()
@@ -183,27 +180,23 @@ namespace Infrastructure
 
             Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
 
             Container.BindFactory<Vector3, FirstAidKit, FirstAidKit.Factory>()
                 .FromComponentInNewPrefab(_firstAidKitPrefab)
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
 
             Container.Bind<FirstAidKitSettings>()
                 .FromInstance(_firstAidKitSettings)
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
 
             Container.Bind(typeof(ConsumableSpawnSettings))
                 .To<ConsumableSpawnSettings>()
                 .FromInstance(_consumableSpawnSettings)
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
 
-            Container.Bind(typeof(ITickable), typeof(IInitializable))
-                .To<GeneralConsumablesSpawner>()
+            Container.Bind(typeof(ITickable))
+                .To<ConsumablesSpawnInvoker>()
                 .AsSingle()
                 .NonLazy();
 
@@ -212,10 +205,9 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind(typeof(ISpawnSpaceSetup), typeof(IConsumableSpawnSystem))
+            Container.Bind(typeof(ISpawnSpaceRegister), typeof(IConsumableSpawnSystem))
                 .To<ConsumableSpawnSystem>()
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
         }
 
         private void BindWeapon()

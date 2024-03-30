@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay.Collectables.SpawnSystem
+namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
     [CreateAssetMenu(fileName = "ConsumableSpawnSettings", menuName = "ArenaSettings/Consumable/ConsumableSpawnSettings")]
     public class ConsumableSpawnSettings : ScriptableObject

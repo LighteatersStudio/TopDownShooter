@@ -1,30 +1,42 @@
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Collectables.SpawnSystem
+namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
     [RequireComponent(typeof(Collider))]
-    public class SpawnSpace : MonoBehaviour
+    public class SpawnSpace : MonoBehaviour, ISpawnSpace
     {
-        public Collider SpaceCollider;
+        [SerializeField] private Collider _spaceCollider;
 
-        private ISpawnSpaceSetup _spawnSpaceSetup;
+        private ISpawnSpaceRegister _spawnSpaceRegister;
 
         [Inject]
-        public void Construct(ISpawnSpaceSetup spawnSpaceSetup)
+        public void Construct(ISpawnSpaceRegister spawnSpaceRegister)
         {
-            _spawnSpaceSetup = spawnSpaceSetup;
+            _spawnSpaceRegister = spawnSpaceRegister;
         }
 
         private void Start()
         {
-            SpaceCollider = GetComponent<Collider>();
-            _spawnSpaceSetup.SetArenaSpawnSpace(this);
+            _spaceCollider = GetComponent<Collider>();
+            _spawnSpaceRegister.RegisterSpawnSpace(this);
+        }
+
+        public Vector3 GetRandomPoint()
+        {
+            Vector3 boundsMin = _spaceCollider.bounds.min;
+            Vector3 boundsMax = _spaceCollider.bounds.max;
+
+            float x = Random.Range(boundsMin.x, boundsMax.x);
+            float z = Random.Range(boundsMin.z, boundsMax.z);
+            float y = _spaceCollider.bounds.center.y;
+
+            return new Vector3(x, y, z);
         }
 
         private void OnDestroy()
         {
-            _spawnSpaceSetup.RemoveSpawnSpace(this);
+            _spawnSpaceRegister.UnregisterSpawnSpace(this);
         }
     }
 }

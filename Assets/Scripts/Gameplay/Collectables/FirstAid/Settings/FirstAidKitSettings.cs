@@ -6,5 +6,6 @@ namespace Gameplay.Collectables.FirstAid
     public class FirstAidKitSettings : ScriptableObject
     {
         [field: SerializeField] public float LifeTime { get; private set; } = 5f;
+        [field: SerializeField] public float HpUpAmount { get; private set; } = 15f;
     }
 }

@@ -1,5 +1,4 @@
-using Gameplay.Collectables.SpawnSystem;
-using Zenject;
+using Gameplay.Collectables.ConsumableSpawnSystem;
 
 namespace Gameplay.Collectables.FirstAid
 {
@@ -8,9 +7,7 @@ namespace Gameplay.Collectables.FirstAid
         private readonly IConsumableSpawnSystem _consumableSpawnSystem;
         private readonly FirstAidKit.Factory _firstAidKitFactory;
 
-        [Inject]
-        public FirstAidKitSpawner(IConsumableSpawnSystem consumableSpawnSystem,
-            FirstAidKit.Factory firstAidKitFactory)
+        public FirstAidKitSpawner(IConsumableSpawnSystem consumableSpawnSystem, FirstAidKit.Factory firstAidKitFactory)
         {
             _consumableSpawnSystem = consumableSpawnSystem;
             _firstAidKitFactory = firstAidKitFactory;

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FirstAidKitSettings
   m_EditorClassIdentifier: 
   <LifeTime>k__BackingField: 5
-  <DelaySpawn>k__BackingField: 3
+  <HpUpAmount>k__BackingField: 15

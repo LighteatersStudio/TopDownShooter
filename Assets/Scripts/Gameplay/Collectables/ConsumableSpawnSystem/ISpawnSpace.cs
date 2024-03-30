@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
-    public interface IConsumableSpawnSystem
+    public interface ISpawnSpace
     {
-        Vector3 GetSpawnPoint();
+        Vector3 GetRandomPoint();
     }
 }

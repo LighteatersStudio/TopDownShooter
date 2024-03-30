@@ -1,4 +1,4 @@
-namespace Gameplay.Collectables.FirstAid
+namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
     public interface ISpawner
     {
