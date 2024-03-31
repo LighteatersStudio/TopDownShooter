@@ -7,7 +7,7 @@ namespace Gameplay
     public class PlayerControllerInstaller : MonoInstaller
     {
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private SimpleTicker _ticker;
+        [SerializeField] private MonoTicker _ticker;
         
         public override void InstallBindings()
         {
@@ -19,7 +19,7 @@ namespace Gameplay
                 .To<MoveBehaviour>()
                 .AsSingle();
             
-            Container.Bind<ITicker>()
+            Container.Bind<MonoTicker>()
                 .FromInstance(_ticker)
                 .AsSingle();
 
