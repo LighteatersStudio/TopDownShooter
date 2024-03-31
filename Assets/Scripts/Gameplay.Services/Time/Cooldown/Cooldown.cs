@@ -71,11 +71,23 @@ namespace Gameplay.Services.GameTime
         
         public class Factory
         {
+            private readonly ITicker _commonTicker;
+
+            public Factory(ITicker commonTicker)
+            {
+                _commonTicker = commonTicker;
+            }
+            
             public virtual Cooldown Create(float duration, ITicker ticker, Action finishHandler = null)
             {
                 return new Cooldown(duration, ticker, finishHandler);
             }
-
+            
+            public virtual Cooldown CreateWithCommonTicker(float duration, Action finishHandler = null)
+            {
+                return Create(duration, _commonTicker, finishHandler);
+            }
+            
             public virtual Cooldown CreateFinished()
             {
                 var instance = Create(1, new ITicker.Fake());

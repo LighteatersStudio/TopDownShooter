@@ -1,4 +1,6 @@
-﻿using Services.Application.Description;
+﻿using System;
+using Gameplay.Services.GameTime;
+using Services.Application.Description;
 using Services.Application.Description.Implementation;
 using Services.Application.Version;
 using Services.Application.Version.Implementation;
@@ -21,6 +23,7 @@ namespace Infrastructure
         {
             BindApplicationServices();
             BindGameColoring();
+            BindTimeService();
         }
 
         private void BindApplicationServices()
@@ -53,5 +56,13 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
         }
+
+        private void BindTimeService()
+        {
+            Container.Bind(typeof(ITicker), typeof(IDisposable))
+                .To<ZenjectTicker>()
+                .AsSingle();
+        }
+        
     }
 }

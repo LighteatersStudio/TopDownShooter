@@ -1,5 +1,4 @@
 ﻿using System;
-using Gameplay.Weapons;
 using System.Linq;
 using UnityEngine;
 using Zenject;

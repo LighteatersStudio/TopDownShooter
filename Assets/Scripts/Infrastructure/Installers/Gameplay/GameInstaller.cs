@@ -195,8 +195,8 @@ namespace Infrastructure
                 .FromInstance(_consumableSpawnSettings)
                 .AsSingle();
 
-            Container.Bind(typeof(ITickable))
-                .To<ConsumablesSpawnInvoker>()
+            Container.Bind(typeof(IInitializable))
+                .To<ConsumableSpawnersInvoker>()
                 .AsSingle()
                 .NonLazy();
 
