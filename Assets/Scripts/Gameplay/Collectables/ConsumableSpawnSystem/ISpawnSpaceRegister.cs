@@ -2,7 +2,7 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
     public interface ISpawnSpaceRegister
     {
-        void RegisterSpawnSpace(ISpawnSpace spawnSpace);
-        void UnregisterSpawnSpace(ISpawnSpace spawnSpace);
+        void Register(ISpawnSpace spawnSpace);
+        void Unregister(ISpawnSpace spawnSpace);
     }
 }

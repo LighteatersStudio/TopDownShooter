@@ -19,7 +19,7 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
         private void Start()
         {
             _spaceCollider = GetComponent<Collider>();
-            _spawnSpaceRegister.RegisterSpawnSpace(this);
+            _spawnSpaceRegister.Register(this);
         }
 
         public Vector3 GetRandomPoint()
@@ -36,7 +36,7 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
         private void OnDestroy()
         {
-            _spawnSpaceRegister.UnregisterSpawnSpace(this);
+            _spawnSpaceRegister.Unregister(this);
         }
     }
 }

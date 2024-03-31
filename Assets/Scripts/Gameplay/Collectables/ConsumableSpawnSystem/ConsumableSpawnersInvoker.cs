@@ -9,7 +9,6 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
     public class ConsumableSpawnersInvoker : IInitializable, IDisposable
     {
         private readonly ISpawner[] _spawners;
-        private readonly IFirstAidKitSpawner _firstAidKitSpawner;
         private readonly ConsumableSpawnSettings _consumableSpawnSettings;
         private readonly Cooldown.Factory _cooldownFactory;
         private Cooldown _spawnInvokeCooldown;

@@ -20,12 +20,12 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
             return randomSpawnSpace.GetRandomPoint();
         }
 
-        public void RegisterSpawnSpace(ISpawnSpace spawnSpace)
+        public void Register(ISpawnSpace spawnSpace)
         {
             _spawnSpaces.Add(spawnSpace);
         }
 
-        public void UnregisterSpawnSpace(ISpawnSpace spawnSpace)
+        public void Unregister(ISpawnSpace spawnSpace)
         {
             _spawnSpaces.Remove(spawnSpace);
         }
