@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Gameplay.Services.GameTime
 {
-    public class SimpleTicker : MonoBehaviour, ITicker
+    public class MonoTicker : MonoBehaviour, ITicker
     {
         public event Action<float> Tick;
 

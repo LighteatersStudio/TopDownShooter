@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 
 namespace Gameplay.Services.GameTime
 {
@@ -7,7 +6,7 @@ namespace Gameplay.Services.GameTime
     {
         float Progress { get; }
         bool IsFinish { get; }
-        
+
         event Action ProgressChanged;
         event Action Completed;
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using DG.Tweening;
 
 namespace Gameplay.Collectables
@@ -14,6 +15,11 @@ namespace Gameplay.Collectables
             RotateObject();
         }
 
+        public void StopRotation()
+        {
+            _rotationTweener.Kill();
+        }
+
         private void RotateObject()
         {
             _rotationTweener = transform.DORotate(_rotationAxis * 360f, _durationS, RotateMode.FastBeyond360)
@@ -21,9 +27,9 @@ namespace Gameplay.Collectables
                 .SetEase(Ease.Linear);
         }
 
-        public void StopRotation()
+        private void OnDestroy()
         {
-            _rotationTweener.Kill();
+            StopRotation();
         }
     }
 }

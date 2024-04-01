@@ -97,8 +97,10 @@ MonoBehaviour:
   _playerPrefab: {fileID: 1672881163020592751, guid: c1fe326bad380aa4c8ce4b801046cd19, type: 3}
   _characterPrefab: {fileID: 7564954714399395940, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
   _enemyPrefab: {fileID: 799623494326944143, guid: d1255cf75f6d57d448def7255072aa1f, type: 3}
+  _consumableSpawnSettings: {fileID: 11400000, guid: 0fbf92715f73448ce9d7b577f33ae693, type: 2}
   _weaponCollectable: {fileID: 8572505702997793812, guid: b1ec1465b13236749a6882e13630344a, type: 3}
   _firstAidKitPrefab: {fileID: 7663522477305382724, guid: 2de38d3fa28dda84f8de903ed0787a6b, type: 3}
+  _firstAidKitSettings: {fileID: 11400000, guid: a57355b76d2904f7cb05e5b70145a4d7, type: 2}
   _weaponPrefab: {fileID: 4628974586498328097, guid: 2168753a697310c48a899f86019a5edc, type: 3}
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
   _outlineSettings: {fileID: 11400000, guid: 91a3eee1e914ba149a70efd866104af8, type: 2}
