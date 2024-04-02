@@ -18,6 +18,9 @@ namespace Gameplay.AI
         private readonly ObserveArea _observeArea;
         private readonly Character _character;
         private readonly AttackingAIState.Factory _attackingAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
+        
+        private CancellationTokenSource _internalSource;
 
         public SearchTargetAIState(CancellationToken token,
             IdleAIState.Factory idleAIFactory,
@@ -39,12 +42,18 @@ namespace Gameplay.AI
         public async Task<StateResult> Launch()
         {
             _observeArea.DeactivateAttackCollider();
+            HandleCharacterDeath();
             
-            await MoveToSearchTargetPosition(_point.Point, _token);
+            if (_character.IsDead)
+            {
+                return new StateResult(_deathAIFactory.Create(_token), true);
+            }
             
+            await MoveToSearchTargetPosition(_point.Point, _internalSource.Token);
+
             float currentRotation = 0;
 
-            while (currentRotation <= FullRotation && !_observeArea.HasTarget)
+            while (currentRotation <= FullRotation && !_observeArea.HasTarget && !_character.IsDead)
             {
                 var rotationSpeed = Angle * Time.deltaTime;
                 
@@ -55,13 +64,29 @@ namespace Gameplay.AI
                 await UniTask.Yield();
             }
 
-            if (_observeArea.HasTarget)
+            if (_observeArea.HasTarget && !_character.IsDead)
             {
                 return new StateResult(_attackingAIFactory.Create(_token), true);
             }
             
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
+        
+        private void HandleCharacterDeath()
+        {
+            _internalSource = new CancellationTokenSource();
+
+            _token.Register(() => _internalSource.Cancel());
+
+            void HandleDead()
+            {
+                _internalSource.Cancel();
+                _character.Dead -= HandleDead;
+            }
+
+            _character.Dead += HandleDead;
+        }
+
 
         private async Task MoveToSearchTargetPosition(Vector3 point, CancellationToken token)
         {

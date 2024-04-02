@@ -13,25 +13,37 @@ namespace Gameplay.AI
         private readonly SearchTargetAIState.Factory _searchTargetFactory;
         private readonly ObserveArea _observeArea;
         private readonly AttackingAIState.Factory _attackingAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
+        private readonly Character _character;
+        
+        private CancellationTokenSource _internalSource;
 
         public PursueTargetAIState(CancellationToken token,
             SearchTargetAIState.Factory searchTargetFactory,
             ObserveArea observeArea,
             NavMeshMoving moving,
-            AttackingAIState.Factory attackingAIFactory)
+            AttackingAIState.Factory attackingAIFactory,
+            Character character)
         {
             _token = token;
             _searchTargetFactory = searchTargetFactory;
             _observeArea = observeArea;
             _moving = moving;
             _attackingAIFactory = attackingAIFactory;
+            _character = character;
         }
 
         public async Task<StateResult> Launch()
         {
             _observeArea.ActivateAttackCollider();
+            HandleCharacterDeath();
+            
+            if (_character.IsDead)
+            {
+                return new StateResult(_deathAIFactory.Create(_token), true);
+            }
 
-            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
+            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _internalSource.Token);
 
             if (!_observeArea.HasTarget)
             {
@@ -39,6 +51,21 @@ namespace Gameplay.AI
             }
 
             return new StateResult(_attackingAIFactory.Create(_token), true);
+        }
+        
+        private void HandleCharacterDeath()
+        {
+            _internalSource = new CancellationTokenSource();
+
+            _token.Register(() => _internalSource.Cancel());
+
+            void HandleDead()
+            {
+                _internalSource.Cancel();
+                _character.Dead -= HandleDead;
+            }
+
+            _character.Dead += HandleDead;
         }
 
         private async Task MoveToLastTargetPosition(Vector3 point, CancellationToken token)

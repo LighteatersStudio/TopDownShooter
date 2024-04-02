@@ -14,6 +14,9 @@ namespace Gameplay.AI
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
         private readonly PursueTargetAIState.Factory _pursueTargetAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
+        
+        private CancellationTokenSource _internalSource;
 
         public AttackingAIState(CancellationToken token, Character character,
             NavMeshMoving moving, ObserveArea observeArea,
@@ -31,8 +34,15 @@ namespace Gameplay.AI
             _moving.Stop();
             _observeArea.ActivateAttackCollider();
 
+            HandleCharacterDeath();
+            
             do
             {
+                if (_character.IsDead)
+                {
+                    return new StateResult(_deathAIFactory.Create(_token), true);
+                }
+                
                 if (!_observeArea.HasTarget)
                 {
                     break;
@@ -51,6 +61,21 @@ namespace Gameplay.AI
             _observeArea.DeactivateAttackCollider();
             
             return new StateResult(_pursueTargetAIFactory.Create(_token), true);
+        }
+        
+        private void HandleCharacterDeath()
+        {
+            _internalSource = new CancellationTokenSource();
+
+            _token.Register(() => _internalSource.Cancel());
+
+            void HandleDead()
+            {
+                _internalSource.Cancel();
+                _character.Dead -= HandleDead;
+            }
+
+            _character.Dead += HandleDead;
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

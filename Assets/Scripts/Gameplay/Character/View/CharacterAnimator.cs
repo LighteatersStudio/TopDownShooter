@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 namespace Gameplay
@@ -7,8 +6,6 @@ namespace Gameplay
     [RequireComponent(typeof(Animator))]
     public class CharacterAnimator : MonoBehaviour
     {
-        private const string ColorProperty = "_BaseColor";
-
         private static readonly int SpeedName = Animator.StringToHash("MoveSpeed");
         private static readonly int HitName = Animator.StringToHash("Hit");
         private static readonly int AttackName = Animator.StringToHash("Attack");
@@ -21,10 +18,12 @@ namespace Gameplay
         private float _currentSpeed;
         private Vector3 _lastPosition;
         private ICharacter _character;
+        private MaterialColorChanger _colorChanger;
 
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
+            _colorChanger = new MaterialColorChanger(_view);
         }
 
         public void Construct(ICharacter character)
@@ -34,13 +33,6 @@ namespace Gameplay
 
         protected void Start()
         {
-            foreach (var material in _view.GetComponent<SkinnedMeshRenderer>().materials)
-            {
-                _materials.Add(new Material(material));
-            }
-            
-            _view.GetComponent<SkinnedMeshRenderer>().sharedMaterials = _materials.ToArray();
-
             transform.SetZeroPositionRotation();
             _lastPosition = transform.position;
             Subscribe();
@@ -93,29 +85,13 @@ namespace Gameplay
         private void OnDamaged()
         {
             const float duration = 0.1f;
-            
-            foreach (var material in _materials)
-            {
-                material.DOKill();
-                ChangeColor(material, Color.red, duration);
-            }
-
+            _colorChanger.ChangeColor(Color.red, duration);
             _animator.SetTrigger(HitName);
         }
 
         private void OnAttacked()
         {
             _animator.SetTrigger(AttackName);
-        }
-
-        private void ChangeColor(Material material, Color targetColor, float duration)
-        {
-            material.DOColor(targetColor, ColorProperty, duration).OnComplete(() => ResetColor(material, duration));
-        }
-
-        private void ResetColor(Material material, float duration)
-        {
-            material.DOColor(Color.white, ColorProperty, duration);
         }
     }
 }

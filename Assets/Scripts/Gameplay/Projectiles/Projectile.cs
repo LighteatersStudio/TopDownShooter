@@ -69,7 +69,7 @@ namespace Gameplay.Projectiles
                 return;
             }
 
-            if (IsFriend(friendOrFoeTag))
+            if (!IsFoes(friendOrFoeTag))
             {
                 return;
             }
@@ -89,10 +89,6 @@ namespace Gameplay.Projectiles
             }
         }
         
-        private bool IsFriend(IFriendOrFoeTag friendOrFoeTag)
-        {
-            return _friendFoeSystem.CheckFriend(_attackInfo.FriendOrFoeTag, friendOrFoeTag);
-        }
         private bool IsFoes(IFriendOrFoeTag friendOrFoeTag)
         {
             return _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, friendOrFoeTag);

@@ -21,7 +21,7 @@ namespace Gameplay
         
         private Vector3 _fireDirection;
 
-        private bool IsDead => _stats.Health <= 0;
+        public bool IsDead => _stats.Health <= 0;
         
         public float HealthRelative => _stats.HealthRelative;
         public float MoveSpeed => _stats.MoveSpeed;
