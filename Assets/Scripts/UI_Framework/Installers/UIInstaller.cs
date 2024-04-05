@@ -23,7 +23,6 @@ namespace UI.Framework.Implementation
                 .WithGameObjectName($"UIRoot[{_scopeName}]")
                 .AsSingle()
                 .NonLazy();
-            
         }
     }
 }

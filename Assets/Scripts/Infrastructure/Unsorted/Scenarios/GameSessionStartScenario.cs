@@ -1,6 +1,7 @@
 ﻿using Services.Audio;
 using UI;
 using UI.Framework;
+using UI.Views.Common;
 using UnityEngine;
 using Zenject;
 
@@ -24,6 +25,7 @@ namespace Infrastructure.Scenraios
             _musicPlayer.StopMusic();
 
             _uiRoot.Open<Hud>();
+            _uiRoot.Open<TouchControlsView>();
             _uiRoot.Open<StartLevelMenu>();
 
             Destroy(gameObject);
