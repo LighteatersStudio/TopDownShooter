@@ -6,7 +6,7 @@ using ETouch = UnityEngine.InputSystem.EnhancedTouch;
 
 namespace Gameplay.Services.Input
 {
-    public class InputController : IInputController
+    public class InputController : IInputController, IInitializable, IDisposable
     {
         private const string MoveActionName = "Move";
         private const string LookActionName = "Look";
@@ -51,7 +51,6 @@ namespace Gameplay.Services.Input
         public InputController(InputActionAsset inputActionAsset)
         {
             _inputActionAsset = inputActionAsset;
-            OnEnable();
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -191,7 +190,7 @@ namespace Gameplay.Services.Input
 
         private void OnFireStart(InputAction.CallbackContext context)
         {
-            if (_lookFinger is not null)
+            if (_lookFinger != null)
             {
                 return;
             }
@@ -201,7 +200,7 @@ namespace Gameplay.Services.Input
         
         private void OnFireEnds(InputAction.CallbackContext context)
         {
-            if (_lookFinger is not null)
+            if (_lookFinger != null)
             {
                 return;
             }
@@ -229,7 +228,7 @@ namespace Gameplay.Services.Input
             ReloadChanged?.Invoke();
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             ETouch.EnhancedTouchSupport.Enable();
 
@@ -248,6 +247,25 @@ namespace Gameplay.Services.Input
             _inputActionAsset.FindAction(UseActionName).performed += OnUse;
             _inputActionAsset.FindAction(ReloadActionName).performed += OnReload;
             _inputActionAsset.FindAction(MeleeActionName).performed += OnMelee;
+        }
+
+        public void Dispose()
+        {
+            ETouch.Touch.onFingerDown -= OnFingerDown;
+            ETouch.Touch.onFingerMove -= OnFingerMove;
+            ETouch.Touch.onFingerUp -= OnFingerUp;
+
+            _inputActionAsset.FindAction(MoveActionName).performed -= OnMove;
+            _inputActionAsset.FindAction(MoveActionName).canceled -= OnMove;
+            
+            _inputActionAsset.FindAction(FireActionName).performed -= OnFireStart;
+            _inputActionAsset.FindAction(FireActionName).canceled -= OnFireEnds;
+            
+            _inputActionAsset.FindAction(LookActionName).performed -= OnLook;
+            _inputActionAsset.FindAction(SpecialActionName).performed -= OnSpecial;
+            _inputActionAsset.FindAction(UseActionName).performed -= OnUse;
+            _inputActionAsset.FindAction(ReloadActionName).performed -= OnReload;
+            _inputActionAsset.FindAction(MeleeActionName).performed -= OnMelee;
         }
     }
 }

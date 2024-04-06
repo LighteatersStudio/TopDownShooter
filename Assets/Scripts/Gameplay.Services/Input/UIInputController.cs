@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay.Services.Input
 {
-    public class UIInputController : IUIInputController
+    public class UIInputController : IUIInputController, IInitializable, IDisposable
     {
         private const string CancelActionName = "Cancel";
         private const string ClickActionName = "Click";
@@ -19,7 +20,6 @@ namespace Gameplay.Services.Input
         public UIInputController(InputActionAsset inputActionAsset)
         {
             _inputActionAsset = inputActionAsset;
-            OnEnable();
         }
 
         private void OnCancel(InputAction.CallbackContext obj)
@@ -37,11 +37,18 @@ namespace Gameplay.Services.Input
             PointChanged?.Invoke(position.ReadValue<Vector2>());
         }
 
-        private void OnEnable()
+        public void Initialize()
         {
             _inputActionAsset.FindAction(CancelActionName).performed += OnCancel;
             _inputActionAsset.FindAction(ClickActionName).performed += OnClick;
             _inputActionAsset.FindAction(PointActionName).performed += OnPoint;
+        }
+
+        public void Dispose()
+        {
+            _inputActionAsset.FindAction(CancelActionName).performed -= OnCancel;
+            _inputActionAsset.FindAction(ClickActionName).performed -= OnClick;
+            _inputActionAsset.FindAction(PointActionName).performed -= OnPoint;
         }
     }
 }

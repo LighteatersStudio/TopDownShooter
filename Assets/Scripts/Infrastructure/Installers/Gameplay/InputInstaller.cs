@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.Input;
+﻿using System;
+using Gameplay.Services.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -28,13 +29,13 @@ namespace Infrastructure.Installers.Gameplay
                 .AsSingle()
                 .NonLazy();
             
-            Container.Bind<IUIInputController>()
+            Container.Bind(typeof(IUIInputController), typeof(IInitializable), typeof(IDisposable))
                 .To<UIInputController>()
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
             
-            Container.Bind<IInputController>()
+            Container.Bind(typeof(IInputController), typeof(IInitializable), typeof(IDisposable))
                 .To<InputController>()
                 .FromNew()
                 .AsSingle()

@@ -64,24 +64,22 @@ namespace Gameplay
 
         private void OnMoveChanged(Vector2 direction)
         {
-            _pause.TryInvokeIfNotPause(() =>
+            if (!_isMoving)
             {
-                if (_isMoving)
-                {
-                    _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y));
-                }
-            });
+                return;
+            }
+            
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y)));
         }
 
         private void OnLookChanged(Vector2 direction)
         {
-            _pause.TryInvokeIfNotPause(() =>
+            if (!_isLooking)
             {
-                if (_isLooking)
-                {
-                    _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y);
-                }
-            });
+                return;
+            }
+            
+            _pause.TryInvokeIfNotPause(() => _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y));
         }
 
         private void OnFireChanged(bool isActive)

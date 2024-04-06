@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.Input;
+﻿using System;
+using Gameplay.Services.Input;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
@@ -20,7 +21,7 @@ namespace UI.Views.Common
 
         private void Awake()
         {
-            if (_leftJoystick == null || _rightJoystick == null)
+            if (!_leftJoystick || !_rightJoystick)
             {
                 Debug.LogError("Joysticks are not set!");
                 gameObject.SetActive(false);
@@ -57,7 +58,7 @@ namespace UI.Views.Common
             ResetJoystick(isLooking, _rightJoystick);
         }
 
-        private static void SetJoystickPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        private void SetJoystickPosition(bool condition, FloatingJoystick joystick, Vector2 position)
         {
             if (condition)
             {
@@ -65,7 +66,7 @@ namespace UI.Views.Common
             }
         }
 
-        private static void SetKnobPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        private void SetKnobPosition(bool condition, FloatingJoystick joystick, Vector2 position)
         {
             if (condition)
             {
@@ -79,6 +80,13 @@ namespace UI.Views.Common
             {
                 joystick.SetJoystickPosition(Vector2.zero, false);
             }
+        }
+
+        private void OnDestroy()
+        {
+            _uiInputController.FingerDown -= OnFingerDown;
+            _uiInputController.FingerMoved -= OnFingerMoved;
+            _uiInputController.FingerUp -= OnFingerUp;
         }
     }
 }
