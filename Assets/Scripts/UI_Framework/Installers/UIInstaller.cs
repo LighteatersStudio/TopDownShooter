@@ -1,5 +1,4 @@
-﻿using UI.Framework;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace UI.Framework.Implementation

@@ -56,80 +56,50 @@ namespace Gameplay.Services.Input
 
         private void OnMove(InputAction.CallbackContext context)
         {
-            if (_movementFinger is not null)
-            {
-                MoveChanged?.Invoke(_movementAmount);
-                return;
-            }
-            
-            MoveChanged?.Invoke(context.ReadValue<Vector2>());
+            MoveChanged?.Invoke(_movementFinger != null ? _movementAmount : context.ReadValue<Vector2>());
         }
 
         private void OnLook(InputAction.CallbackContext context)
         {
-            if (_lookFinger is not null)
-            {
-                LookChanged?.Invoke(_lookAmount);
-                return;
-            }
-            
-            LookChanged?.Invoke(context.ReadValue<Vector2>());
+            LookChanged?.Invoke(_lookFinger != null ? _lookAmount : context.ReadValue<Vector2>());
         }
 
         private void OnFingerDown(ETouch.Finger finger)
         {
-            if (_movementFinger == null && finger.screenPosition.x <= Screen.width / ScreenSizeModifier)
+            var isMovement = finger.screenPosition.x <= Screen.width / ScreenSizeModifier;
+            var isLook = !isMovement;
+
+            if (isMovement && _movementFinger == null)
             {
-                _movementFinger = finger;
-                _movementAmount = Vector2.zero;
-                _movementJoystickAnchoredPosition = ClampMovementTouchPosition(finger.screenPosition);
-                FingerDown?.Invoke(_movementJoystickAnchoredPosition, true, false);
+                SetFingerDown(ref _movementFinger, ref _movementAmount, ref _movementJoystickAnchoredPosition, finger,
+                    isMovement, isLook);
             }
             
             if (_lookFinger == null && finger.screenPosition.x > Screen.width / ScreenSizeModifier)
             {
-                _lookFinger = finger;
-                _lookAmount = Vector2.zero;
-                _lookJoystickAnchoredPosition = ClampLookTouchPosition(finger.screenPosition);
-                FingerDown?.Invoke(_lookJoystickAnchoredPosition, false, true);
+                SetFingerDown(ref _lookFinger, ref _lookAmount, ref _lookJoystickAnchoredPosition, finger, isMovement, isLook);
                 FireChanged?.Invoke(true);
             }
         }
 
-        private Vector2 ClampMovementTouchPosition(Vector2 startPosition)
+        private void SetFingerDown(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 joystickAnchoredPosition, ETouch.Finger finger, bool isMovement, bool isLook)
         {
-            if (startPosition.x < _joystickSize.x / JoystickSizeModifier)
-            {
-                startPosition.x = _joystickSize.x / JoystickSizeModifier;
-            }
-
-            if (startPosition.y < _joystickSize.y / JoystickSizeModifier)
-            {
-                startPosition.y = _joystickSize.y / JoystickSizeModifier;
-            }
-            else if (startPosition.y > Screen.height - _joystickSize.y / JoystickSizeModifier)
-            {
-                startPosition.y = Screen.height - _joystickSize.y / JoystickSizeModifier;
-            }
-
-            return startPosition;
+            fingerField = finger;
+            amount = Vector2.zero;
+            joystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, isMovement);
+            FingerDown?.Invoke(joystickAnchoredPosition, isMovement, isLook);
         }
 
-        private Vector2 ClampLookTouchPosition(Vector2 startPosition)
+        private Vector2 ClampTouchPosition(Vector2 startPosition, bool isMovement)
         {
-            if (startPosition.x > Screen.width - _joystickSize.x / JoystickSizeModifier)
-            {
-                startPosition.x = Screen.width - _joystickSize.x / JoystickSizeModifier;
-            }
+            var xBoundary = isMovement
+                ? _joystickSize.x / JoystickSizeModifier
+                : Screen.width - _joystickSize.x / JoystickSizeModifier;
+            var yBoundary = _joystickSize.y / JoystickSizeModifier;
+            var yUpperBoundary = Screen.height - _joystickSize.y / JoystickSizeModifier;
 
-            if (startPosition.y < _joystickSize.y / JoystickSizeModifier)
-            {
-                startPosition.y = _joystickSize.y / JoystickSizeModifier;
-            }
-            else if (startPosition.y > Screen.height - _joystickSize.y / JoystickSizeModifier)
-            {
-                startPosition.y = Screen.height - _joystickSize.y / JoystickSizeModifier;
-            }
+            startPosition.x = isMovement ? Mathf.Max(startPosition.x, xBoundary) : Mathf.Min(startPosition.x, xBoundary);
+            startPosition.y = startPosition.y < yBoundary ? yBoundary : Mathf.Min(startPosition.y, yUpperBoundary);
 
             return startPosition;
         }
@@ -199,21 +169,23 @@ namespace Gameplay.Services.Input
 
         private void OnFingerUp(ETouch.Finger finger)
         {
-            if (finger == _movementFinger)
+            ResetFinger(ref _movementFinger, ref _movementAmount, ref _movementKnobAnchoredPosition, finger, true, false);
+            ResetFinger(ref _lookFinger, ref _lookAmount, ref _lookKnobAnchoredPosition, finger, false, true);
+        }
+
+        private void ResetFinger(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 knobAnchoredPosition, ETouch.Finger finger, bool isMovement, bool isLook)
+        {
+            if (finger == fingerField)
             {
-                _movementFinger = null;
-                _movementKnobAnchoredPosition = Vector2.zero;
-                FingerUp?.Invoke(true, false);
-                _movementAmount = Vector2.zero;
-            }
-            
-            if (finger == _lookFinger)
-            {
-                _lookFinger = null;
-                _lookKnobAnchoredPosition = Vector2.zero;
-                FingerUp?.Invoke(false, true);
-                FireChanged?.Invoke(false);
-                _lookAmount = Vector2.zero;
+                fingerField = null;
+                knobAnchoredPosition = Vector2.zero;
+                FingerUp?.Invoke(isMovement, isLook);
+                if (isLook)
+                {
+                    FireChanged?.Invoke(false);
+                }
+
+                amount = Vector2.zero;
             }
         }
 

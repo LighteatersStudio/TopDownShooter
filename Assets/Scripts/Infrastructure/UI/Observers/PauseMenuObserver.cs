@@ -12,9 +12,8 @@ namespace Infrastructure.UI
         private IUIRoot _uiRoot;
 
         [Inject]
-        public void Construct(IUIRoot uiRoot, IUIInputController uiInputController, PauseMenu pauseMenu)
+        public void Construct(IUIRoot uiRoot, IUIInputController uiInputController)
         {
-            _pauseMenu = pauseMenu;
             _uiRoot = uiRoot;
             uiInputController.CancelChanged += TogglePauseMenu;
         }

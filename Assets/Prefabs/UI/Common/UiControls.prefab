@@ -170,7 +170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9009181683999118959
 RectTransform:
   m_ObjectHideFlags: 0
@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a22dc487cb439183da8a0cf63855f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RectTransform: {fileID: 9009181683999118959}
-  Knob: {fileID: 1492716782317988075}
+  _rectTransform: {fileID: 9009181683999118959}
+  _knob: {fileID: 1492716782317988075}
 --- !u!1 &2991200753754485742
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,10 +296,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c31fc76fe7a4644bad223505a698f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftJoystickBase: {fileID: 461047729437311257}
-  _leftJoystickKnob: {fileID: 2128548016514375422}
-  _rightJoystickBase: {fileID: 4330041690709059783}
-  _rightJoystickKnob: {fileID: 2336243252875548112}
+  _leftJoystick: {fileID: 461047729437311257}
+  _rightJoystick: {fileID: 4330041690709059783}
 --- !u!1 &7000252980725795415
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2818610323027721393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -525,5 +523,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a22dc487cb439183da8a0cf63855f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RectTransform: {fileID: 2818610323027721393}
-  Knob: {fileID: 1896416701761386147}
+  _rectTransform: {fileID: 2818610323027721393}
+  _knob: {fileID: 1896416701761386147}

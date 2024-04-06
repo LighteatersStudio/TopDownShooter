@@ -2,7 +2,6 @@
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Pause;
 using Infrastructure.UI;
-using UI;
 using UnityEngine;
 using Zenject;
 
@@ -10,9 +9,6 @@ namespace Infrastructure
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
-        [Header("Menu Entities")]
-        [SerializeField] private PauseMenu _pauseMenuPrefab;
-        
         public override void InstallBindings()
         {
             BindTime();
@@ -38,11 +34,6 @@ namespace Infrastructure
         
         private void BindPause()
         {
-            Container.Bind<PauseMenu>()
-                .FromComponentInNewPrefab(_pauseMenuPrefab)
-                .AsSingle()
-                .Lazy();
-            
             Container.Bind<IPause>()
                 .To<PauseManager>()
                 .AsSingle()

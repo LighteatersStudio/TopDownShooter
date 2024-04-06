@@ -1,5 +1,4 @@
-﻿using System;
-using Gameplay.Services.Input;
+﻿using Gameplay.Services.Input;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
@@ -8,10 +7,8 @@ namespace UI.Views.Common
 {
     public class TouchControlsView : View
     {
-        [SerializeField] private FloatingJoystick _leftJoystickBase;
-        [SerializeField] private GameObject _leftJoystickKnob;
-        [SerializeField] private FloatingJoystick _rightJoystickBase;
-        [SerializeField] private GameObject _rightJoystickKnob;
+        [SerializeField] private FloatingJoystick _leftJoystick;
+        [SerializeField] private FloatingJoystick _rightJoystick;
 
         private IInputController _uiInputController;
 
@@ -19,68 +16,68 @@ namespace UI.Views.Common
         public void Construct(IInputController inputController)
         {
             _uiInputController = inputController;
+        }
+
+        private void Awake()
+        {
+            if (_leftJoystick == null || _rightJoystick == null)
+            {
+                Debug.LogError("Joysticks are not set!");
+                gameObject.SetActive(false);
+            }
+        }
+
+        private void Start()
+        {
             _uiInputController.FingerDown += OnFingerDown;
             _uiInputController.FingerMoved += OnFingerMoved;
             _uiInputController.FingerUp += OnFingerUp;
-
-            _leftJoystickBase.gameObject.SetActive(false);
-            _rightJoystickBase.gameObject.SetActive(false);
         }
 
         private void OnFingerDown(Vector2 touchPosition, bool isMoving, bool isLooking)
         {
-            if (_leftJoystickBase == null || _rightJoystickBase == null)
-            {
-                return;
-            }
-
-            if (isMoving)
-            {
-                _leftJoystickBase.transform.position = touchPosition;
-                _leftJoystickBase.gameObject.SetActive(true);
-            }
-
-            if (isLooking)
-            {
-                _rightJoystickBase.transform.position = touchPosition;
-                _rightJoystickBase.gameObject.SetActive(true);
-            }
+            SetJoystickPosition(isMoving, _leftJoystick, touchPosition);
+            SetJoystickPosition(isLooking, _rightJoystick, touchPosition);
         }
 
         private void OnFingerMoved(Vector2 touchPosition, bool isMoving, bool isLooking)
         {
-            if (_leftJoystickBase == null || _rightJoystickBase == null || float.IsNaN(touchPosition.x) ||
-                float.IsNaN(touchPosition.y))
+            if (float.IsNaN(touchPosition.x) || float.IsNaN(touchPosition.y))
             {
                 return;
             }
 
-            if (isMoving)
-            {
-                _leftJoystickKnob.transform.localPosition = touchPosition;
-            }
-
-            if (isLooking)
-            {
-                _rightJoystickKnob.transform.localPosition = touchPosition;
-            }
+            SetKnobPosition(isMoving, _leftJoystick, touchPosition);
+            SetKnobPosition(isLooking, _rightJoystick, touchPosition);
         }
 
         private void OnFingerUp(bool isMoving, bool isLooking)
         {
-            if (_leftJoystickBase == null || _rightJoystickBase == null)
-            {
-                return;
-            }
+            ResetJoystick(isMoving, _leftJoystick);
+            ResetJoystick(isLooking, _rightJoystick);
+        }
 
-            if (isMoving)
+        private static void SetJoystickPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        {
+            if (condition)
             {
-                _leftJoystickBase.gameObject.SetActive(false);
+                joystick.SetJoystickPosition(position, true);
             }
+        }
 
-            if (isLooking)
+        private static void SetKnobPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        {
+            if (condition)
             {
-                _rightJoystickBase.gameObject.SetActive(false);
+                joystick.SetKnobPosition(position);
+            }
+        }
+
+        private static void ResetJoystick(bool condition, FloatingJoystick joystick)
+        {
+            if (condition)
+            {
+                joystick.SetJoystickPosition(Vector2.zero, false);
             }
         }
     }
