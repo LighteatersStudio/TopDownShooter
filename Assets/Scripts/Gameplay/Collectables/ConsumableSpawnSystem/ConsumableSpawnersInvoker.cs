@@ -47,6 +47,7 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
             int index = Random.Range(0, _spawners.Length);
             _spawners[index].Spawn();
+            StartSpawn();
         }
 
         public void Dispose()

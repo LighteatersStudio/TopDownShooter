@@ -59,10 +59,9 @@ namespace Infrastructure
 
         private void BindTimeService()
         {
-            Container.Bind(typeof(ITicker), typeof(IDisposable))
+            Container.Bind(typeof(ITicker), typeof(ITickable), typeof(IDisposable))
                 .To<ZenjectTicker>()
                 .AsSingle();
         }
-        
     }
 }
