@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6032338114108344520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 588.968, y: 307.7043, z: -2.337853}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -78,8 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d2cac36d9da49c68cfc0ba25c7b455e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerInputActionsMap: {fileID: -944628639613478452, guid: 7204243c7727540028fb2dd08ab8b392, type: 3}
-  _playerInputPrefab: {fileID: 5776387706417208865, guid: 65f7b11787bb0e04798952537ae807d8, type: 3}
+  _pauseMenuPrefab: {fileID: 3337071853172049906, guid: 2b70ff7d37f884f0c86ed10e5a2ecb72, type: 3}
 --- !u!114 &1167715141
 MonoBehaviour:
   m_ObjectHideFlags: 0

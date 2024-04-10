@@ -7,7 +7,6 @@ namespace Gameplay
         private readonly Character _character;
         private readonly Rigidbody _rigidbody;
         private float Speed => _character.MoveSpeed;
-        
 
         public MoveBehaviour(Character character, Rigidbody rigidbody)
         {
@@ -24,7 +23,7 @@ namespace Gameplay
 
         public void SetMoveForce(Vector3 direction, float force = 1)
         {
-            _rigidbody.velocity = direction.normalized * Speed * force;
+            _rigidbody.velocity = direction.normalized * (Speed * force);
         }
 
         public void Stop()

@@ -1,5 +1,4 @@
-﻿using UI.Framework;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 namespace UI.Framework.Implementation
@@ -23,7 +22,6 @@ namespace UI.Framework.Implementation
                 .WithGameObjectName($"UIRoot[{_scopeName}]")
                 .AsSingle()
                 .NonLazy();
-            
         }
     }
 }

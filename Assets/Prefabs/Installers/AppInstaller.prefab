@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8362516885837498339}
   - component: {fileID: 1900659981389239575}
   - component: {fileID: 8935362038654220901}
+  - component: {fileID: -7907889370390857968}
   m_Layer: 0
   m_Name: AppInstaller
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8229114719343782071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.575096, y: 11.075371, z: -38.059414}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59,6 +60,7 @@ MonoBehaviour:
   - {fileID: 8362516885837498339}
   - {fileID: 8935362038654220901}
   - {fileID: 1900659981389239575}
+  - {fileID: -7907889370390857968}
 --- !u!114 &1518887348426973762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +157,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSettings: {fileID: 11400000, guid: e056b892dd6466c46af8cb8c1a92c1be, type: 2}
+--- !u!114 &-7907889370390857968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8229114719343782071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f13bddacd8470ab24fcaf1d4665052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInputActionsMap: {fileID: -944628639613478452, guid: 7204243c7727540028fb2dd08ab8b392, type: 3}
+  _playerInputPrefab: {fileID: 5776387706417208865, guid: 65f7b11787bb0e04798952537ae807d8, type: 3}
