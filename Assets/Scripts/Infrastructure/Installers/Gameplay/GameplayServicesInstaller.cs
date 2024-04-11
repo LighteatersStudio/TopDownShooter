@@ -1,47 +1,19 @@
 ﻿using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
-using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
 using Infrastructure.UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Infrastructure
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
-        [Header("Input")]
-        [SerializeField] private InputActionAsset _playerInputActionsMap;
-        [SerializeField] private PlayerInput _playerInputPrefab;
-        
         public override void InstallBindings()
         {
-            BindInputController();
             BindTime();
-            BindPauseManager();
+            BindPause();
             BindFX();
-        }
-        
-        private void BindInputController()
-        {
-            Debug.Log("Game installer: Bind input controller");
-
-            Container.Bind<InputActionAsset>()
-                .FromScriptableObject(_playerInputActionsMap)
-                .AsSingle()
-                .Lazy();
-
-            Container.Bind<PlayerInput>()
-                .FromComponentInNewPrefab(_playerInputPrefab)
-                .AsSingle()
-                .NonLazy();
-            
-            Container.Bind<IInputController>()
-                .To<InputController>()
-                .FromNew()
-                .AsSingle()
-                .NonLazy();
         }
         
         private void BindTime()
@@ -60,14 +32,12 @@ namespace Infrastructure
                 .Lazy();
         }
         
-        
-        private void BindPauseManager()
+        private void BindPause()
         {
             Container.Bind<IPause>()
                 .To<PauseManager>()
                 .AsSingle()
                 .Lazy();
-            
             
             Container.Bind<PauseMenuObserver>()
                 .FromNewComponentOnNewGameObject()

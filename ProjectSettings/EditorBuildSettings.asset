@@ -21,4 +21,4 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/LevelBaseSize.unity
     guid: 26ddde11920c34b22a6ed4a2ef2a46ee
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: b3b0054f4a3cd3545bf318c7319780be, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 91ee3d88d8c3aed46a0bcda99602a7ad, type: 2}

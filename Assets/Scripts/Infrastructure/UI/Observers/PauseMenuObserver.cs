@@ -2,25 +2,20 @@ using UI;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
+using Gameplay.Services.Input;
 
 namespace Infrastructure.UI
 {
     public class PauseMenuObserver : MonoBehaviour
     {
-        private IUIRoot _uiRoot;
         private PauseMenu _pauseMenu;
-    
+        private IUIRoot _uiRoot;
+
         [Inject]
-        public void Construct(IUIRoot uiRoot)
+        public void Construct(IUIRoot uiRoot, IUIInputController uiInputController)
         {
             _uiRoot = uiRoot;
-        }
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                TogglePauseMenu();
-            }
+            uiInputController.CancelChanged += TogglePauseMenu;
         }
 
         private void TogglePauseMenu()
