@@ -24,8 +24,8 @@ namespace Infrastructure.Scenraios
         {
             _musicPlayer.StopMusic();
 
-            _uiRoot.Open<Hud>();
             _uiRoot.Open<TouchControlsView>();
+            _uiRoot.Open<Hud>();
             _uiRoot.Open<StartLevelMenu>();
 
             Destroy(gameObject);

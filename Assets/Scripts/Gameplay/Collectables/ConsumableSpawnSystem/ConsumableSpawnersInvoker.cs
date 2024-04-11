@@ -1,4 +1,5 @@
 using System;
+using Gameplay.CollectableItems;
 using Gameplay.Collectables.FirstAid;
 using Gameplay.Services.GameTime;
 using Zenject;
@@ -15,12 +16,13 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
         [Inject]
         public ConsumableSpawnersInvoker(IFirstAidKitSpawner firstAidKitSpawner,
+            IWeaponSpawner weaponSpawner,
             ConsumableSpawnSettings consumableSpawnSettings,
             Cooldown.Factory cooldownFactory)
         {
             _consumableSpawnSettings = consumableSpawnSettings;
             _cooldownFactory = cooldownFactory;
-            _spawners = new ISpawner[] { firstAidKitSpawner };
+            _spawners = new ISpawner[] { firstAidKitSpawner, weaponSpawner };
 
             _spawnInvokeCooldown = _cooldownFactory.CreateFinished();
         }

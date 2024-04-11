@@ -37,6 +37,7 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
+        [SerializeField] private AvailableWeaponsSettings _availableWeaponsSettings;
 
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
@@ -178,7 +179,7 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind collectables");
 
-            Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
+            Container.BindFactory<Vector3, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
                 .AsSingle();
 
@@ -222,6 +223,17 @@ namespace Infrastructure
             Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
+
+            Container.Bind<IAvailableWeaponsSettings>()
+                .To<AvailableWeaponsSettings>()
+                .FromScriptableObject(_availableWeaponsSettings)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind(typeof(IWeaponSpawner))
+                .To<WeaponSpawner>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindFriendOrFoeSystem()
