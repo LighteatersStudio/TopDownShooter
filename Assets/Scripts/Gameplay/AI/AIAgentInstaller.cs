@@ -24,7 +24,12 @@ namespace Gameplay.AI
         { 
             Container.Bind<AIAgent>()
                 .FromInstance(_aiAgent)
-                .AsSingle();
+                .AsCached();
+
+            Container.Bind<IAIAgentStop>()
+                .To<AIAgent>()
+                .FromResolve()
+                .AsCached();
             
             Container.Bind<ObserveArea>()
                 .FromInstance(_observeArea)

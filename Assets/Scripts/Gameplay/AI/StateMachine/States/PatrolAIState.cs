@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PatrolAIState : IAIState
+    public class PatrolAIState : CharacterDeathStateHandler
     {
         private readonly NavMeshMoving _moving;
         private readonly MovingPath _path;
@@ -17,8 +17,6 @@ namespace Gameplay.AI
         private readonly AttackingAIState.Factory _attackingAIFactory;
         private readonly DeathAIState.Factory _deathAIFactory;
         private readonly Character _character;
-        
-        private CancellationTokenSource _internalSource;
 
         public PatrolAIState(NavMeshMoving moving,
             MovingPath path,
@@ -27,7 +25,7 @@ namespace Gameplay.AI
             ObserveArea observeArea,
             AttackingAIState.Factory attackingAIFactory,
             Character character,
-            DeathAIState.Factory deathAIFactory)
+            DeathAIState.Factory deathAIFactory) : base(token, character, factory)
         {
             _moving = moving;
             _path = path;
@@ -39,12 +37,11 @@ namespace Gameplay.AI
             _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             var path = _path;
 
-            HandleCharacterDeath();
-            
             do
             {
                 if (_character.IsDead)
@@ -57,28 +54,13 @@ namespace Gameplay.AI
                     return new StateResult(_attackingAIFactory.Create(_token), true);
                 }
 
-                await MoveThroughPath(path.Points, _internalSource.Token);
+                await MoveThroughPath(path.Points, InternalSource.Token);
                 await UniTask.Yield();
 
                 path = _path.Reverse();
             } while (!_token.IsCancellationRequested);
 
             return new StateResult(_factory.Create(_token), false);
-        }
-        
-        private void HandleCharacterDeath()
-        {
-            _internalSource = new CancellationTokenSource();
-
-            _token.Register(() => _internalSource.Cancel());
-
-            void HandleDead()
-            {
-                _internalSource.Cancel();
-                _character.Dead -= HandleDead;
-            }
-
-            _character.Dead += HandleDead;
         }
 
         private async Task MoveThroughPath(IEnumerable<Vector3> points, CancellationToken token)

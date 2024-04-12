@@ -3,7 +3,12 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class AIAgent : MonoBehaviour
+    public interface IAIAgentStop
+    {
+        void Stop();
+    }
+    
+    public class AIAgent : MonoBehaviour, IAIAgentStop
     {
         [SerializeField] private bool _debugTrace;
         
@@ -40,6 +45,11 @@ namespace Gameplay.AI
         }
         
         private void OnDisable()
+        {
+            _stateMachine?.Stop();
+        }
+
+        public void Stop()
         {
             _stateMachine?.Stop();
         }

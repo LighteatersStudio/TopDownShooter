@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
@@ -12,27 +13,32 @@ namespace Gameplay
         private static readonly int DeadName = Animator.StringToHash("Dead");
 
         [SerializeField] private GameObject _view;
-
-        private List<Material> _materials = new();
+        
+          
+        private CharacterColorFeedback.Factory _colorFeedbackFactory;
+        
         private Animator _animator;
         private float _currentSpeed;
         private Vector3 _lastPosition;
         private ICharacter _character;
-        private MaterialColorChanger _colorChanger;
+        private CharacterColorFeedback _colorFeedback;
 
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
-            _colorChanger = new MaterialColorChanger(_view);
+            // _colorFeedback = new CharacterColorFeedback(_view);
         }
 
-        public void Construct(ICharacter character)
+        public void Construct(ICharacter character, CharacterColorFeedback.Factory colorFeedbackFactory)
         {
             _character = character;
+            _colorFeedbackFactory = colorFeedbackFactory;
         }
 
         protected void Start()
         {
+            Debug.Log(_colorFeedbackFactory);
+            _colorFeedback =  _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
             _lastPosition = transform.position;
             Subscribe();
@@ -84,8 +90,7 @@ namespace Gameplay
 
         private void OnDamaged()
         {
-            const float duration = 0.1f;
-            _colorChanger.ChangeColor(Color.red, duration);
+            _colorFeedback.ChangeColor();
             _animator.SetTrigger(HitName);
         }
 

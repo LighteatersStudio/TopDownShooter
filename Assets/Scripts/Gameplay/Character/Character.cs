@@ -15,6 +15,7 @@ namespace Gameplay
         [SerializeField] private float _deathWaitTime = 10f;
 
         private DynamicMonoInitializer<Func<Transform, GameObject>> _initializer;
+        private CharacterColorFeedback.Factory _colorFeedbackFactory;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
@@ -57,17 +58,19 @@ namespace Gameplay
         
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag)
+            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag,
+            CharacterColorFeedback.Factory colorFeedbackFactory)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
             FriendOrFoeTag = friendOrFoeTag;
+            _colorFeedbackFactory = colorFeedbackFactory;
 
             _initializer = new(viewFactoryMethod);
             
             _initializer.Initialize(Load);
-        }
+        } 
 
         private void Load(Func<Transform, GameObject> viewFactoryMethod)
         {
@@ -77,7 +80,7 @@ namespace Gameplay
         private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
         {
             var model = viewFactoryMethod(_viewRoot);
-            model.GetComponent<CharacterAnimator>().Construct(this);
+            model.GetComponent<CharacterAnimator>().Construct(this, _colorFeedbackFactory);
 
             return model.GetComponent<CharacterModelRoots>();
         }

@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class AttackingAIState : IAIState
+    public class AttackingAIState : CharacterDeathStateHandler
     {
         private readonly CancellationToken _token;
         private readonly Character _character;
@@ -15,27 +15,26 @@ namespace Gameplay.AI
         private readonly ObserveArea _observeArea;
         private readonly PursueTargetAIState.Factory _pursueTargetAIFactory;
         private readonly DeathAIState.Factory _deathAIFactory;
-        
-        private CancellationTokenSource _internalSource;
 
         public AttackingAIState(CancellationToken token, Character character,
             NavMeshMoving moving, ObserveArea observeArea,
-            PursueTargetAIState.Factory pursueTargetAIFactory)
+            PursueTargetAIState.Factory pursueTargetAIFactory, IdleAIState.Factory idleFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleFactory)
         {
             _token = token;
             _character = character;
             _moving = moving;
             _observeArea = observeArea;
             _pursueTargetAIFactory = pursueTargetAIFactory;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _moving.Stop();
             _observeArea.ActivateAttackCollider();
 
-            HandleCharacterDeath();
-            
             do
             {
                 if (_character.IsDead)
@@ -61,21 +60,6 @@ namespace Gameplay.AI
             _observeArea.DeactivateAttackCollider();
             
             return new StateResult(_pursueTargetAIFactory.Create(_token), true);
-        }
-        
-        private void HandleCharacterDeath()
-        {
-            _internalSource = new CancellationTokenSource();
-
-            _token.Register(() => _internalSource.Cancel());
-
-            void HandleDead()
-            {
-                _internalSource.Cancel();
-                _character.Dead -= HandleDead;
-            }
-
-            _character.Dead += HandleDead;
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, AttackingAIState>

@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PursueTargetAIState: IAIState
+    public class PursueTargetAIState: CharacterDeathStateHandler
     {
         private readonly NavMeshMoving _moving;
         private readonly CancellationToken _token;
@@ -15,15 +14,15 @@ namespace Gameplay.AI
         private readonly AttackingAIState.Factory _attackingAIFactory;
         private readonly DeathAIState.Factory _deathAIFactory;
         private readonly Character _character;
-        
-        private CancellationTokenSource _internalSource;
 
         public PursueTargetAIState(CancellationToken token,
             SearchTargetAIState.Factory searchTargetFactory,
             ObserveArea observeArea,
             NavMeshMoving moving,
             AttackingAIState.Factory attackingAIFactory,
-            Character character)
+            Character character,
+            IdleAIState.Factory idleFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleFactory)
         {
             _token = token;
             _searchTargetFactory = searchTargetFactory;
@@ -31,19 +30,20 @@ namespace Gameplay.AI
             _moving = moving;
             _attackingAIFactory = attackingAIFactory;
             _character = character;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _observeArea.ActivateAttackCollider();
-            HandleCharacterDeath();
-            
+
             if (_character.IsDead)
             {
                 return new StateResult(_deathAIFactory.Create(_token), true);
             }
 
-            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _internalSource.Token);
+            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, InternalSource.Token);
 
             if (!_observeArea.HasTarget)
             {
@@ -51,21 +51,6 @@ namespace Gameplay.AI
             }
 
             return new StateResult(_attackingAIFactory.Create(_token), true);
-        }
-        
-        private void HandleCharacterDeath()
-        {
-            _internalSource = new CancellationTokenSource();
-
-            _token.Register(() => _internalSource.Cancel());
-
-            void HandleDead()
-            {
-                _internalSource.Cancel();
-                _character.Dead -= HandleDead;
-            }
-
-            _character.Dead += HandleDead;
         }
 
         private async Task MoveToLastTargetPosition(Vector3 point, CancellationToken token)

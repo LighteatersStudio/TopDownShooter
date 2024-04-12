@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class SearchTargetAIState: IAIState
+    public class SearchTargetAIState: CharacterDeathStateHandler
     {
         private const int Angle = 50;
         private const int FullRotation = 360;
@@ -19,8 +19,6 @@ namespace Gameplay.AI
         private readonly Character _character;
         private readonly AttackingAIState.Factory _attackingAIFactory;
         private readonly DeathAIState.Factory _deathAIFactory;
-        
-        private CancellationTokenSource _internalSource;
 
         public SearchTargetAIState(CancellationToken token,
             IdleAIState.Factory idleAIFactory,
@@ -28,7 +26,8 @@ namespace Gameplay.AI
             NavMeshMoving moving,
             ObserveArea observeArea,
             Character character,
-            AttackingAIState.Factory attackingAIFactory)
+            AttackingAIState.Factory attackingAIFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleAIFactory)
         {
             _point = point;
             _token = token;
@@ -37,19 +36,20 @@ namespace Gameplay.AI
             _observeArea = observeArea;
             _character = character;
             _attackingAIFactory = attackingAIFactory;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _observeArea.DeactivateAttackCollider();
-            HandleCharacterDeath();
-            
+
             if (_character.IsDead)
             {
                 return new StateResult(_deathAIFactory.Create(_token), true);
             }
             
-            await MoveToSearchTargetPosition(_point.Point, _internalSource.Token);
+            await MoveToSearchTargetPosition(_point.Point, InternalSource.Token);
 
             float currentRotation = 0;
 
@@ -71,22 +71,6 @@ namespace Gameplay.AI
             
             return new StateResult(_idleAIFactory.Create(_token), true);
         }
-        
-        private void HandleCharacterDeath()
-        {
-            _internalSource = new CancellationTokenSource();
-
-            _token.Register(() => _internalSource.Cancel());
-
-            void HandleDead()
-            {
-                _internalSource.Cancel();
-                _character.Dead -= HandleDead;
-            }
-
-            _character.Dead += HandleDead;
-        }
-
 
         private async Task MoveToSearchTargetPosition(Vector3 point, CancellationToken token)
         {
