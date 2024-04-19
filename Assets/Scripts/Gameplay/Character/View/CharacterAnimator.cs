@@ -13,8 +13,7 @@ namespace Gameplay
         private static readonly int DeadName = Animator.StringToHash("Dead");
 
         [SerializeField] private GameObject _view;
-        
-          
+
         private CharacterColorFeedback.Factory _colorFeedbackFactory;
         
         private Animator _animator;
@@ -26,7 +25,6 @@ namespace Gameplay
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
-            // _colorFeedback = new CharacterColorFeedback(_view);
         }
 
         public void Construct(ICharacter character, CharacterColorFeedback.Factory colorFeedbackFactory)
@@ -37,7 +35,6 @@ namespace Gameplay
 
         protected void Start()
         {
-            Debug.Log(_colorFeedbackFactory);
             _colorFeedback =  _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
             _lastPosition = transform.position;
