@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _viewRoot: {fileID: 7564954714408511390}
-  _projectileRoot: {fileID: 7804321971561553831}
   _deathWaitTime: 10
 --- !u!114 &1287744693554637472
 MonoBehaviour:
@@ -234,6 +233,7 @@ MonoBehaviour:
   _reloadBarPrefab: {fileID: -6512463384514603965, guid: 4becb2bebb5c24d418cd5a04e4222865, type: 3}
   _lookDirectionDisplayPrefab: {fileID: 9131443714891836163, guid: db5dfd9e4bff62c4aa3be58539cc1209, type: 3}
   _characterFXList: {fileID: 11400000, guid: a3e8a13bf0572594196e4fa5a635c970, type: 2}
+  _colorChangeData: {fileID: 11400000, guid: ca195032b3585714bad4c0b657e76ea5, type: 2}
 --- !u!114 &1262148185
 MonoBehaviour:
   m_ObjectHideFlags: 0

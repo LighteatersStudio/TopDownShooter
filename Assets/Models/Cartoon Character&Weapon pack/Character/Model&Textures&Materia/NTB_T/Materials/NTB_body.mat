@@ -97,7 +97,7 @@ Material:
     - _TexLod: 5
     - _ZSmooth: -0.5
     m_Colors:
-    - _AmbientColor: {r: 0, g: 0, b: 0, a: 0}
+    - _AmbientColor: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _HColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
