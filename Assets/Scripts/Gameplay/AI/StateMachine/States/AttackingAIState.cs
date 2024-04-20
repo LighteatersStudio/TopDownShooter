@@ -7,32 +7,41 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class AttackingAIState : IAIState
+    public class AttackingAIState : CharacterDeathStateHandler
     {
         private readonly CancellationToken _token;
         private readonly Character _character;
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
         private readonly PursueTargetAIState.Factory _pursueTargetAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
 
         public AttackingAIState(CancellationToken token, Character character,
             NavMeshMoving moving, ObserveArea observeArea,
-            PursueTargetAIState.Factory pursueTargetAIFactory)
+            PursueTargetAIState.Factory pursueTargetAIFactory, IdleAIState.Factory idleFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleFactory)
         {
             _token = token;
             _character = character;
             _moving = moving;
             _observeArea = observeArea;
             _pursueTargetAIFactory = pursueTargetAIFactory;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _moving.Stop();
             _observeArea.ActivateAttackCollider();
 
             do
             {
+                if (_character.IsDead)
+                {
+                    return new StateResult(_deathAIFactory.Create(_token), true);
+                }
+                
                 if (!_observeArea.HasTarget)
                 {
                     break;

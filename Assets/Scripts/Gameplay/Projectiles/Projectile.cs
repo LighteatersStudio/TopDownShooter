@@ -56,14 +56,26 @@ namespace Gameplay.Projectiles
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.GetComponent<ObserveArea>())
+            if (ShouldIgnoreCollision(other))
             {
                 return;
             }
             
-            SpawnSparksEffect();
-            Dispose();
-            
+            var friendOrFoeTag = other.GetComponent<IFriendOrFoeTag>();
+
+            if (friendOrFoeTag == null)
+            {
+                HandleNonTaggedCollision();
+                return;
+            }
+
+            if (!IsFoes(friendOrFoeTag))
+            {
+                return;
+            }
+
+            HandleNonTaggedCollision();
+
             var target = other.GetComponent<IDamageable>();
 
             if (target == null)
@@ -71,12 +83,25 @@ namespace Gameplay.Projectiles
                 return;
             }
 
-            var fiendOrFoeTag = other.GetComponent<IFriendOrFoeTag>();
-
-            if (fiendOrFoeTag == null || _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, fiendOrFoeTag))
+            if (IsFoes(friendOrFoeTag))
             {
                 target.TakeDamage(_attackInfo);
             }
+        }
+        
+        private bool IsFoes(IFriendOrFoeTag friendOrFoeTag)
+        {
+            return _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, friendOrFoeTag);
+        }
+        private void HandleNonTaggedCollision()
+        {
+            SpawnSparksEffect();
+            Dispose();
+        }
+        
+        private bool ShouldIgnoreCollision(Collider other)
+        {
+            return other.GetComponent<ObserveArea>() || other.GetComponent<Projectile>();
         }
 
         private void SpawnSparksEffect()

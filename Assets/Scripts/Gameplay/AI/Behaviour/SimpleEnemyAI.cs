@@ -40,6 +40,7 @@ namespace Gameplay.AI
             Container.BindFactory<CancellationToken, AttackingAIState, AttackingAIState.Factory>();
             Container.BindFactory<CancellationToken, PursueTargetAIState, PursueTargetAIState.Factory>();
             Container.BindFactory<CancellationToken, SearchTargetAIState, SearchTargetAIState.Factory>();
+            Container.BindFactory<CancellationToken, DeathAIState, DeathAIState.Factory>();
         }
     }
 }
