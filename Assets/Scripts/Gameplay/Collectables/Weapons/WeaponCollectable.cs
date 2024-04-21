@@ -31,9 +31,7 @@ namespace Gameplay.CollectableItems
         private void Start()
         {
             _weapon.ViewFactory(transform);
-
-            _destroyCooldown = _cooldownFactory.Create(_availableWeaponsSettings.LifeTime, this, SelfDestroy);
-            _destroyCooldown.Launch();
+            StartDestroyTimer();
         }
 
         private void Update()
@@ -50,6 +48,12 @@ namespace Gameplay.CollectableItems
                 player.ChangeWeapon(_weapon);
                 SelfDestroy();
             }
+        }
+
+        private void StartDestroyTimer()
+        {
+            _destroyCooldown = _cooldownFactory.Create(_availableWeaponsSettings.LifeTime, this, SelfDestroy);
+            _destroyCooldown.Launch();
         }
 
         private void SelfDestroy()

@@ -7,7 +7,7 @@ namespace Gameplay.CollectableItems
         private readonly IConsumableSpawnSystem _consumableSpawnSystem;
         private readonly WeaponCollectable.Factory _weaponCollectableFactory;
 
-        public WeaponSpawner(IConsumableSpawnSystem consumableSpawnSystem,WeaponCollectable.Factory weaponCollectableFactory)
+        public WeaponSpawner(IConsumableSpawnSystem consumableSpawnSystem, WeaponCollectable.Factory weaponCollectableFactory)
         {
             _consumableSpawnSystem = consumableSpawnSystem;
             _weaponCollectableFactory = weaponCollectableFactory;
