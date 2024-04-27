@@ -12,19 +12,32 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
         private readonly ISpawner[] _spawners;
         private readonly ConsumableSpawnSettings _consumableSpawnSettings;
         private readonly Cooldown.Factory _cooldownFactory;
+        private readonly IGameState _gameState;
         private Cooldown _spawnInvokeCooldown;
+        private bool _isSpawn = false;
 
         [Inject]
         public ConsumableSpawnersInvoker(IFirstAidKitSpawner firstAidKitSpawner,
             IWeaponSpawner weaponSpawner,
             ConsumableSpawnSettings consumableSpawnSettings,
-            Cooldown.Factory cooldownFactory)
+            Cooldown.Factory cooldownFactory,
+            IGameState gameState)
         {
             _consumableSpawnSettings = consumableSpawnSettings;
             _cooldownFactory = cooldownFactory;
+            _gameState = gameState;
             _spawners = new ISpawner[] { firstAidKitSpawner, weaponSpawner };
 
             _spawnInvokeCooldown = _cooldownFactory.CreateFinished();
+
+            _gameState.Won += OnLevelFinished;
+            _gameState.PlayerDead += OnLevelFinished;
+        }
+
+        private void OnLevelFinished()
+        {
+            _isSpawn = false;
+            Dispose();
         }
 
         public void Initialize()
@@ -34,6 +47,7 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
         private void StartSpawn()
         {
+            _isSpawn = true;
             _spawnInvokeCooldown =
                 _cooldownFactory.CreateWithCommonTicker(_consumableSpawnSettings.DelaySpawn, SpawnByRandomSpawner);
             _spawnInvokeCooldown.Launch();
@@ -41,6 +55,11 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
         private void SpawnByRandomSpawner()
         {
+            if (!_isSpawn)
+            {
+                return;
+            }
+
             var count = _spawners.Length;
             if (count == 0)
             {
