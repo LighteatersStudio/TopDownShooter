@@ -75,6 +75,8 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
         {
             _spawnInvokeCooldown.ForceFinish();
             _spawnInvokeCooldown = null;
+            _gameState.Won -= OnLevelFinished;
+            _gameState.PlayerDead -= OnLevelFinished;
         }
     }
 }
