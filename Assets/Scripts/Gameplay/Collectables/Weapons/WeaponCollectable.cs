@@ -11,21 +11,21 @@ namespace Gameplay.CollectableItems
         public event Action<float> Tick;
 
         private WeaponSettings _weapon;
-        private IAvailableWeaponsSettings _availableWeaponsSettings;
+        private ILevelWeaponSettings _levelWeaponSettings;
         private Cooldown.Factory _cooldownFactory;
         private Cooldown _destroyCooldown;
 
         [Inject]
         public void Construct(Vector3 newPosition,
-            IAvailableWeaponsSettings availableWeaponsSettings,
+            ILevelWeaponSettings levelWeaponSettings,
             Cooldown.Factory cooldownFactory)
         {
             transform.position = newPosition;
-            _availableWeaponsSettings = availableWeaponsSettings;
+            _levelWeaponSettings = levelWeaponSettings;
             _cooldownFactory = cooldownFactory;
 
             _destroyCooldown = _cooldownFactory.CreateFinished();
-            _weapon = _availableWeaponsSettings.GetRandom();
+            _weapon = _levelWeaponSettings.WeaponSetting();
         }
 
         private void Start()
@@ -52,7 +52,7 @@ namespace Gameplay.CollectableItems
 
         private void StartDestroyTimer()
         {
-            _destroyCooldown = _cooldownFactory.Create(_availableWeaponsSettings.LifeTime, this, SelfDestroy);
+            _destroyCooldown = _cooldownFactory.Create(_levelWeaponSettings.LifeTime, this, SelfDestroy);
             _destroyCooldown.Launch();
         }
 

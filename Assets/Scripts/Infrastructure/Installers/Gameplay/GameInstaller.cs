@@ -10,6 +10,7 @@ using Infrastructure.Scenraios;
 using Infrastructure.UI;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
@@ -37,7 +38,7 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
-        [SerializeField] private AvailableWeaponsSettings _availableWeaponsSettings;
+        [FormerlySerializedAs("_availableWeaponsSettings")] [SerializeField] private LevelWeaponSettings _levelWeaponSettings;
 
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
@@ -224,9 +225,9 @@ namespace Infrastructure
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
 
-            Container.Bind<IAvailableWeaponsSettings>()
-                .To<AvailableWeaponsSettings>()
-                .FromScriptableObject(_availableWeaponsSettings)
+            Container.Bind<ILevelWeaponSettings>()
+                .To<LevelWeaponSettings>()
+                .FromScriptableObject(_levelWeaponSettings)
                 .AsSingle()
                 .Lazy();
 

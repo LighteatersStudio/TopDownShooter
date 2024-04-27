@@ -4,12 +4,12 @@ using UnityEngine;
 namespace Gameplay.Weapons
 {
     [CreateAssetMenu(fileName = "AvailableWeaponsSettings", menuName = "ArenaSettings/Consumable/AvailableWeaponsSettings")]
-    public class AvailableWeaponsSettings : ScriptableObject, IAvailableWeaponsSettings
+    public class LevelWeaponSettings : ScriptableObject, ILevelWeaponSettings
     {
         [field: SerializeField] public float LifeTime { get; private set; } = 5f;
         [field: SerializeField] private WeaponSettings[] WeaponSettingsArray { get; set; }
 
-        public WeaponSettings GetRandom()
+        public WeaponSettings WeaponSetting()
         {
             if (!WeaponSettingsArray.Any())
             {
