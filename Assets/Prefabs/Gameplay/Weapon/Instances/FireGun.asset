@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728f61e9bc0d4670987b5a9dea1252b9, type: 3}
   m_Name: FireGun
   m_EditorClassIdentifier: 
-  _id: Riffle_1
+  _id: FireGun_1
   _shotsPerSecond: 2
   _ammoClipSize: 20
   _reloadTime: 2

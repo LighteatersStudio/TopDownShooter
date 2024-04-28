@@ -14,7 +14,6 @@ namespace Gameplay.Collectables.FirstAid
         private FirstAidKitSettings _firstAidKitSettings;
         private Cooldown.Factory _cooldownFactory;
         private Cooldown _destroyCooldown;
-        private float _timer;
 
         [Inject]
         public void Construct(Vector3 newPosition, FirstAidKitSettings firstAidKitSettings, Cooldown.Factory cooldownFactory)
@@ -56,7 +55,7 @@ namespace Gameplay.Collectables.FirstAid
 
             GetComponent<RotateCollectables>().StopRotation();
 
-            Destroy(gameObject);
+            SelfDestroy();
         }
 
         private void SelfDestroy()

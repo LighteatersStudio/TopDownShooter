@@ -18,7 +18,7 @@ namespace Gameplay.CollectableItems
 
         private void Start()
         {
-            _weaponCollectableFactory.Create(transform.position, _weapon);
+            _weaponCollectableFactory.Create(transform.position);
             Destroy(gameObject);
         }
     }

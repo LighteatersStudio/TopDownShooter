@@ -10,6 +10,7 @@ using Infrastructure.Scenraios;
 using Infrastructure.UI;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
@@ -37,6 +38,7 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
+        [FormerlySerializedAs("_availableWeaponsSettings")] [SerializeField] private LevelWeaponSettings _levelWeaponSettings;
 
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
@@ -178,7 +180,7 @@ namespace Infrastructure
         {
             Debug.Log("Game installer: Bind collectables");
 
-            Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
+            Container.BindFactory<Vector3, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
                 .AsSingle();
 
@@ -222,6 +224,17 @@ namespace Infrastructure
             Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
+
+            Container.Bind<ILevelWeaponSettings>()
+                .To<LevelWeaponSettings>()
+                .FromScriptableObject(_levelWeaponSettings)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind(typeof(IWeaponSpawner))
+                .To<WeaponSpawner>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindFriendOrFoeSystem()

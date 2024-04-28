@@ -10,6 +10,7 @@ namespace Gameplay.Projectiles
     [RequireComponent(typeof(IProjectileMovement))]
     public class Projectile : MonoBehaviour, ITicker, IPoolable<FlyInfo, IAttackInfo, IMemoryPool>, IDisposable
     {
+        private const string Collectable = "Collectable";
         [SerializeField] private float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
 
@@ -98,10 +99,10 @@ namespace Gameplay.Projectiles
             SpawnSparksEffect();
             Dispose();
         }
-        
+
         private bool ShouldIgnoreCollision(Collider other)
         {
-            return other.GetComponent<ObserveArea>() || other.GetComponent<Projectile>();
+            return other.GetComponent<ObserveArea>() || other.GetComponent<Projectile>() || other.gameObject.CompareTag(Collectable);
         }
 
         private void SpawnSparksEffect()

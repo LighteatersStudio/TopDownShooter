@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbf76a851f4fc28b6bddee32c44400, type: 3}
   m_Name: ConsumableSpawnSettings
   m_EditorClassIdentifier: 
-  <DelaySpawn>k__BackingField: 15
+  <DelaySpawn>k__BackingField: 2
