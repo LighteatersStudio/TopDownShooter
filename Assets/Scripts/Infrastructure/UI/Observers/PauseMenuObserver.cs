@@ -8,26 +8,27 @@ namespace Infrastructure.UI
 {
     public class PauseMenuObserver : MonoBehaviour
     {
-        private PauseMenu _pauseMenu;
-        private IUIRoot _uiRoot;
+        private IView _pauseMenu;
+        private PauseMenu.Factory _pauseMenuFactory;
 
         [Inject]
-        public void Construct(IUIRoot uiRoot, IUIInputController uiInputController)
+        public void Construct(PauseMenu.Factory pauseMenuFactory, IUIInputController uiInputController)
         {
-            _uiRoot = uiRoot;
+            _pauseMenuFactory = pauseMenuFactory;
             uiInputController.CancelChanged += TogglePauseMenu;
         }
 
+        //TODO: check - is need refactoring?
         private void TogglePauseMenu()
         {
-            if (_pauseMenu)
+            if (_pauseMenu.IsAlive)
             {
                 _pauseMenu.Close();
                 _pauseMenu = null;
             }
             else
             {
-                // _pauseMenu = _uiRoot.Open<PauseMenu>();
+                _pauseMenu = _pauseMenuFactory.Open();
                 _pauseMenu.Closed += OnPauseMenuClosed;
             }
         }

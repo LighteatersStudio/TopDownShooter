@@ -35,6 +35,15 @@ namespace UI.New_UI
 
             Container.Bind<StartLevelMenu.Factory>()
                 .AsSingle();
+
+            Container.Bind<PauseMenu.Factory>()
+                .AsSingle();
+
+            Container.Bind<WinLevelMenu.Factory>()
+                .AsSingle();
+
+            Container.Bind<DeathMenu.Factory>()
+                .AsSingle();
         }
     }
 }

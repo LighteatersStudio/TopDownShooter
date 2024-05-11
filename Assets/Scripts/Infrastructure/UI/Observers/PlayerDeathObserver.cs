@@ -6,23 +6,23 @@ using Zenject;
 
 namespace Infrastructure.UI
 {
-    public class PlayerDeathObserver 
+    public class PlayerDeathObserver
     {
-        private IUIRoot _uiRoot;
+        private DeathMenu.Factory _deathMenuFactory;
         private IPlayer _player;
-        
+
         [Inject]
-        public void Construct(IUIRoot uiRoot, IPlayer player)
+        public void Construct(DeathMenu.Factory deathMenuFactory, IPlayer player)
         {
-            _uiRoot = uiRoot;
+            _deathMenuFactory = deathMenuFactory;
             _player = player;
-            
+
             _player.Dead += ToggleDeathMenu;
         }
 
         private void ToggleDeathMenu()
         {
-            _uiRoot.Open<DeathMenu>();
+            _deathMenuFactory.Open();
         }
     }
 }

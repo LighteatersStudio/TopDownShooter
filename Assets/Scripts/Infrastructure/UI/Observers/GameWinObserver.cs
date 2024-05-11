@@ -7,22 +7,22 @@ namespace Infrastructure.UI
 {
     public class GameWinObserver
     {
-        private readonly IUIRoot _uiRoot;
+        private readonly WinLevelMenu.Factory _winMenuFactory;
         private readonly IGameState _gameState;
-        
+
         [Inject]
-        public GameWinObserver(IUIRoot uiRoot, IGameState gameState)
+        public GameWinObserver(WinLevelMenu.Factory winMenuFactory, IGameState gameState)
         {
-            _uiRoot = uiRoot;
+            _winMenuFactory = winMenuFactory;
             _gameState = gameState;
-            
+
             _gameState.Won += OnWin;
         }
 
         private void OnWin()
         {
             _gameState.Won -= OnWin;
-            _uiRoot.Open<WinLevelMenu>();
+            _winMenuFactory.Open();
         }
     }
 }
