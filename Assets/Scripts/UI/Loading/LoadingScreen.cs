@@ -8,29 +8,43 @@ using TMPro;
 using UI.Framework;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI
 {
     public class LoadingScreen : View
     {
         private const float FillDelay = 0.15f;
-        
+
         [SerializeField]
         private Slider _progressFill;
         [SerializeField]
         private TextMeshProUGUI _loadingInfo;
         [SerializeField]
         private float _barSpeed = 1;
-        
+
+        private Queue<ILoadingOperation> _loadingOperations;
         private float _targetProgress;
         private bool _isProgress;
-        
-        public async Task Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
+
+        [Inject]
+        public void Construct(Queue<ILoadingOperation> loadingOperations)
+        {
+            _loadingOperations = loadingOperations;
+        }
+
+        public override void Open()
+        {
+            base.Open();
+            Load(_loadingOperations);
+        }
+
+        private async Task Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
         {
             _isProgress = true;
-            
+
             StartCoroutine(UpdateProgressBar());
-            
+
             foreach (var operation in loadingOperations)
             {
                 ResetFill();
@@ -42,7 +56,7 @@ namespace UI
             }
 
             _isProgress = false;
-            
+
             if (closeAfterLoad)
             {
                 Close();
@@ -66,7 +80,7 @@ namespace UI
             {
                 await UniTask.Delay(1);
             }
-            
+
             await UniTask.Delay(TimeSpan.FromSeconds(FillDelay));
         }
 
@@ -78,9 +92,13 @@ namespace UI
                 {
                     _progressFill.value += Time.deltaTime * _barSpeed;
                 }
-                
-                yield return null;    
+
+                yield return null;
             }
+        }
+
+        public class Factory : ViewFactory<LoadingScreen, Queue<ILoadingOperation>>
+        {
         }
     }
 }
