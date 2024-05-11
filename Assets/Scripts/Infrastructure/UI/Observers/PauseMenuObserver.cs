@@ -27,7 +27,7 @@ namespace Infrastructure.UI
             }
             else
             {
-                _pauseMenu = _uiRoot.Open<PauseMenu>();
+                // _pauseMenu = _uiRoot.Open<PauseMenu>();
                 _pauseMenu.Closed += OnPauseMenuClosed;
             }
         }

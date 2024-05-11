@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cc09eaf749040fda1b75e2bc5970e1, type: 3}
+  m_Name: MainMenuUISchema
+  m_EditorClassIdentifier: 
+  <Layers>k__BackingField:
+  - <WindowSystem>k__BackingField: {fileID: 1073484497271914590, guid: b78b2eaf673724c4085ed67d4c6ea4a4, type: 3}
+    <Name>k__BackingField: MainMenu
+    <ViewCollection>k__BackingField:
+      _views:
+      - {fileID: 735601388137290407, guid: ebd531b5100176e48b8dfd657da686e2, type: 3}
+      - {fileID: 6762105179401652709, guid: 830bb3b460df145bfb46cc52d7eb4513, type: 3}
+    <Lazy>k__BackingField: 0
+    <Debug>k__BackingField: 0

@@ -17,14 +17,14 @@ namespace UI
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _exitButton;
-        
+
         [Header("Settings")]
         [SerializeField] private MainMenuBackgrounds _backgrounds;
-        
+
         private IUIRoot _uiRoot;
         private IApplicationDescription _applicationDescription;
 
-        
+
         [Inject]
         public void Construct(IUIRoot uiRoot, IApplicationDescription description)
         {
@@ -62,11 +62,16 @@ namespace UI
         {
             Debug.Log("Settings button clicked.");
         }
-        
+
         private void ApplicationExit()
         {
             Debug.Log("Application Quit.");
             Application.Quit();
+        }
+
+        public class Factory : ViewFactory<MainMenu>
+        {
+
         }
     }
 }

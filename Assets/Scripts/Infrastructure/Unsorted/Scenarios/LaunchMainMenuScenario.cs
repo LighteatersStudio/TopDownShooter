@@ -9,13 +9,18 @@ namespace Infrastructure.Scenraios
     public class LaunchMainMenuScenario : MonoBehaviour
     {
         private StartSplashScreen.Factory _splashScreenFactory;
+        private MainMenu.Factory _mainMenuFactory;
         private IMusicPlayer _musicPlayer;
         private IMusicList _musicList;
 
         [Inject]
-        public void Construct(StartSplashScreen.Factory splashScreenFactory, IMusicPlayer musicPlayer, IMusicList musicList)
+        public void Construct(StartSplashScreen.Factory splashScreenFactory,
+            MainMenu.Factory mainMenuFactory,
+            IMusicPlayer musicPlayer,
+            IMusicList musicList)
         {
             _splashScreenFactory = splashScreenFactory;
+            _mainMenuFactory = mainMenuFactory;
             _musicPlayer = musicPlayer;
             _musicList = musicList;
         }
@@ -32,7 +37,7 @@ namespace Infrastructure.Scenraios
         private void OnSplashScreenClosed(IView view)
         {
             view.Closed -= OnSplashScreenClosed;
-            _uiRoot.Open<MainMenu>();
+            _mainMenuFactory.Open();
             Destroy(gameObject);
         }
     }

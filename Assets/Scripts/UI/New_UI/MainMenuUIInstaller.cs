@@ -28,6 +28,9 @@ namespace UI.New_UI
         {
             Container.Bind<StartSplashScreen.Factory>()
                 .AsSingle();
+
+            Container.Bind<MainMenu.Factory>()
+                .AsSingle();
         }
     }
 }
