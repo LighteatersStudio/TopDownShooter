@@ -8,15 +8,14 @@ namespace Infrastructure.Scenraios
 {
     public class LaunchMainMenuScenario : MonoBehaviour
     {
-        private IUIRoot _uiRoot;
-
+        private StartSplashScreen.Factory _splashScreenFactory;
         private IMusicPlayer _musicPlayer;
         private IMusicList _musicList;
-        
+
         [Inject]
-        public void Construct(IUIRoot uiRoot, IMusicPlayer musicPlayer, IMusicList musicList)
+        public void Construct(StartSplashScreen.Factory splashScreenFactory, IMusicPlayer musicPlayer, IMusicList musicList)
         {
-            _uiRoot = uiRoot;
+            _splashScreenFactory = splashScreenFactory;
             _musicPlayer = musicPlayer;
             _musicList = musicList;
         }
@@ -24,12 +23,12 @@ namespace Infrastructure.Scenraios
         protected void Start()
         {
             _musicPlayer.PlayMusic(_musicList.GetRandomTrack());
-            
-            
-            var startSplashScreenView = _uiRoot.Open<StartSplashScreen>();
+
+
+            var startSplashScreenView = _splashScreenFactory.Open();
             startSplashScreenView.Closed += OnSplashScreenClosed;
         }
-        
+
         private void OnSplashScreenClosed(IView view)
         {
             view.Closed -= OnSplashScreenClosed;

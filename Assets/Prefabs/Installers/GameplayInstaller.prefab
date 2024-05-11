@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6032338114108344527}
   - component: {fileID: 7573587972311919696}
-  - component: {fileID: -1196963654466697849}
   - component: {fileID: 2196999272501285394}
   - component: {fileID: 1167715141}
   m_Layer: 0
@@ -27,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6032338114108344520}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7573587972311919696
 MonoBehaviour:
@@ -48,24 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _leafInstallers:
-  - {fileID: -1196963654466697849}
   - {fileID: 2196999272501285394}
   - {fileID: 1167715141}
---- !u!114 &-1196963654466697849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6032338114108344520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 933c027289464903a84f826d34f3e3b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiRoot: {fileID: 1742492003223578173, guid: 4ad4e5d681e2e5b4eba87a18f79cd9dd, type: 3}
-  _globalUIBuilder: {fileID: 8895478004471453305, guid: 14f177d253889c44c8acd828317e8eb6, type: 3}
-  _scopeName: Gameplay
 --- !u!114 &2196999272501285394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,5 +84,5 @@ MonoBehaviour:
   _firstAidKitSettings: {fileID: 11400000, guid: a57355b76d2904f7cb05e5b70145a4d7, type: 2}
   _weaponPrefab: {fileID: 4628974586498328097, guid: 2168753a697310c48a899f86019a5edc, type: 3}
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
-  _availableWeaponsSettings: {fileID: 11400000, guid: a4f3a593fe833489ca16b8c91539a1a4, type: 2}
+  _levelWeaponSettings: {fileID: 11400000, guid: a4f3a593fe833489ca16b8c91539a1a4, type: 2}
   _outlineSettings: {fileID: 11400000, guid: 91a3eee1e914ba149a70efd866104af8, type: 2}
