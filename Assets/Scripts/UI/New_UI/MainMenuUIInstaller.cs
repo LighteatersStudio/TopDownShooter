@@ -1,5 +1,6 @@
 using UI.Framework;
 using UI.Framework.Implementation;
+using UI.Views.Popups.CharacterSelectionMenu;
 using UnityEngine;
 using Zenject;
 
@@ -30,6 +31,9 @@ namespace UI.New_UI
                 .AsSingle();
 
             Container.Bind<MainMenu.Factory>()
+                .AsSingle();
+
+            Container.Bind<CharacterSelectionScreen.Factory>()
                 .AsSingle();
         }
     }

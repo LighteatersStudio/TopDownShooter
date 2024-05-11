@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Gameplay;
 using Meta.Level;
+using UI.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -88,6 +89,10 @@ namespace UI.Views.Popups.CharacterSelectionMenu
             {
                 characterView.Toggled -= SyncToggleState;
             }
+        }
+
+        public class Factory : ViewFactory<CharacterSelectionScreen>
+        {
         }
     }
 }

@@ -21,14 +21,15 @@ namespace UI
         [Header("Settings")]
         [SerializeField] private MainMenuBackgrounds _backgrounds;
 
-        private IUIRoot _uiRoot;
+        // private IUIRoot _uiRoot;
         private IApplicationDescription _applicationDescription;
+        private CharacterSelectionScreen.Factory _selectionScreenFactory;
 
 
         [Inject]
-        public void Construct(IUIRoot uiRoot, IApplicationDescription description)
+        public void Construct(CharacterSelectionScreen.Factory selectionScreenFactory, IApplicationDescription description)
         {
-            _uiRoot = uiRoot;
+            _selectionScreenFactory = selectionScreenFactory;
             _applicationDescription = description;
         }
 
@@ -54,7 +55,7 @@ namespace UI
 
         private void LoadLevel()
         {
-            _uiRoot.Open<CharacterSelectionScreen>();
+            _selectionScreenFactory.Open();
             Close();
         }
 
