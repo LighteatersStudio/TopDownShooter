@@ -1,5 +1,6 @@
 ﻿using Zenject;
 using Gameplay.Services.Pause;
+using UI.Framework;
 
 namespace UI
 {
@@ -23,6 +24,11 @@ namespace UI
         {
             _pauseManager.Paused = false;
             Close();
+        }
+        
+        public class Factory : ViewFactory<StartLevelMenu>
+        {
+            
         }
     }
 }

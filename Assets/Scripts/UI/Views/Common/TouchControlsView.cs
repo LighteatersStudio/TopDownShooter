@@ -1,5 +1,4 @@
-﻿using System;
-using Gameplay.Services.Input;
+﻿using Gameplay.Services.Input;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
@@ -87,6 +86,10 @@ namespace UI.Views.Common
             _uiInputController.FingerDown -= OnFingerDown;
             _uiInputController.FingerMoved -= OnFingerMoved;
             _uiInputController.FingerUp -= OnFingerUp;
+        }
+
+        public class Factory : ViewFactory<TouchControlsView>
+        {
         }
     }
 }

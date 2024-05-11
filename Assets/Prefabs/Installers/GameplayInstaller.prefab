@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7573587972311919696}
   - component: {fileID: 2196999272501285394}
   - component: {fileID: 1167715141}
+  - component: {fileID: 394977836697235989}
   m_Layer: 0
   m_Name: GameplayInstaller
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   _leafInstallers:
   - {fileID: 2196999272501285394}
   - {fileID: 1167715141}
+  - {fileID: 394977836697235989}
 --- !u!114 &2196999272501285394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,3 +88,16 @@ MonoBehaviour:
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
   _levelWeaponSettings: {fileID: 11400000, guid: a4f3a593fe833489ca16b8c91539a1a4, type: 2}
   _outlineSettings: {fileID: 11400000, guid: 91a3eee1e914ba149a70efd866104af8, type: 2}
+--- !u!114 &394977836697235989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032338114108344520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad93db7d412c4db8b56c8add31872c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uiRoot: {fileID: 5384029968621299481, guid: 955e270f9a3d04b0bb871c5ed0d01bc7, type: 3}

@@ -29,7 +29,6 @@ namespace Infrastructure.Scenraios
         {
             _musicPlayer.PlayMusic(_musicList.GetRandomTrack());
 
-
             var startSplashScreenView = _splashScreenFactory.Open();
             startSplashScreenView.Closed += OnSplashScreenClosed;
         }
