@@ -33,13 +33,12 @@ namespace UI
             _loadingOperations = loadingOperations;
         }
 
-        public override void Open()
+        private async void Start()
         {
-            base.Open();
-            Load(_loadingOperations);
+            await Load(_loadingOperations);
         }
 
-        private async Task Load(Queue<ILoadingOperation> loadingOperations, bool closeAfterLoad = true)
+        private async Task Load(Queue<ILoadingOperation> loadingOperations)
         {
             _isProgress = true;
 
@@ -56,11 +55,7 @@ namespace UI
             }
 
             _isProgress = false;
-
-            if (closeAfterLoad)
-            {
-                Close();
-            }
+            Close();
         }
 
         private void ResetFill()

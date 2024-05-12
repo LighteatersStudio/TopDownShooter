@@ -18,10 +18,9 @@ namespace Infrastructure.UI
             uiInputController.CancelChanged += TogglePauseMenu;
         }
 
-        //TODO: check - is need refactoring?
         private void TogglePauseMenu()
         {
-            if (_pauseMenu.IsAlive)
+            if (_pauseMenu.Avaliable())
             {
                 _pauseMenu.Close();
                 _pauseMenu = null;
