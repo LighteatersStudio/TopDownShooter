@@ -9,24 +9,31 @@ namespace Infrastructure.Scenraios
 {
     public class GameSessionStartScenario : MonoBehaviour
     {
-        private IUIRoot _uiRoot;
-        
+        private TouchControlsView.Factory _touchControlFactory;
+        private Hud.Factory _hudFactory;
+        private StartLevelMenu.Factory _startLevelMenuFactory;
+
         private IMusicPlayer _musicPlayer;
-        
+
         [Inject]
-        public void Construct(IUIRoot uiRoot, IMusicPlayer musicPlayer)
+        public void Construct(TouchControlsView.Factory touchControlFactory,
+            Hud.Factory hudFactory,
+            StartLevelMenu.Factory startLevelMenuFactory,
+            IMusicPlayer musicPlayer)
         {
-            _uiRoot = uiRoot;
+            _touchControlFactory = touchControlFactory;
+            _hudFactory = hudFactory;
+            _startLevelMenuFactory = startLevelMenuFactory;
             _musicPlayer = musicPlayer;
         }
-        
+
         protected void Start()
         {
             _musicPlayer.StopMusic();
 
-            _uiRoot.Open<TouchControlsView>();
-            _uiRoot.Open<Hud>();
-            _uiRoot.Open<StartLevelMenu>();
+            _touchControlFactory.Open();
+            _hudFactory.Open();
+            _startLevelMenuFactory.Open();
 
             Destroy(gameObject);
         }

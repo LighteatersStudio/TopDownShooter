@@ -10,13 +10,13 @@ namespace UI.Views.Common
         [SerializeField] private WeaponView _weaponView;
 
         private IPlayer _player;
-        
+
         [Inject]
         public void Construct(IPlayer player)
         {
             _player = player;
         }
-        
+
         private void Start()
         {
             InitWeapon();
@@ -25,6 +25,10 @@ namespace UI.Views.Common
         private void InitWeapon()
         {
             _weaponView.SetupOwner(_player.WeaponOwner);
+        }
+
+        public class Factory : ViewFactory<Hud>
+        {
         }
     }
 }

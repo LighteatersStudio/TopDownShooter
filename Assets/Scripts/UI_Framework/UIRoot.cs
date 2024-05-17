@@ -1,79 +1,95 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace UI.Framework.Implementation
 {
-    public class UIRoot : MonoBehaviour, IUIRoot
+    internal class UIRoot : MonoBehaviour, IUIRoot
     {
-        [SerializeField] private Transform _menuRoot;
+        private UISchema _schema;
+        private Layer.Factory _layerFactory;
 
-        private readonly Stack<IView> _viewStack = new();
-        private UIBuilder _builder;
-        private IUIBuildProcessor _buildProcessor;
-
+        private readonly List<Layer> _layer = new();
 
         [Inject]
-        public void Construct(UIBuilder uiBuilder, IUIBuildProcessor buildProcessor)
+        public void Construct(UISchema uiSchema, Layer.Factory layerFactory)
         {
-            _builder = uiBuilder;
-            _buildProcessor = buildProcessor;
-        }
+            _schema = uiSchema;
+            _layerFactory = layerFactory;
 
-        public TView Open<TView>() where TView : IView
-        {
-            var newView = _builder.Build<TView>(_menuRoot);
-
-            InvokeBuildProcessor(newView);
-
-            if (newView == null)
-            {
-                Debug.LogError("View not opened!");
-                return default;
-            }
-
-            if (_viewStack.Any())
-            {
-                var current = _viewStack.Peek();
-
-                current.Closed -= OnViewClosed;
-                current.Close();
-            }
-
-            _viewStack.Push(newView);
-            OpenCurrent();
-            return newView;
-        }
-
-        private void InvokeBuildProcessor<TView>(TView newView) where TView : IView
-        {
-            if (newView is View view)
-            {
-                _buildProcessor.Process(view);
-            }
+            CreateLayers();
         }
         
-
-        private void OnViewClosed(IView view)
+        private void CreateLayers()
         {
-            _builder.ToPool(view);
+            var order = -1;
             
-            view.Closed -= OnViewClosed;
-            _viewStack.Pop();
-            OpenCurrent();
-        }
-
-        private void OpenCurrent()
-        {
-            if (!_viewStack.Any())
+            foreach (var layerInfo in _schema.Layers)
             {
-                return;
+                var layer = _layerFactory.Create(layerInfo, ++order);
+                layer.Init();
+                _layer.Add(layer);
+            }
+        }   
+        
+        private bool TryGetLayer<TView>(out Layer result) where TView : IView
+        {
+            result = null;
+            foreach (var layer in _layer)
+            {
+                if (layer.Contains<TView>())
+                {
+                    result = layer;
+                    return true;
+                }
             }
 
-            var current = _viewStack.Peek();
-            current.Closed += OnViewClosed;
-            current.Open();
+            Debug.LogError($"View type[{typeof(TView)}] didn't find in UIScheme!");
+            return false;
+        } 
+        
+        public IView Open<TView>() where TView : IView
+        {
+            if (!TryGetLayer<TView>(out var layer))
+            {
+                Debug.LogError($"View didn't open!");
+                return null;
+            }
+
+            return layer.Open<TView>();
+        }
+
+        public IView Open<TView, TParam>(TParam param) where TView : IView
+        {
+            if (!TryGetLayer<TView>(out var layer))
+            {
+                Debug.LogError($"View didn't open!");
+                return null;
+            }
+
+            return layer.Open<TView, TParam>(param);
+        }
+
+        public IView Open<TView, TParam, TParam2>(TParam param1, TParam2 param2) where TView : IView
+        {
+            if (!TryGetLayer<TView>(out var layer))
+            {
+                Debug.LogError($"View didn't open!");
+                return null;
+            }
+
+            return layer.Open<TView, TParam, TParam2>(param1, param2);
+        }
+
+        public IView Open<TView, TParam, TParam2, TParam3>(TParam param1, TParam2 param2, TParam3 param3) where TView : IView
+        {
+            if (!TryGetLayer<TView>(out var layer))
+            {
+                Debug.LogError($"View didn't open!");
+                return null;
+            }
+
+            return layer.Open<TView, TParam, TParam2, TParam3>(param1, param2, param3);
         }
     }
 }

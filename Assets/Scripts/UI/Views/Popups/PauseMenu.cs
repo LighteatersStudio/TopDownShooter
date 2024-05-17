@@ -1,5 +1,6 @@
 using Meta.Level;
 using Gameplay.Services.Pause;
+using UI.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -10,7 +11,7 @@ namespace UI
     {
         [SerializeField] private Button _closeButton;
         [SerializeField] private Button _breakRunButton;
-        
+
         private IPause _pauseManager;
         private IGameRun _gameRun;
 
@@ -21,7 +22,7 @@ namespace UI
             _gameRun = gameRun;
         }
 
-      
+
         private void OnEnable()
         {
             _pauseManager.Paused = true;
@@ -40,11 +41,16 @@ namespace UI
             _pauseManager.Paused = false;
             Close();
         }
-        
+
         private void OnBreakRunButtonClicked()
         {
             _gameRun.Finish();
             Close();
+        }
+
+        public class Factory : ViewFactory<PauseMenu>
+        {
+
         }
     }
 }

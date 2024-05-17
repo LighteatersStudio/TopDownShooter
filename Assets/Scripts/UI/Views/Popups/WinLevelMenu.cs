@@ -1,21 +1,21 @@
-﻿using System;
-using Meta.Level;
+﻿using Meta.Level;
 using Gameplay.Services.GameTime;
 using UnityEngine;
 using Zenject;
 using Gameplay.Services.Pause;
 using TMPro;
+using UI.Framework;
 
 namespace UI
 {
     public class WinLevelMenu : Popup
     {
         [SerializeField] private TextMeshProUGUI _timerText;
-        
+
         private IGameRun _gameRun;
         private IPause _pauseManager;
         private IGameTime _gameTime;
-        
+
         [Inject]
         public void Construct(IGameRun gameRun, IPause pause, IGameTime gameTime)
         {
@@ -23,7 +23,6 @@ namespace UI
             _pauseManager = pause;
             _gameTime = gameTime;
         }
-
 
         private void Start()
         {
@@ -35,10 +34,14 @@ namespace UI
         {
             _timerText.text = _gameTime.ConvertToString();
         }
-        
+
         public void ClickDoneLevelButton()
         {
             _gameRun.Finish();
+        }
+
+        public class Factory : ViewFactory<WinLevelMenu>
+        {
         }
     }
 }
