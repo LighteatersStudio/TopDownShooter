@@ -17,10 +17,10 @@ namespace Infrastructure.UI
             _player = player;
             _gameState = gameState;
 
-            _player.Dead += ToggleDeathMenu;
+            _player.Dead += OnPlayerDeath;
         }
 
-        private void ToggleDeathMenu()
+        private void OnPlayerDeath()
         {
             _deathMenuFactory.Open();
             _gameState.Death();
