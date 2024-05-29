@@ -13,29 +13,24 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
         private readonly ConsumableSpawnSettings _consumableSpawnSettings;
         private readonly Cooldown.Factory _cooldownFactory;
         private readonly IGameState _gameState;
-        private readonly IPlayer _player;
         private Cooldown _spawnInvokeCooldown;
         private bool _isSpawn = false;
 
-        [Inject]
         public ConsumableSpawnersInvoker(IFirstAidKitSpawner firstAidKitSpawner,
             IWeaponSpawner weaponSpawner,
             ConsumableSpawnSettings consumableSpawnSettings,
             Cooldown.Factory cooldownFactory,
-            IGameState gameState,
-            IPlayer player)
+            IGameState gameState)
         {
             _consumableSpawnSettings = consumableSpawnSettings;
             _cooldownFactory = cooldownFactory;
             _gameState = gameState;
-            _player = player;
             _spawners = new ISpawner[] { firstAidKitSpawner, weaponSpawner };
 
             _spawnInvokeCooldown = _cooldownFactory.CreateFinished();
 
             _gameState.Won += OnLevelFinished;
             _gameState.PlayerDead += OnLevelFinished;
-            _player.Dead += OnLevelFinished;
         }
 
         private void OnLevelFinished()
@@ -81,7 +76,6 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
             _spawnInvokeCooldown = null;
             _gameState.Won -= OnLevelFinished;
             _gameState.PlayerDead -= OnLevelFinished;
-            _player.Dead -= OnLevelFinished;
         }
     }
 }

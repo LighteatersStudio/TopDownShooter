@@ -1,8 +1,5 @@
 ﻿using Gameplay;
 using UI;
-using UI.Framework;
-using UnityEngine;
-using Zenject;
 
 namespace Infrastructure.UI
 {
@@ -10,12 +7,15 @@ namespace Infrastructure.UI
     {
         private DeathMenu.Factory _deathMenuFactory;
         private IPlayer _player;
+        private IGameState _gameState;
 
-        [Inject]
-        public void Construct(DeathMenu.Factory deathMenuFactory, IPlayer player)
+        public PlayerDeathObserver(DeathMenu.Factory deathMenuFactory,
+            IPlayer player,
+            IGameState gameState)
         {
             _deathMenuFactory = deathMenuFactory;
             _player = player;
+            _gameState = gameState;
 
             _player.Dead += ToggleDeathMenu;
         }
@@ -23,6 +23,7 @@ namespace Infrastructure.UI
         private void ToggleDeathMenu()
         {
             _deathMenuFactory.Open();
+            _gameState.Death();
         }
     }
 }
