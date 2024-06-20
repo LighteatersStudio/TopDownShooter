@@ -53,6 +53,27 @@ namespace Gameplay.Services.Input
             _inputActionAsset = inputActionAsset;
         }
 
+        public void Initialize()
+        {
+            ETouch.EnhancedTouchSupport.Enable();
+
+            ETouch.Touch.onFingerDown += OnFingerDown;
+            ETouch.Touch.onFingerMove += OnFingerMove;
+            ETouch.Touch.onFingerUp += OnFingerUp;
+
+            _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
+            _inputActionAsset.FindAction(MoveActionName).canceled += OnMove;
+            
+            _inputActionAsset.FindAction(FireActionName).performed += OnFireStart;
+            _inputActionAsset.FindAction(FireActionName).canceled += OnFireEnds;
+            
+            _inputActionAsset.FindAction(LookActionName).performed += OnLook;
+            _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
+            _inputActionAsset.FindAction(UseActionName).performed += OnUse;
+            _inputActionAsset.FindAction(ReloadActionName).performed += OnReload;
+            _inputActionAsset.FindAction(MeleeActionName).performed += OnMelee;
+        }
+
         private void OnMove(InputAction.CallbackContext context)
         {
             MoveChanged?.Invoke(_movementFinger != null ? _movementAmount : context.ReadValue<Vector2>());
@@ -66,27 +87,25 @@ namespace Gameplay.Services.Input
         private void OnFingerDown(ETouch.Finger finger)
         {
             var isMovement = finger.screenPosition.x <= Screen.width / ScreenSizeModifier;
-            var isLook = !isMovement;
 
-            if (isMovement && _movementFinger == null)
+            if (isMovement)
             {
-                SetFingerDown(ref _movementFinger, ref _movementAmount, ref _movementJoystickAnchoredPosition, finger,
-                    isMovement, isLook);
+                SetFingerDown(ref _movementFinger, ref _movementAmount, ref _movementJoystickAnchoredPosition, finger);
             }
-            
-            if (_lookFinger == null && finger.screenPosition.x > Screen.width / ScreenSizeModifier)
+    
+            if (!isMovement)
             {
-                SetFingerDown(ref _lookFinger, ref _lookAmount, ref _lookJoystickAnchoredPosition, finger, isMovement, isLook);
+                SetFingerDown(ref _lookFinger, ref _lookAmount, ref _lookJoystickAnchoredPosition, finger);
                 FireChanged?.Invoke(true);
             }
         }
 
-        private void SetFingerDown(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 joystickAnchoredPosition, ETouch.Finger finger, bool isMovement, bool isLook)
+        private void SetFingerDown(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 joystickAnchoredPosition, ETouch.Finger finger)
         {
             fingerField = finger;
             amount = Vector2.zero;
-            joystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, isMovement);
-            FingerDown?.Invoke(joystickAnchoredPosition, isMovement, isLook);
+            joystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, fingerField == _movementFinger);
+            FingerDown?.Invoke(joystickAnchoredPosition, fingerField == _movementFinger, fingerField == _lookFinger);
         }
 
         private Vector2 ClampTouchPosition(Vector2 startPosition, bool isMovement)
@@ -98,7 +117,7 @@ namespace Gameplay.Services.Input
             var yUpperBoundary = Screen.height - _joystickSize.y / JoystickSizeModifier;
 
             startPosition.x = isMovement ? Mathf.Max(startPosition.x, xBoundary) : Mathf.Min(startPosition.x, xBoundary);
-            startPosition.y = startPosition.y < yBoundary ? yBoundary : Mathf.Min(startPosition.y, yUpperBoundary);
+            startPosition.y = Mathf.Clamp(startPosition.y, yBoundary, yUpperBoundary);
 
             return startPosition;
         }
@@ -117,7 +136,7 @@ namespace Gameplay.Services.Input
             }
 
             var maxMovement = _joystickSize.x / JoystickSizeModifier;
-            var currentTouch = _movementFinger.currentTouch;
+            var currentTouch = finger.currentTouch;
 
             var distance = Vector2.Distance(currentTouch.screenPosition, _movementJoystickAnchoredPosition);
             
@@ -145,7 +164,7 @@ namespace Gameplay.Services.Input
             }
 
             var maxMovement = _joystickSize.x / JoystickSizeModifier;
-            var currentTouch = _lookFinger.currentTouch;
+            var currentTouch = finger.currentTouch;
 
             var distance = Vector2.Distance(currentTouch.screenPosition, _lookJoystickAnchoredPosition);
             
@@ -179,6 +198,7 @@ namespace Gameplay.Services.Input
                 fingerField = null;
                 knobAnchoredPosition = Vector2.zero;
                 FingerUp?.Invoke(isMovement, isLook);
+                
                 if (isLook)
                 {
                     FireChanged?.Invoke(false);
@@ -228,29 +248,10 @@ namespace Gameplay.Services.Input
             ReloadChanged?.Invoke();
         }
 
-        public void Initialize()
-        {
-            ETouch.EnhancedTouchSupport.Enable();
-
-            ETouch.Touch.onFingerDown += OnFingerDown;
-            ETouch.Touch.onFingerMove += OnFingerMove;
-            ETouch.Touch.onFingerUp += OnFingerUp;
-
-            _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
-            _inputActionAsset.FindAction(MoveActionName).canceled += OnMove;
-            
-            _inputActionAsset.FindAction(FireActionName).performed += OnFireStart;
-            _inputActionAsset.FindAction(FireActionName).canceled += OnFireEnds;
-            
-            _inputActionAsset.FindAction(LookActionName).performed += OnLook;
-            _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
-            _inputActionAsset.FindAction(UseActionName).performed += OnUse;
-            _inputActionAsset.FindAction(ReloadActionName).performed += OnReload;
-            _inputActionAsset.FindAction(MeleeActionName).performed += OnMelee;
-        }
-
         public void Dispose()
         {
+            ETouch.EnhancedTouchSupport.Disable();
+
             ETouch.Touch.onFingerDown -= OnFingerDown;
             ETouch.Touch.onFingerMove -= OnFingerMove;
             ETouch.Touch.onFingerUp -= OnFingerUp;

@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.GameTime;
+﻿using System;
+using Gameplay.Services.GameTime;
 using Gameplay.Services.Input;
 using Gameplay.Services.Pause;
 using UnityEngine;
@@ -6,7 +7,7 @@ using Zenject;
 
 namespace Gameplay
 {
-    public class PlayerInputAdapter
+    public class PlayerInputAdapter : IDisposable
     {
         private readonly IMovable _movingActor;
         private readonly IInputController _inputController;
@@ -17,6 +18,8 @@ namespace Gameplay
 
         private bool _isMoving;
         private bool _isLooking;
+        
+        private Vector3 _moveDirection;
 
         [Inject]
         public PlayerInputAdapter(IInputController inputController, IMovable movingActor, ICanFire fireActor, ICanReload reloadActor, IPause pause, ITicker ticker)
@@ -69,7 +72,21 @@ namespace Gameplay
                 return;
             }
             
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(new Vector3(direction.x, 0, direction.y)));
+            _moveDirection = new Vector3(direction.x, 0, direction.y);
+
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
+            _ticker.Tick += RepeatMove;
+        }
+        
+        private void RepeatMove(float deltaTime)
+        {
+            if (!_isMoving)
+            {
+                _ticker.Tick -= RepeatMove;
+                return;
+            }
+
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
         }
 
         private void OnLookChanged(Vector2 direction)
@@ -104,6 +121,19 @@ namespace Gameplay
         private void RepeatAttack(float deltaTime)
         {
             _pause.TryInvokeIfNotPause(() => _fireActor.Fire());
+        }
+
+        public void Dispose()
+        {
+            _inputController.MoveChanged -= OnMoveChanged;
+            _inputController.LookChanged -= OnLookChanged;
+
+            _inputController.FireChanged -= OnFireChanged;
+            _inputController.ReloadChanged -= OnReloadChanged;
+
+            _inputController.FingerDown -= OnFingerDown;
+            _inputController.FingerMoved -= OnFingerMoved;
+            _inputController.FingerUp -= OnFingerUp;
         }
     }
 }
