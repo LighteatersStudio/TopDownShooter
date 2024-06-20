@@ -23,13 +23,10 @@ namespace Gameplay
 
         public void SetMoveForce(Vector3 direction, float force = 1)
         {
-            _rigidbody.velocity = direction.normalized * (Speed * force);
-        }
-
-        public void Stop()
-        {
-            _rigidbody.velocity = Vector3.zero;
-            _rigidbody.angularVelocity = Vector3.zero;
+            if (_rigidbody)
+            {
+                _rigidbody.velocity = direction.normalized * (Speed * force);
+            }
         }
     }
 }
