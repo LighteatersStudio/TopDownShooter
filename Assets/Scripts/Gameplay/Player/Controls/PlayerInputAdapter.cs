@@ -75,6 +75,7 @@ namespace Gameplay
             _moveDirection = new Vector3(direction.x, 0, direction.y);
 
             _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
+            _ticker.Tick -= RepeatMove;
             _ticker.Tick += RepeatMove;
         }
         
