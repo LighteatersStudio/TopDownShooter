@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using Gameplay.Services.GameTime;
 using Gameplay.Weapons;
 using Zenject;
 
@@ -15,17 +14,15 @@ namespace Gameplay
         
         public IWeaponOwner WeaponOwner => _character;
         public IHaveHealth Health => _character;
-        private PlayerInputAdapter _inputAdapter;
 
         public event Action Dead;
 
         [Inject]
-        public void Construct(IPlayerSettings settings, Character character, Weapon.Factory weaponFactory, PlayerInputAdapter inputAdapter)
+        public void Construct(IPlayerSettings settings, Character character, Weapon.Factory weaponFactory)
         {
             _settings = settings;
             _character = character;
             _weaponFactory = weaponFactory;
-            _inputAdapter = inputAdapter;
         }
 
         private void Start()
@@ -51,7 +48,6 @@ namespace Gameplay
         
         private void OnDead()
         {
-            _inputAdapter.Dispose();
             Dead?.Invoke();
         }
     }

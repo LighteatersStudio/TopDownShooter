@@ -23,10 +23,7 @@ namespace Gameplay
 
         public void SetMoveForce(Vector3 direction, float force = 1)
         {
-            if (_rigidbody)
-            {
-                _rigidbody.velocity = direction.normalized * (Speed * force);
-            }
+            _rigidbody.velocity = direction.normalized * (Speed * force);
         }
     }
 }
