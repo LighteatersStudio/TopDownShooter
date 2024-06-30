@@ -10,12 +10,18 @@ namespace Infrastructure.UI
     {
         private IView _pauseMenu;
         private PauseMenu.Factory _pauseMenuFactory;
+        private IUIInputController _uiInputController;
 
         [Inject]
         public void Construct(PauseMenu.Factory pauseMenuFactory, IUIInputController uiInputController)
         {
             _pauseMenuFactory = pauseMenuFactory;
-            uiInputController.CancelChanged += TogglePauseMenu;
+            _uiInputController = uiInputController;
+        }
+
+        private void Start()
+        {
+            _uiInputController.CancelChanged += TogglePauseMenu;
         }
 
         private void TogglePauseMenu()
@@ -36,6 +42,15 @@ namespace Infrastructure.UI
         {
             _pauseMenu.Closed -= OnPauseMenuClosed;
             _pauseMenu = null;
+        }
+
+        private void OnDestroy()
+        {
+            _uiInputController.CancelChanged -= TogglePauseMenu;
+            if (_pauseMenu.Avaliable())
+            {
+                _pauseMenu.Closed -= OnPauseMenuClosed;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-using Meta.Level;
+using Gameplay;
 using Gameplay.Services.Pause;
 using UI.Framework;
 using UnityEngine;
@@ -13,13 +13,13 @@ namespace UI
         [SerializeField] private Button _breakRunButton;
 
         private IPause _pauseManager;
-        private IGameRun _gameRun;
+        private IGameState _gameState;
 
         [Inject]
-        public void Construct(IPause pause, IGameRun gameRun)
+        public void Construct(IPause pause, IGameState gameState)
         {
             _pauseManager = pause;
-            _gameRun = gameRun;
+            _gameState = gameState;
         }
 
 
@@ -44,7 +44,7 @@ namespace UI
 
         private void OnBreakRunButtonClicked()
         {
-            _gameRun.Finish();
+            _gameState.Death();
             Close();
         }
 

@@ -1,3 +1,4 @@
+using System;
 using Gameplay;
 using Gameplay.CollectableItems;
 using Gameplay.AI;
@@ -98,7 +99,7 @@ namespace Infrastructure
 
         private void BindGameState()
         {
-            Container.Bind<IGameState>()
+            Container.Bind(typeof(IGameState), typeof(IInitializable))
                 .To<GameStateManager>()
                 .FromNew()
                 .AsSingle();
@@ -136,7 +137,8 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<PlayerDeathObserver>()
+            Container.Bind(typeof(IInitializable), typeof(IDisposable), typeof(PlayerDeathObserver))
+                .To<PlayerDeathObserver>()
                 .FromNew()
                 .AsSingle()
                 .NonLazy();

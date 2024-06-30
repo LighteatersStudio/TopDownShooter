@@ -1,29 +1,34 @@
-﻿using Gameplay;
+﻿using System;
+using Gameplay;
 using UI;
+using Zenject;
 
 namespace Infrastructure.UI
 {
-    public class PlayerDeathObserver
+    public class PlayerDeathObserver : IInitializable, IDisposable
     {
-        private DeathMenu.Factory _deathMenuFactory;
-        private IPlayer _player;
-        private IGameState _gameState;
+        private readonly DeathMenu.Factory _deathMenuFactory;
+        private readonly IGameState _gameState;
 
-        public PlayerDeathObserver(DeathMenu.Factory deathMenuFactory,
-            IPlayer player,
-            IGameState gameState)
+        public PlayerDeathObserver(DeathMenu.Factory deathMenuFactory, IGameState gameState)
         {
             _deathMenuFactory = deathMenuFactory;
-            _player = player;
             _gameState = gameState;
+        }
 
-            _player.Dead += OnPlayerDeath;
+        public void Initialize()
+        {
+            _gameState.PlayerDead += OnPlayerDeath;
         }
 
         private void OnPlayerDeath()
         {
             _deathMenuFactory.Open();
-            _gameState.Death();
+        }
+
+        public void Dispose()
+        {
+            _gameState.PlayerDead -= OnPlayerDeath;
         }
     }
 }
