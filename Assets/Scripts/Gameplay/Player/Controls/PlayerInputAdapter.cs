@@ -79,19 +79,6 @@ namespace Gameplay
             _moveDirection = new Vector3(direction.x, 0, direction.y);
 
             _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
-            _ticker.Tick -= RepeatMove;
-            _ticker.Tick += RepeatMove;
-        }
-
-        private void RepeatMove(float deltaTime)
-        {
-            if (!_isMoving)
-            {
-                _ticker.Tick -= RepeatMove;
-                return;
-            }
-
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
         }
 
         private void OnLookChanged(Vector2 direction)
@@ -141,7 +128,6 @@ namespace Gameplay
             _inputController.FingerUp -= OnFingerUp;
 
             _ticker.Tick -= RepeatAttack;
-            _ticker.Tick -= RepeatMove;
         }
     }
 }
