@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7147861041552597253}
   - component: {fileID: 1001789146604880013}
   - component: {fileID: 1209159493923511981}
-  - component: {fileID: 4702570166323211376}
   - component: {fileID: 4173512780692033984}
   m_Layer: 0
   m_Name: ConsumableSpawnSpace
@@ -85,27 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4702570166323211376
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8058338131249253044}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4173512780692033984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,4 +96,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7288332b62c64602b259cd4e647b79d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spaceCollider: {fileID: 4702570166323211376}
+  _spaces: []

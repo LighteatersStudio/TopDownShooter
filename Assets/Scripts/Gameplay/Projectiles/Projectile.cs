@@ -11,6 +11,7 @@ namespace Gameplay.Projectiles
     public class Projectile : MonoBehaviour, ITicker, IPoolable<FlyInfo, IAttackInfo, IMemoryPool>, IDisposable
     {
         private const string Collectable = "Collectable";
+        private const string ProjectileIgnore = "ProjectileIgnore";
         [SerializeField] private float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
 
@@ -61,7 +62,7 @@ namespace Gameplay.Projectiles
             {
                 return;
             }
-            
+
             var friendOrFoeTag = other.GetComponent<IFriendOrFoeTag>();
 
             if (friendOrFoeTag == null)
@@ -89,7 +90,7 @@ namespace Gameplay.Projectiles
                 target.TakeDamage(_attackInfo);
             }
         }
-        
+
         private bool IsFoes(IFriendOrFoeTag friendOrFoeTag)
         {
             return _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, friendOrFoeTag);
@@ -102,7 +103,10 @@ namespace Gameplay.Projectiles
 
         private bool ShouldIgnoreCollision(Collider other)
         {
-            return other.GetComponent<ObserveArea>() || other.GetComponent<Projectile>() || other.gameObject.CompareTag(Collectable);
+            return other.gameObject.CompareTag(ProjectileIgnore)
+                   || other.GetComponent<ObserveArea>()
+                   || other.GetComponent<Projectile>()
+                   || other.gameObject.CompareTag(Collectable);
         }
 
         private void SpawnSparksEffect()
@@ -136,7 +140,7 @@ namespace Gameplay.Projectiles
         {
             _pool.Despawn(this);
         }
-        
+
         public class Factory : PlaceholderFactory<FlyInfo, IAttackInfo, Projectile>
         {
         }
