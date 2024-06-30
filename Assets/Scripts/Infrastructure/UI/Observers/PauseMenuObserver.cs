@@ -1,3 +1,4 @@
+using System;
 using UI;
 using UI.Framework;
 using UnityEngine;
@@ -36,6 +37,16 @@ namespace Infrastructure.UI
         {
             _pauseMenu.Closed -= OnPauseMenuClosed;
             _pauseMenu = null;
+        }
+
+        private void OnDestroy()
+        {
+            if (!_pauseMenu.Avaliable())
+            {
+                return;
+            }
+
+            _pauseMenu.Closed -= OnPauseMenuClosed;
         }
     }
 }
