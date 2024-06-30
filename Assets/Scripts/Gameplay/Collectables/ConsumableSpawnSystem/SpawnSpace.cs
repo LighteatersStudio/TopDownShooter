@@ -1,12 +1,13 @@
+using System.Collections.Generic;
+using Sirenix.Utilities;
 using UnityEngine;
 using Zenject;
 
 namespace Gameplay.Collectables.ConsumableSpawnSystem
 {
-    [RequireComponent(typeof(Collider))]
     public class SpawnSpace : MonoBehaviour, ISpawnSpace
     {
-        [SerializeField] private Collider _spaceCollider;
+        [SerializeField] private List<Collider> _spaces;
 
         private ISpawnSpaceRegister _spawnSpaceRegister;
 
@@ -18,18 +19,29 @@ namespace Gameplay.Collectables.ConsumableSpawnSystem
 
         private void Start()
         {
-            _spaceCollider = GetComponent<Collider>();
             _spawnSpaceRegister.Register(this);
         }
 
         public Vector3 GetRandomPoint()
         {
-            Vector3 boundsMin = _spaceCollider.bounds.min;
-            Vector3 boundsMax = _spaceCollider.bounds.max;
+            if (_spaces.IsNullOrEmpty())
+            {
+                Debug.LogAssertion("Collider list is empty");
+                return Vector3.zero;
+            }
+
+            var randomCollider = _spaces[Random.Range(0, _spaces.Count)];
+            return GetRandomPointInternal(randomCollider);
+        }
+
+        private Vector3 GetRandomPointInternal(Collider space)
+        {
+            Vector3 boundsMin = space.bounds.min;
+            Vector3 boundsMax = space.bounds.max;
 
             float x = Random.Range(boundsMin.x, boundsMax.x);
             float z = Random.Range(boundsMin.z, boundsMax.z);
-            float y = _spaceCollider.bounds.center.y;
+            float y = space.bounds.center.y;
 
             return new Vector3(x, y, z);
         }
