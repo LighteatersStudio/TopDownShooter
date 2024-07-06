@@ -214,61 +214,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Touch",
-                    "id": "4904ab10-2611-47b1-9624-8623cb336f29",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "ca4ee46e-99e9-44cf-a841-499b3495e279",
-                    "path": "<Touchscreen>/delta/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "2a0ece9d-b2f4-4a30-9820-5a0450cc633a",
-                    "path": "<Touchscreen>/delta/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "7bd375b8-e0ef-423e-9963-9c6ca999319e",
-                    "path": "<Touchscreen>/delta/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "8ff810ec-e120-4506-9eea-70dd8108de7b",
-                    "path": "<Touchscreen>/delta/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
@@ -300,61 +245,6 @@
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Touch",
-                    "id": "cfd0cf19-ac97-4488-b204-295681a1b081",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Look",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "b788fa2b-f3df-4d10-a6d6-a19c9645e11d",
-                    "path": "<Touchscreen>/delta/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "4db16ec1-f859-4aef-b364-fa85d1e32316",
-                    "path": "<Touchscreen>/delta/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "ae90a5da-0884-4885-9a79-3e9c53f8d029",
-                    "path": "<Touchscreen>/delta/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "f97f7014-6fc2-4075-8901-37fcccb5b680",
-                    "path": "<Touchscreen>/delta/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touch",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

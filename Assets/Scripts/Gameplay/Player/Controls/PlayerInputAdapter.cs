@@ -45,49 +45,18 @@ namespace Gameplay
 
             _inputController.FireChanged += OnFireChanged;
             _inputController.ReloadChanged += OnReloadChanged;
-
-            _inputController.FingerDown += OnFingerDown;
-            _inputController.FingerMoved += OnFingerMoved;
-            _inputController.FingerUp += OnFingerUp;
-        }
-
-        private void OnFingerDown(Vector2 touchPosition, bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
-        }
-
-        private void OnFingerMoved(Vector2 touchPosition, bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
-        }
-
-        private void OnFingerUp(bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
         }
 
         private void OnMoveChanged(Vector2 direction)
         {
-            if (!_isMoving)
-            {
-                return;
-            }
-
             _moveDirection = new Vector3(direction.x, 0, direction.y);
-
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
+            var force = direction.magnitude;
+            
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection, force));
         }
 
         private void OnLookChanged(Vector2 direction)
         {
-            if (!_isLooking)
-            {
-                return;
-            }
-
             _pause.TryInvokeIfNotPause(() => _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y));
         }
 
@@ -122,10 +91,6 @@ namespace Gameplay
 
             _inputController.FireChanged -= OnFireChanged;
             _inputController.ReloadChanged -= OnReloadChanged;
-
-            _inputController.FingerDown -= OnFingerDown;
-            _inputController.FingerMoved -= OnFingerMoved;
-            _inputController.FingerUp -= OnFingerUp;
 
             _ticker.Tick -= RepeatAttack;
         }
