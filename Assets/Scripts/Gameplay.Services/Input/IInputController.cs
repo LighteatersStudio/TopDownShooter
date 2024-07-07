@@ -7,9 +7,12 @@ namespace Gameplay.Services.Input
     {
         event Action<Vector2> MoveChanged;
         event Action<Vector2> LookChanged;
-        event Action<Vector2, bool, bool> FingerDown;
-        event Action<Vector2, bool, bool> FingerMoved; 
-        event Action<bool, bool> FingerUp;
+        event Action<Vector2> MovementFingerDown;
+        event Action<Vector2> MovementFingerMoved;
+        event Action MovementFingerUp;
+        event Action<Vector2> LookFingerDown;
+        event Action<Vector2> LookFingerMoved;
+        event Action LookFingerUp;
         event Action<bool> FireChanged;
         event Action<Vector2> SpecialChanged;
         event Action MeleeChanged;

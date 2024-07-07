@@ -38,9 +38,12 @@ namespace Gameplay.Services.Input
 
         public event Action<Vector2> MoveChanged;
         public event Action<Vector2> LookChanged;
-        public event Action<Vector2, bool, bool> FingerDown;
-        public event Action<Vector2, bool, bool> FingerMoved;
-        public event Action<bool, bool> FingerUp;
+        public event Action<Vector2> MovementFingerDown;
+        public event Action<Vector2> MovementFingerMoved;
+        public event Action MovementFingerUp;
+        public event Action<Vector2> LookFingerDown;
+        public event Action<Vector2> LookFingerMoved;
+        public event Action LookFingerUp;
         public event Action<bool> FireChanged;
         public event Action<Vector2> SpecialChanged;
         public event Action MeleeChanged;
@@ -76,12 +79,13 @@ namespace Gameplay.Services.Input
 
         private void OnMove(InputAction.CallbackContext context)
         {
-            MoveChanged?.Invoke(_movementFinger != null ? _movementAmount : context.ReadValue<Vector2>());
+            MoveChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnLook(InputAction.CallbackContext context)
         {
-            LookChanged?.Invoke(_lookFinger != null ? _lookAmount : context.ReadValue<Vector2>());
+            
+            LookChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnFingerDown(ETouch.Finger finger)
@@ -90,22 +94,17 @@ namespace Gameplay.Services.Input
 
             if (isMovement)
             {
-                SetFingerDown(ref _movementFinger, ref _movementAmount, ref _movementJoystickAnchoredPosition, finger);
+                _movementFinger = finger;
+                _movementJoystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, true);
+                MovementFingerDown?.Invoke(_movementJoystickAnchoredPosition);
             }
-    
-            if (!isMovement)
+            else
             {
-                SetFingerDown(ref _lookFinger, ref _lookAmount, ref _lookJoystickAnchoredPosition, finger);
+                _lookFinger = finger;
+                _lookJoystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, false);
+                LookFingerDown?.Invoke(_lookJoystickAnchoredPosition);
                 FireChanged?.Invoke(true);
             }
-        }
-
-        private void SetFingerDown(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 joystickAnchoredPosition, ETouch.Finger finger)
-        {
-            fingerField = finger;
-            amount = Vector2.zero;
-            joystickAnchoredPosition = ClampTouchPosition(finger.screenPosition, fingerField == _movementFinger);
-            FingerDown?.Invoke(joystickAnchoredPosition, fingerField == _movementFinger, fingerField == _lookFinger);
         }
 
         private Vector2 ClampTouchPosition(Vector2 startPosition, bool isMovement)
@@ -124,17 +123,18 @@ namespace Gameplay.Services.Input
 
         private void OnFingerMove(ETouch.Finger finger)
         {
-            HandleMovementFinger(finger);
-            HandleLookFinger(finger);
+            if (finger == _movementFinger)
+            {
+                HandleMovementFinger(finger);
+            }
+            else if (finger == _lookFinger)
+            {
+                HandleLookFinger(finger);
+            }
         }
 
         private void HandleMovementFinger(ETouch.Finger finger)
         {
-            if (finger != _movementFinger)
-            {
-                return;
-            }
-
             var maxMovement = _joystickSize.x / JoystickSizeModifier;
             var currentTouch = finger.currentTouch;
 
@@ -149,20 +149,16 @@ namespace Gameplay.Services.Input
                 _movementKnobAnchoredPosition = currentTouch.screenPosition - _movementJoystickAnchoredPosition;
             }
             
-            var projectedKnobPosition = (_movementKnobAnchoredPosition / maxMovement) * _joystickSize / KnobPositionModifier;
+            var projectedKnobPosition = _movementKnobAnchoredPosition / maxMovement * _joystickSize / KnobPositionModifier;
             
             _movementAmount = _movementKnobAnchoredPosition / maxMovement;
-            
-            FingerMoved?.Invoke(projectedKnobPosition, true, false);
+
+            MoveChanged?.Invoke(_movementAmount);
+            MovementFingerMoved?.Invoke(projectedKnobPosition);
         }
 
         private void HandleLookFinger(ETouch.Finger finger)
         {
-            if (finger != _lookFinger)
-            {
-                return;
-            }
-
             var maxMovement = _joystickSize.x / JoystickSizeModifier;
             var currentTouch = finger.currentTouch;
 
@@ -177,35 +173,42 @@ namespace Gameplay.Services.Input
                 _lookKnobAnchoredPosition = currentTouch.screenPosition - _lookJoystickAnchoredPosition;
             }
             
-            var projectedKnobPosition = (_lookKnobAnchoredPosition / maxMovement) * _joystickSize / KnobPositionModifier;
+            var projectedKnobPosition = _lookKnobAnchoredPosition / maxMovement * _joystickSize / KnobPositionModifier;
 
             _lookAmount = _lookKnobAnchoredPosition / maxMovement;
-            
-            FingerMoved?.Invoke(projectedKnobPosition, false, true);
+
+            LookChanged?.Invoke(_lookAmount);
+            LookFingerMoved?.Invoke(projectedKnobPosition);
             FireChanged?.Invoke(true);
         }
 
         private void OnFingerUp(ETouch.Finger finger)
         {
-            ResetFinger(ref _movementFinger, ref _movementAmount, ref _movementKnobAnchoredPosition, finger, true, false);
-            ResetFinger(ref _lookFinger, ref _lookAmount, ref _lookKnobAnchoredPosition, finger, false, true);
+            if (finger == _movementFinger)
+            {
+                ResetMovementFinger();
+            }
+            else if (finger == _lookFinger)
+            {
+                ResetLookFinger();
+            }
         }
 
-        private void ResetFinger(ref ETouch.Finger fingerField, ref Vector2 amount, ref Vector2 knobAnchoredPosition, ETouch.Finger finger, bool isMovement, bool isLook)
+        private void ResetMovementFinger()
         {
-            if (finger == fingerField)
-            {
-                fingerField = null;
-                knobAnchoredPosition = Vector2.zero;
-                FingerUp?.Invoke(isMovement, isLook);
-                
-                if (isLook)
-                {
-                    FireChanged?.Invoke(false);
-                }
+            _movementFinger = null;
+            _movementJoystickAnchoredPosition = Vector2.zero;
+            _movementAmount = Vector2.zero;
+            MovementFingerUp?.Invoke();
+            MoveChanged?.Invoke(Vector2.zero);
+        }
 
-                amount = Vector2.zero;
-            }
+        private void ResetLookFinger()
+        {
+            _lookFinger = null;
+            _lookJoystickAnchoredPosition = Vector2.zero;
+            LookFingerUp?.Invoke();
+            FireChanged?.Invoke(false);
         }
 
         private void OnFireStart(InputAction.CallbackContext context)

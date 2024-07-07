@@ -15,12 +15,7 @@ namespace Gameplay
         private readonly IPause _pause;
         private readonly ICanReload _reloadActor;
         private readonly ITicker _ticker;
-
-        private bool _isMoving;
-        private bool _isLooking;
-
-        private Vector3 _moveDirection;
-
+        
         [Inject]
         public PlayerInputAdapter(
             IInputController inputController,
@@ -45,62 +40,18 @@ namespace Gameplay
 
             _inputController.FireChanged += OnFireChanged;
             _inputController.ReloadChanged += OnReloadChanged;
-
-            _inputController.FingerDown += OnFingerDown;
-            _inputController.FingerMoved += OnFingerMoved;
-            _inputController.FingerUp += OnFingerUp;
-        }
-
-        private void OnFingerDown(Vector2 touchPosition, bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
-        }
-
-        private void OnFingerMoved(Vector2 touchPosition, bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
-        }
-
-        private void OnFingerUp(bool isMoving, bool isLooking)
-        {
-            _isMoving = isMoving;
-            _isLooking = isLooking;
         }
 
         private void OnMoveChanged(Vector2 direction)
         {
-            if (!_isMoving)
-            {
-                return;
-            }
-
-            _moveDirection = new Vector3(direction.x, 0, direction.y);
-
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
-            _ticker.Tick -= RepeatMove;
-            _ticker.Tick += RepeatMove;
-        }
-
-        private void RepeatMove(float deltaTime)
-        {
-            if (!_isMoving)
-            {
-                _ticker.Tick -= RepeatMove;
-                return;
-            }
-
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection));
+            var moveDirection = new Vector3(direction.x, 0, direction.y);
+            var force = direction.magnitude;
+            
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(moveDirection, force));
         }
 
         private void OnLookChanged(Vector2 direction)
         {
-            if (!_isLooking)
-            {
-                return;
-            }
-
             _pause.TryInvokeIfNotPause(() => _fireActor.LookDirection = new Vector3(direction.x, 0, direction.y));
         }
 
@@ -136,12 +87,7 @@ namespace Gameplay
             _inputController.FireChanged -= OnFireChanged;
             _inputController.ReloadChanged -= OnReloadChanged;
 
-            _inputController.FingerDown -= OnFingerDown;
-            _inputController.FingerMoved -= OnFingerMoved;
-            _inputController.FingerUp -= OnFingerUp;
-
             _ticker.Tick -= RepeatAttack;
-            _ticker.Tick -= RepeatMove;
         }
     }
 }
