@@ -37,7 +37,7 @@ namespace UI
 
         public void ClickDoneLevelButton()
         {
-            _gameRun.Finish();
+            _gameRun.NextLevel();
         }
 
         public class Factory : ViewFactory<WinLevelMenu>
