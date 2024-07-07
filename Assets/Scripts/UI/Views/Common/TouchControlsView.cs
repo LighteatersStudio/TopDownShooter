@@ -88,7 +88,7 @@ namespace UI.Views.Common
             joystick.SetKnobPosition(position);
         }
 
-        private static void ResetJoystick(FloatingJoystick joystick)
+        private void ResetJoystick(FloatingJoystick joystick)
         {
             joystick.SetJoystickPosition(Vector2.zero, false);
         }

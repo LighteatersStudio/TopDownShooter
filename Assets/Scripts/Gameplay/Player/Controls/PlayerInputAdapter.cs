@@ -15,12 +15,7 @@ namespace Gameplay
         private readonly IPause _pause;
         private readonly ICanReload _reloadActor;
         private readonly ITicker _ticker;
-
-        private bool _isMoving;
-        private bool _isLooking;
-
-        private Vector3 _moveDirection;
-
+        
         [Inject]
         public PlayerInputAdapter(
             IInputController inputController,
@@ -49,10 +44,10 @@ namespace Gameplay
 
         private void OnMoveChanged(Vector2 direction)
         {
-            _moveDirection = new Vector3(direction.x, 0, direction.y);
+            var moveDirection = new Vector3(direction.x, 0, direction.y);
             var force = direction.magnitude;
             
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(_moveDirection, force));
+            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(moveDirection, force));
         }
 
         private void OnLookChanged(Vector2 direction)
