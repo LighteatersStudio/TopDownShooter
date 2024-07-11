@@ -1,5 +1,6 @@
 using UI.Framework;
 using UI.Framework.Implementation;
+using UI.Shop;
 using UnityEngine;
 using Zenject;
 
@@ -26,7 +27,8 @@ namespace UI.Installers
 
         private void BindViews()
         {
-
+            Container.Bind<ShopScreen.Factory>()
+                .AsSingle();
         }
     }
 }

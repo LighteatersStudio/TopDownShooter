@@ -31,10 +31,6 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
 
-            Container.Bind<ILoadShopService>()
-                .To<LoadShopService>()
-                .AsSingle();
-
             Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>();
             Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>();
             Container.BindFactory<GameRunShopLoadingOperation, GameRunShopLoadingOperation.Factory>();

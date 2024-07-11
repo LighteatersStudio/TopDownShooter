@@ -1,5 +1,6 @@
 using Infrastructure.Loading;
 using Services.Loading;
+using UI.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -33,6 +34,10 @@ namespace UI.Shop
         private void OnDestroy()
         {
             _playButton.onClick.RemoveListener(OnPlayClicked);
+        }
+
+        public class Factory : ViewFactory<ShopScreen>
+        {
         }
     }
 }

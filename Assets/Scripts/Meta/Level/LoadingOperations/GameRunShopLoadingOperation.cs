@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Services.Loading;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Loading
@@ -11,7 +12,6 @@ namespace Infrastructure.Loading
 
         private readonly ILoadShopService _loadShopService;
 
-        [Inject]
         public GameRunShopLoadingOperation(ILoadShopService loadShopService)
         {
             _loadShopService = loadShopService;
