@@ -38,7 +38,6 @@ namespace UI
 
         private void OnCloseButtonClicked()
         {
-            _pauseManager.Paused = false;
             Close();
         }
 
@@ -46,6 +45,12 @@ namespace UI
         {
             _gameState.Death();
             Close();
+        }
+
+        public override void Close()
+        {
+            _pauseManager.Paused = false;
+            base.Close();
         }
 
         public class Factory : ViewFactory<PauseMenu>

@@ -1,10 +1,9 @@
-using UI;
+using Gameplay.Services.Input;
 using UI.Framework;
 using UnityEngine;
 using Zenject;
-using Gameplay.Services.Input;
 
-namespace Infrastructure.UI
+namespace UI
 {
     public class PauseMenuObserver : MonoBehaviour
     {
@@ -22,6 +21,11 @@ namespace Infrastructure.UI
         private void Start()
         {
             _uiInputController.CancelChanged += TogglePauseMenu;
+        }
+        
+        public void ManualTogglePauseMenu()
+        {
+            TogglePauseMenu();
         }
 
         private void TogglePauseMenu()
