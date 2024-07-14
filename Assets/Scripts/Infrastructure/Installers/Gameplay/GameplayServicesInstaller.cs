@@ -1,7 +1,7 @@
 ﻿using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Pause;
-using Infrastructure.UI;
+using UI;
 using UnityEngine;
 using Zenject;
 
