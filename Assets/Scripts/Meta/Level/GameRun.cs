@@ -17,6 +17,7 @@ namespace Meta.Level
         private readonly GameRunContext _gameRunContext;
 
         public GameRunType RunType { get; }
+        public int CurrentLevel => _gameRunContext.CurrentLevel;
 
         public GameRun(GameRunParameters gameRunParameters,
             ILoadingService loadingService,

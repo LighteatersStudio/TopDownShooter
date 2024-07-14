@@ -4,9 +4,9 @@ namespace Meta.Level
     {
         private readonly int _maxLevel;
 
-        public int CountOfFinishedArenas { get; private set; }
+        public int CurrentLevel { get; private set; }
         public int CharacterIndex { get; private set; }
-        public bool IsFinished => _maxLevel <= CountOfFinishedArenas;
+        public bool IsFinished => _maxLevel <= CurrentLevel;
 
         public GameRunContext(int characterIndex, int maxLevel)
         {
@@ -16,7 +16,7 @@ namespace Meta.Level
 
         public bool ToNextArena()
         {
-            CountOfFinishedArenas++;
+            CurrentLevel++;
             return IsFinished;
         }
     }
