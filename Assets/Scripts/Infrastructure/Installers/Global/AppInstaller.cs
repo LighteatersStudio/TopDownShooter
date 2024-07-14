@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Loading;
 using Meta.Level;
+using Meta.Level.Shop;
 using Services.Loading;
 using Services.Loading.Implementation;
 using UnityEngine;
@@ -22,18 +23,17 @@ namespace Infrastructure
 
             Container.Bind<ILoadingScreen>()
                 .To<LoadingScreenAdapter>()
-                .FromNew()
                 .AsSingle()
                 .NonLazy();
 
             Container.Bind<ILoadingService>()
                 .To<LoadingService>()
-                .FromNew()
                 .AsSingle()
                 .NonLazy();
 
             Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>();
             Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>();
+            Container.BindFactory<GameRunShopLoadingOperation, GameRunShopLoadingOperation.Factory>();
         }
 
         private void BindScenes()

@@ -10,7 +10,7 @@ namespace Meta.Level
             CharacterIndex = characterIndex;
         }
 
-        public void OnNextArena()
+        public void ToNextArena()
         {
             CountOfFinishedArenas++;
         }

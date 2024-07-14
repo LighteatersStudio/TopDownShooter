@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Infrastructure.Loading;
 using Services.Coloring;
 using Services.Loading;
+using UnityEngine;
 using Zenject;
 
 namespace Meta.Level
@@ -9,9 +11,10 @@ namespace Meta.Level
     public class GameRun : IGameRun
     {
         private readonly ILoadingService _loadingService;
+        private readonly GameColoring _gameColoring;
         private readonly MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
         private readonly ArenaLoadingOperation.Factory _arenaLoadingOperationFactory;
-        private readonly GameColoring _gameColoring;
+        private readonly GameRunShopLoadingOperation.Factory _shopLoadingOperationFactory;
         private readonly GameRunContext _gameRunContext;
 
         public GameRunType RunType { get; }
@@ -19,16 +22,18 @@ namespace Meta.Level
         public GameRun(GameRunParameters gameRunParameters,
             ILoadingService loadingService,
             GameColoring gameColoring,
+            MainMenuLoadingOperation.Factory mainMenuLoadingFactory,
             ArenaLoadingOperation.Factory arenaLoadingOperationFactory,
-            MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
+            GameRunShopLoadingOperation.Factory shopLoadingOperationFactory)
         {
             RunType = gameRunParameters.RunType;
             _gameRunContext = new GameRunContext(gameRunParameters.CharacterIndex);
 
             _loadingService = loadingService;
             _gameColoring = gameColoring;
-            _arenaLoadingOperationFactory = arenaLoadingOperationFactory;
             _mainMenuLoadingFactory = mainMenuLoadingFactory;
+            _arenaLoadingOperationFactory = arenaLoadingOperationFactory;
+            _shopLoadingOperationFactory = shopLoadingOperationFactory;
         }
 
         public async Task Start()
@@ -40,8 +45,8 @@ namespace Meta.Level
 
         public async Task NextLevel()
         {
-            _gameRunContext.OnNextArena();
-            await _loadingService.Load(_arenaLoadingOperationFactory.Create());
+            _gameRunContext.ToNextArena();
+            await _loadingService.Load(_shopLoadingOperationFactory.Create());
         }
 
         public async Task Finish()

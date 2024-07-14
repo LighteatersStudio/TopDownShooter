@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arenaListSettings: {fileID: 11400000, guid: 59fb9020564ad49bca8f418d31488c77, type: 2}
+  _shopSettings: {fileID: 11400000, guid: 70486848a5d73422d992e7ad0740f386, type: 2}
 --- !u!114 &8935362038654220901
 MonoBehaviour:
   m_ObjectHideFlags: 0

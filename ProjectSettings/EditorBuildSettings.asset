@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/LevelBaseSize.unity
     guid: 26ddde11920c34b22a6ed4a2ef2a46ee
+  - enabled: 1
+    path: Assets/Scenes/Meta/GameRunShop.unity
+    guid: 02cfdf738623248abb54fb2dd4f84230
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 91ee3d88d8c3aed46a0bcda99602a7ad, type: 2}
