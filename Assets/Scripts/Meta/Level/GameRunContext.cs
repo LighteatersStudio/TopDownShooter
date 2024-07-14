@@ -2,17 +2,22 @@ namespace Meta.Level
 {
     public class GameRunContext
     {
-        public int CountOfFinishedArenas { get; private set; } = 0;
-        public int CharacterIndex { get; private set; }
+        private readonly int _maxLevel;
 
-        public GameRunContext(int characterIndex)
+        public int CountOfFinishedArenas { get; private set; }
+        public int CharacterIndex { get; private set; }
+        public bool IsFinished => _maxLevel <= CountOfFinishedArenas;
+
+        public GameRunContext(int characterIndex, int maxLevel)
         {
             CharacterIndex = characterIndex;
+            _maxLevel = maxLevel;
         }
 
-        public void ToNextArena()
+        public bool ToNextArena()
         {
             CountOfFinishedArenas++;
+            return IsFinished;
         }
     }
 }

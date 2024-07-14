@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSettings: {fileID: 11400000, guid: e056b892dd6466c46af8cb8c1a92c1be, type: 2}
+  _gameRunSettings: {fileID: 11400000, guid: 09791167520094b8ba9e063e61b59574, type: 2}
 --- !u!114 &-7907889370390857968
 MonoBehaviour:
   m_ObjectHideFlags: 0

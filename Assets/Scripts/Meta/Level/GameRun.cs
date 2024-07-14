@@ -1,15 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Infrastructure.Loading;
 using Services.Coloring;
 using Services.Loading;
-using UnityEngine;
 using Zenject;
 
 namespace Meta.Level
 {
     public class GameRun : IGameRun
     {
+        private readonly GameRunParameters _gameRunParameters;
         private readonly ILoadingService _loadingService;
         private readonly GameColoring _gameColoring;
         private readonly MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
@@ -27,7 +26,7 @@ namespace Meta.Level
             GameRunShopLoadingOperation.Factory shopLoadingOperationFactory)
         {
             RunType = gameRunParameters.RunType;
-            _gameRunContext = new GameRunContext(gameRunParameters.CharacterIndex);
+            _gameRunContext = new GameRunContext(gameRunParameters.CharacterIndex, gameRunParameters.MaxLevel);
 
             _loadingService = loadingService;
             _gameColoring = gameColoring;
@@ -39,13 +38,17 @@ namespace Meta.Level
         public async Task Start()
         {
             ChoiceGameColor();
-
             await _loadingService.Load(_arenaLoadingOperationFactory.Create());
         }
 
         public async Task NextLevel()
         {
-            _gameRunContext.ToNextArena();
+            if (_gameRunContext.ToNextArena())
+            {
+                await Finish();
+                return;
+            }
+
             await _loadingService.Load(_shopLoadingOperationFactory.Create());
         }
 
