@@ -18,13 +18,17 @@ namespace UI.Views.Popups.CharacterSelectionMenu
         private GameRunProvider _gameRun;
         private SelectCharacterService _selectCharacterService;
         private readonly List<int> _selectedCharacters = new();
+        private GameRunSettings _gameRunSettings;
         private int _characterIndex;
 
         [Inject]
-        public void Construct(GameRunProvider gameRun, SelectCharacterService selectCharacterService)
+        public void Construct(GameRunProvider gameRun,
+            SelectCharacterService selectCharacterService,
+            GameRunSettings gameRunSettings)
         {
             _gameRun = gameRun;
             _selectCharacterService = selectCharacterService;
+            _gameRunSettings = gameRunSettings;
         }
 
         private void Start()
@@ -39,7 +43,7 @@ namespace UI.Views.Popups.CharacterSelectionMenu
 
         private void ActivateHighMode()
         {
-            var parameters = new GameRunParameters(GameRunType.High, _characterIndex);
+            var parameters = new GameRunParameters(GameRunType.High, _characterIndex, _gameRunSettings.MaxLevel);
             _gameRun.Run(parameters);
             Close();
         }

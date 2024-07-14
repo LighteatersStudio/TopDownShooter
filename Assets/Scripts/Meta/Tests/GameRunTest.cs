@@ -37,7 +37,7 @@ namespace Meta.Tests
         {
             var factory = Container.Resolve<GameRun.Factory>();
 
-            var parameters = new GameRunParameters(GameRunType.High, 0);
+            var parameters = new GameRunParameters(GameRunType.High, 0, 2);
             var run = factory.Create(parameters);
 
             Assert.NotNull(run,"Object creating fail");
@@ -48,11 +48,11 @@ namespace Meta.Tests
         {
             var factory = Container.Resolve<GameRun.Factory>();
 
-            var parametersHigh = new GameRunParameters(GameRunType.High, 0);
+            var parametersHigh = new GameRunParameters(GameRunType.High, 0, 2);
             var run = factory.Create(parametersHigh);
             Assert.IsTrue(run.RunType == GameRunType.High);
 
-            var parametersStone = new GameRunParameters(GameRunType.Stone, 0);
+            var parametersStone = new GameRunParameters(GameRunType.Stone, 0, 2);
             run = factory.Create(parametersStone);
             Assert.IsTrue(run.RunType == GameRunType.Stone);
         }
