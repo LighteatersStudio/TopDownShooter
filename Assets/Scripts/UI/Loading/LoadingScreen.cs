@@ -73,10 +73,10 @@ namespace UI
         {
             while (_progressFill.value < _targetProgress)
             {
-                await UniTask.Delay(1);
+                await UniTask.Delay(1, true);
             }
 
-            await UniTask.Delay(TimeSpan.FromSeconds(FillDelay));
+            await UniTask.Delay(TimeSpan.FromSeconds(FillDelay), true);
         }
 
         private IEnumerator UpdateProgressBar()
@@ -85,7 +85,7 @@ namespace UI
             {
                 if (_progressFill.value < _targetProgress)
                 {
-                    _progressFill.value += Time.deltaTime * _barSpeed;
+                    _progressFill.value += Time.unscaledDeltaTime * _barSpeed;
                 }
 
                 yield return null;

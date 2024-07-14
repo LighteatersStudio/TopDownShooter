@@ -72,7 +72,7 @@ namespace Gameplay
 
             var position = transform.position;
 
-            _currentSpeed += (position - _lastPosition).magnitude / Time.deltaTime - decelerationInS * Time.deltaTime;
+            _currentSpeed += (position - _lastPosition).magnitude / Time.unscaledDeltaTime - decelerationInS * Time.unscaledDeltaTime;
             _currentSpeed = Mathf.Clamp(_currentSpeed, 0, maxSpeed);
 
             _lastPosition = position;

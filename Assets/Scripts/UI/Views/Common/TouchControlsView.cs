@@ -29,63 +29,79 @@ namespace UI.Views.Common
 
         private void Start()
         {
-            _uiInputController.FingerDown += OnFingerDown;
-            _uiInputController.FingerMoved += OnFingerMoved;
-            _uiInputController.FingerUp += OnFingerUp;
+            _uiInputController.MovementFingerDown += OnMovementFingerDown;
+            _uiInputController.MovementFingerMoved += OnMovementFingerMoved;
+            _uiInputController.MovementFingerUp += OnMovementFingerUp;
+            
+            _uiInputController.LookFingerDown += OnLookFingerDown;
+            _uiInputController.LookFingerMoved += OnLookFingerMoved;
+            _uiInputController.LookFingerUp += OnLookFingerUp;
         }
 
-        private void OnFingerDown(Vector2 touchPosition, bool isMoving, bool isLooking)
+        private void OnMovementFingerDown(Vector2 touchPosition)
         {
-            SetJoystickPosition(isMoving, _leftJoystick, touchPosition);
-            SetJoystickPosition(isLooking, _rightJoystick, touchPosition);
+            SetJoystickPosition(_leftJoystick, touchPosition);
         }
 
-        private void OnFingerMoved(Vector2 touchPosition, bool isMoving, bool isLooking)
+        private void OnMovementFingerMoved(Vector2 touchPosition)
         {
             if (float.IsNaN(touchPosition.x) || float.IsNaN(touchPosition.y))
             {
                 return;
             }
 
-            SetKnobPosition(isMoving, _leftJoystick, touchPosition);
-            SetKnobPosition(isLooking, _rightJoystick, touchPosition);
+            SetKnobPosition(_leftJoystick, touchPosition);
         }
 
-        private void OnFingerUp(bool isMoving, bool isLooking)
+        private void OnMovementFingerUp()
         {
-            ResetJoystick(isMoving, _leftJoystick);
-            ResetJoystick(isLooking, _rightJoystick);
+            ResetJoystick(_leftJoystick);
+        }
+        
+        private void OnLookFingerDown(Vector2 touchPosition)
+        {
+            SetJoystickPosition(_rightJoystick, touchPosition);
         }
 
-        private void SetJoystickPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        private void OnLookFingerMoved(Vector2 touchPosition)
         {
-            if (condition)
+            if (float.IsNaN(touchPosition.x) || float.IsNaN(touchPosition.y))
             {
-                joystick.SetJoystickPosition(position, true);
+                return;
             }
+
+            SetKnobPosition(_rightJoystick, touchPosition);
         }
 
-        private void SetKnobPosition(bool condition, FloatingJoystick joystick, Vector2 position)
+        private void OnLookFingerUp()
         {
-            if (condition)
-            {
-                joystick.SetKnobPosition(position);
-            }
+            ResetJoystick(_rightJoystick);
         }
 
-        private static void ResetJoystick(bool condition, FloatingJoystick joystick)
+        private void SetJoystickPosition(FloatingJoystick joystick, Vector2 position)
         {
-            if (condition)
-            {
-                joystick.SetJoystickPosition(Vector2.zero, false);
-            }
+            joystick.SetJoystickPosition(position, true);
+        }
+
+        private void SetKnobPosition(FloatingJoystick joystick, Vector2 position)
+        {
+            joystick.SetKnobPosition(position);
+        }
+
+        private void ResetJoystick(FloatingJoystick joystick)
+        {
+            joystick.SetJoystickPosition(Vector2.zero, false);
         }
 
         private void OnDestroy()
         {
-            _uiInputController.FingerDown -= OnFingerDown;
-            _uiInputController.FingerMoved -= OnFingerMoved;
-            _uiInputController.FingerUp -= OnFingerUp;
+            _uiInputController.MovementFingerDown -= OnMovementFingerDown;
+            _uiInputController.MovementFingerMoved -= OnMovementFingerMoved;
+            _uiInputController.MovementFingerUp -= OnMovementFingerUp;
+            
+            _uiInputController.LookFingerDown -= OnLookFingerDown;
+            _uiInputController.LookFingerMoved -= OnLookFingerMoved;
+            _uiInputController.LookFingerUp -= OnLookFingerUp;
         }
 
         public class Factory : ViewFactory<TouchControlsView>
