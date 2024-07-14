@@ -46,8 +46,15 @@ namespace Gameplay
         {
             var moveDirection = new Vector3(direction.x, 0, direction.y);
             var force = direction.magnitude;
-            
-            _pause.TryInvokeIfNotPause(() => _movingActor.SetMoveForce(moveDirection, force));
+
+            if (!_pause.Paused)
+            {
+                _movingActor.SetMoveForce(moveDirection, force);
+            }
+            else
+            {
+                _movingActor.SetMoveForce(Vector3.zero);
+            }
         }
 
         private void OnLookChanged(Vector2 direction)

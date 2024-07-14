@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.FX;
+﻿using System;
+using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
 using Gameplay.Services.Pause;
 using UI;
@@ -34,10 +35,10 @@ namespace Infrastructure
         
         private void BindPause()
         {
-            Container.Bind<IPause>()
+            Container.Bind(typeof(IPause), typeof(IInitializable), typeof(IDisposable))
                 .To<PauseManager>()
                 .AsSingle()
-                .Lazy();
+                .NonLazy();
             
             Container.Bind<PauseMenuObserver>()
                 .FromNewComponentOnNewGameObject()
