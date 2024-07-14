@@ -44,6 +44,9 @@ namespace Infrastructure
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
 
+        [Header("Gameplay Entities: session")]
+        [SerializeField] private LevelSettings _levelSettings;
+
         private SelectCharacterService _selectCharacterService;
 
         [Inject]
@@ -102,6 +105,10 @@ namespace Infrastructure
             Container.Bind(typeof(IGameState), typeof(IInitializable))
                 .To<GameStateManager>()
                 .FromNew()
+                .AsSingle();
+
+            Container.Bind<LevelSettings>()
+                .FromScriptableObject(_levelSettings)
                 .AsSingle();
         }
 

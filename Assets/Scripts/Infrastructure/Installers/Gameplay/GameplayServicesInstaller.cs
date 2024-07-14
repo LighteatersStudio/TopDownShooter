@@ -16,15 +16,13 @@ namespace Infrastructure
             BindPause();
             BindFX();
         }
-        
+
         private void BindTime()
         {
             Debug.Log("Game installer: Bind time");
-            
+
             Container.Bind<IGameTime>()
                 .To<GameTimer>()
-                .FromNewComponentOnNewGameObject()
-                .WithGameObjectName(nameof(GameTimer))
                 .AsSingle()
                 .NonLazy();
 
@@ -32,21 +30,21 @@ namespace Infrastructure
                 .AsSingle()
                 .Lazy();
         }
-        
+
         private void BindPause()
         {
             Container.Bind(typeof(IPause), typeof(IInitializable), typeof(IDisposable))
                 .To<PauseManager>()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<PauseMenuObserver>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName(nameof(PauseMenuObserver))
                 .AsSingle()
                 .NonLazy();
         }
-        
+
         private void BindFX()
         {
             Debug.Log("Game installer: Bind FX");

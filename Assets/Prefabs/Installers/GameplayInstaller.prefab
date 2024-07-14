@@ -88,6 +88,7 @@ MonoBehaviour:
   _weaponUISetting: {fileID: 11400000, guid: 464984ae4e66aa9468bcf7d43b302f8e, type: 2}
   _levelWeaponSettings: {fileID: 11400000, guid: a4f3a593fe833489ca16b8c91539a1a4, type: 2}
   _outlineSettings: {fileID: 11400000, guid: 91a3eee1e914ba149a70efd866104af8, type: 2}
+  _levelSettings: {fileID: 11400000, guid: 68317c3e5595c4f8b87284019b545e63, type: 2}
 --- !u!114 &394977836697235989
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,31 +1,39 @@
-﻿using Gameplay.Services.Pause;
-using UnityEngine;
-using Zenject;
+﻿using System;
 
 namespace Gameplay.Services.GameTime
 {
-    public class GameTimer : MonoBehaviour, IGameTime
+    public class GameTimer : IGameTime
     {
-        private IPause _pause;
+        private readonly Cooldown.Factory _cooldownFactory;
+        private Cooldown _cooldown;
 
-        private float _time;
-        
-        public float Value => _time;
+        public float Value => _cooldown.RemainingTimeS;
+        public event Action Finished;
 
-        [Inject]
-        public void Construct(IPause pause)
+
+        public GameTimer(Cooldown.Factory cooldownFactory)
         {
-            _pause = pause;
+            _cooldownFactory = cooldownFactory;
+            _cooldown = _cooldownFactory.CreateFinished();
         }
-        
-        private void Update()
+
+        public void Start(float durationS)
         {
-            if (_pause.Paused)
-            {
-                return;
-            }
-            
-            _time += Time.deltaTime;
+            _cooldown = _cooldownFactory.CreateWithCommonTicker(durationS);
+            _cooldown.Completed += OnFinished;
+            _cooldown.Launch();
+        }
+
+        public void Break()
+        {
+            _cooldown.Completed -= OnFinished;
+            _cooldown.ForceFinish();
+        }
+
+        private void OnFinished()
+        {
+            _cooldown.Completed -= OnFinished;
+            Finished?.Invoke();
         }
     }
 }
