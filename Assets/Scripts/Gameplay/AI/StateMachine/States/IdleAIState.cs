@@ -2,21 +2,20 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace Gameplay.AI
 {
     public class IdleAIState : StateBase
     {
         private readonly CancellationToken _token;
-        private readonly Factory _idleFactory;
-        private readonly PatrolAIState.Factory _patrolFactory;
+       // private readonly PatrolAIState.Factory _patrolFactory;
 
-        public IdleAIState(CancellationToken token, Factory idleFactory, PatrolAIState.Factory patrolFactory)
-            : base(token, Array.Empty<IStateTransition>())
+        public IdleAIState(CancellationToken token, /*PatrolAIState.Factory patrolFactory,*/ IdleTransitions transitions)
+            : base(token, transitions.Create())
         {
             _token = token;
-            _idleFactory = idleFactory;
-            _patrolFactory = patrolFactory;
+           // _patrolFactory = patrolFactory;
         }
 
         protected override void BeginInternal()
@@ -25,22 +24,16 @@ namespace Gameplay.AI
 
         protected override async Task<IAIState> LaunchInternal(CancellationToken token)
         {
-            return _patrolFactory.Create(_token);
-            
-            while (!_token.IsCancellationRequested)
-            {
-                await UniTask.Delay(1000, cancellationToken: _token);
-            }
-
-            return _idleFactory.Create(_token);
+            /*return _patrolFactory.Create(_token);*/
+            await Task.Delay(100000);
+            throw new NotImplementedException();
         }
-
 
         protected override void EndInternal()
         {
         }
 
-        public class Factory : AIStateFactory<IdleAIState>
+        public class Factory : PlaceholderFactory<CancellationToken, IdleAIState>
         {
         }
     }

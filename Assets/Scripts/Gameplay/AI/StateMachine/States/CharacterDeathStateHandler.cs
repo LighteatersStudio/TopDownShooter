@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
@@ -19,11 +20,22 @@ namespace Gameplay.AI
             _idleFactory = idleFactory;
         }
 
-        public virtual async Task<StateResult> Launch()
+        public void Begin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual async Task<IAIState> Launch()
         {
             HandleCharacterDeath();
             await UniTask.Yield();
-            return new StateResult(_idleFactory.Create(_token), true);
+            //return new StateResult(_idleFactory.Create(_token), true);
+            throw new NotImplementedException();
+        }
+
+        public void Release()
+        {
+            throw new NotImplementedException();
         }
 
         private void HandleCharacterDeath()
@@ -42,3 +54,4 @@ namespace Gameplay.AI
         }
     }
 }
+

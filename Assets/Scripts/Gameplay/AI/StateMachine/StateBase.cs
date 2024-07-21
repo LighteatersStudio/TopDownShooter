@@ -9,7 +9,6 @@ namespace Gameplay.AI
     {
         private readonly CancellationToken _mainToken;
         private readonly CancellationTokenSource _selfTokenSource;
-        
         private readonly List<IStateTransition> _transitions;
         
         private IAIState _transitionState;
@@ -41,7 +40,6 @@ namespace Gameplay.AI
         }
         
         protected abstract Task<IAIState> LaunchInternal(CancellationToken token);
-        
 
         public void Release()
         {

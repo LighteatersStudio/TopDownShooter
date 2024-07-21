@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Zenject;
@@ -22,13 +23,24 @@ namespace Gameplay.AI
             _agentStop = agentStop;
         }
 
-        public async Task<StateResult> Launch()
+        public void Begin()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IAIState> Launch()
         {
             await UniTask.Yield();
             _moving.Stop();
             _agentStop.Stop();
 
-            return new StateResult(_idleFactory.Create(_token), true);
+           // return new StateResult(_idleFactory.Create(_token), true);
+           throw new NotImplementedException();
+        }
+
+        public void Release()
+        {
+            throw new NotImplementedException();
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, DeathAIState>

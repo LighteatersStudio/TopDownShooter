@@ -40,7 +40,7 @@ namespace Gameplay.AI
         {
         }
 
-        public class Factory : AIStateFactory<InitAIState>
+        public class Factory : PlaceholderFactory<CancellationToken, InitAIState>
         {
         }
     }
