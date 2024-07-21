@@ -1,6 +1,8 @@
 ﻿using Services.Application.Description;
 using TMPro;
 using UI.Framework;
+using UI.Views.Popups;
+using UI.Views.Popups.CharacterSelectionMenu;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -15,18 +17,19 @@ namespace UI
         [SerializeField] private Button _startButton;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _exitButton;
-        
+
         [Header("Settings")]
         [SerializeField] private MainMenuBackgrounds _backgrounds;
-        
-        private IUIRoot _uiRoot;
-        private IApplicationDescription _applicationDescription;
 
-        
+        // private IUIRoot _uiRoot;
+        private IApplicationDescription _applicationDescription;
+        private CharacterSelectionScreen.Factory _selectionScreenFactory;
+
+
         [Inject]
-        public void Construct(IUIRoot uiRoot, IApplicationDescription description)
+        public void Construct(CharacterSelectionScreen.Factory selectionScreenFactory, IApplicationDescription description)
         {
-            _uiRoot = uiRoot;
+            _selectionScreenFactory = selectionScreenFactory;
             _applicationDescription = description;
         }
 
@@ -52,7 +55,7 @@ namespace UI
 
         private void LoadLevel()
         {
-            _uiRoot.Open<HighStoneChooseMenu>();
+            _selectionScreenFactory.Open();
             Close();
         }
 
@@ -60,11 +63,16 @@ namespace UI
         {
             Debug.Log("Settings button clicked.");
         }
-        
+
         private void ApplicationExit()
         {
             Debug.Log("Application Quit.");
             Application.Quit();
+        }
+
+        public class Factory : ViewFactory<MainMenu>
+        {
+
         }
     }
 }

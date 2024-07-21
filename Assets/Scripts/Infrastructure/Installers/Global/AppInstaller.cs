@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Loading;
 using Meta.Level;
+using Meta.Level.Shop;
 using Services.Loading;
 using Services.Loading.Implementation;
 using UnityEngine;
@@ -15,57 +16,44 @@ namespace Infrastructure
             BindScenes();
             BindGameRun();
         }
-        
+
         private void BindLoadingService()
         {
             Debug.Log("Global installer: Bind loading operation");
 
             Container.Bind<ILoadingScreen>()
                 .To<LoadingScreenAdapter>()
-                .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<ILoadingService>()
                 .To<LoadingService>()
-                .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<MainMenuLoadingOperation>()
-                .FromNew()
-                .AsSingle()
-                .Lazy();
-            
-            Container.Bind<LevelLoadingOperation>()
-                .FromNew()
-                .AsSingle()
-                .Lazy();
+
+            Container.BindFactory<MainMenuLoadingOperation, MainMenuLoadingOperation.Factory>();
+            Container.BindFactory<ArenaLoadingOperation, ArenaLoadingOperation.Factory>();
+            Container.BindFactory<GameRunShopLoadingOperation, GameRunShopLoadingOperation.Factory>();
         }
 
         private void BindScenes()
         {
             Debug.Log("Global installer: Bind scenes");
-            
+
             Container.Bind<SceneNames>()
                 .FromNew()
                 .AsSingle()
                 .Lazy();
         }
-        
+
         private void BindGameRun()
         {
             Debug.Log("Global installer: Bind game runtime");
 
-            Container.Bind<ILevelsNavigation>()
-                .To<LevelsNavigation>()
-                .FromNew()
-                .AsSingle().Lazy();
-            
-            Container.BindFactory<GameRunType, GameRun, GameRun.Factory>()
+            Container.BindFactory<GameRunParameters, GameRun, GameRun.Factory>()
                 .FromNew()
                 .Lazy();
-            
+
             Container.Bind<GameRunProvider>()
                 .FromNew()
                 .AsSingle()

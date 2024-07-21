@@ -8,12 +8,14 @@ namespace Gameplay.Services.GameTime
         private readonly float _duration;
         private readonly ITicker _ticker;
         private readonly Action _finishHandler;
-        
+
         private float _timer;
 
+        public float RemainingTimeS => _timer;
+        public float ElapsedTimeS => _duration - _timer;
         public float Progress => _timer / _duration;
         public bool IsFinish { get; private set; }
-        
+
         public event Action ProgressChanged;
         public event Action Completed;
 
@@ -31,7 +33,7 @@ namespace Gameplay.Services.GameTime
                 Debug.LogError("Launch failure. Cooldown already finished!");
                 return;
             }
-            
+
             _timer = _duration;
             _ticker.Tick += Update;
         }
@@ -42,7 +44,7 @@ namespace Gameplay.Services.GameTime
             {
                 return;
             }
-            
+
             _timer -= deltaTime;
             ProgressChanged?.Invoke();
 
@@ -55,9 +57,9 @@ namespace Gameplay.Services.GameTime
         private void Finish()
         {
             IsFinish = true;
-            
+
             _ticker.Tick -= Update;
-            
+
             _finishHandler?.Invoke();
             Completed?.Invoke();
         }
@@ -68,12 +70,24 @@ namespace Gameplay.Services.GameTime
             Finish();
         }
 
-        
+
         public class Factory
         {
+            private readonly ITicker _commonTicker;
+
+            public Factory(ITicker commonTicker)
+            {
+                _commonTicker = commonTicker;
+            }
+
             public virtual Cooldown Create(float duration, ITicker ticker, Action finishHandler = null)
             {
                 return new Cooldown(duration, ticker, finishHandler);
+            }
+
+            public virtual Cooldown CreateWithCommonTicker(float duration, Action finishHandler = null)
+            {
+                return Create(duration, _commonTicker, finishHandler);
             }
 
             public virtual Cooldown CreateFinished()

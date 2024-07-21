@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a4b3ce452734765b0d30d42919679ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _muzzle: {fileID: 6892000819206925962}
+  <Muzzle>k__BackingField: {fileID: 6892000819206925962}
 --- !u!1001 &6106973530963098543
 PrefabInstance:
   m_ObjectHideFlags: 0

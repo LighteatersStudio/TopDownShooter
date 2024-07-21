@@ -7,13 +7,13 @@ namespace Infrastructure.Loading
     public class AppLoader : MonoBehaviour
     {
         private ILoadingService _loadingService;
-        private MainMenuLoadingOperation _menuLoadingOperation;
+        private MainMenuLoadingOperation.Factory _mainMenuLoadingFactory;
 
         [Inject]
-        public void Construct(ILoadingService loadingService, MainMenuLoadingOperation menuLoadingOperation)
+        public void Construct(ILoadingService loadingService, MainMenuLoadingOperation.Factory mainMenuLoadingFactory)
         {
             _loadingService = loadingService;
-            _menuLoadingOperation = menuLoadingOperation;
+            _mainMenuLoadingFactory = mainMenuLoadingFactory;
         }
 
         protected void Start()
@@ -23,7 +23,7 @@ namespace Infrastructure.Loading
 
         private async void LoadGame()
         {
-            await _loadingService.Load(_menuLoadingOperation);
+            await _loadingService.Load(_mainMenuLoadingFactory.Create());
         }
     }
 }

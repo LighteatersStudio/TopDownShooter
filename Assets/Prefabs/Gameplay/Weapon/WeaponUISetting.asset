@@ -19,3 +19,13 @@ MonoBehaviour:
     Icon: {fileID: 21300046, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
   - WeaponType: EMPTY_WEAPON
     Icon: {fileID: 21300038, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: BFG_1
+    Icon: {fileID: 21300018, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: FireGun_1
+    Icon: {fileID: 21300000, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: ROBOT_Gun_1
+    Icon: {fileID: 21300042, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: Rocket_1
+    Icon: {fileID: 21300032, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}
+  - WeaponType: Uzi_1
+    Icon: {fileID: 21300016, guid: 0bd96f6f4899f644ea1ffd9b4735a5e6, type: 3}

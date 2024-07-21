@@ -1,37 +1,49 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PursueTargetAIState: IAIState
+    public class PursueTargetAIState: CharacterDeathStateHandler
     {
         private readonly NavMeshMoving _moving;
         private readonly CancellationToken _token;
         private readonly SearchTargetAIState.Factory _searchTargetFactory;
         private readonly ObserveArea _observeArea;
         private readonly AttackingAIState.Factory _attackingAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
+        private readonly Character _character;
 
         public PursueTargetAIState(CancellationToken token,
             SearchTargetAIState.Factory searchTargetFactory,
             ObserveArea observeArea,
             NavMeshMoving moving,
-            AttackingAIState.Factory attackingAIFactory)
+            AttackingAIState.Factory attackingAIFactory,
+            Character character,
+            IdleAIState.Factory idleFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleFactory)
         {
             _token = token;
             _searchTargetFactory = searchTargetFactory;
             _observeArea = observeArea;
             _moving = moving;
             _attackingAIFactory = attackingAIFactory;
+            _character = character;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _observeArea.ActivateAttackCollider();
 
-            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, _token);
+            if (_character.IsDead)
+            {
+                return new StateResult(_deathAIFactory.Create(_token), true);
+            }
+
+            await MoveToLastTargetPosition(_observeArea.LastTargetPosition, InternalSource.Token);
 
             if (!_observeArea.HasTarget)
             {

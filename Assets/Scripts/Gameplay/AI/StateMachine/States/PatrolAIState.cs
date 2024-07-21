@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PatrolAIState : IAIState
+    public class PatrolAIState : CharacterDeathStateHandler
     {
         private readonly NavMeshMoving _moving;
         private readonly MovingPath _path;
@@ -16,13 +16,17 @@ namespace Gameplay.AI
         private readonly ObserveArea _observeArea;
         private readonly IdleAIState.Factory _factory;
         private readonly AttackingAIState.Factory _attackingAIFactory;
-        
+        private readonly DeathAIState.Factory _deathAIFactory;
+        private readonly Character _character;
+
         public PatrolAIState(NavMeshMoving moving,
             MovingPath path,
             IdleAIState.Factory factory,
             CancellationToken token,
             ObserveArea observeArea,
-            AttackingAIState.Factory attackingAIFactory)
+            AttackingAIState.Factory attackingAIFactory,
+            Character character,
+            DeathAIState.Factory deathAIFactory) : base(token, character, factory)
         {
             _moving = moving;
             _path = path;
@@ -30,24 +34,31 @@ namespace Gameplay.AI
             _token = token;
             _observeArea = observeArea;
             _attackingAIFactory = attackingAIFactory;
+            _character = character;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             var path = _path;
 
             do
             {
+                if (_character.IsDead)
+                {
+                    return new StateResult(_deathAIFactory.Create(_token), true);
+                }
+
                 if (_observeArea.HasTarget)
                 {
                     return new StateResult(_attackingAIFactory.Create(_token), true);
                 }
 
-                await MoveThroughPath(path.Points, _token);
+                await MoveThroughPath(path.Points, InternalSource.Token);
                 await UniTask.Yield();
 
                 path = _path.Reverse();
-
             } while (!_token.IsCancellationRequested);
 
             return new StateResult(_factory.Create(_token), false);
@@ -63,7 +74,7 @@ namespace Gameplay.AI
                 {
                     break;
                 }
-                    
+
                 if (!await _moving.MoveTo(pathPoint, internalToken) && !internalToken.IsCancellationRequested)
                 {
                     Debug.LogError($"MovePoint NOT REACHED: {pathPoint}");
@@ -86,7 +97,7 @@ namespace Gameplay.AI
                 {
                     return;
                 }
-                
+
                 _observeArea.TargetsChanged -= OnTargetChanged;
                 internalSource.Cancel();
             }

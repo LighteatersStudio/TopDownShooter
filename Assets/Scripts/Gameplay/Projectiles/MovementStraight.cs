@@ -23,7 +23,7 @@ namespace Gameplay.Projectiles
             _rigidbody.useGravity = false;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             _cachedTransform.position += _cachedTransform.forward * Time.deltaTime * _speed;
         }

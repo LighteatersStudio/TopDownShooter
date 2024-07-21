@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScreenSpaceOutlines
   m_EditorClassIdentifier: 
   m_Active: 1
-  renderPassEvent: 550
+  renderPassEvent: 1000
   outlinesLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -32,7 +32,7 @@ MonoBehaviour:
     colorFormat: 0
     depthBufferBits: 16
     filterMode: 0
-    backgroundColor: {r: 0, g: 0, b: 0, a: 1}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
     perObjectData: 0
     enableDynamicBatching: 0
     enableInstancing: 0
@@ -71,6 +71,7 @@ MonoBehaviour:
     blitHDROverlay: {fileID: 4800000, guid: a89bee29cffa951418fc1e2da94d1959, type: 3}
     cameraMotionVector: {fileID: 4800000, guid: c56b7e0d4c7cb484e959caeeedae9bbf, type: 3}
     objectMotionVector: {fileID: 4800000, guid: 7b3ede40266cd49a395def176e1bc486, type: 3}
+    dataDrivenLensFlare: {fileID: 4800000, guid: 6cda457ac28612740adb23da5d39ea92, type: 3}
   m_AssetVersion: 2
   m_OpaqueLayerMask:
     serializedVersion: 2

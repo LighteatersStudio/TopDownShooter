@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Collectable
+  - ProjectileIgnore
   layers:
   - Default
   - TransparentFX
@@ -35,8 +37,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - FirstCharacter
+  - SecondCharacter
   m_SortingLayers:
   - name: Default
     uniqueID: 0

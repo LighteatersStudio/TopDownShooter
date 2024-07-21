@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class SearchTargetAIState: IAIState
+    public class SearchTargetAIState: CharacterDeathStateHandler
     {
         private const int Angle = 50;
         private const int FullRotation = 360;
@@ -18,6 +18,7 @@ namespace Gameplay.AI
         private readonly ObserveArea _observeArea;
         private readonly Character _character;
         private readonly AttackingAIState.Factory _attackingAIFactory;
+        private readonly DeathAIState.Factory _deathAIFactory;
 
         public SearchTargetAIState(CancellationToken token,
             IdleAIState.Factory idleAIFactory,
@@ -25,7 +26,8 @@ namespace Gameplay.AI
             NavMeshMoving moving,
             ObserveArea observeArea,
             Character character,
-            AttackingAIState.Factory attackingAIFactory)
+            AttackingAIState.Factory attackingAIFactory,
+            DeathAIState.Factory deathAIFactory) : base(token, character, idleAIFactory)
         {
             _point = point;
             _token = token;
@@ -34,17 +36,24 @@ namespace Gameplay.AI
             _observeArea = observeArea;
             _character = character;
             _attackingAIFactory = attackingAIFactory;
+            _deathAIFactory = deathAIFactory;
         }
 
-        public async Task<StateResult> Launch()
+        public override async Task<StateResult> Launch()
         {
+            await base.Launch();
             _observeArea.DeactivateAttackCollider();
+
+            if (_character.IsDead)
+            {
+                return new StateResult(_deathAIFactory.Create(_token), true);
+            }
             
-            await MoveToSearchTargetPosition(_point.Point, _token);
-            
+            await MoveToSearchTargetPosition(_point.Point, InternalSource.Token);
+
             float currentRotation = 0;
 
-            while (currentRotation <= FullRotation && !_observeArea.HasTarget)
+            while (currentRotation <= FullRotation && !_observeArea.HasTarget && !_character.IsDead)
             {
                 var rotationSpeed = Angle * Time.deltaTime;
                 
@@ -55,7 +64,7 @@ namespace Gameplay.AI
                 await UniTask.Yield();
             }
 
-            if (_observeArea.HasTarget)
+            if (_observeArea.HasTarget && !_character.IsDead)
             {
                 return new StateResult(_attackingAIFactory.Create(_token), true);
             }

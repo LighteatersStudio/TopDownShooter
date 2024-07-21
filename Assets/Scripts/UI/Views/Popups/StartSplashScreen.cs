@@ -1,15 +1,28 @@
-﻿using UnityEngine;
+﻿using Gameplay.Services.Input;
+using UI.Framework;
+using Zenject;
 
 namespace UI
 {
     public class StartSplashScreen : Popup
     {
-        private void Update()
+        private IUIInputController _uiInputController;
+
+        [Inject]
+        public void Construct(IUIInputController uiInputController)
         {
-            if (Input.anyKeyDown)
-            {
-                Close();
-            }
+            _uiInputController = uiInputController;
+            _uiInputController.ClickChanged += Close;
+        }
+
+        private void OnDestroy()
+        {
+            _uiInputController.ClickChanged -= Close;
+        }
+
+        public class Factory : ViewFactory<StartSplashScreen>
+        {
+
         }
     }
 }

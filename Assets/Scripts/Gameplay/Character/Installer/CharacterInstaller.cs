@@ -19,6 +19,7 @@ namespace Gameplay
         
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
+        [SerializeField] private CharacterMaterialColorChangeData _colorChangeData;
         
         [Inject] private ICharacterSettings _settings;
         [Inject] private IFriendOrFoeTag _friendOrFoeTag;
@@ -139,6 +140,14 @@ namespace Gameplay
             Container.Bind<ICharacterFXList>()
                 .To<CharacterFXList>()
                 .FromScriptableObject(_characterFXList)
+                .AsSingle()
+                .Lazy();
+
+            Container.BindFactory<GameObject, CharacterColorFeedback, CharacterColorFeedback.Factory>()
+                .AsSingle();
+            
+            Container.Bind<CharacterMaterialColorChangeData>()
+                .FromScriptableObject(_colorChangeData)
                 .AsSingle()
                 .Lazy();
             

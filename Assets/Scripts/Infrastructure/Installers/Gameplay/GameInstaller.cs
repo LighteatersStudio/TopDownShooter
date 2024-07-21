@@ -1,6 +1,8 @@
+using System;
 using Gameplay;
 using Gameplay.CollectableItems;
 using Gameplay.AI;
+using Gameplay.Collectables.ConsumableSpawnSystem;
 using Gameplay.Enemy;
 using Gameplay.Collectables.FirstAid;
 using Gameplay.Weapons;
@@ -9,35 +11,49 @@ using Infrastructure.Scenraios;
 using Infrastructure.UI;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
 {
-    
+
     public class GameInstaller : MonoInstaller
     {
         [Header("Level Entities")]
         [SerializeField]private Camera _playerCamera;
-        
+
         [Header("Gameplay Entities: player")]
         [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private Player _playerPrefab;
-        
+
         [Header("Gameplay Entities: character")]
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private Character _enemyPrefab;
 
         [Header("Gameplay Entities: collectables")]
+        [SerializeField]private ConsumableSpawnSettings _consumableSpawnSettings;
         [SerializeField] private WeaponCollectable _weaponCollectable;
         [SerializeField] private FirstAidKit _firstAidKitPrefab;
-        
+        [SerializeField] private FirstAidKitSettings _firstAidKitSettings;
+
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
-        
+        [FormerlySerializedAs("_availableWeaponsSettings")] [SerializeField] private LevelWeaponSettings _levelWeaponSettings;
+
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
 
+        [Header("Gameplay Entities: session")]
+        [SerializeField] private LevelSettings _levelSettings;
+
+        private SelectCharacterService _selectCharacterService;
+
+        [Inject]
+        public void Construct(SelectCharacterService selectCharacterService)
+        {
+            _selectCharacterService = selectCharacterService;
+        }
 
         public override void InstallBindings()
         {
@@ -54,11 +70,11 @@ namespace Infrastructure
             BindFriendOrFoeSystem();
             BindOutline();
         }
-        
+
         private void BindScenarios()
         {
             Debug.Log("Game installer: Bind scenarios");
-            
+
             Container.Bind<GameSessionStartScenario>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName(nameof(GameSessionStartScenario))
@@ -72,10 +88,10 @@ namespace Infrastructure
 
             Container.Bind<IPlayerSettings>()
                 .To<PlayerSettings>()
-                .FromScriptableObject(_playerSettings)
+                .FromScriptableObject(_selectCharacterService.GetPlayerSettings)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.Bind<IPlayer>()
                 .To<Player>()
                 .FromSubContainerResolve()
@@ -86,13 +102,16 @@ namespace Infrastructure
 
         private void BindGameState()
         {
-            Container.Bind<IGameState>()
+            Container.Bind(typeof(IGameState), typeof(IInitializable))
                 .To<GameStateManager>()
                 .FromNew()
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
+
+            Container.Bind<LevelSettings>()
+                .FromScriptableObject(_levelSettings)
+                .AsSingle();
         }
-        
+
         private void BindGameRun()
         {
             Debug.Log("Game installer: Bind game runtime");
@@ -102,7 +121,7 @@ namespace Infrastructure
                 .AsSingle()
                 .NonLazy();
         }
-        
+
         private IGameRun GetGameRun()
         {
             foreach (var container in Container.ParentContainers)
@@ -124,8 +143,9 @@ namespace Infrastructure
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<PlayerDeathObserver>()
+
+            Container.Bind(typeof(IInitializable), typeof(IDisposable), typeof(PlayerDeathObserver))
+                .To<PlayerDeathObserver>()
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
@@ -140,17 +160,15 @@ namespace Infrastructure
                 .WithGameObjectName("MainCamera")
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<CameraTrackingTarget>()
-                .FromMethod(()=>Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
-                .AsSingle()
-                .Lazy();
-            
+                .FromMethod(() => Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
+                .AsSingle();
+
             Container.Bind<ICameraProvider>()
                 .To<CameraProvider>()
                 .FromNew()
-                .AsSingle()
-                .Lazy();
+                .AsSingle();
         }
 
         private void BindCharacter()
@@ -166,22 +184,43 @@ namespace Infrastructure
                 .ByInstaller<EnemyInstaller>()
                 .WithArguments(_enemyPrefab);
         }
-        
+
         private void BindCollectables()
         {
             Debug.Log("Game installer: Bind collectables");
-            
-            Container.BindFactory<Vector3, WeaponSettings, WeaponCollectable, WeaponCollectable.Factory>()
+
+            Container.BindFactory<Vector3, WeaponCollectable, WeaponCollectable.Factory>()
                 .FromComponentInNewPrefab(_weaponCollectable)
-                .AsSingle()
-                .Lazy();
-            
+                .AsSingle();
+
             Container.BindFactory<Vector3, FirstAidKit, FirstAidKit.Factory>()
                 .FromComponentInNewPrefab(_firstAidKitPrefab)
+                .AsSingle();
+
+            Container.Bind<FirstAidKitSettings>()
+                .FromInstance(_firstAidKitSettings)
+                .AsSingle();
+
+            Container.Bind(typeof(ConsumableSpawnSettings))
+                .To<ConsumableSpawnSettings>()
+                .FromInstance(_consumableSpawnSettings)
+                .AsSingle();
+
+            Container.Bind(typeof(IInitializable))
+                .To<ConsumableSpawnersInvoker>()
                 .AsSingle()
-                .Lazy();
+                .NonLazy();
+
+            Container.Bind(typeof(IFirstAidKitSpawner))
+                .To<FirstAidKitSpawner>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind(typeof(ISpawnSpaceRegister), typeof(IConsumableSpawnSystem))
+                .To<ConsumableSpawnSystem>()
+                .AsSingle();
         }
-        
+
         private void BindWeapon()
         {
             Debug.Log("Game installer: Bind weapon");
@@ -190,10 +229,21 @@ namespace Infrastructure
                 .FromScriptableObject(_weaponUISetting)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.BindFactory<IWeaponSettings, IWeaponUser, Weapon, Weapon.Factory>()
                 .FromSubContainerResolve()
                 .ByNewContextPrefab<WeaponInstaller>(_weaponPrefab);
+
+            Container.Bind<ILevelWeaponSettings>()
+                .To<LevelWeaponSettings>()
+                .FromScriptableObject(_levelWeaponSettings)
+                .AsSingle()
+                .Lazy();
+
+            Container.Bind(typeof(IWeaponSpawner))
+                .To<WeaponSpawner>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindFriendOrFoeSystem()

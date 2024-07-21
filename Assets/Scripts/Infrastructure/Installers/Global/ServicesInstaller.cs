@@ -1,4 +1,6 @@
-﻿using Services.Application.Description;
+﻿using System;
+using Gameplay.Services.GameTime;
+using Services.Application.Description;
 using Services.Application.Description.Implementation;
 using Services.Application.Version;
 using Services.Application.Version.Implementation;
@@ -13,16 +15,17 @@ namespace Infrastructure
         [Header("Version")]
         [SerializeField] private string _applicationVersion = "ApplicationVersion";
         [SerializeField] private string _applicationDescription = "ApplicationDescription";
-        
+
         [Header("GameColors")]
         [SerializeField] private ColorSchemeSettings _colorSchemeSettings;
-        
+
         public override void InstallBindings()
         {
             BindApplicationServices();
             BindGameColoring();
+            BindTimeService();
         }
-        
+
         private void BindApplicationServices()
         {
             Container.Bind<IApplicationDescription>()
@@ -30,14 +33,14 @@ namespace Infrastructure
                 .FromScriptableObjectResource(_applicationDescription)
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.Bind<IApplicationVersion>()
                 .To<ApplicationVersion>()
                 .FromScriptableObjectResource(_applicationVersion)
                 .AsSingle()
                 .NonLazy();
         }
-        
+
         private void BindGameColoring()
         {
             Debug.Log("Global installer: Bind game coloring");
@@ -47,11 +50,18 @@ namespace Infrastructure
                 .FromScriptableObject(_colorSchemeSettings)
                 .AsSingle()
                 .NonLazy();
-            
+
             Container.BindInterfacesAndSelfTo<GameColoring>()
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private void BindTimeService()
+        {
+            Container.Bind(typeof(ITicker), typeof(ITickable), typeof(IDisposable))
+                .To<ZenjectTicker>()
+                .AsSingle();
         }
     }
 }
