@@ -9,7 +9,7 @@ namespace Gameplay.AI
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 
         public ErrorState(CancellationToken token)
-            : base(token, Array.Empty<IStateTransition>())
+            : base(token, Array.Empty<IStateTransitionFactory>())
         {
             _taskCompletionSource = new TaskCompletionSource<StateResult>();
 

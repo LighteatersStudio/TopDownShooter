@@ -40,7 +40,6 @@ namespace Gameplay.AI
             Container.BindFactory<CancellationToken, InitAIState, InitAIState.Factory>();
             Container.BindFactory<CancellationToken, IdleAIState, IdleAIState.Factory>();
             
-            
            // Container.BindFactory<CancellationToken, PatrolAIState, PatrolAIState.Factory>();
            // Container.BindFactory<CancellationToken, AttackingAIState, AttackingAIState.Factory>();
            // Container.BindFactory<CancellationToken, PursueTargetAIState, PursueTargetAIState.Factory>();
@@ -50,9 +49,15 @@ namespace Gameplay.AI
 
         private void BindTransitions()
         {
-            Container.BindFactory<DeathTransition, DeathTransition.Factory>();
+            Container.BindFactory<DeathTransition, DeathTransition.Factory>().FromMethod(GetDeathTransition);
+            Container.Bind<DeathTransition>().AsTransient();
 
             Container.BindFactory<IdleTransitions, IdleTransitions.Factory>();
+        }
+
+        private DeathTransition GetDeathTransition(DiContainer container)
+        {
+            return container.Resolve<DeathTransition>();
         }
     }
 
@@ -66,7 +71,7 @@ namespace Gameplay.AI
         }
         public IEnumerable<IStateTransition> Create()
         {
-            return _factories.Select(factory => factory.Create()).ToList();
+            return _factories.Select(factory => factory.CreateTransition()).ToList();
         }
         
         public class Factory : PlaceholderFactory<IdleTransitions>

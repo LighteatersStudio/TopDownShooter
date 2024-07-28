@@ -27,13 +27,17 @@ namespace Gameplay.AI
             Activated?.Invoke(_factory.Create(new CancellationToken()));
         }
 
-        public void OnDestroy()
+        public void Release()
         {
             _character.Dead -= OnDead;
         }
         
-        public class Factory : PlaceholderFactory<DeathTransition>
+        public class Factory : PlaceholderFactory<DeathTransition>, IStateTransitionFactory
         {
+            public IStateTransition CreateTransition()
+            {
+                return Create();
+            }
         }
     }
 }

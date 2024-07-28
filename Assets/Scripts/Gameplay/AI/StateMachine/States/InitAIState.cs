@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace Gameplay.AI
 
         public InitAIState(NavMeshMoving moving,
             IdleAIState.Factory idleFactory,
-            IEnumerable<IStateTransition> transitions,
+           
             CancellationToken token) 
-            : base(token, transitions)
+            : base(token, Array.Empty<IStateTransitionFactory>())
         {
             _moving = moving;
             _idleFactory = idleFactory;
