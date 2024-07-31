@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
-    public abstract class StateBase : IAIState
+    public abstract class BaseState : IAIState
     {
         private readonly CancellationToken _mainToken;
-        private readonly CancellationTokenSource _selfTokenSource;
-        private readonly List<IStateTransition> _transitions = new ();
         private readonly List<IStateTransitionFactory> _transitionFactory;
         
+        private readonly CancellationTokenSource _selfTokenSource;
+        private readonly List<IStateTransition> _transitions = new ();
+
         private IAIState _transitionState;
 
-        protected StateBase(CancellationToken mainToken, IEnumerable<IStateTransitionFactory> transitionsFactories)
+        protected BaseState(CancellationToken mainToken, IEnumerable<IStateTransitionFactory> transitionsFactories)
         {
             _mainToken = mainToken;
             _transitionFactory = transitionsFactories.ToList();
@@ -27,7 +28,7 @@ namespace Gameplay.AI
             
             foreach (var factory in _transitionFactory)
             {
-               var transition = factory.CreateTransition();
+                var transition = factory.CreateState(/*_mainToken*/);
                 transition.Activated += OnTransitionActivated;
                 transition.Initialize();
                 _transitions.Add(transition);

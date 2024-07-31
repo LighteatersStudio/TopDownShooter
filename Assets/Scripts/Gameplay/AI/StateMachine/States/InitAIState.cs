@@ -1,12 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Zenject;
 
 namespace Gameplay.AI
 {
-    public class InitAIState : StateBase
+    public class InitAIState : SimpleBaseState
     {
         private readonly NavMeshMoving _moving;
         private readonly IdleAIState.Factory _idleFactory;
@@ -14,17 +13,12 @@ namespace Gameplay.AI
 
         public InitAIState(NavMeshMoving moving,
             IdleAIState.Factory idleFactory,
-           
             CancellationToken token) 
             : base(token, Array.Empty<IStateTransitionFactory>())
         {
             _moving = moving;
             _idleFactory = idleFactory;
             _token = token;
-        }
-
-        protected override void BeginInternal()
-        {
         }
 
         protected override Task<IAIState> LaunchInternal(CancellationToken token)
@@ -35,10 +29,6 @@ namespace Gameplay.AI
             }
 
             return Task.FromResult<IAIState>(_idleFactory.Create(_token));
-        }
-
-        protected override void EndInternal()
-        {
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, InitAIState>

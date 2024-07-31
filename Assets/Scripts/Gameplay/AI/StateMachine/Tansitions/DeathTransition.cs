@@ -1,43 +1,36 @@
-﻿using System;
-using System.Threading;
-using Zenject;
+﻿using System.Threading;
 
 namespace Gameplay.AI
 {
-    public class DeathTransition : IStateTransition
+    public class DeathTransition : BaseTransition
     {
         private readonly Character _character;
         private readonly DeathAIState.Factory _factory;
 
-        public event Action<IAIState> Activated;
-        
-        public DeathTransition(Character character, DeathAIState.Factory factory)
+        public DeathTransition(CancellationToken token, Character character, DeathAIState.Factory factory)
+            : base(token)
         {
             _character = character;
             _factory = factory;
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             _character.Dead += OnDead;
         }
 
         private void OnDead()
         {
-            Activated?.Invoke(_factory.Create(new CancellationToken()));
+            OnActivated(ActivateState(_factory));
         }
 
-        public void Release()
+        public override void Release()
         {
             _character.Dead -= OnDead;
         }
-        
-        public class Factory : PlaceholderFactory<DeathTransition>, IStateTransitionFactory
+
+        public class Factory : StateTransitionFactory<DeathTransition>
         {
-            public IStateTransition CreateTransition()
-            {
-                return Create();
-            }
         }
     }
 }

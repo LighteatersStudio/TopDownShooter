@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
-    public class ErrorState : StateBase
+    public class ErrorState : BaseState
     {
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 

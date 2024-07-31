@@ -10,9 +10,4 @@ namespace Gameplay.AI
         void Release();
 
     }
-
-    public interface IStateTransitionFactory
-    {
-        IStateTransition CreateTransition();
-    }
 }

@@ -7,7 +7,7 @@
 //
 // namespace Gameplay.AI
 // {
-//     public class AttackingAIState : CharacterDeathStateHandler
+//     public class AttackingAIState : BaseState
 //     {
 //         private readonly CancellationToken _token;
 //         private readonly Character _character;

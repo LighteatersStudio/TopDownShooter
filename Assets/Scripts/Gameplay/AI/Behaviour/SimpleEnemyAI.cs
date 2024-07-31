@@ -23,7 +23,7 @@ namespace Gameplay.AI
             BindTransitions(); 
             BindStates();
         }
-        
+
         private void BindParameters()
         {
             Container.Bind<MovingPath>()
@@ -34,48 +34,32 @@ namespace Gameplay.AI
                 .FromInstance(_searchTargetPoint)
                 .AsSingle();
         }
-        
+
         protected virtual void BindStates()
         {
             Container.BindFactory<CancellationToken, InitAIState, InitAIState.Factory>();
             Container.BindFactory<CancellationToken, IdleAIState, IdleAIState.Factory>();
+            Container.BindFactory<CancellationToken, PatrolAIState, PatrolAIState.Factory>();
             
-           // Container.BindFactory<CancellationToken, PatrolAIState, PatrolAIState.Factory>();
-           // Container.BindFactory<CancellationToken, AttackingAIState, AttackingAIState.Factory>();
-           // Container.BindFactory<CancellationToken, PursueTargetAIState, PursueTargetAIState.Factory>();
-           // Container.BindFactory<CancellationToken, SearchTargetAIState, SearchTargetAIState.Factory>();
+            // Container.BindFactory<CancellationToken, AttackingAIState, AttackingAIState.Factory>();
+            // Container.BindFactory<CancellationToken, PursueTargetAIState, PursueTargetAIState.Factory>();
+            // Container.BindFactory<CancellationToken, SearchTargetAIState, SearchTargetAIState.Factory>();
             Container.BindFactory<CancellationToken, DeathAIState, DeathAIState.Factory>();
         }
 
         private void BindTransitions()
         {
-            Container.BindFactory<DeathTransition, DeathTransition.Factory>().FromMethod(GetDeathTransition);
-            Container.Bind<DeathTransition>().AsTransient();
-
-            Container.BindFactory<IdleTransitions, IdleTransitions.Factory>();
+            Container.Bind<CancellationToken>().FromInstance(new CancellationTokenSource().Token).AsSingle();
+            BindTransition<DeathTransition, DeathTransition.Factory>();
+            BindTransition<AttackTransition, AttackTransition.Factory>();
         }
 
-        private DeathTransition GetDeathTransition(DiContainer container)
+        private void BindTransition<TTransition, TFactory>()
+            where TTransition : IStateTransition
+            where TFactory : PlaceholderFactory</*CancellationToken,*/ TTransition>
         {
-            return container.Resolve<DeathTransition>();
-        }
-    }
-
-    public class IdleTransitions
-    {
-        private DeathTransition.Factory[] _factories;
-
-        public IdleTransitions(DeathTransition.Factory deathFactory)
-        {
-            _factories = new[] { deathFactory };
-        }
-        public IEnumerable<IStateTransition> Create()
-        {
-            return _factories.Select(factory => factory.CreateTransition()).ToList();
-        }
-        
-        public class Factory : PlaceholderFactory<IdleTransitions>
-        {
+            Container.Bind<TTransition>().AsTransient();
+            Container.BindFactory</*CancellationToken,*/ TTransition, TFactory>().FromResolve();
         }
     }
 }
