@@ -20,3 +20,4 @@ MonoBehaviour:
       - {fileID: 280896094661634781, guid: a404f2fd865ccd845928c85d0774894e, type: 3}
     <Lazy>k__BackingField: 0
     <Debug>k__BackingField: 0
+  <RenderingOrderOffset>k__BackingField: 100

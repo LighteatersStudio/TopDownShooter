@@ -19,19 +19,19 @@ namespace UI.Framework.Implementation
 
             CreateLayers();
         }
-        
+
         private void CreateLayers()
         {
-            var order = -1;
-            
+            var order = _schema.RenderingOrderOffset - 1;
+
             foreach (var layerInfo in _schema.Layers)
             {
                 var layer = _layerFactory.Create(layerInfo, ++order);
                 layer.Init();
                 _layer.Add(layer);
             }
-        }   
-        
+        }
+
         private bool TryGetLayer<TView>(out Layer result) where TView : IView
         {
             result = null;
@@ -46,8 +46,8 @@ namespace UI.Framework.Implementation
 
             Debug.LogError($"View type[{typeof(TView)}] didn't find in UIScheme!");
             return false;
-        } 
-        
+        }
+
         public IView Open<TView>() where TView : IView
         {
             if (!TryGetLayer<TView>(out var layer))
