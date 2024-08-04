@@ -3,7 +3,6 @@ using Gameplay.Services.GameTime;
 using UnityEngine;
 using Zenject;
 using Gameplay.Services.Pause;
-using TMPro;
 using UI.Framework;
 using UnityEngine.UI;
 
@@ -11,7 +10,6 @@ namespace UI
 {
     public class WinLevelMenu : Popup
     {
-        [SerializeField] private TextMeshProUGUI _timerText;
         [SerializeField] private Button _doneButton;
 
         private IGameRun _gameRun;
@@ -30,12 +28,6 @@ namespace UI
         {
             _doneButton.onClick.AddListener(ClickDoneLevelButton);
             _pauseManager.Paused = true;
-            UpdateTimeText();
-        }
-
-        private void UpdateTimeText()
-        {
-            _timerText.text = _gameTime.ConvertToString();
         }
 
         private void ClickDoneLevelButton()
