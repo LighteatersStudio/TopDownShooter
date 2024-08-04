@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
-    public class ErrorState : BaseState
+    public class ErrorState : SimpleBaseState
     {
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 
@@ -12,22 +12,12 @@ namespace Gameplay.AI
             : base(token, Array.Empty<IStateTransitionFactory>())
         {
             _taskCompletionSource = new TaskCompletionSource<StateResult>();
-
-            token.Register(() => { _taskCompletionSource.TrySetCanceled(); });
         }
-
-        protected override void BeginInternal()
-        {
-        }
-
+        
         protected override async Task<IAIState> LaunchInternal(CancellationToken token)
         {
             await _taskCompletionSource.Task;
             return new EmptyState(token);
-        }
-
-        protected override void EndInternal()
-        {
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Zenject;
 
 namespace Gameplay.AI
 {
@@ -28,7 +29,7 @@ namespace Gameplay.AI
             
             foreach (var factory in _transitionFactory)
             {
-                var transition = factory.CreateState(/*_mainToken*/);
+                var transition = factory.CreateState(_mainToken);
                 transition.Activated += OnTransitionActivated;
                 transition.Initialize();
                 _transitions.Add(transition);
@@ -57,6 +58,11 @@ namespace Gameplay.AI
             EndInternal();
         }
         protected abstract void EndInternal();
+        
+        protected TState ActivateState<TState>(PlaceholderFactory<CancellationToken, TState> factory) where TState : IAIState
+        {
+            return factory.Create(_mainToken);
+        }
 
         private void OnTransitionActivated(IAIState nextState)
         {

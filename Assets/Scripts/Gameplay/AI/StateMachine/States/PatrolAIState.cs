@@ -11,18 +11,19 @@ namespace Gameplay.AI
     {
         private readonly NavMeshMoving _moving;
         private readonly MovingPath _path;
-        private readonly IdleAIState.Factory _factory;
+        private readonly IdleAIState.Factory _idle;
 
         public PatrolAIState(CancellationToken token,
             NavMeshMoving moving,
             MovingPath path,
-            IdleAIState.Factory factory,
-            DeathTransition.Factory death) 
-            : base(token, new []{death})
+            IdleAIState.Factory idle,
+            DeathTransition.Factory death,
+            AttackTransition.Factory attack)
+            : base(token, new IStateTransitionFactory[] { death, attack })
         {
             _moving = moving;
             _path = path;
-            _factory = factory;
+            _idle = idle;
         }
 
         protected override async Task<IAIState> LaunchInternal(CancellationToken token)
@@ -36,7 +37,7 @@ namespace Gameplay.AI
                 
             } while (!token.IsCancellationRequested);
 
-            return _factory.Create(token);
+            return ActivateState(_idle);
         }
 
         private async Task MoveThroughPath(IEnumerable<Vector3> points, CancellationToken token)
@@ -48,7 +49,7 @@ namespace Gameplay.AI
                     break;
                 }
 
-                if (!await _moving.MoveTo(pathPoint, token))
+                if (!await _moving.MoveTo(pathPoint, token) && !token.IsCancellationRequested)
                 {
                     Debug.LogError($"MovePoint NOT REACHED: {pathPoint}");
                 }

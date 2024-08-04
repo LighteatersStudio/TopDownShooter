@@ -6,9 +6,9 @@ namespace Gameplay.AI
     public class AttackTransition : BaseTransition
     {
         private readonly ObserveArea _observeArea;
-        private readonly DeathAIState.Factory _factory;
+        private readonly AttackAIState.Factory _factory;
 
-        public AttackTransition(CancellationToken token, ObserveArea observeArea, DeathAIState.Factory factory)
+        public AttackTransition(CancellationToken token, ObserveArea observeArea, AttackAIState.Factory factory)
         : base(token)
         {
             _observeArea = observeArea;

@@ -84,7 +84,7 @@ namespace Gameplay.AI
             transform.localRotation = Quaternion.identity;
         }
 
-        public void StopRatation()
+        public void StopRotation()
         {
             KillRotationTween();
         }
@@ -130,6 +130,11 @@ namespace Gameplay.AI
             
             _sphereCollider.enabled = false;
             _boxCollider.enabled = true;
+        }
+
+        public void StartRotation()
+        {
+            throw new NotImplementedException();
         }
     }
 }

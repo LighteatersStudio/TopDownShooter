@@ -22,6 +22,7 @@ namespace Gameplay.AI
         {
             return factory.Create(_token);
         }
+        
         protected void OnActivated(IAIState state)
         {
             Activated?.Invoke(state);
