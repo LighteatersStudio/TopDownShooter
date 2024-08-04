@@ -36,7 +36,7 @@ namespace Gameplay.AI
 
         protected override void BeginInternal()
         {
-            _observeArea.StopRotation();;
+            _observeArea.StopRotation();
         }
 
         protected override async Task<IAIState> LaunchInternal(CancellationToken token)

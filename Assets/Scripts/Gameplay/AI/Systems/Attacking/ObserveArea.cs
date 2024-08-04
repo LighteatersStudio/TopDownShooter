@@ -20,7 +20,7 @@ namespace Gameplay.AI
         private Vector3 _lastTargetPosition;
         private BoxCollider _boxCollider;
         private SphereCollider _sphereCollider;
-
+        private bool _disableRotation;
         public event Action TargetsChanged;
         public bool HasTarget => _targetsTransforms.Count > 0;
         public IEnumerable<Transform> TargetsTransforms => _targetsTransforms;
@@ -84,18 +84,13 @@ namespace Gameplay.AI
             transform.localRotation = Quaternion.identity;
         }
 
-        public void StopRotation()
-        {
-            KillRotationTween();
-        }
-
         private void Update()
         {
             var position = transform.position;
             var isMoving = Vector3.Distance(position, _lastPosition) > MovementThreshold;
             _lastPosition = position;
 
-            if (_boxCollider.enabled)
+            if (!_disableRotation && _boxCollider.enabled)
             {
                 ProcessRotation(isMoving);
             }
@@ -134,7 +129,13 @@ namespace Gameplay.AI
 
         public void StartRotation()
         {
-            throw new NotImplementedException();
+            _disableRotation = false;
+        }
+
+        public void StopRotation()
+        {
+            _disableRotation = true;
+            KillRotationTween();
         }
     }
 }

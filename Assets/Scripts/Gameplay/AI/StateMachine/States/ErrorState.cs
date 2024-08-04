@@ -17,7 +17,7 @@ namespace Gameplay.AI
         protected override async Task<IAIState> LaunchInternal(CancellationToken token)
         {
             await _taskCompletionSource.Task;
-            return new EmptyState(token);
+            return new EmptyState();
         }
     }
 }

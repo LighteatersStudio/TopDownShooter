@@ -1,4 +1,3 @@
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gameplay.AI
@@ -7,10 +6,9 @@ namespace Gameplay.AI
     {
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 
-        public EmptyState(CancellationToken token)
+        public EmptyState()
         {
             _taskCompletionSource = new TaskCompletionSource<StateResult>();
-            token.Register(() => { _taskCompletionSource.TrySetCanceled(); });
         }
 
         public void Begin()
@@ -21,7 +19,7 @@ namespace Gameplay.AI
         {
             await _taskCompletionSource.Task;
             
-            return new EmptyState(CancellationToken.None);
+            return new EmptyState();
         }
 
         public void Release()
