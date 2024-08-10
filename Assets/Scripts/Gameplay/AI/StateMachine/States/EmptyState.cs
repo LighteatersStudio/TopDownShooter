@@ -1,23 +1,29 @@
-using System;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Gameplay.AI
 {
-    public class ErrorState : SimpleBaseState
+    public class EmptyState : IAIState
     {
         private readonly TaskCompletionSource<StateResult> _taskCompletionSource;
 
-        public ErrorState(CancellationToken token)
-            : base(token, Array.Empty<IStateTransitionFactory>())
+        public EmptyState()
         {
             _taskCompletionSource = new TaskCompletionSource<StateResult>();
         }
-        
-        protected override async Task<IAIState> LaunchInternal(CancellationToken token)
+
+        public void Begin()
+        {
+        }
+
+        public async Task<IAIState> Launch()
         {
             await _taskCompletionSource.Task;
+            
             return new EmptyState();
+        }
+
+        public void Release()
+        {
         }
     }
 }

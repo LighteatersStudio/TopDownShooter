@@ -32,15 +32,19 @@ namespace Gameplay.AI
         private async void ProcessLoop(CancellationToken token)
         {
             var currentState = _startStateFactory(token);
+            
             while (!token.IsCancellationRequested)
             {
                 if (_debugTrace)
                 {
                     Debug.Log($"[{_name}] AI launch state: {currentState.GetType().Name}");   
                 }
-
-                var result = await currentState.Launch();
-                currentState = result.NextState;
+                
+                currentState.Begin();
+                var nextState = await currentState.Launch();
+                currentState.Release();
+                
+                currentState = nextState;
             }
         }
     }

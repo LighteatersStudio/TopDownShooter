@@ -7,101 +7,53 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class PatrolAIState : CharacterDeathStateHandler
+    public class PatrolAIState : SimpleBaseState
     {
         private readonly NavMeshMoving _moving;
         private readonly MovingPath _path;
-        private readonly CancellationToken _token;
-        private readonly ObserveArea _observeArea;
-        private readonly IdleAIState.Factory _factory;
-        private readonly AttackingAIState.Factory _attackingAIFactory;
-        private readonly DeathAIState.Factory _deathAIFactory;
-        private readonly Character _character;
+        private readonly IdleAIState.Factory _idle;
 
-        public PatrolAIState(NavMeshMoving moving,
+        public PatrolAIState(CancellationToken token,
+            NavMeshMoving moving,
             MovingPath path,
-            IdleAIState.Factory factory,
-            CancellationToken token,
-            ObserveArea observeArea,
-            AttackingAIState.Factory attackingAIFactory,
-            Character character,
-            DeathAIState.Factory deathAIFactory) : base(token, character, factory)
+            IdleAIState.Factory idle,
+            DeathTransition.Factory death,
+            AttackTransition.Factory attack)
+            : base(token, new IStateTransitionFactory[] { death, attack })
         {
             _moving = moving;
             _path = path;
-            _factory = factory;
-            _token = token;
-            _observeArea = observeArea;
-            _attackingAIFactory = attackingAIFactory;
-            _character = character;
-            _deathAIFactory = deathAIFactory;
+            _idle = idle;
         }
 
-        public override async Task<StateResult> Launch()
+        protected override async Task<IAIState> LaunchInternal(CancellationToken token)
         {
-            await base.Launch();
-            var path = _path;
-
+            _path.Reverse();
+            
             do
             {
-                if (_character.IsDead)
-                {
-                    return new StateResult(_deathAIFactory.Create(_token), true);
-                }
-
-                if (_observeArea.HasTarget)
-                {
-                    return new StateResult(_attackingAIFactory.Create(_token), true);
-                }
-
-                await MoveThroughPath(path.Points, InternalSource.Token);
+                await MoveThroughPath(_path.Reverse().Points, token);
                 await UniTask.Yield();
+                
+            } while (!token.IsCancellationRequested);
 
-                path = _path.Reverse();
-            } while (!_token.IsCancellationRequested);
-
-            return new StateResult(_factory.Create(_token), false);
+            return ActivateState(_idle);
         }
 
         private async Task MoveThroughPath(IEnumerable<Vector3> points, CancellationToken token)
         {
-            var internalToken = GetTargetChangedToken(token);
-
             foreach (var pathPoint in points)
             {
-                if (internalToken.IsCancellationRequested || _observeArea.HasTarget)
+                if (token.IsCancellationRequested)
                 {
                     break;
                 }
 
-                if (!await _moving.MoveTo(pathPoint, internalToken) && !internalToken.IsCancellationRequested)
+                if (!await _moving.MoveTo(pathPoint, token) && !token.IsCancellationRequested)
                 {
                     Debug.LogError($"MovePoint NOT REACHED: {pathPoint}");
                 }
             }
-        }
-
-        private CancellationToken GetTargetChangedToken(CancellationToken parentToken)
-        {
-            CancellationTokenSource internalSource = new CancellationTokenSource();
-            parentToken.Register(() => internalSource.Cancel());
-
-            var internalToken = internalSource.Token;
-
-            _observeArea.TargetsChanged += OnTargetChanged;
-
-            void OnTargetChanged()
-            {
-                if (!_observeArea.HasTarget)
-                {
-                    return;
-                }
-
-                _observeArea.TargetsChanged -= OnTargetChanged;
-                internalSource.Cancel();
-            }
-
-            return internalToken;
         }
 
         public class Factory : PlaceholderFactory<CancellationToken, PatrolAIState>

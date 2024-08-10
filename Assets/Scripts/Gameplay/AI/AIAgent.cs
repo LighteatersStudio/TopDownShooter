@@ -3,11 +3,6 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public interface IAIAgentStop
-    {
-        void Stop();
-    }
-    
     public class AIAgent : MonoBehaviour, IAIAgentStop
     {
         [SerializeField] private bool _debugTrace;

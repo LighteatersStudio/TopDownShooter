@@ -6,105 +6,75 @@ using Zenject;
 
 namespace Gameplay.AI
 {
-    public class SearchTargetAIState: CharacterDeathStateHandler
+    public class SearchTargetAIState: BaseState
     {
         private const int Angle = 50;
         private const int FullRotation = 360;
         
         private readonly TargetSearchPoint _point;
-        private readonly CancellationToken _token;
-        private readonly IdleAIState.Factory _idleAIFactory;
         private readonly NavMeshMoving _moving;
         private readonly ObserveArea _observeArea;
         private readonly Character _character;
-        private readonly AttackingAIState.Factory _attackingAIFactory;
-        private readonly DeathAIState.Factory _deathAIFactory;
+        private readonly IdleAIState.Factory _idleAIFactory;
 
         public SearchTargetAIState(CancellationToken token,
-            IdleAIState.Factory idleAIFactory,
             TargetSearchPoint point,
             NavMeshMoving moving,
             ObserveArea observeArea,
             Character character,
-            AttackingAIState.Factory attackingAIFactory,
-            DeathAIState.Factory deathAIFactory) : base(token, character, idleAIFactory)
+            IdleAIState.Factory idleAIFactory,
+            DeathTransition.Factory death,
+            AttackTransition.Factory attack) 
+            : base(token, new IStateTransitionFactory[] { death, attack })
         {
             _point = point;
-            _token = token;
-            _idleAIFactory = idleAIFactory;
             _moving = moving;
             _observeArea = observeArea;
             _character = character;
-            _attackingAIFactory = attackingAIFactory;
-            _deathAIFactory = deathAIFactory;
+            _idleAIFactory = idleAIFactory;
         }
 
-        public override async Task<StateResult> Launch()
+        protected override void BeginInternal()
         {
-            await base.Launch();
-            _observeArea.DeactivateAttackCollider();
+            _observeArea.StopRotation();
+        }
 
-            if (_character.IsDead)
-            {
-                return new StateResult(_deathAIFactory.Create(_token), true);
-            }
-            
-            await MoveToSearchTargetPosition(_point.Point, InternalSource.Token);
+        protected override async Task<IAIState> LaunchInternal(CancellationToken token)
+        {
+            await MoveToSearchTargetPosition(_point.Point, token);
+            await SearchAndRotate(token);
 
-            float currentRotation = 0;
-
-            while (currentRotation <= FullRotation && !_observeArea.HasTarget && !_character.IsDead)
-            {
-                var rotationSpeed = Angle * Time.deltaTime;
-                
-                _observeArea.StopRatation();
-                _character.Rotate(rotationSpeed);
-                currentRotation += rotationSpeed;
-
-                await UniTask.Yield();
-            }
-
-            if (_observeArea.HasTarget && !_character.IsDead)
-            {
-                return new StateResult(_attackingAIFactory.Create(_token), true);
-            }
-            
-            return new StateResult(_idleAIFactory.Create(_token), true);
+            return ActivateState(_idleAIFactory);
         }
 
         private async Task MoveToSearchTargetPosition(Vector3 point, CancellationToken token)
         {
-            var internalToken = GetTargetChangedToken(token);
-
-            if (!await _moving.MoveTo(point, internalToken) && !internalToken.IsCancellationRequested)
+            if (!await _moving.MoveTo(point, token) && !token.IsCancellationRequested)
             {
                 Debug.LogError($"MovePoint NOT REACHED: {point}");
             }
         }
 
-        private CancellationToken GetTargetChangedToken(CancellationToken parentToken)
+        private async Task SearchAndRotate(CancellationToken token)
         {
-            CancellationTokenSource internalSource = new CancellationTokenSource();
-            parentToken.Register(() => internalSource.Cancel());
+            float currentRotation = 0;
 
-            var internalToken = internalSource.Token;
-
-            _observeArea.TargetsChanged += OnTargetChanged;
-            
-            void OnTargetChanged()
+            while (currentRotation <= FullRotation && !token.IsCancellationRequested)
             {
-                if (!_observeArea.HasTarget)
-                {
-                    return;
-                }
+                var rotationSpeed = Angle * Time.deltaTime;
                 
-                _observeArea.TargetsChanged -= OnTargetChanged;
-                internalSource.Cancel();
+                _character.Rotate(rotationSpeed);
+                currentRotation += rotationSpeed;
+
+                await UniTask.Yield();
             }
-            
-            return internalToken;
         }
-        
+
+        protected override void EndInternal()
+        {
+            _observeArea.StartRotation();
+        }
+
         public class Factory : PlaceholderFactory<CancellationToken, SearchTargetAIState>
         {
         }

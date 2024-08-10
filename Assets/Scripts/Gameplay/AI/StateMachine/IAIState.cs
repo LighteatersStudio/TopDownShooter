@@ -4,6 +4,8 @@ namespace Gameplay.AI
 {
     public interface IAIState
     {
-        Task<StateResult> Launch();
+        void Begin();
+        Task<IAIState> Launch();
+        void Release();
     }
 }
