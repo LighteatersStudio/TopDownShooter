@@ -4,6 +4,6 @@ namespace Gameplay.AI
 {
     public interface IStateTransitionFactory
     {
-        IStateTransition CreateState(CancellationToken token);
+        IStateTransition Create(CancellationToken token);
     }
 }

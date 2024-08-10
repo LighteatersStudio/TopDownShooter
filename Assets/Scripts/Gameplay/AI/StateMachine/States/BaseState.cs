@@ -13,7 +13,9 @@ namespace Gameplay.AI
         
         private readonly CancellationTokenSource _selfTokenSource;
         private readonly List<IStateTransition> _transitions = new ();
-
+        private CancellationTokenRegistration _mainTokenHandler;
+        
+        
         private IAIState _transitionState;
 
         protected BaseState(CancellationToken mainToken, IEnumerable<IStateTransitionFactory> transitionsFactories)
@@ -25,11 +27,11 @@ namespace Gameplay.AI
         
         public void Begin()
         {
-            _mainToken.Register(_selfTokenSource.Cancel);
-            
+            _mainTokenHandler = _mainToken.Register(_selfTokenSource.Cancel);
+
             foreach (var factory in _transitionFactory)
             {
-                var transition = factory.CreateState(_mainToken);
+                var transition = factory.Create(_mainToken);
                 transition.Activated += OnTransitionActivated;
                 transition.Initialize();
                 _transitions.Add(transition);
@@ -49,6 +51,8 @@ namespace Gameplay.AI
 
         public void Release()
         {
+            _mainTokenHandler.Dispose();
+            
             foreach (var transition in _transitions)
             {
                 transition.Activated -= OnTransitionActivated;

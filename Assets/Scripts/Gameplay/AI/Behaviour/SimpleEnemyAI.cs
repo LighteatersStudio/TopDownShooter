@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using UnityEngine;
 using Zenject;
-using Object = UnityEngine.Object;
 
 namespace Gameplay.AI
 {
@@ -49,7 +46,6 @@ namespace Gameplay.AI
 
         private void BindTransitions()
         {
-            Container.Bind<CancellationToken>().FromInstance(new CancellationTokenSource().Token).AsSingle();
             BindTransition<DeathTransition, DeathTransition.Factory>();
             BindTransition<AttackTransition, AttackTransition.Factory>();
         }
@@ -58,13 +54,12 @@ namespace Gameplay.AI
             where TTransition : IStateTransition
             where TFactory : PlaceholderFactory<CancellationToken, TTransition>
         {
-            Container.Bind<TTransition>().AsTransient();
-            Container.BindFactory<CancellationToken, TTransition, TFactory>().FromMethod(Resolve<TTransition>);
-        }
-
-        private TTransition Resolve<TTransition>(DiContainer container, CancellationToken token)
-        {
-            return container.Instantiate<TTransition>(new object[] { token });
+            Container.BindFactory<CancellationToken, TTransition, TFactory>()
+                .FromMethod
+                (
+                    (container, token)
+                        => container.Instantiate<TTransition>(new object[] { token })
+                );
         }
     }
 }
