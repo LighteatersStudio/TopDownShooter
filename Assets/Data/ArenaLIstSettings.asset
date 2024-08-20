@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <_arenas>k__BackingField:
   - <SceneName>k__BackingField: LevelBaseSize
+  - <SceneName>k__BackingField: Level3
     <Enable>k__BackingField: 1
   - <SceneName>k__BackingField: Level3
     <Enable>k__BackingField: 1

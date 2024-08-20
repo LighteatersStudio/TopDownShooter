@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using Gameplay.Weapons;
+using Sirenix.OdinInspector;
 using Zenject;
 
 namespace Gameplay

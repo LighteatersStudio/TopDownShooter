@@ -11,7 +11,7 @@ namespace Gameplay
         public float MoveSpeed { get; private set; }
         public float AttackSpeed { get; private set; }
         public float HealthRelative => Health / MaxHealth;
-        public bool Immune { get; }
+        public bool Immune { get; set; }
 
         public event Action HealthChanged;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace Gameplay
@@ -10,7 +11,9 @@ namespace Gameplay
         
         private Character _character;
         private FriendOrFoeFactory _friendOrFoeFactory;
-
+        
+        [ShowInInspector, ReadOnly]
+        private bool _isImmune;
         
         [Inject]
         public void Construct(Character character, FriendOrFoeFactory friendOrFoeFactory)
@@ -31,6 +34,13 @@ namespace Gameplay
         private void TakeDamage()
         {
             _character.TakeDamage(new AttackInfo(_damage, TypeDamage.Fire, _friendOrFoeFactory.CreateEnemyTeam()));
+        }
+        
+        [Button(nameof(ChangeImmuneToggle))]
+        public void ChangeImmuneToggle()
+        {
+            _isImmune = !_isImmune;
+            _character.GiveImmune(_isImmune);
         }
     }
 }

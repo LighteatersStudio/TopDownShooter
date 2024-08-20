@@ -153,6 +153,11 @@ namespace Gameplay
             transform.Rotate(Vector3.up * angle);
         }
 
+        public void GiveImmune(bool isImmune)
+        {
+            _stats.Immune = isImmune;
+        }
+
         public class Factory : PlaceholderFactory<ICharacterSettings, IFriendOrFoeTag, Character>
         {
         }
