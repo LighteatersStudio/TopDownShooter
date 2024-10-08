@@ -30,11 +30,12 @@ namespace Gameplay.Services.Input
         private Vector2 _movementJoystickAnchoredPosition;
         private Vector2 _movementJoystickSizeDelta;
         private Vector2 _movementKnobAnchoredPosition;
-        
+
         private Vector2 _lookAmount;
         private Vector2 _lookJoystickAnchoredPosition;
         private Vector2 _lookJoystickSizeDelta;
         private Vector2 _lookKnobAnchoredPosition;
+        private InputLocker _inputLocker;
 
         public event Action<Vector2> MoveChanged;
         public event Action<Vector2> LookChanged;
@@ -66,10 +67,10 @@ namespace Gameplay.Services.Input
 
             _inputActionAsset.FindAction(MoveActionName).performed += OnMove;
             _inputActionAsset.FindAction(MoveActionName).canceled += OnMove;
-            
+
             _inputActionAsset.FindAction(FireActionName).performed += OnFireStart;
             _inputActionAsset.FindAction(FireActionName).canceled += OnFireEnds;
-            
+
             _inputActionAsset.FindAction(LookActionName).performed += OnLook;
             _inputActionAsset.FindAction(SpecialActionName).performed += OnSpecial;
             _inputActionAsset.FindAction(UseActionName).performed += OnUse;
@@ -77,19 +78,54 @@ namespace Gameplay.Services.Input
             _inputActionAsset.FindAction(MeleeActionName).performed += OnMelee;
         }
 
+        public IInputLocker Lock()
+        {
+            if (_inputLocker != null)
+            {
+                Debug.LogError("ERROR! Input already locked!");
+                return null;
+            }
+
+            _inputLocker = new InputLocker(LockInternal, UnlockInternal);
+            return _inputLocker;
+        }
+
+        private void LockInternal()
+        {
+        }
+
+        private void UnlockInternal()
+        {
+            _inputLocker = null;
+        }
+
         private void OnMove(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             MoveChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnLook(InputAction.CallbackContext context)
         {
-            
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             LookChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnFingerDown(ETouch.Finger finger)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             var isMovement = finger.screenPosition.x <= Screen.width / ScreenSizeModifier;
 
             if (isMovement)
@@ -123,6 +159,11 @@ namespace Gameplay.Services.Input
 
         private void OnFingerMove(ETouch.Finger finger)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             if (finger == _movementFinger)
             {
                 HandleMovementFinger(finger);
@@ -139,7 +180,7 @@ namespace Gameplay.Services.Input
             var currentTouch = finger.currentTouch;
 
             var distance = Vector2.Distance(currentTouch.screenPosition, _movementJoystickAnchoredPosition);
-            
+
             if (distance > maxMovement)
             {
                 _movementKnobAnchoredPosition = (currentTouch.screenPosition - _movementJoystickAnchoredPosition).normalized * maxMovement;
@@ -148,9 +189,9 @@ namespace Gameplay.Services.Input
             {
                 _movementKnobAnchoredPosition = currentTouch.screenPosition - _movementJoystickAnchoredPosition;
             }
-            
+
             var projectedKnobPosition = _movementKnobAnchoredPosition / maxMovement * _joystickSize / KnobPositionModifier;
-            
+
             _movementAmount = _movementKnobAnchoredPosition / maxMovement;
 
             MoveChanged?.Invoke(_movementAmount);
@@ -163,7 +204,7 @@ namespace Gameplay.Services.Input
             var currentTouch = finger.currentTouch;
 
             var distance = Vector2.Distance(currentTouch.screenPosition, _lookJoystickAnchoredPosition);
-            
+
             if (distance > maxMovement)
             {
                 _lookKnobAnchoredPosition = (currentTouch.screenPosition - _lookJoystickAnchoredPosition).normalized * maxMovement;
@@ -172,7 +213,7 @@ namespace Gameplay.Services.Input
             {
                 _lookKnobAnchoredPosition = currentTouch.screenPosition - _lookJoystickAnchoredPosition;
             }
-            
+
             var projectedKnobPosition = _lookKnobAnchoredPosition / maxMovement * _joystickSize / KnobPositionModifier;
 
             _lookAmount = _lookKnobAnchoredPosition / maxMovement;
@@ -184,6 +225,11 @@ namespace Gameplay.Services.Input
 
         private void OnFingerUp(ETouch.Finger finger)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             if (finger == _movementFinger)
             {
                 ResetMovementFinger();
@@ -213,16 +259,26 @@ namespace Gameplay.Services.Input
 
         private void OnFireStart(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             if (_lookFinger != null)
             {
                 return;
             }
-            
+
             FireChanged?.Invoke(true);
         }
-        
+
         private void OnFireEnds(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             if (_lookFinger != null)
             {
                 return;
@@ -230,24 +286,44 @@ namespace Gameplay.Services.Input
 
             FireChanged?.Invoke(false);
         }
-        
+
         private void OnSpecial(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             SpecialChanged?.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnMelee(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             MeleeChanged?.Invoke();
         }
 
         private void OnUse(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             UseChanged?.Invoke();
         }
 
         private void OnReload(InputAction.CallbackContext context)
         {
+            if (_inputLocker != null)
+            {
+                return;
+            }
+
             ReloadChanged?.Invoke();
         }
 
@@ -261,10 +337,10 @@ namespace Gameplay.Services.Input
 
             _inputActionAsset.FindAction(MoveActionName).performed -= OnMove;
             _inputActionAsset.FindAction(MoveActionName).canceled -= OnMove;
-            
+
             _inputActionAsset.FindAction(FireActionName).performed -= OnFireStart;
             _inputActionAsset.FindAction(FireActionName).canceled -= OnFireEnds;
-            
+
             _inputActionAsset.FindAction(LookActionName).performed -= OnLook;
             _inputActionAsset.FindAction(SpecialActionName).performed -= OnSpecial;
             _inputActionAsset.FindAction(UseActionName).performed -= OnUse;

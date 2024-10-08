@@ -18,5 +18,6 @@ namespace Gameplay.Services.Input
         event Action MeleeChanged;
         event Action UseChanged;
         event Action ReloadChanged;
+        IInputLocker Lock();
     }
 }
