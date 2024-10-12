@@ -6,8 +6,8 @@ namespace Common.Scenarios
 {
     public class ScenarioPlayer
     {
-        private readonly ITaskProcessQueue _taskQueue;
-        
+        private readonly TaskProcessQueue _taskQueue;
+
         public ScenarioPlayer()
         {
             _taskQueue = new TaskProcessQueue();
@@ -23,9 +23,9 @@ namespace Common.Scenarios
         private async Task PlayInternal(IScenario scenario)
         {
             Debug.Log("Scenario play: " + scenario);
-            
+
             await _taskQueue.Start(scenario.Launch);
-            
+
             Debug.Log("Scenario finished: " + scenario);
         }
     }

@@ -9,7 +9,8 @@
         "Plugin.Outline",
         "UniTask",
         "Cinemachine",
-        "Unity.Timeline"
+        "Unity.Timeline",
+        "TopDownShooter.Meta"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

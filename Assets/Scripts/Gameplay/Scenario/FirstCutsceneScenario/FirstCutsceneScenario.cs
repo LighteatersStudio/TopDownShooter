@@ -1,11 +1,12 @@
 using System.Threading.Tasks;
+using Common.Scenarios;
 using Gameplay.Cutscene;
 using Gameplay.Services.Input;
 using Zenject;
 
 namespace Gameplay.Scenario.FirstCutsceneScenario
 {
-    public class FirstCutsceneScenario : IFirstCutsceneScenario
+    public class FirstCutsceneScenario : IScenario
     {
         private readonly FirstCutscene.Factory _firstCutsceneFactory;
         private readonly IInputController _inputService;
@@ -23,7 +24,10 @@ namespace Gameplay.Scenario.FirstCutsceneScenario
             {
                 await _firstCutsceneFactory.Create().Play();
             }
+        }
 
+        public class Factory : PlaceholderFactory<FirstCutsceneScenario>
+        {
         }
     }
 }

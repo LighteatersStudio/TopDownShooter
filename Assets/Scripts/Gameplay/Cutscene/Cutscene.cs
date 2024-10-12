@@ -14,7 +14,7 @@ namespace Gameplay.Cutscene
         private TaskCompletionSource<bool> _endAwaiter;
 
         [Inject]
-        private void Construct(ICinemachineBrainProvider сinemachineBrainProvider)
+        public void Construct(ICinemachineBrainProvider сinemachineBrainProvider)
         {
             SetCinemachineBrain(_director, сinemachineBrainProvider.CinemachineBrain);
         }

@@ -1,3 +1,5 @@
+using Common.Scenarios;
+using Meta.Level;
 using UnityEngine;
 using Zenject;
 
@@ -5,17 +7,34 @@ namespace Gameplay.Scenario.FirstCutsceneScenario
 {
     public class FirstScenarioStarter : MonoBehaviour
     {
-        private FirstScenarioEvent _firstScenarioEvent;
+        private ScenarioPlayer _scenarioPlayer;
+        private FirstCutsceneScenario.Factory _firstCutsceneScenarioFactory;
+        private IGameRun _gameRun;
 
         [Inject]
-        public void Construct(FirstScenarioEvent firstScenarioEvent)
+        public void Construct(
+            FirstCutsceneScenario.Factory firstCutsceneScenarioFactory,
+            ScenarioPlayer scenarioPlayer,
+            IGameRun gameRun)
         {
-            _firstScenarioEvent = firstScenarioEvent;
+            _firstCutsceneScenarioFactory = firstCutsceneScenarioFactory;
+            _scenarioPlayer = scenarioPlayer;
+            _gameRun = gameRun;
         }
 
-        private void Start()
+        private async void Start()
         {
-            _firstScenarioEvent.Start();
+            if (!IsFirstLevel())
+            {
+                return;
+            }
+
+            await _scenarioPlayer.Play(_firstCutsceneScenarioFactory.Create());
+        }
+
+        private bool IsFirstLevel()
+        {
+            return _gameRun.CurrentLevel == 0;
         }
     }
 }
