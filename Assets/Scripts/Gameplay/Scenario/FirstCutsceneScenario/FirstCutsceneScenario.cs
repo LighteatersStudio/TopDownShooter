@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
-using Common.Scenarios;
-using Gameplay.Cutscene;
+using Gameplay.Scenario.Cutscene;
 using Gameplay.Services.Input;
 using Zenject;
 

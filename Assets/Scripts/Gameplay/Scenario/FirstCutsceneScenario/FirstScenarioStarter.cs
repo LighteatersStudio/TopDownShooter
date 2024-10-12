@@ -1,4 +1,3 @@
-using Common.Scenarios;
 using Meta.Level;
 using UnityEngine;
 using Zenject;

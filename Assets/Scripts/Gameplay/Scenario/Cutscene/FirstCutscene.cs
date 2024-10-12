@@ -1,6 +1,6 @@
 using Zenject;
 
-namespace Gameplay.Cutscene
+namespace Gameplay.Scenario.Cutscene
 {
     public class FirstCutscene : Cutscene
     {

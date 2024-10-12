@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Common.Scenarios
+namespace Gameplay.Scenario
 {
     public interface IScenario
     {

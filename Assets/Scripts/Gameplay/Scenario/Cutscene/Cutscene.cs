@@ -5,7 +5,7 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using Zenject;
 
-namespace Gameplay.Cutscene
+namespace Gameplay.Scenario.Cutscene
 {
     public abstract class Cutscene : MonoBehaviour
     {

@@ -1,9 +1,8 @@
-using Common.Scenarios;
-using Gameplay.Scenario.FirstCutsceneScenario;
+using Gameplay.Scenario.Cutscene;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Cutscene
+namespace Gameplay.Scenario.Installer
 {
     public class ScenarioInstaller : MonoInstaller
     {
@@ -26,8 +25,8 @@ namespace Gameplay.Cutscene
             Container.BindFactory<FirstCutscene, FirstCutscene.Factory>()
                 .FromComponentInNewPrefab(_firstCutscene);
 
-            Container.BindFactory<FirstCutsceneScenario, FirstCutsceneScenario.Factory>()
-                .To<FirstCutsceneScenario>();
+            Container.BindFactory<FirstCutsceneScenario.FirstCutsceneScenario, FirstCutsceneScenario.FirstCutsceneScenario.Factory>()
+                .To<FirstCutsceneScenario.FirstCutsceneScenario>();
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Services.Utilities;
 using UnityEngine;
 
-namespace Common.Scenarios
+namespace Gameplay.Scenario
 {
     public class ScenarioPlayer
     {
