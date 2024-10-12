@@ -165,7 +165,7 @@ namespace Infrastructure
                 .FromMethod(() => Container.Resolve<Camera>().GetComponent<CameraTrackingTarget>())
                 .AsSingle();
 
-            Container.Bind<ICameraProvider>()
+            Container.Bind(typeof(ICameraProvider), typeof(ICinemachineBrainProvider))
                 .To<CameraProvider>()
                 .FromNew()
                 .AsSingle();
