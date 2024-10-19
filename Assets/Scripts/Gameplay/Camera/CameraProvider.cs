@@ -15,20 +15,15 @@ namespace Gameplay
         public CameraProvider(Camera mainCamera)
         {
             MainCamera = mainCamera;
-
-            //TODO need refactoring
             SetCinemachineBrain();
         }
 
         private void SetCinemachineBrain()
         {
-            if (MainCamera.gameObject.TryGetComponent(out CinemachineBrain cinemachineBrain))
+            if (!MainCamera.gameObject.TryGetComponent(out _cinemachineBrain))
             {
-                _cinemachineBrain = cinemachineBrain;
-                return;
+                _cinemachineBrain = MainCamera.gameObject.AddComponent<CinemachineBrain>();;
             }
-
-            _cinemachineBrain = MainCamera.gameObject.AddComponent<CinemachineBrain>();
         }
     }
 }
