@@ -5,20 +5,16 @@ using Gameplay.Services.Pause;
 using UI;
 using UnityEngine;
 using Zenject;
-using PixelCrushers.DialogueSystem;
 
 namespace Infrastructure
 {
     public class GameplayServicesInstaller : MonoInstaller
     {
-        [SerializeField] private DialogueSystemController _dialogueSystemController;
-        
         public override void InstallBindings()
         {
             BindTime();
             BindPause();
             BindFX();
-            BindDialogueSystem();
         }
 
         private void BindTime()
@@ -56,14 +52,6 @@ namespace Infrastructure
                 .FromNewComponentOnNewGameObject()
                 .AsSingle()
                 .Lazy();
-        }
-        
-        private void BindDialogueSystem()
-        {
-            Container.Bind<DialogueSystemController>()
-                .FromComponentInNewPrefab(_dialogueSystemController)
-                .AsSingle()
-                .NonLazy();
         }
     }
 }

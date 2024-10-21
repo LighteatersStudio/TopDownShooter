@@ -10,8 +10,7 @@
         "UniTask",
         "Cinemachine",
         "Unity.Timeline",
-        "TopDownShooter.Meta",
-        "DialogueSystem"
+        "TopDownShooter.Meta"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
