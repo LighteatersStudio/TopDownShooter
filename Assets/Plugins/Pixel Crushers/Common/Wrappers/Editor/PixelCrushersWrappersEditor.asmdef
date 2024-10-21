@@ -1,0 +1,12 @@
+{
+    "name": "PixelCrushersWrappersEditor",
+    "references": [
+        "PixelCrushers"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}

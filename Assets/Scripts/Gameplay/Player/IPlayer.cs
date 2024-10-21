@@ -9,6 +9,7 @@ namespace Gameplay
         IWeaponOwner WeaponOwner { get; }
 
         IHaveHealth Health { get; }
+        Transform DialogueActor { get; }
 
         event Action Dead; 
 
