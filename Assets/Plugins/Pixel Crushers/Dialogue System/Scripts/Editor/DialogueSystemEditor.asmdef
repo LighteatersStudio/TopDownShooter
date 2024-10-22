@@ -1,0 +1,14 @@
+{
+    "name": "DialogueSystemEditor",
+    "references": [
+        "DialogueSystem",
+        "PixelCrushers",
+        "PixelCrushersEditor"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
