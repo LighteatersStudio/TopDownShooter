@@ -9,18 +9,17 @@ using Gameplay.Weapons;
 using Meta.Level;
 using Infrastructure.Scenraios;
 using Infrastructure.UI;
+using PixelCrushers.DialogueSystem;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Infrastructure
 {
-
     public class GameInstaller : MonoInstaller
     {
         [Header("Level Entities")]
-        [SerializeField]private Camera _playerCamera;
+        [SerializeField] private Camera _playerCamera;
 
         [Header("Gameplay Entities: player")]
         [SerializeField] private PlayerSettings _playerSettings;
@@ -31,7 +30,7 @@ namespace Infrastructure
         [SerializeField] private Character _enemyPrefab;
 
         [Header("Gameplay Entities: collectables")]
-        [SerializeField]private ConsumableSpawnSettings _consumableSpawnSettings;
+        [SerializeField] private ConsumableSpawnSettings _consumableSpawnSettings;
         [SerializeField] private WeaponCollectable _weaponCollectable;
         [SerializeField] private FirstAidKit _firstAidKitPrefab;
         [SerializeField] private FirstAidKitSettings _firstAidKitSettings;
@@ -39,13 +38,16 @@ namespace Infrastructure
         [Header("Gameplay Entities: weapon")]
         [SerializeField] private Weapon _weaponPrefab;
         [SerializeField] private WeaponUISetting _weaponUISetting;
-        [FormerlySerializedAs("_availableWeaponsSettings")] [SerializeField] private LevelWeaponSettings _levelWeaponSettings;
+        [SerializeField] private LevelWeaponSettings _levelWeaponSettings;
 
         [Header("Gameplay Entities: outline")]
         [SerializeField] private OutlineSettings _outlineSettings;
 
         [Header("Gameplay Entities: session")]
         [SerializeField] private LevelSettings _levelSettings;
+
+        [Header("Dialogue Triggers")]
+        [SerializeField] private DialogueSystemTrigger[] _dialogueSystemTriggers;
 
         private SelectCharacterService _selectCharacterService;
 

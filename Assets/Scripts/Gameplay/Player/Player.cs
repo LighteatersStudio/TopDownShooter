@@ -11,9 +11,9 @@ namespace Gameplay
         private Character _character;
         private Weapon.Factory _weaponFactory;
         
-        
         public IWeaponOwner WeaponOwner => _character;
         public IHaveHealth Health => _character;
+        public Transform DialogueActor { get; private set; }
 
         public event Action Dead;
 
@@ -23,6 +23,7 @@ namespace Gameplay
             _settings = settings;
             _character = character;
             _weaponFactory = weaponFactory;
+            DialogueActor = character.transform;
         }
 
         private void Start()

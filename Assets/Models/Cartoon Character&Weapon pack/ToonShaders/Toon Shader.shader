@@ -57,7 +57,7 @@ Shader "Will/Toon Shader"
 		
 		CGPROGRAM
 		
-		#include "assets/Cartoon Character&Weapon pack/toonshaders/Include/TCP2_Include.cginc"
+		#include "assets/Models/Cartoon Character&Weapon pack/toonshaders/Include/TCP2_Include.cginc"
 		#pragma surface surf ToonyColorsSpec alphatest:_Cutoff addshadow
 		#pragma target 3.0
 		#pragma glsl
