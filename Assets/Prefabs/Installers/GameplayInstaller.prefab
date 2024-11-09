@@ -120,3 +120,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _firstCutscene: {fileID: 4934736991381547548, guid: e530bb4692e40452ba5967977844ecda, type: 3}
+  _scenarioContainer: {fileID: 11400000, guid: 59f29e0a5f4884b94bd5ca84e55f39a7, type: 2}

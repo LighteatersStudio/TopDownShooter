@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aadc276a1b8246eea77d27512dadbc75, type: 3}
+  m_Name: FirstScenarioContainer
+  m_EditorClassIdentifier: 
+  <_enemySettings>k__BackingField:
+    _statsInfo:
+      MaxHealth: 10
+      Health: 10
+      MoveSpeed: 1
+      AttackSpeed: 1
+    _modelPrefab: {fileID: 179778, guid: 2a153d3826ec445468f78a05919c1ac2, type: 3}
+    _simpleEnemyAI:
+      _patrolPath:
+        _points: []
+        _pingPong: 0
+      _searchTargetPoint:
+        _point: {x: 0, y: 0, z: 0}
+  <_spawnEnemyPoint>k__BackingField: {fileID: 1711865269454981706, guid: 6305486fd2e0b4b13b4840223172bfcf, type: 3}
