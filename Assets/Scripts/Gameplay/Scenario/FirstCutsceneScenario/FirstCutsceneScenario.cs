@@ -33,19 +33,14 @@ namespace Gameplay.Scenario.FirstCutsceneScenario
             {
                 await _firstCutsceneFactory.Create().Play();
                 await Task.Delay(TimeSpan.FromSeconds(5f));
-
+                //диалог
                 var enemy = _enemyFactory.Create(_scenarioContainer.EnemySettings, _scenarioContainer.EnemySettings.SimpleEnemyAI);
                 enemy.transform.SetPositionAndRotation(_scenarioContainer.SpawnEnemyPoint.position, _scenarioContainer.SpawnEnemyPoint.rotation);
+                //диалог
+                //спавним маркер куда идти
+
             }
 
-            //диалог
-            //npc подходит к точке
-
-
-            //Set position
-            //диалог
-            //диалог
-            //спавним маркер куда идти
             //выключаем лок управления
         }
 
