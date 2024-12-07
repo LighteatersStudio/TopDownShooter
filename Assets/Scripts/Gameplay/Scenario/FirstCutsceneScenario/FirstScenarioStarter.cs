@@ -1,3 +1,4 @@
+using Gameplay.Services.GameTime;
 using Meta.Level;
 using UnityEngine;
 using Zenject;
@@ -9,20 +10,25 @@ namespace Gameplay.Scenario.FirstCutsceneScenario
         private ScenarioPlayer _scenarioPlayer;
         private FirstCutsceneScenario.Factory _firstCutsceneScenarioFactory;
         private IGameRun _gameRun;
+        private IGameTime _gameTime;
 
         [Inject]
         public void Construct(
             FirstCutsceneScenario.Factory firstCutsceneScenarioFactory,
             ScenarioPlayer scenarioPlayer,
-            IGameRun gameRun)
+            IGameRun gameRun,
+            IGameTime gameTime)
         {
             _firstCutsceneScenarioFactory = firstCutsceneScenarioFactory;
             _scenarioPlayer = scenarioPlayer;
             _gameRun = gameRun;
+            _gameTime = gameTime;
         }
 
         private async void Start()
         {
+            _gameTime.Break();
+
             if (!IsFirstLevel())
             {
                 return;
