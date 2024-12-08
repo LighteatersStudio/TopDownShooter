@@ -237,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeForDestroyShot: 10
   _sparksEffect: {fileID: 1370874438154576188, guid: c98c9b6f940c4c14497f10f580e53478, type: 3}
-  _rayfireBomb: {fileID: 6268334150267391614}
+  _rayFireBomb: {fileID: 6268334150267391614}
 --- !u!1001 &946230872482838367
 PrefabInstance:
   m_ObjectHideFlags: 0
