@@ -11,7 +11,8 @@
         "Cinemachine",
         "Unity.Timeline",
         "TopDownShooter.Meta",
-        "DialogueSystem"
+        "DialogueSystem",
+        "RayFireAssembly"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

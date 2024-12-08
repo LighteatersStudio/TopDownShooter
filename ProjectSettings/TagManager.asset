@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Collectable
   - ProjectileIgnore
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -36,7 +37,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - RayFire
   - FirstCharacter
   - SecondCharacter
   m_SortingLayers:

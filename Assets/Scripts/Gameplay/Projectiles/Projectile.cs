@@ -2,6 +2,7 @@
 using Gameplay.AI;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
+using RayFire;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +13,10 @@ namespace Gameplay.Projectiles
     {
         private const string Collectable = "Collectable";
         private const string ProjectileIgnore = "ProjectileIgnore";
+        
         [SerializeField] private float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
+        [SerializeField] private RayfireBomb _rayFireBomb;
 
         private PlayingFX.Factory _fxFactory;
         private Cooldown.Factory _cooldownFactory;
@@ -30,6 +33,11 @@ namespace Gameplay.Projectiles
 
         private void Awake()
         {
+            if (!_rayFireBomb)
+            {
+                Debug.LogWarning("RayFire Bomb is undefined");
+            }
+            
             _projectileMovement = GetComponent<IProjectileMovement>();
         }
 
@@ -138,6 +146,7 @@ namespace Gameplay.Projectiles
 
         public void Dispose()
         {
+            _rayFireBomb?.Explode(0);
             _pool.Despawn(this);
         }
 
