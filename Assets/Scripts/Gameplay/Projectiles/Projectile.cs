@@ -2,6 +2,7 @@
 using Gameplay.AI;
 using Gameplay.Services.FX;
 using Gameplay.Services.GameTime;
+using RayFire;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace Gameplay.Projectiles
         private const string ProjectileIgnore = "ProjectileIgnore";
         [SerializeField] private float _timeForDestroyShot;
         [SerializeField] private ParticleSystem _sparksEffect;
+        [SerializeField] private RayfireBomb _rayfireBomb;
 
         private PlayingFX.Factory _fxFactory;
         private Cooldown.Factory _cooldownFactory;
@@ -138,6 +140,11 @@ namespace Gameplay.Projectiles
 
         public void Dispose()
         {
+            if (_rayfireBomb)
+            {
+                _rayfireBomb.Explode(0);
+            }
+            
             _pool.Despawn(this);
         }
 
