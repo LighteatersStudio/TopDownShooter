@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Services.Input;
 using UnityEngine;
 using Services.Utility;
 using Zenject;
@@ -19,14 +20,14 @@ namespace Gameplay
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        
+        private IInputController _inputController;
         private Vector3 _fireDirection;
 
         public bool IsDead => _stats.Health <= 0;
-        
+
         public float HealthRelative => _stats.HealthRelative;
         public float MoveSpeed => _stats.MoveSpeed;
-        
+
         public float AttackSpeed => _stats.AttackSpeed;
 
         public Transform WeaponRoot => ModelRoots.Weapon;
@@ -35,6 +36,7 @@ namespace Gameplay
         public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
+
         public Vector3 LookDirection
         {
             get => _fireDirection;
@@ -44,31 +46,32 @@ namespace Gameplay
                 ChangeLookDirection(_fireDirection);
             }
         }
-        
+
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;
             remove => _stats.HealthChanged -= value;
         }
+
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
         public event Action WeaponChanged;
-      
-        
+
+
         [Inject]
         public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
             IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag,
-            CharacterColorFeedback.Factory colorFeedbackFactory)
+            CharacterColorFeedback.Factory colorFeedbackFactory, IInputController inputController)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
             FriendOrFoeTag = friendOrFoeTag;
             _colorFeedbackFactory = colorFeedbackFactory;
+            _inputController = inputController;
 
             _initializer = new(viewFactoryMethod);
-            
             _initializer.Initialize(Load);
         } 
 
@@ -80,7 +83,7 @@ namespace Gameplay
         private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
         {
             var model = viewFactoryMethod(_viewRoot);
-            model.GetComponent<CharacterAnimator>().Construct(this, _colorFeedbackFactory);
+            model.GetComponent<CharacterAnimator>().Construct(this, _colorFeedbackFactory, _inputController);
 
             return model.GetComponent<CharacterModelRoots>();
         }
