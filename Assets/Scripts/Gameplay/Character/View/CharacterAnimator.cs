@@ -1,5 +1,6 @@
 ﻿using Gameplay.Services.Input;
 using UnityEngine;
+using Zenject;
 
 namespace Gameplay
 {
@@ -7,8 +8,8 @@ namespace Gameplay
     public class CharacterAnimator : MonoBehaviour
     {
         private const int LerpSpeed = 5;
-        private const float RoundingThreshold = 0.5f;
-        
+        private const float RoundingCoef = 0.5f;
+
         private static readonly int SpeedName = Animator.StringToHash("MoveSpeed");
         private static readonly int HorizontalName = Animator.StringToHash("Horizontal");
         private static readonly int VerticalName = Animator.StringToHash("Vertical");
@@ -34,8 +35,9 @@ namespace Gameplay
             _animator = GetComponent<Animator>();
         }
 
+        [Inject]
         public void Construct(ICharacter character,
-            CharacterColorFeedback.Factory colorFeedbackFactory,
+            CharacterColorFeeadback.Factory colorFeedbackFactory,
             IInputController inputController)
         {
             _character = character;
@@ -45,7 +47,7 @@ namespace Gameplay
 
         protected void Start()
         {
-            _colorFeedback =  _colorFeedbackFactory.Create(_view);
+            _colorFeedback = _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
             _lastPosition = transform.position;
             Subscribe();
@@ -61,7 +63,7 @@ namespace Gameplay
             _character.Attacked += OnAttacked;
             _character.Damaged += OnDamaged;
             _character.Dead += OnDead;
-            
+
             _inputController.MoveChanged += SetMoveDirection;
             _inputController.LookChanged += SetLookDirection;
         }
@@ -71,7 +73,7 @@ namespace Gameplay
             _character.Attacked -= OnAttacked;
             _character.Damaged -= OnDamaged;
             _character.Dead -= OnDead;
-            
+
             _inputController.MoveChanged -= SetMoveDirection;
             _inputController.LookChanged -= SetLookDirection;
         }
@@ -88,8 +90,9 @@ namespace Gameplay
             const float decelerationInS = maxSpeed * 6;
 
             var position = transform.position;
-            
-            _currentSpeed += (position - _lastPosition).magnitude / Time.unscaledDeltaTime - decelerationInS * Time.unscaledDeltaTime;
+
+            _currentSpeed += (position - _lastPosition).magnitude / Time.unscaledDeltaTime -
+                             decelerationInS * Time.unscaledDeltaTime;
             _currentSpeed = Mathf.Clamp(_currentSpeed, 0, maxSpeed);
 
             _lastPosition = position;
@@ -108,28 +111,28 @@ namespace Gameplay
 
         private Vector2 ConvertToLocal(Vector2 worldDirection)
         {
-            var right = new Vector2(_lookDirection.y, -_lookDirection.x); 
+            var right = new Vector2(_lookDirection.y, -_lookDirection.x);
             var forward = _lookDirection;
-            
+
             var localX = Vector2.Dot(worldDirection, right);
             var localY = Vector2.Dot(worldDirection, forward);
-            
-            localX = RoundedValue(localX);
-            localY = RoundedValue(localY);
+
+            localX = NormalizeDirection(localX);
+            localY = NormalizeDirection(localY);
 
             return new Vector2(localX, localY);
         }
 
-        private float RoundedValue(float value)
+        private float NormalizeDirection(float value)
         {
-            return Mathf.Abs(value) < RoundingThreshold ? 0 : Mathf.Sign(value);
+            return Mathf.RoundToInt(value - RoundingCoef);
         }
 
         private void SetMoveDirection(Vector2 direction)
         {
-            _targetDirection = new Vector2(RoundedValue(direction.x), RoundedValue(direction.y));
+            _targetDirection = new Vector2(NormalizeDirection(direction.x), NormalizeDirection(direction.y));
         }
-        
+
         private void SetLookDirection(Vector2 direction)
         {
             _lookDirection = direction.normalized;

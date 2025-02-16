@@ -12,7 +12,7 @@ namespace Gameplay
         [SerializeField] private WeaponSettings _defaultWeapon;
 
         public StatsInfo Stats => _stats;
-        public Func<Transform, GameObject> ModelFactory =>  parent => Instantiate(_model, parent);
+        public GameObject ModelPrefab => _model;
         public IWeaponSettings DefaultWeapon => _defaultWeapon;
     }
 }

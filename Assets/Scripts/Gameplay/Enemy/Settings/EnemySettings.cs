@@ -1,7 +1,6 @@
 using System;
 using Gameplay.AI;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Gameplay.Enemy
 {
@@ -13,8 +12,7 @@ namespace Gameplay.Enemy
         [SerializeField] private TEnemyAI _simpleEnemyAI;
         
         public StatsInfo Stats => _statsInfo;
-        public Func<Transform, GameObject> ModelFactory => parent => Object.Instantiate(_modelPrefab, parent);
-        
+        public GameObject ModelPrefab => _modelPrefab;
         public TEnemyAI SimpleEnemyAI => _simpleEnemyAI;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Gameplay.Services.Input;
 using UnityEngine;
 using Services.Utility;
 using Zenject;
@@ -15,12 +14,10 @@ namespace Gameplay
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
 
-        private DynamicMonoInitializer<Func<Transform, GameObject>> _initializer;
-        private CharacterColorFeedback.Factory _colorFeedbackFactory;
+        private DynamicMonoInitializer<CharacterModelFactory> _initializer;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        private IInputController _inputController;
         private Vector3 _fireDirection;
 
         public bool IsDead => _stats.Health <= 0;
@@ -60,32 +57,26 @@ namespace Gameplay
 
 
         [Inject]
-        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag,
-            CharacterColorFeedback.Factory colorFeedbackFactory, IInputController inputController)
+        public void Construct(StatsInfo statsInfo, CharacterModelFactory viewFactory,
+            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
             FriendOrFoeTag = friendOrFoeTag;
-            _colorFeedbackFactory = colorFeedbackFactory;
-            _inputController = inputController;
 
-            _initializer = new(viewFactoryMethod);
+            _initializer = new(viewFactory);
             _initializer.Initialize(Load);
         } 
 
-        private void Load(Func<Transform, GameObject> viewFactoryMethod)
+        private void Load(CharacterModelFactory viewFactory)
         {
-            ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
+            ModelRoots = LoadViewAndGetRoots(viewFactory);
         }
 
-        private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
+        private CharacterModelRoots LoadViewAndGetRoots(CharacterModelFactory viewFactory)
         {
-            var model = viewFactoryMethod(_viewRoot);
-            model.GetComponent<CharacterAnimator>().Construct(this, _colorFeedbackFactory, _inputController);
-
-            return model.GetComponent<CharacterModelRoots>();
+            return viewFactory.Create();
         }
 
         public void TakeDamage(IAttackInfo attackInfo)
