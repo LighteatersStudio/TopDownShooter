@@ -37,7 +37,7 @@ namespace Gameplay
 
         [Inject]
         public void Construct(ICharacter character,
-            CharacterColorFeeadback.Factory colorFeedbackFactory,
+            CharacterColorFeedback.Factory colorFeedbackFactory,
             IInputController inputController)
         {
             _character = character;
@@ -125,7 +125,7 @@ namespace Gameplay
 
         private float NormalizeDirection(float value)
         {
-            return Mathf.RoundToInt(value - RoundingCoef);
+            return Mathf.Round(value);
         }
 
         private void SetMoveDirection(Vector2 direction)
