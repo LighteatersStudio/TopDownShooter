@@ -21,6 +21,11 @@ namespace Gameplay.Services.GameTime
 
         public Cooldown(float duration, ITicker ticker, Action finishHandler)
         {
+            if (duration == 0)
+            {
+                Debug.LogError("Duration equals zero!");
+            }
+            
             _duration = duration;
             _ticker = ticker;
             _finishHandler = finishHandler;

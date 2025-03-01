@@ -21,11 +21,12 @@ namespace Gameplay.Projectiles
         private PlayingFX.Factory _fxFactory;
         private Cooldown.Factory _cooldownFactory;
         private FlyInfo _flyInfo;
-        private Cooldown _cooldown;
+        private Cooldown _destroyDelay;
         private IFriendFoeSystem _friendFoeSystem;
         private IAttackInfo _attackInfo;
         private IMemoryPool _pool;
         private IProjectileMovement _projectileMovement;
+        private IExplosionAction _explosionAction;
 
         private float _lifeTimer;
 
@@ -39,6 +40,7 @@ namespace Gameplay.Projectiles
             }
             
             _projectileMovement = GetComponent<IProjectileMovement>();
+            _explosionAction = GetComponent<IExplosionAction>();
         }
 
         [Inject]
@@ -53,8 +55,13 @@ namespace Gameplay.Projectiles
         {
             transform.parent = null;
 
-            _cooldown = _cooldownFactory.Create(_timeForDestroyShot, this, DestroyByLifeTime);
-            _cooldown.Launch();
+            LaunchInternal();
+        }
+
+        protected virtual void LaunchInternal()
+        {
+            _destroyDelay = _cooldownFactory.Create(_timeForDestroyShot, this, DestroyByLifeTime);
+            _destroyDelay.Launch();
 
             _projectileMovement.Move(_flyInfo);
         }
@@ -103,10 +110,17 @@ namespace Gameplay.Projectiles
         {
             return _friendFoeSystem.CheckFoes(_attackInfo.FriendOrFoeTag, friendOrFoeTag);
         }
-        private void HandleNonTaggedCollision()
+
+        protected void HandleNonTaggedCollision()
         {
+            ApplyExplosionDamage();
             SpawnSparksEffect();
             Dispose();
+        }
+
+        private void ApplyExplosionDamage()
+        {
+            _explosionAction?.Blast(_friendFoeSystem, _attackInfo);
         }
 
         private bool ShouldIgnoreCollision(Collider other)

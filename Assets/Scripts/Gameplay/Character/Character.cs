@@ -14,19 +14,17 @@ namespace Gameplay
         [Header("Settings")]
         [SerializeField] private float _deathWaitTime = 10f;
 
-        private DynamicMonoInitializer<Func<Transform, GameObject>> _initializer;
-        private CharacterColorFeedback.Factory _colorFeedbackFactory;
+        private DynamicMonoInitializer<CharacterModelFactory> _initializer;
         private IDamageCalculator _damageCalculator;
         private CharacterStats _stats;
         private IWeapon _weapon;
-        
         private Vector3 _fireDirection;
 
         public bool IsDead => _stats.Health <= 0;
-        
+
         public float HealthRelative => _stats.HealthRelative;
         public float MoveSpeed => _stats.MoveSpeed;
-        
+
         public float AttackSpeed => _stats.AttackSpeed;
 
         public Transform WeaponRoot => ModelRoots.Weapon;
@@ -35,6 +33,7 @@ namespace Gameplay
         public IFriendOrFoeTag FriendOrFoeTag { get; private set; }
         public IWeaponReadonly Weapon => _weapon;
         public CharacterModelRoots ModelRoots { get; private set; }
+
         public Vector3 LookDirection
         {
             get => _fireDirection;
@@ -44,45 +43,40 @@ namespace Gameplay
                 ChangeLookDirection(_fireDirection);
             }
         }
-        
+
         public event Action HealthChanged
         {
             add => _stats.HealthChanged += value;
             remove => _stats.HealthChanged -= value;
         }
+
         public event Action Damaged;
         public event Action Attacked;
         public event Action Dead;
         public event Action WeaponChanged;
-      
-        
+
+
         [Inject]
-        public void Construct(StatsInfo statsInfo, Func<Transform, GameObject> viewFactoryMethod,
-            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag,
-            CharacterColorFeedback.Factory colorFeedbackFactory)
+        public void Construct(StatsInfo statsInfo, CharacterModelFactory viewFactory,
+            IDamageCalculator damageCalculator, IWeapon weapon, IFriendOrFoeTag friendOrFoeTag)
         {
             _damageCalculator = damageCalculator;
             ApplyNewWeapon(weapon);
             _stats = new CharacterStats(statsInfo);
             FriendOrFoeTag = friendOrFoeTag;
-            _colorFeedbackFactory = colorFeedbackFactory;
 
-            _initializer = new(viewFactoryMethod);
-            
+            _initializer = new(viewFactory);
             _initializer.Initialize(Load);
         } 
 
-        private void Load(Func<Transform, GameObject> viewFactoryMethod)
+        private void Load(CharacterModelFactory viewFactory)
         {
-            ModelRoots = LoadViewAndGetRoots(viewFactoryMethod);
+            ModelRoots = LoadViewAndGetRoots(viewFactory);
         }
 
-        private CharacterModelRoots LoadViewAndGetRoots(Func<Transform, GameObject> viewFactoryMethod)
+        private CharacterModelRoots LoadViewAndGetRoots(CharacterModelFactory viewFactory)
         {
-            var model = viewFactoryMethod(_viewRoot);
-            model.GetComponent<CharacterAnimator>().Construct(this, _colorFeedbackFactory);
-
-            return model.GetComponent<CharacterModelRoots>();
+            return viewFactory.Create();
         }
 
         public void TakeDamage(IAttackInfo attackInfo)

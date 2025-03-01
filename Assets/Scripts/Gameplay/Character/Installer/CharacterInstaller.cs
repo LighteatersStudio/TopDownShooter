@@ -40,17 +40,28 @@ namespace Gameplay
             }
         }
 
+        private CharacterModelRoots CreateCharacterModel(DiContainer container)
+        {
+            var result = container.InstantiatePrefab(_settings.ModelPrefab).GetComponent<CharacterModelRoots>();
+
+            if (!result)
+            {
+                Debug.LogError(
+                    $"Model prefab doesn't include CharacterModelRoots in CharacterSettings ({_settings.GetType()})");
+            }
+
+            return result;
+        }
+
         private void BindInjectedParameters()
         {
             Container.Bind<StatsInfo>()
                 .FromInstance(_settings.Stats)
                 .AsSingle()
                 .NonLazy();
-            
-            Container.Bind<Func<Transform, GameObject>>()
-                .FromInstance(_settings.ModelFactory)
-                .AsSingle()
-                .NonLazy();
+
+            Container.BindFactory<CharacterModelRoots, CharacterModelFactory>()
+                .FromMethod(CreateCharacterModel);
 
             if (!Container.HasBinding<IFriendOrFoeTag>())
             {
@@ -122,7 +133,7 @@ namespace Gameplay
                 .AsSingle()
                 .Lazy();
         }
-        
+
         private void BindView()
         {
             Container.BindFactory<IHaveHealth, HealthBar, HealthBar.Factory>()
@@ -156,7 +167,7 @@ namespace Gameplay
                 .AsSingle()
                 .NonLazy();
         }
-        
+
         private void BindDebug()
         {
             Container.Bind<CharacterDebug>()
@@ -166,3 +177,4 @@ namespace Gameplay
         }
     }
 }
+

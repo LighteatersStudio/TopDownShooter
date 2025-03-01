@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: CharactersSettings
   m_EditorClassIdentifier: 
   _playerSettingsArray:
-  - {fileID: 11400000, guid: 7e5e59efa8570f647b7c804efe7f9664, type: 2}
+  - {fileID: 11400000, guid: 5b31fe0bccfe1f048a85cc6a7c10a084, type: 2}
   - {fileID: 11400000, guid: ef6a1bf72bdbc9642a2e3627b70a8f8b, type: 2}
+  - {fileID: 11400000, guid: 5b31fe0bccfe1f048a85cc6a7c10a084, type: 2}
