@@ -56,4 +56,4 @@ Sprite format:
 ---
 
 Project documentation:
-- [Character](ProjectDocumentation/Character.md)
+- [Character Documentation](ProjectDocumentation/Character_en.md)
