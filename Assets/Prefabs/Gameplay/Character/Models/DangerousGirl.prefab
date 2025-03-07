@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 470064}
   - component: {fileID: 9593386}
-  - component: {fileID: -1297127323325673893}
+  - component: {fileID: -6920606045485952945}
   - component: {fileID: 6103446451359640688}
   m_Layer: 0
   m_Name: DangerousGirl
@@ -57,7 +57,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-1297127323325673893
+--- !u!114 &-6920606045485952945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,10 +66,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 170064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa46df61488a4911b20b238c5bb2da43, type: 3}
+  m_Script: {fileID: 11500000, guid: d5793bc4ea4e4a89bc01a154fdba396b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 5307518665324607194}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotationThreshold: 5
+  rotationSpeed: 5
 --- !u!114 &6103446451359640688
 MonoBehaviour:
   m_ObjectHideFlags: 0

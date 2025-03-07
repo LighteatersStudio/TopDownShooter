@@ -2,16 +2,20 @@
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay
+namespace Gameplay.View
 {
     [RequireComponent(typeof(Animator))]
-    public class CharacterAnimator : MonoBehaviour
+    public class PlayerAnimator : MonoBehaviour
     {
-        private const int LerpSpeed = 5;
+        private const int LerpSpeed = 6;
+        private const float RotationLerpSpeed = 2.2f;
+        private const float BaseSpeed = 8.8f;
+        private const float TurnValue = 0.8f;
 
         private static readonly int SpeedName = Animator.StringToHash("MoveSpeed");
         private static readonly int HorizontalName = Animator.StringToHash("Horizontal");
         private static readonly int VerticalName = Animator.StringToHash("Vertical");
+        private static readonly int TurnName = Animator.StringToHash("Turn");
         private static readonly int HitName = Animator.StringToHash("Hit");
         private static readonly int AttackName = Animator.StringToHash("Attack");
         private static readonly int DeadName = Animator.StringToHash("Dead");
@@ -23,32 +27,41 @@ namespace Gameplay
         private ICharacter _character;
         private CharacterColorFeedback _colorFeedback;
         private IInputController _inputController;
-        private Vector3 _lastPosition;
+        private IPlayerSettings _settings;
+        private Vector2 _previousLookDirection;
         private Vector2 _currentDirection;
         private Vector2 _targetDirection;
         private Vector2 _lookDirection = Vector2.up;
         private float _currentSpeed;
+        private float _rotationValue;
+        private bool _isRotating;
+
+
+        [Inject]
+        public void Construct(ICharacter character,
+            CharacterColorFeedback.Factory colorFeedbackFactory,
+            IInputController inputController,
+            IPlayerSettings settings)
+        {
+            _character = character;
+            _colorFeedbackFactory = colorFeedbackFactory;
+            _inputController = inputController;
+            _settings = settings;
+        }
 
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
         }
 
-        [Inject]
-        public void Construct(ICharacter character,
-            CharacterColorFeedback.Factory colorFeedbackFactory,
-            IInputController inputController)
-        {
-            _character = character;
-            _colorFeedbackFactory = colorFeedbackFactory;
-            _inputController = inputController;
-        }
-
         protected void Start()
         {
+            _animator.SetFloat(SpeedName, 1);
+            _animator.SetFloat(TurnName, 0);
+            
+            _previousLookDirection = _lookDirection;
             _colorFeedback = _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
-            _lastPosition = transform.position;
             Subscribe();
         }
 
@@ -76,32 +89,40 @@ namespace Gameplay
             _inputController.MoveChanged -= SetMoveDirection;
             _inputController.LookChanged -= SetLookDirection;
         }
-
+        
         protected void Update()
         {
-            _animator.SetFloat(SpeedName, CalculateSpeed());
             DirectionAnimation();
+            RotationAnimation();
         }
 
         private float CalculateSpeed()
         {
-            const float maxSpeed = 10f;
-            const float decelerationInS = maxSpeed * 6;
+            const float minAnimSpeed = 0.5f;
+            const float maxAnimSpeed = 2;
 
-            var position = transform.position;
+            var animationSpeed = _settings.Stats.MoveSpeed / BaseSpeed;
+            animationSpeed = Mathf.Clamp(animationSpeed, minAnimSpeed, maxAnimSpeed);
 
-            _currentSpeed += (position - _lastPosition).magnitude / Time.unscaledDeltaTime -
-                             decelerationInS * Time.unscaledDeltaTime;
-            _currentSpeed = Mathf.Clamp(_currentSpeed, 0, maxSpeed);
-
-            _lastPosition = position;
+            _currentSpeed = Mathf.Clamp(animationSpeed, minAnimSpeed, maxAnimSpeed);
 
             return _currentSpeed;
+        }
+
+        private void RotationAnimation()
+        {
+            _isRotating = _lookDirection != _previousLookDirection;
+            _previousLookDirection = _lookDirection; 
+            
+            var target = _isRotating ? TurnValue : 0;
+            _rotationValue = Mathf.MoveTowards(_rotationValue, target, Time.deltaTime * RotationLerpSpeed);
+            _animator.SetFloat(TurnName, _rotationValue);
         }
 
         private void DirectionAnimation()
         {
             var correctedDirection = ConvertToLocal(_targetDirection);
+            
             _currentDirection = Vector2.MoveTowards(_currentDirection, correctedDirection, Time.deltaTime * LerpSpeed);
 
             _animator.SetFloat(HorizontalName, _currentDirection.x);
@@ -130,6 +151,8 @@ namespace Gameplay
         private void SetMoveDirection(Vector2 direction)
         {
             _targetDirection = new Vector2(NormalizeDirection(direction.x), NormalizeDirection(direction.y));
+
+            _animator.SetFloat(SpeedName, direction.magnitude > 0 ? CalculateSpeed() : 1);
         }
 
         private void SetLookDirection(Vector2 direction)
