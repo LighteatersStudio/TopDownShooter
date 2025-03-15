@@ -1,4 +1,5 @@
 # Character Documentation ([rus](Character_ru.md))
+- [Back to Main README](../README.md)
 
 This document describes the key game entities: Character, Player, Enemy, and their interactions. It covers their installers and dependency integration methods.
 
@@ -123,3 +124,4 @@ This modular structure allows easy expansion and modification of enemy behavior 
 | Spawners  | EnemyFactory            | EnemySettings                           |
 | UI        | Character, Player       | HealthBar, ReloadBar, LookDirectionDisplay |
 
+## [Examples](Character_example.md)

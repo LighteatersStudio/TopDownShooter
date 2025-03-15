@@ -1,4 +1,5 @@
 # Документация Character ([eng](Character_en.md))
+- [Обратно в README](../README.md)
 
 Этот документ описывает ключевые игровые сущности: Character, Player, Enemy и их взаимодействие. В документе рассмотрены их инсталлеры и способы интеграции зависимостей.
 
@@ -105,7 +106,7 @@ Zenject-инсталлеры используются для настройки 
 - **IInputController** – управление игроком.
 - **PlayerInputAdapter** – связывает ввод с действиями персонажа.
 
-### **Система дружбы/вражды**
+### **Система свой/чужой**
 
 - **FriendOrFoeComponent** – определяет союзников и врагов.
 - **IFriendOrFoeTag** – обозначает принадлежность персонажа к команде.
@@ -123,3 +124,4 @@ Zenject-инсталлеры используются для настройки 
 | Spawners  | EnemyFactory             | EnemySettings                                 |
 | UI        | Character, Player        | HealthBar, ReloadBar, LookDirectionDisplay    |
 
+## [Примеры](Character_example.md)
