@@ -1,3 +1,4 @@
+using System;
 using Gameplay.AI;
 using Zenject;
 
@@ -24,7 +25,7 @@ namespace Gameplay.Enemy
             Container.Bind<IFriendOrFoeTag>()
                 .FromMethod(_friendOrFoeFactory.CreateEnemyTeam)
                 .AsSingle();
-            
+
             Container.Bind<ICharacterSettings>()
                 .FromInstance(_characterSettings);
 
@@ -36,6 +37,14 @@ namespace Gameplay.Enemy
                 .ByNewContextPrefab(_characterPrefab)
                 .AsSingle()
                 .NonLazy();
+
+            BindDemo();
+        }
+
+        private void BindDemo()
+        {
+            Container.Bind<DateTime>()
+                .FromInstance(DateTime.Now);
         }
     }
 }

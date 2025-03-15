@@ -1,5 +1,49 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4574921146074642572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8423355631750606247}
+  - component: {fileID: 2592579141103225813}
+  m_Layer: 0
+  m_Name: DemoObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8423355631750606247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4574921146074642572}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 799623494326944142}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2592579141103225813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4574921146074642572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20eb40c76a054166b5e876fb381e312, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2917665097769872207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,7 +187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_Name
-      value: Character Variant AI_ROBOT_RED
+      value: Enemy Character Variant AI
       objectReference: {fileID: 0}
     - target: {fileID: 7804321971561553831, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -164,6 +208,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5848443398800128019}
+    - targetCorrespondingSourceObject: {fileID: 7564954714399395941, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8423355631750606247}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7564954714399395942, guid: b1c2939ec647be144abc08f77a2938fb, type: 3}
       insertIndex: -1

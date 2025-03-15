@@ -1,4 +1,5 @@
 ﻿using System;
+using Gameplay.Demo;
 using Gameplay.View;
 using Gameplay.Weapons;
 using UnityEngine;
@@ -11,23 +12,23 @@ namespace Gameplay
     {
         [Header("Character self")]
         [SerializeField] private Character _character;
-        
+
         [Header("View components")]
         [SerializeField] private HealthBar _healthBarPrefab;
         [SerializeField] private ReloadBar _reloadBarPrefab;
         [SerializeField] private LookDirectionDisplay _lookDirectionDisplayPrefab;
-        
+
         [Header("Effects")]
         [SerializeField] private ScriptableObject _characterFXList;
         [SerializeField] private CharacterMaterialColorChangeData _colorChangeData;
-        
+
         [Inject] private ICharacterSettings _settings;
         [Inject] private IFriendOrFoeTag _friendOrFoeTag;
-        
+
         public override void InstallBindings()
         {
             BindInjectedParameters();
-            
+
             BindCharacterSelf();
             BindFriendForComponent();
             BindGameRules();
@@ -36,7 +37,7 @@ namespace Gameplay
 
             if (Application.isEditor)
             {
-                BindDebug();    
+                BindDebug();
             }
         }
 
@@ -77,32 +78,32 @@ namespace Gameplay
                 .FromInstance(_character)
                 .AsCached()
                 .NonLazy();
-            
+
             Container.Bind<ICharacter>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
             Container.Bind<IHaveHealth>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
             Container.Bind<ICanFire>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
             Container.Bind<IWeaponOwner>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
             Container.Bind<ICanReload>()
                 .To<Character>()
                 .FromResolve()
                 .AsCached();
-            
+
             Container.Bind<IReloaded>()
                 .FromMethod(()=> new WeaponOwnerReloadProxy(Container.Resolve<IWeaponOwner>()))
                 .AsSingle()
@@ -139,7 +140,7 @@ namespace Gameplay
             Container.BindFactory<IHaveHealth, HealthBar, HealthBar.Factory>()
                 .FromComponentInNewPrefab(_healthBarPrefab)
                 .Lazy();
-         
+
             Container.BindFactory<IReloaded, ReloadBar, ReloadBar.Factory>()
                 .FromComponentInNewPrefab(_reloadBarPrefab)
                 .Lazy();
@@ -147,7 +148,7 @@ namespace Gameplay
             Container.BindFactory<LookDirectionDisplay, LookDirectionDisplay.Factory>()
                 .FromComponentInNewPrefab(_lookDirectionDisplayPrefab)
                 .Lazy();
-            
+
             Container.Bind<ICharacterFXList>()
                 .To<CharacterFXList>()
                 .FromScriptableObject(_characterFXList)
@@ -156,12 +157,12 @@ namespace Gameplay
 
             Container.BindFactory<GameObject, CharacterColorFeedback, CharacterColorFeedback.Factory>()
                 .AsSingle();
-            
+
             Container.Bind<CharacterMaterialColorChangeData>()
                 .FromScriptableObject(_colorChangeData)
                 .AsSingle()
                 .Lazy();
-            
+
             Container.Bind<CharacterFX>()
                 .FromNew()
                 .AsSingle()
@@ -172,6 +173,11 @@ namespace Gameplay
         {
             Container.Bind<CharacterDebug>()
                 .FromNewComponentOnRoot()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind(typeof(TimeToDebug), typeof(ITickable))
+                .To<TimeToDebug>()
                 .AsSingle()
                 .NonLazy();
         }
