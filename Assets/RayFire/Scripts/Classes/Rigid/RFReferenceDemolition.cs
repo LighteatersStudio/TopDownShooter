@@ -272,7 +272,7 @@ namespace RayFire
                     Rigidbody rb = instGo.GetComponent<Rigidbody>();
                     if (rb != null && scr.physics.rigidBody != null)
                     {
-                        rb.velocity        = scr.physics.rigidBody.velocity;
+                        rb.linearVelocity        = scr.physics.rigidBody.linearVelocity;
                         rb.angularVelocity = scr.physics.rigidBody.angularVelocity;
                     }
                 }
