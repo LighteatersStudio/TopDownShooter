@@ -52,3 +52,8 @@ WIP Pull Request:
 
 Sprite format:
 * Only PNG or JPG sprite formats are allowed in the project. This rule doesn't apply to uncompressed textures.
+
+---
+
+Project documentation:
+- [Character Documentation](ProjectDocumentation/Character_en.md)
