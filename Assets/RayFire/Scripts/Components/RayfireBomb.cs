@@ -239,7 +239,7 @@ namespace RayFire
                     prj[i].rigid.ResetRigid();
                 else if (prj[i].rb != null)
                 {
-                    prj[i].rb.velocity           = Vector3.zero;
+                    prj[i].rb.linearVelocity           = Vector3.zero;
                     prj[i].rb.angularVelocity    = Vector3.zero;
                     prj[i].rb.transform.SetPositionAndRotation (prj[i].positionPivot, prj[i].rotation);
                 }

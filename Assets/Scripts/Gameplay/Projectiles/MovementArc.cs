@@ -34,7 +34,7 @@ namespace Gameplay.Projectiles
             TrajectoryCalculation(_range, _speed);
             
             _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.velocity = _velocity;
+            _rigidbody.linearVelocity = _velocity;
         }
 
         /// <summary>
