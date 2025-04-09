@@ -1,4 +1,5 @@
-﻿using Gameplay.Services.Input;
+﻿using System;
+using Gameplay.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -10,16 +11,10 @@ namespace Gameplay.View
         private const int LerpSpeed = 6;
         private const float RotationLerpSpeed = 2.2f;
         private const float BaseSpeed = 8.8f;
-        private const float TurnValue = 0.8f;
+        private const float TurnValue = 0.6f;
 
-        private static readonly int SpeedName = Animator.StringToHash("MoveSpeed");
-        private static readonly int HorizontalName = Animator.StringToHash("Horizontal");
-        private static readonly int VerticalName = Animator.StringToHash("Vertical");
-        private static readonly int TurnName = Animator.StringToHash("Turn");
-        private static readonly int HitName = Animator.StringToHash("Hit");
-        private static readonly int AttackName = Animator.StringToHash("Attack");
-        private static readonly int DeadName = Animator.StringToHash("Dead");
-
+        private readonly PlayerAnimatorParams _params = new ();
+        
         [SerializeField] private GameObject _view;
 
         private CharacterColorFeedback.Factory _colorFeedbackFactory;
@@ -36,7 +31,8 @@ namespace Gameplay.View
         private float _rotationValue;
         private bool _isRotating;
 
-
+        public event Action<Vector2> OnDirectionChanged;
+        
         [Inject]
         public void Construct(ICharacter character,
             CharacterColorFeedback.Factory colorFeedbackFactory,
@@ -56,9 +52,9 @@ namespace Gameplay.View
 
         protected void Start()
         {
-            _animator.SetFloat(SpeedName, 1);
-            _animator.SetFloat(TurnName, 0);
-            
+            _animator.SetFloat(_params.MoveSpeed, 1);
+            _animator.SetFloat(_params.Turn, 0);
+
             _previousLookDirection = _lookDirection;
             _colorFeedback = _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
@@ -72,24 +68,22 @@ namespace Gameplay.View
 
         private void Subscribe()
         {
-            _character.Attacked += OnAttacked;
             _character.Damaged += OnDamaged;
             _character.Dead += OnDead;
 
             _inputController.MoveChanged += SetMoveDirection;
             _inputController.LookChanged += SetLookDirection;
         }
-
+        
         private void Unsubscribe()
         {
-            _character.Attacked -= OnAttacked;
             _character.Damaged -= OnDamaged;
             _character.Dead -= OnDead;
 
             _inputController.MoveChanged -= SetMoveDirection;
             _inputController.LookChanged -= SetLookDirection;
         }
-        
+
         protected void Update()
         {
             DirectionAnimation();
@@ -111,22 +105,39 @@ namespace Gameplay.View
 
         private void RotationAnimation()
         {
-            _isRotating = _lookDirection != _previousLookDirection;
-            _previousLookDirection = _lookDirection; 
+            var direction = _previousLookDirection.x * _lookDirection.y - _previousLookDirection.y * _lookDirection.x;
             
-            var target = _isRotating ? TurnValue : 0;
+            var turnValue = TurnValue;
+            
+            switch (direction)
+            {
+                case > 0:
+                    turnValue *= 1;
+                    break;
+                case < 0:
+                    turnValue *= -1;
+                    break;
+            }
+            
+            _isRotating = _lookDirection != _previousLookDirection;
+            _previousLookDirection = _lookDirection;
+            
+
+            var target = _isRotating ? turnValue : 0;
             _rotationValue = Mathf.MoveTowards(_rotationValue, target, Time.deltaTime * RotationLerpSpeed);
-            _animator.SetFloat(TurnName, _rotationValue);
+            _animator.SetFloat(_params.Turn, _rotationValue);
         }
 
         private void DirectionAnimation()
         {
             var correctedDirection = ConvertToLocal(_targetDirection);
             
-            _currentDirection = Vector2.MoveTowards(_currentDirection, correctedDirection, Time.deltaTime * LerpSpeed);
-
-            _animator.SetFloat(HorizontalName, _currentDirection.x);
-            _animator.SetFloat(VerticalName, _currentDirection.y);
+            OnDirectionChanged?.Invoke(correctedDirection);
+            _currentDirection = Vector2.MoveTowards(_currentDirection,
+                correctedDirection, Time.deltaTime * LerpSpeed);
+            
+            _animator.SetFloat(_params.Horizontal, _currentDirection.x);
+            _animator.SetFloat(_params.Vertical, _currentDirection.y);
         }
 
         private Vector2 ConvertToLocal(Vector2 worldDirection)
@@ -151,8 +162,8 @@ namespace Gameplay.View
         private void SetMoveDirection(Vector2 direction)
         {
             _targetDirection = new Vector2(NormalizeDirection(direction.x), NormalizeDirection(direction.y));
-
-            _animator.SetFloat(SpeedName, direction.magnitude > 0 ? CalculateSpeed() : 1);
+            
+            _animator.SetFloat(_params.MoveSpeed, direction.magnitude > 0 ? CalculateSpeed() : 1);
         }
 
         private void SetLookDirection(Vector2 direction)
@@ -162,18 +173,13 @@ namespace Gameplay.View
 
         private void OnDead()
         {
-            _animator.SetTrigger(DeadName);
+            _animator.SetTrigger(_params.Dead);
         }
 
         private void OnDamaged()
         {
             _colorFeedback.ChangeColor();
-            _animator.SetTrigger(HitName);
-        }
-
-        private void OnAttacked()
-        {
-            _animator.SetTrigger(AttackName);
+            _animator.SetTrigger(_params.Hit);
         }
     }
 }

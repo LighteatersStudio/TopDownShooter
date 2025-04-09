@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Services.Loading;
-using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Loading
