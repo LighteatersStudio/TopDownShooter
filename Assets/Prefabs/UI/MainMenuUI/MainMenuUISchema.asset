@@ -22,3 +22,13 @@ MonoBehaviour:
       - {fileID: 7208786591299265359, guid: 26991796bb466604f8e1c3b12dcee518, type: 3}
     <Lazy>k__BackingField: 0
     <Debug>k__BackingField: 0
+    <SystemOrder>k__BackingField: 0
+  - <WindowSystem>k__BackingField: {fileID: 1073484497271914590, guid: b78b2eaf673724c4085ed67d4c6ea4a4, type: 3}
+    <Name>k__BackingField: Test
+    <ViewCollection>k__BackingField:
+      _views:
+      - {fileID: 735601388137290407, guid: e07c23dff94834d12a7c0d938a299387, type: 3}
+    <Lazy>k__BackingField: 0
+    <Debug>k__BackingField: 0
+    <SystemOrder>k__BackingField: 10
+  <RenderingOrderOffset>k__BackingField: 0

@@ -9,17 +9,20 @@ namespace Infrastructure.Scenraios
     public class LaunchMainMenuScenario : MonoBehaviour
     {
         private StartSplashScreen.Factory _splashScreenFactory;
+        private TestSplashScreen.Factory _testSplashScreenFactory;
         private MainMenu.Factory _mainMenuFactory;
         private IMusicPlayer _musicPlayer;
         private IMusicList _musicList;
 
         [Inject]
         public void Construct(StartSplashScreen.Factory splashScreenFactory,
+            TestSplashScreen.Factory testSplashScreenFactory,
             MainMenu.Factory mainMenuFactory,
             IMusicPlayer musicPlayer,
             IMusicList musicList)
         {
             _splashScreenFactory = splashScreenFactory;
+            _testSplashScreenFactory = testSplashScreenFactory;
             _mainMenuFactory = mainMenuFactory;
             _musicPlayer = musicPlayer;
             _musicList = musicList;
@@ -37,6 +40,7 @@ namespace Infrastructure.Scenraios
         {
             view.Closed -= OnSplashScreenClosed;
             _mainMenuFactory.Open();
+            _testSplashScreenFactory.Open();
             Destroy(gameObject);
         }
     }

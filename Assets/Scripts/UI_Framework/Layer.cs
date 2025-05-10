@@ -7,15 +7,16 @@ namespace UI.Framework.Implementation
     {
         private readonly WindowSystemFactory _windowSystemFactory;
         private readonly WindowSystemBase _windowSystemPrefab;
-        
+
         private readonly ViewCollection _collection;
         private readonly string _name;
         private readonly int  _order;
         private readonly bool  _lazy;
         private readonly bool  _debug;
-        
+        private readonly int  _systemOrder;
+
         private IWindowSystem _windowSystem;
-        
+
         public Layer(LayerInfo layerInfo, int order, WindowSystemFactory windowSystemFactory)
         {
             _collection = layerInfo.ViewCollection;
@@ -24,6 +25,7 @@ namespace UI.Framework.Implementation
             _order = order;
             _lazy = layerInfo.Lazy;
             _debug = layerInfo.Debug;
+            _systemOrder = layerInfo.SystemOrder;
 
             _windowSystemFactory = windowSystemFactory;
         }
@@ -32,9 +34,9 @@ namespace UI.Framework.Implementation
         {
             if (_debug || !_lazy)
             {
-                _windowSystem = _windowSystemFactory.Create(_windowSystemPrefab.gameObject, _name, _order);    
+                _windowSystem = _windowSystemFactory.Create(_windowSystemPrefab.gameObject, _name, _order, _systemOrder);
             }
-             
+
             if (_debug)
             {
                 foreach (var rawView in _collection.Objects)
@@ -48,40 +50,40 @@ namespace UI.Framework.Implementation
         {
             return _collection.Contains<TView>();
         }
-        
+
         public TView Open<TView>() where TView : IView
         {
             return OpenInternal(() => _windowSystem.Open<TView>(_collection.Get<TView>()));
         }
-        
+
         public TView Open<TView, TParam>(TParam param) where TView : IView
         {
             return OpenInternal(() => _windowSystem.Open<TView, TParam>(_collection.Get<TView>(), param));
         }
-        
+
         public TView Open<TView, TParam, TParam2>(TParam param1, TParam2 param2) where TView : IView
         {
             return OpenInternal(() => _windowSystem.Open<TView, TParam, TParam2>(_collection.Get<TView>(), param1, param2));
         }
-        
+
         public TView Open<TView, TParam, TParam2, TParam3>(TParam param1, TParam2 param2, TParam3 param3) where TView : IView
         {
             return OpenInternal(() => _windowSystem.Open<TView, TParam, TParam2, TParam3>(_collection.Get<TView>(), param1, param2, param3));
         }
-        
+
         private TView OpenInternal<TView>(Func<TView> creation) where TView : IView
         {
             if (_debug)
             {
                 return default;
             }
-            
-            _windowSystem ??= _windowSystemFactory.Create(_windowSystemPrefab.gameObject, _name, _order);
-            
+
+            _windowSystem ??= _windowSystemFactory.Create(_windowSystemPrefab.gameObject, _name, _order, _systemOrder);
+
             return creation.Invoke();
         }
-        
-        
+
+
         public class Factory : PlaceholderFactory<LayerInfo, int,  Layer>
         {
         }

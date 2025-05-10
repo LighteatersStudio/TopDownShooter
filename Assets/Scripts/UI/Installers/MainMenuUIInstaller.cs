@@ -35,6 +35,9 @@ namespace UI.New_UI
 
             Container.Bind<CharacterSelectionScreen.Factory>()
                 .AsSingle();
+
+            Container.Bind<TestSplashScreen.Factory>()
+                .AsSingle();
         }
     }
 }

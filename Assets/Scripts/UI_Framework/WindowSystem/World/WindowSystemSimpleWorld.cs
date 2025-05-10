@@ -1,13 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace UI.Framework.Implementation
 {
     internal class WindowSystemSimpleWorld : WindowSystemBase
     {
+        public override event Action<IWindowsSystemController> ViewOpen;
+        public override event Action<IWindowsSystemController> ViewClosed;
+
         [SerializeField] private WorldNodeUI _worldNodeUI;
 
         private int _order;
-        
+
         public override void SetOrder(int order)
         {
             _order = order;
@@ -17,9 +21,10 @@ namespace UI.Framework.Implementation
         {
             var node = builder.Build(_worldNodeUI.gameObject, transform).GetComponent<WorldNodeUI>();
             var view = builder.Build<TView>(prefab, node.Root);
-            
+
             node.SetupView(view, _order);
             node.Open();
+            // ViewOpen?.Invoke();
 
             return view;
         }

@@ -10,12 +10,14 @@ namespace UI.Framework.Implementation
         private Layer.Factory _layerFactory;
 
         private readonly List<Layer> _layer = new();
+        private WindowSystemOrderObserver _windowSystemOrderObserver;
 
         [Inject]
-        public void Construct(UISchema uiSchema, Layer.Factory layerFactory)
+        public void Construct(UISchema uiSchema, Layer.Factory layerFactory, WindowSystemOrderObserver windowSystemOrderObserver)
         {
             _schema = uiSchema;
             _layerFactory = layerFactory;
+            _windowSystemOrderObserver = windowSystemOrderObserver;
 
             CreateLayers();
         }
@@ -46,6 +48,11 @@ namespace UI.Framework.Implementation
 
             Debug.LogError($"View type[{typeof(TView)}] didn't find in UIScheme!");
             return false;
+        }
+
+        private void OnDestroy()
+        {
+            _windowSystemOrderObserver.UnregisterAll();
         }
 
         public IView Open<TView>() where TView : IView

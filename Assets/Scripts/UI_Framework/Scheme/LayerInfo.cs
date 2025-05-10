@@ -11,6 +11,7 @@ namespace UI.Framework.Implementation
         [field: SerializeField] public ViewCollection ViewCollection { get; private set; }
         [field: SerializeField] public bool Lazy { get; private set; } = false;
         [field: SerializeField] public bool Debug { get; private set; } = false;
+        [field: SerializeField] public int SystemOrder { get; private set; } = 0;
 
         public override string ToString()
         {
