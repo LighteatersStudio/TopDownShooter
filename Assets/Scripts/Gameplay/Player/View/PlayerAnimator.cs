@@ -8,56 +8,55 @@ namespace Gameplay.View
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimator : MonoBehaviour
     {
-        private const int LerpSpeed = 6;
-        private const float RotationLerpSpeed = 2.2f;
-        private const float BaseSpeed = 8.8f;
-        private const float TurnValue = 0.6f;
-
-        private readonly PlayerAnimatorParams _params = new ();
-        
         [SerializeField] private GameObject _view;
 
-        private CharacterColorFeedback.Factory _colorFeedbackFactory;
-        private Animator _animator;
         private ICharacter _character;
-        private CharacterColorFeedback _colorFeedback;
         private IInputController _inputController;
+        private Animator _animator;
+        private PlayerAnimatorNames _names;
         private IPlayerSettings _settings;
-        private Vector2 _previousLookDirection;
-        private Vector2 _currentDirection;
-        private Vector2 _targetDirection;
-        private Vector2 _lookDirection = Vector2.up;
-        private float _currentSpeed;
-        private float _rotationValue;
-        private bool _isRotating;
+        private IPlayerAnimator[] _playerAnimators;
+        private CharacterColorFeedback.Factory _colorFeedbackFactory;
+        private CharacterColorFeedback _colorFeedback;
 
         public event Action<Vector2> OnDirectionChanged;
-        
+
         [Inject]
         public void Construct(ICharacter character,
-            CharacterColorFeedback.Factory colorFeedbackFactory,
             IInputController inputController,
-            IPlayerSettings settings)
+            PlayerAnimatorNames names,
+            IPlayerSettings settings,
+            CharacterColorFeedback.Factory colorFeedbackFactory)
         {
             _character = character;
             _colorFeedbackFactory = colorFeedbackFactory;
             _inputController = inputController;
+            _names = names;
             _settings = settings;
         }
 
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
+            var rotationAnimator = new RotationAnimator(_animator, _inputController, _names);
+            var directionalAnimator = new DirectionalAnimator(_animator, _inputController, _names, _settings,
+                rotationAnimator, direction => OnDirectionChanged?.Invoke(direction));
+
+            _playerAnimators = new IPlayerAnimator[]
+            {
+                rotationAnimator,
+                directionalAnimator
+            };
         }
 
         protected void Start()
         {
-            _animator.SetFloat(_params.MoveSpeed, 1);
-            _animator.SetFloat(_params.Turn, 0);
+            _animator.SetFloat(_names.MoveSpeed, 1);
+            _animator.SetFloat(_names.Turn, 0);
 
-            _previousLookDirection = _lookDirection;
             _colorFeedback = _colorFeedbackFactory.Create(_view);
             transform.SetZeroPositionRotation();
+
             Subscribe();
         }
 
@@ -71,115 +70,40 @@ namespace Gameplay.View
             _character.Damaged += OnDamaged;
             _character.Dead += OnDead;
 
-            _inputController.MoveChanged += SetMoveDirection;
-            _inputController.LookChanged += SetLookDirection;
+            foreach (var anim in _playerAnimators)
+            {
+                anim.Initialize();
+            }
         }
-        
+
         private void Unsubscribe()
         {
             _character.Damaged -= OnDamaged;
             _character.Dead -= OnDead;
 
-            _inputController.MoveChanged -= SetMoveDirection;
-            _inputController.LookChanged -= SetLookDirection;
+            foreach (var anim in _playerAnimators)
+            {
+                anim.Dispose();
+            }
         }
 
         protected void Update()
         {
-            DirectionAnimation();
-            RotationAnimation();
-        }
-
-        private float CalculateSpeed()
-        {
-            const float minAnimSpeed = 0.5f;
-            const float maxAnimSpeed = 2;
-
-            var animationSpeed = _settings.Stats.MoveSpeed / BaseSpeed;
-            animationSpeed = Mathf.Clamp(animationSpeed, minAnimSpeed, maxAnimSpeed);
-
-            _currentSpeed = Mathf.Clamp(animationSpeed, minAnimSpeed, maxAnimSpeed);
-
-            return _currentSpeed;
-        }
-
-        private void RotationAnimation()
-        {
-            var direction = _previousLookDirection.x * _lookDirection.y - _previousLookDirection.y * _lookDirection.x;
-            
-            var turnValue = TurnValue;
-            
-            switch (direction)
+            foreach (var anim in _playerAnimators)
             {
-                case > 0:
-                    turnValue *= 1;
-                    break;
-                case < 0:
-                    turnValue *= -1;
-                    break;
+                anim.Update();
             }
-            
-            _isRotating = _lookDirection != _previousLookDirection;
-            _previousLookDirection = _lookDirection;
-            
-
-            var target = _isRotating ? turnValue : 0;
-            _rotationValue = Mathf.MoveTowards(_rotationValue, target, Time.deltaTime * RotationLerpSpeed);
-            _animator.SetFloat(_params.Turn, _rotationValue);
-        }
-
-        private void DirectionAnimation()
-        {
-            var correctedDirection = ConvertToLocal(_targetDirection);
-            
-            OnDirectionChanged?.Invoke(correctedDirection);
-            _currentDirection = Vector2.MoveTowards(_currentDirection,
-                correctedDirection, Time.deltaTime * LerpSpeed);
-            
-            _animator.SetFloat(_params.Horizontal, _currentDirection.x);
-            _animator.SetFloat(_params.Vertical, _currentDirection.y);
-        }
-
-        private Vector2 ConvertToLocal(Vector2 worldDirection)
-        {
-            var right = new Vector2(_lookDirection.y, -_lookDirection.x);
-            var forward = _lookDirection;
-
-            var localX = Vector2.Dot(worldDirection, right);
-            var localY = Vector2.Dot(worldDirection, forward);
-
-            localX = NormalizeDirection(localX);
-            localY = NormalizeDirection(localY);
-
-            return new Vector2(localX, localY);
-        }
-
-        private float NormalizeDirection(float value)
-        {
-            return Mathf.Round(value);
-        }
-
-        private void SetMoveDirection(Vector2 direction)
-        {
-            _targetDirection = new Vector2(NormalizeDirection(direction.x), NormalizeDirection(direction.y));
-            
-            _animator.SetFloat(_params.MoveSpeed, direction.magnitude > 0 ? CalculateSpeed() : 1);
-        }
-
-        private void SetLookDirection(Vector2 direction)
-        {
-            _lookDirection = direction.normalized;
         }
 
         private void OnDead()
         {
-            _animator.SetTrigger(_params.Dead);
+            _animator.SetTrigger(_names.Dead);
         }
 
         private void OnDamaged()
         {
             _colorFeedback.ChangeColor();
-            _animator.SetTrigger(_params.Hit);
+            _animator.SetTrigger(_names.Hit);
         }
     }
 }

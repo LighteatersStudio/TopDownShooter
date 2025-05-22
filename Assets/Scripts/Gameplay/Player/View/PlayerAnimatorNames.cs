@@ -2,7 +2,7 @@
 
 namespace Gameplay.View
 {
-    public class PlayerAnimatorParams
+    public class PlayerAnimatorNames
     {
         public int MoveSpeed { get; private set; } = Animator.StringToHash("MoveSpeed");
         public int Horizontal { get; private set; } = Animator.StringToHash("Horizontal");

@@ -19,7 +19,7 @@ namespace Gameplay.View
         private readonly Vector3 _leftDir = new(-0.312f, 1.378f, 0.828f);
         private readonly Vector3 _rightFrontDir = new(0f, 1.324f, 1.194f);
         private readonly Vector3 _frontDir = new(0f, 1.14f, 1.124f);
-        private readonly PlayerAnimatorParams _params = new();
+        private readonly Vector3 _leftHandEndValue = new(-57, 148, -84);
 
         [SerializeField] private PlayerAnimator _playerAnimator;
         [SerializeField] private Rig _rig;
@@ -30,16 +30,18 @@ namespace Gameplay.View
         private Animator _animator;
         private IReloaded _source;
         private ICharacter _character;
+        private PlayerAnimatorNames _names;
         private Quaternion _regularRotation;
         private Vector3 _startLeftHandPos;
         private Vector3 _startLeftShoulderPos;
         private Vector3 _currentLeftHandPos;
 
         [Inject]
-        public void Construct(ICharacter character, IReloaded source)
+        public void Construct(ICharacter character, IReloaded source, PlayerAnimatorNames animatorNames)
         {
             _character = character;
             _source = source;
+            _names = animatorNames;
         }
 
         protected void Awake()
@@ -49,7 +51,7 @@ namespace Gameplay.View
 
         private void Start()
         {
-            _source.ReloadStarted += Reload;
+            _source.ReloadStarted += OnReloaded;
             _character.Attacked += OnAttacked;
             _playerAnimator.OnDirectionChanged += UpdateLeftHandByDirection;
 
@@ -63,7 +65,7 @@ namespace Gameplay.View
 
         private void OnDestroy()
         {
-            _source.ReloadStarted -= Reload;
+            _source.ReloadStarted -= OnReloaded;
             _character.Attacked -= OnAttacked;
             _playerAnimator.OnDirectionChanged -= UpdateLeftHandByDirection;
         }
@@ -107,14 +109,15 @@ namespace Gameplay.View
         {
             const float leftHandOffsetZ = 0.12f;
             const float leftShoulderOffsetZ = 0.17f;
+            const float yOffset = 0.01f;
 
-            var randomYOffset = Random.Range(-0.01f, 0.01f);
-            var leftHandEndValue = new Vector3(-57, 148, -84);
-
+            var randomYOffset = Random.Range(-yOffset, yOffset);
+            
             _leftHandTransform.DOKill();
+            _leftShoulderTransform.DOKill();
 
             _leftHandTransform
-                .DOLocalRotate(leftHandEndValue, DurationAttack)
+                .DOLocalRotate(_leftHandEndValue, DurationAttack)
                 .SetEase(Ease.Linear)
                 .SetLink(_leftHandTransform.gameObject);
 
@@ -131,16 +134,17 @@ namespace Gameplay.View
                 .SetLink(_leftShoulderTransform.gameObject);
         }
 
-        private void Reload(ICooldown cooldown)
+        private void OnReloaded(ICooldown cooldown)
         {
-            _animator.SetTrigger(_params.Reload);
+            _animator.SetTrigger(_names.Reload);
             _rig.weight = 0;
 
             var animationStartTime = Mathf.Max(0, cooldown.RemainingTimeS - ReloadTimeOffset);
             DOVirtual.DelayedCall(animationStartTime, () =>
             {
                 DOTween.To(() => _rig.weight, x => _rig.weight = x, 1f, ReloadTimeOffset)
-                    .SetEase(Ease.OutCubic);
+                    .SetEase(Ease.OutCubic)
+                    .SetLink(gameObject);
             });
         }
     }
