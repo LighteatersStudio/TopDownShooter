@@ -41,12 +41,12 @@ namespace Gameplay.View
             _inputController.LookChanged -= SetLookDirection;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            RotationAnimation();
+            RotationAnimation(deltaTime);
         }
 
-        private void RotationAnimation()
+        private void RotationAnimation(float deltaTime)
         {
             var orientation = _previousLookDirection.x * _lookDirection.y - _previousLookDirection.y * _lookDirection.x;
             var turnValue = TurnValue;
@@ -57,7 +57,7 @@ namespace Gameplay.View
             _previousLookDirection = _lookDirection;
 
             var target = _isRotating ? turnValue : 0;
-            _rotationValue = Mathf.MoveTowards(_rotationValue, target, Time.deltaTime * RotationLerpSpeed);
+            _rotationValue = Mathf.MoveTowards(_rotationValue, target, deltaTime * RotationLerpSpeed);
             _animator.SetFloat(_names.Turn, _rotationValue);
         }
 

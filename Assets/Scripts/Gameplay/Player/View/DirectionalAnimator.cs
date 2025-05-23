@@ -13,9 +13,9 @@ namespace Gameplay.View
         private readonly Animator _animator;
         private readonly IInputController _inputController;
         private readonly PlayerAnimatorNames _names;
-        private readonly IPlayerSettings _settings;
         private readonly RotationAnimator _rotationAnimator;
-        private readonly Action<Vector2> _onDirectionChanged;
+        private readonly Action<Vector2> _directionChangedHandler;
+        private readonly float _moveSpeed;
 
         private Vector2 _currentDirection;
         private Vector2 _targetDirection;
@@ -23,16 +23,16 @@ namespace Gameplay.View
         public DirectionalAnimator(Animator animator,
             IInputController inputController,
             PlayerAnimatorNames names,
-            IPlayerSettings settings,
             RotationAnimator rotationAnimator,
-            Action<Vector2> onDirectionChanged)
+            Action<Vector2> directionChangedHandler,
+            float moveSpeed)
         {
             _animator = animator;
             _inputController = inputController;
             _names = names;
-            _settings = settings;
             _rotationAnimator = rotationAnimator;
-            _onDirectionChanged = onDirectionChanged;
+            _directionChangedHandler = directionChangedHandler;
+            _moveSpeed = moveSpeed;
         }
 
         public void Initialize()
@@ -45,19 +45,19 @@ namespace Gameplay.View
             _inputController.MoveChanged -= SetMoveDirection;
         }
 
-        public void Update()
+        public void Update(float deltaTime)
         {
-            DirectionAnimation();
+            DirectionAnimation(deltaTime);
         }
 
-        private void DirectionAnimation()
+        private void DirectionAnimation(float deltaTime)
         {
             var correctedDirection = ConvertToLocal(_targetDirection);
 
-            _onDirectionChanged?.Invoke(correctedDirection);
+            _directionChangedHandler?.Invoke(correctedDirection);
 
             _currentDirection = Vector2.MoveTowards(_currentDirection,
-                correctedDirection, Time.deltaTime * LerpSpeed);
+                correctedDirection, deltaTime * LerpSpeed);
 
             _animator.SetFloat(_names.Horizontal, _currentDirection.x);
             _animator.SetFloat(_names.Vertical, _currentDirection.y);
@@ -86,7 +86,7 @@ namespace Gameplay.View
             const float minAnimSpeed = 0.5f;
             const float maxAnimSpeed = 2;
 
-            var animationSpeed = _settings.Stats.MoveSpeed / BaseSpeed;
+            var animationSpeed = _moveSpeed / BaseSpeed;
 
             return Mathf.Clamp(animationSpeed, minAnimSpeed, maxAnimSpeed);
         }

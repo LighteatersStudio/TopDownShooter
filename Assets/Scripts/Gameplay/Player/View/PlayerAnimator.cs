@@ -29,18 +29,18 @@ namespace Gameplay.View
             CharacterColorFeedback.Factory colorFeedbackFactory)
         {
             _character = character;
-            _colorFeedbackFactory = colorFeedbackFactory;
             _inputController = inputController;
             _names = names;
             _settings = settings;
+            _colorFeedbackFactory = colorFeedbackFactory;
         }
 
         protected void Awake()
         {
             _animator = GetComponent<Animator>();
             var rotationAnimator = new RotationAnimator(_animator, _inputController, _names);
-            var directionalAnimator = new DirectionalAnimator(_animator, _inputController, _names, _settings,
-                rotationAnimator, direction => OnDirectionChanged?.Invoke(direction));
+            var directionalAnimator = new DirectionalAnimator(_animator, _inputController, _names, rotationAnimator,
+                direction => OnDirectionChanged?.Invoke(direction), _settings.Stats.MoveSpeed);
 
             _playerAnimators = new IPlayerAnimator[]
             {
@@ -58,40 +58,42 @@ namespace Gameplay.View
             transform.SetZeroPositionRotation();
 
             Subscribe();
-        }
-
-        protected void OnDestroy()
-        {
-            Unsubscribe();
-        }
-
-        private void Subscribe()
-        {
-            _character.Damaged += OnDamaged;
-            _character.Dead += OnDead;
-
+            
             foreach (var anim in _playerAnimators)
             {
                 anim.Initialize();
             }
         }
 
-        private void Unsubscribe()
+        protected void OnDestroy()
         {
-            _character.Damaged -= OnDamaged;
-            _character.Dead -= OnDead;
-
+            Unsubscribe();
+            
             foreach (var anim in _playerAnimators)
             {
                 anim.Dispose();
             }
         }
 
+        private void Subscribe()
+        {
+            _character.Damaged += OnDamaged;
+            _character.Dead += OnDead;
+        }
+
+        private void Unsubscribe()
+        {
+            _character.Damaged -= OnDamaged;
+            _character.Dead -= OnDead;
+        }
+
         protected void Update()
         {
+            var deltaTime = Time.deltaTime;
+            
             foreach (var anim in _playerAnimators)
             {
-                anim.Update();
+                anim.Update(deltaTime);
             }
         }
 

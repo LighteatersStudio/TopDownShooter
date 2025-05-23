@@ -4,6 +4,6 @@
     {
         void Initialize();
         void Dispose();
-        void Update();
+        void Update(float deltaTime);
     }
 }
