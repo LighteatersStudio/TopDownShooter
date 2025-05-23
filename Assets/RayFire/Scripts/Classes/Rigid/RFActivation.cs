@@ -142,7 +142,7 @@ namespace RayFire
             // Check
             while (scr.activation.activated == false && scr.activation.vel > 0)
             {
-                if (scr.physics.rigidBody.velocity.magnitude > vel)
+                if (scr.physics.rigidBody.linearVelocity.magnitude > vel)
                     scr.Activate();
                 yield return null;
             }
@@ -199,7 +199,7 @@ namespace RayFire
             //scr.transForm.hasChanged = false;
             while (scr.simulationType == SimType.Inactive)
             {
-                scr.physics.rigidBody.velocity        = Vector3.zero;
+                scr.physics.rigidBody.linearVelocity        = Vector3.zero;
                 scr.physics.rigidBody.angularVelocity = Vector3.zero;
                 yield return null;
             }
@@ -233,7 +233,7 @@ namespace RayFire
                     shardsAmount = scr.inactiveShards.Count - 1;
                     for (int i = shardsAmount; i >= 0; i--)
                     {
-                        if (scr.inactiveShards[i].rb.velocity.magnitude > scr.activation.vel)
+                        if (scr.inactiveShards[i].rb.linearVelocity.magnitude > scr.activation.vel)
                             if (ActivateShard (scr.inactiveShards[i], scr) == true)
                                 scr.inactiveShards.RemoveAt (i);
                     }
@@ -275,7 +275,7 @@ namespace RayFire
                 shardsAmount = scr.inactiveShards.Count - 1;
                 for (int i = shardsAmount; i >= 0; i--)
                 {
-                    scr.inactiveShards[i].rb.velocity        = Vector3.zero;
+                    scr.inactiveShards[i].rb.linearVelocity        = Vector3.zero;
                     scr.inactiveShards[i].rb.angularVelocity = Vector3.zero;
                 }
 
@@ -330,7 +330,7 @@ namespace RayFire
                     Rigidbody rBody = inst.GetComponent<Rigidbody>();
                     if (rBody != null)
                     {
-                        rBody.velocity        = scr.physics.rigidBody.velocity;
+                        rBody.linearVelocity        = scr.physics.rigidBody.linearVelocity;
                         rBody.angularVelocity = scr.physics.rigidBody.angularVelocity;
                     }
 

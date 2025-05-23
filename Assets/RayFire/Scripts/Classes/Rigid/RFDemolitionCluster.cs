@@ -666,7 +666,7 @@ namespace RayFire
             scr.physics.rigidBody.ResetCenterOfMass();
 
             // Set velocity after demolition
-            scr.physics.rigidBody.velocity = scr.physics.velocity * scr.physics.dm;
+            scr.physics.rigidBody.linearVelocity = scr.physics.velocity * scr.physics.dm;
         }
         
         /// /////////////////////////////////////////////////////////

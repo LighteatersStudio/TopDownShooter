@@ -12,7 +12,7 @@ namespace RayFire
     public class RFPhysic
     {
         [FormerlySerializedAs ("materialType")]     public MaterialType   mt;
-        public                                             PhysicMaterial material;
+        public                                             PhysicsMaterial material;
         public                                             MassType       massBy;
         public                                             float          mass;
         [FormerlySerializedAs ("colliderType")]     public RFColliderType ct;
@@ -99,7 +99,7 @@ namespace RayFire
             // Reset components
             if (rigidBody != null)
             {
-                rigidBody.velocity = Vector3.zero;
+                rigidBody.linearVelocity = Vector3.zero;
             }
             
             if (meshCollider != null)
@@ -327,15 +327,15 @@ namespace RayFire
         // Set drag properties
         public static void SetDrag(RayfireRigid scr)
         {
-            scr.physics.rigidBody.drag        = RayfireMan.inst.materialPresets.Drag(scr.physics.mt);
-            scr.physics.rigidBody.angularDrag = RayfireMan.inst.materialPresets.AngularDrag(scr.physics.mt);
+            scr.physics.rigidBody.linearDamping        = RayfireMan.inst.materialPresets.Drag(scr.physics.mt);
+            scr.physics.rigidBody.angularDamping = RayfireMan.inst.materialPresets.AngularDrag(scr.physics.mt);
         }
 
         // Set drag properties
         public static void SetDrag(RFShard shard, float drag, float dragAngular)
         {
-            shard.rb.drag        = drag;
-            shard.rb.angularDrag = dragAngular;
+            shard.rb.linearDamping        = drag;
+            shard.rb.angularDamping = dragAngular;
         }
         
         /// /////////////////////////////////////////////////////////
@@ -352,7 +352,7 @@ namespace RayFire
             {
                 for (int i = 0; i < scr.fragments.Count; i++)
                     if (scr.fragments[i] != null)
-                        scr.fragments[i].physics.rigidBody.velocity = scr.physics.rigidBody.GetPointVelocity (scr.fragments[i].transForm.position) * scr.physics.dm;
+                        scr.fragments[i].physics.rigidBody.linearVelocity = scr.physics.rigidBody.GetPointVelocity (scr.fragments[i].transForm.position) * scr.physics.dm;
             }
 
             // Previous frame velocity
@@ -361,7 +361,7 @@ namespace RayFire
                 Vector3 baseVelocity = scr.physics.velocity * scr.physics.dm;
                 for (int i = 0; i < scr.fragments.Count; i++)
                     if (IsNull(scr.fragments[i].physics.rigidBody) == false)
-                        scr.fragments[i].physics.rigidBody.velocity = baseVelocity;
+                        scr.fragments[i].physics.rigidBody.linearVelocity = baseVelocity;
             }
         }
         
@@ -941,12 +941,12 @@ namespace RayFire
             
             // Set velocity
             if (IsNull(scr.physics.rigidBody) == false)
-                velocity = scr.physics.rigidBody.velocity;
+                velocity = scr.physics.rigidBody.linearVelocity;
 
             while (exclude == false)
             {
                 if (IsNull(scr.physics.rigidBody) == false)
-                    velocity = scr.physics.rigidBody.velocity;
+                    velocity = scr.physics.rigidBody.linearVelocity;
                 yield return null;
             }
    
@@ -974,7 +974,7 @@ namespace RayFire
         }
         
         // Get physic material
-        public PhysicMaterial PhysMaterial
+        public PhysicsMaterial PhysMaterial
         {
             get
             {
