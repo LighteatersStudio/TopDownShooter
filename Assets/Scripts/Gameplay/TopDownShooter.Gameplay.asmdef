@@ -12,7 +12,8 @@
         "Unity.Timeline",
         "TopDownShooter.Meta",
         "DialogueSystem",
-        "RayFireAssembly"
+        "RayFireAssembly",
+        "Unity.Animation.Rigging"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

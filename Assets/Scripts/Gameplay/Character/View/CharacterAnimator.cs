@@ -8,7 +8,6 @@ namespace Gameplay
     public class CharacterAnimator : MonoBehaviour
     {
         private const int LerpSpeed = 5;
-        private const float RoundingCoef = 0.5f;
 
         private static readonly int SpeedName = Animator.StringToHash("MoveSpeed");
         private static readonly int HorizontalName = Animator.StringToHash("Horizontal");

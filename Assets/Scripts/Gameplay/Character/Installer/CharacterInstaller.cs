@@ -166,6 +166,11 @@ namespace Gameplay
                 .FromNew()
                 .AsSingle()
                 .NonLazy();
+            
+            Container.Bind<PlayerAnimatorNames>()
+                .FromNew()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindDebug()

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb06a40e49bf4b008cdde84ee8b712a4, type: 3}
   m_Name: LevelSettings
   m_EditorClassIdentifier: 
-  <LevelDurationS>k__BackingField: 120
+  <LevelDurationS>k__BackingField: 12000
