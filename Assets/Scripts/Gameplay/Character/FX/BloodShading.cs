@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Gameplay
 {
@@ -19,6 +20,14 @@ namespace Gameplay
         private Vector3 _startPosition;
         private Vector3 _startScale;
         private float _currentBloodValue;
+
+        private void OnEnable()
+        {
+            if (_material)
+            {
+                ResetToStart();
+            }
+        }
 
         private void Start()
         {
@@ -45,23 +54,19 @@ namespace Gameplay
             UpdateBloodValue();
             Movement();
             Scale();
-
-            //Test
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                ResetToStart();
-            }
         }
 
         private void UpdateBloodValue()
         {
-            if (_currentBloodValue < 1f)
+            if (_currentBloodValue >= 1f)
             {
-                var step = _bloodSpeed * _speed;
+                return;
+            }
+            
+            var step = _bloodSpeed * _speed;
 
-                _currentBloodValue = Mathf.Min(_currentBloodValue + step, 1f);
-                _material.SetFloat(SliceAmount, _currentBloodValue);
-            }  
+            _currentBloodValue = Mathf.Min(_currentBloodValue + step, 1f);
+            _material.SetFloat(SliceAmount, _currentBloodValue);
         }
 
         private void Movement()
@@ -74,11 +79,13 @@ namespace Gameplay
 
         private void Scale()
         {
-            if (_currentBloodValue < 1f)
+            if (_currentBloodValue >= 1f)
             {
-                Vector3 deltaScale = Vector3.Scale(_scaleVector, _scaleSpeed) * _scaleModifier;
-                transform.localScale += deltaScale;
+                return;
             }
+            
+            var deltaScale = Vector3.Scale(_scaleVector, _scaleSpeed) * _scaleModifier;
+            transform.localScale += deltaScale;
         }
 
         private void ResetToStart()
@@ -87,7 +94,7 @@ namespace Gameplay
             _currentBloodValue = _startBloodValue;
             transform.localScale = _startScale;
 
-            if (_material != null)
+            if (_material)
             {
                 _material.SetFloat(SliceAmount, _currentBloodValue);
             }
