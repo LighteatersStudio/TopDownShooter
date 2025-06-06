@@ -10,20 +10,20 @@ namespace UI.Framework.Implementation
         [SerializeField] private UISchema _schema;
         [SerializeField] private string _scopeName;
         [SerializeField] private bool _useEmptyBuilderProcessor = true;
-        
+
         public override void InstallBindings()
         {
             Container.Bind<UIBuilderInstaller>()
                 .AsSingle();
-            
+
             Container.BindFactory<ViewCreator, UIBuilder,UIBuilder.Factory>()
                 .AsSingle();
-            
+
             Container.Bind<WindowSystemFactory>()
                 .AsSingle();
-            
+
             Container.BindFactory<LayerInfo, int, Layer, Layer.Factory>();
-            
+
             Container.Bind<UISchema>()
                 .FromScriptableObject(_schema)
                 .AsSingle();
@@ -32,7 +32,11 @@ namespace UI.Framework.Implementation
                 .FromInstance(uiRoot)
                 .AsSingle()
                 .NonLazy();
-            
+
+            Container.Bind<WindowSystemOrderObserver>()
+                .AsSingle()
+                .Lazy();
+
             uiRoot.name = $"UIRoot[{_scopeName}]";
 
             if (_uiCamera)
@@ -40,7 +44,7 @@ namespace UI.Framework.Implementation
                 Container.Bind<Camera>()
                     .FromComponentInNewPrefab(_uiCamera)
                     .AsSingle()
-                    .Lazy();    
+                    .Lazy();
             }
             else
             {

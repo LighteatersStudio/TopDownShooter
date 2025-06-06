@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -5,6 +6,9 @@ namespace UI.Framework.Implementation
 {
     public class SimpleWindowsSystem : WindowSystemBase
     {
+        public override event Action<IWindowsSystemController> ViewOpen;
+        public override event Action<IWindowsSystemController> ViewClosed;
+
         [SerializeField] private Canvas _canvas;
         private Camera _camera;
 
@@ -35,6 +39,7 @@ namespace UI.Framework.Implementation
 
             view.Closed += OnViewClosed;
             view.Open();
+            ViewOpen?.Invoke(this);
 
             return view;
         }
@@ -42,6 +47,7 @@ namespace UI.Framework.Implementation
         protected virtual void OnViewClosed(IView view)
         {
             view.Closed -= OnViewClosed;
+            ViewClosed?.Invoke(this);
         }
     }
 }
