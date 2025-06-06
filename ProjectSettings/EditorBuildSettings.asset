@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Meta/GameRunShop.unity
     guid: 02cfdf738623248abb54fb2dd4f84230
+  - enabled: 1
+    path: Assets/Scenes/Levels/NightClubScene.unity
+    guid: caa56eae744a1f34fb39247d6387c226
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 91ee3d88d8c3aed46a0bcda99602a7ad, type: 2}
